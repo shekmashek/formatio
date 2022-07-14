@@ -660,33 +660,28 @@ function Cours() {
   $(".newRowCours").append(html);
 }
 
-let count_input = $('.count_input');
-// alert(count_input.length);
-
-// let nb_input = count_input.length;
-
 function competence() {
 
+let count_input = $('.count_input');
+
   var html = "";
-  for (let i = 0; i < (10 - count_input.length); i++) {
-    html += '<div class="d-flex mt-2" id="row_newComp">';
-    html += '<div class="col-7">';
+  if (count_input.length < 10) {
+
+    html += '<div class="d-flex mt-2 count_input" id="row_newComp">';
+    html += '<div class="col-8">';
     html += '<div class="form-group">';
     html += '<div class="form-row">';
-    html +=
-      '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>';
-    html +=
-      '<label for="titre_competence" class="form-control-placeholder">Compétences';
+    html += '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>';
+    html += '<label for="titre_competence" class="form-control-placeholder">Compétences';
     html += "</label>";
     html += "</div>";
     html += "</div>";
     html += "</div>";
 
-    html += '<div class="col-4">';
+    html += '<div class="col-3">';
     html += '<div class="form-group ms-1">';
     html += '<div class="form-row">';
-    html +=
-      '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
+    html += '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
     html += '<label for="objectif" class="form-control-placeholder">Notes';
     html += "</label>";
     html += "</div>";
@@ -702,8 +697,11 @@ function competence() {
     html += "</div>";
     html += "</div>";
     html += "</div>";
+
+    $(".newRowComp").append(html);
+  }else{
+    toastr.warning('le nombres maximale de competence à açquérir est atteint ☝️');
   }
-  $(".newRowComp").append(html);
 }
 
 // remove row cours

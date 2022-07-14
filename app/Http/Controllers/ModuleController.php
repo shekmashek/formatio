@@ -575,31 +575,40 @@ class ModuleController extends Controller
         return response()->json($thematique);
     }
 
-    public function ajout_new_competence(Request $request)
-    {
-        $id = $request->id;
-        $competence = $request->all();
-        for($i = 0; $i < count($competence['titre_competence']); $i++){
-            $comp = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',[$competence['titre_competence'][$i],$competence['notes'][$i],$id]);
-        }
-        return back();
-    }
+    // public function ajout_new_competence(Request $request)
+    // {
+    //     $id = $request->id;
+    //     $competence = $request->all();
+    //     for($i = 0; $i < count($competence['titre_competence']); $i++){
+    //         $comp = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',[$competence['titre_competence'][$i],$competence['notes'][$i],$id]);
+    //     }
+    //     return back();
+    // }
 
     public function modif_competence(Request $request)
     {
         $id = $request->id;
         $donnees = $request->all();
         $fonct = new FonctionGenerique();
-
+        // dd($donnees);
         $competence = $fonct->findWhere('competence_a_evaluers', ['module_id'], [$id]);
-        for ($i = 0; $i < count($competence); $i++) {
-            $id_comp = $donnees['id_notes_' . $id . '_' . $competence[$i]->id];
-            $val_comp = $donnees['titre_competence_' . $id . '_' . $competence[$i]->id];
-            $val_note = $donnees['notes_' . $id . '_' . $competence[$i]->id];
-            if ($donnees['titre_competence_' . $id . '_' . $competence[$i]->id] != null) {
-                $cour = DB::update('update competence_a_evaluers set titre_competence=?, objectif=?  where module_id = ? and id = ?', [$val_comp, $val_note, $id_comp, $competence[$i]->id]);
-            } else {
-                return back()->with('error', "l'une de ces informations est invalide");
+        if ($donnees != null) {
+            for ($i = 0; $i < count($competence); $i++) {
+                $id_comp = $donnees['id_notes_' . $id . '_' . $competence[$i]->id];
+                $val_comp = $donnees['titre_competence_' . $id . '_' . $competence[$i]->id];
+                $val_note = $donnees['notes_' . $id . '_' . $competence[$i]->id];
+                if ($donnees['titre_competence_' . $id . '_' . $competence[$i]->id] != null) {
+                    $cour = DB::update('update competence_a_evaluers set titre_competence=?, objectif=?  where module_id = ? and id = ?', [$val_comp, $val_note, $id_comp, $competence[$i]->id]);
+                } else {
+                    return back()->with('error', "l'une de ces informations est invalide");
+                }
+            }
+            if (isset($donnees["titre_competence"]) && isset($donnees["notes"])) {
+                if ($donnees["titre_competence"] != null || $donnees["notes"] != null) {
+                    for($i = 0; $i < count($donnees['titre_competence']); $i++){
+                        $comp = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',[$donnees['titre_competence'][$i],$donnees['notes'][$i],$id]);
+                    }
+                }
             }
         }
         return back();

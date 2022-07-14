@@ -116,7 +116,7 @@
             <div class="col-lg-4 col-md-4 ">
                 <div class="">
                     <a href="{{route('detail_cfp',$res->cfp_id)}}">
-                        <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
+                        <h6 class="py-4 text-center">Formation proposée par&nbsp;<span>{{$res->nom}}</span></h6>
                         <div class="text-center">
                             <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
                         </div>
@@ -454,6 +454,7 @@
                             <div class="row ms-1 mb-3">
                                 <p>{{ $avis->commentaire }}</p>
                             </div>
+                            <hr>
                             @endforeach
                             @if(count($liste_avis_count) >= 10)
                                 <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$infos[0]->module_id}}">voir tous les avis</a></div>
@@ -501,8 +502,8 @@
                 <div class="row detail__intra">
                     <div class="row g-0 m-0">
                         <div class="detail__prix">
-                            <div class="detail__prix__text">
-                                <p class="pt-2 text-uppercase"><b>competences a acquérir</b></p>
+                            <div class="">
+                                <p class="pt-2 ">Competences a acquérir</p>
                             </div>
                         </div>
                     </div>
@@ -775,7 +776,7 @@
                 let moduleData = response;
                 if (moduleData['liste_avis'] != null || undefined){
                     let html = '';
-
+                    html += '<hr>';
                     for (let i = 0; i < moduleData['liste_avis'].length; i++) {
                         html += '<div class="row" id="avis">';
                         html +=     '<div class="d-flex flex-row">';
@@ -795,6 +796,8 @@
                         html += '<div class="row ms-1">';
                         html +=     '<p>'+moduleData['liste_avis'][i]['commentaire']+'</p>';
                         html += '</div>';
+                        html += '<hr>';
+
                     }
                     $('.newRowAvis').empty();
                     $('.newRowAvis').append(html);

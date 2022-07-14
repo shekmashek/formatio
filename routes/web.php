@@ -146,6 +146,8 @@ Route::get('plus_avis_mod_etp','ProjetControlleur@plus_avis_mod_etp')->name('plu
 Route::get('select_par_module_etp/{id}', 'ProjetControlleur@affichageParModule')->name('select_par_module_etp');
 Route::get('affichage_formation_etp/{id}', 'ProjetControlleur@affichage_formation_etp')->name('affichage_formation_etp');
 Route::get('destroy_module_etp','ProjetControlleur@destroy_module_etp')->name('destroy_module_etp');
+Route::get('plus_avis_module_etp','ProjetControlleur@plus_avis_module_etp')->name('plus_avis_module_etp');
+
 
 
 //route groupe
@@ -260,7 +262,7 @@ Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur'
 //route formateur profil
 Route::get('/profile_formateur/{id?}', 'ProfController@profile_formateur')->name('profile_formateur');
 Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
-    Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
+Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 });
 Route::get('/accueilFormateur', 'ProfController@accueil')->name('accueilFormateur');
 //Route update par champs prof

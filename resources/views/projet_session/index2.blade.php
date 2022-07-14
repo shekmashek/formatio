@@ -10,382 +10,7 @@
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
-    <style>
-        .corps_planning .nav-link {
-            color: #637381;
-            padding: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 200ms;
-            text-transform: uppercase;
-            padding-top: 10px;
-        }
-
-
-        .nav-item .nav-link button.active {
-            /* border-bottom: 3px solid #7635dc !important; */
-            color: #7635dc;
-            border-right:.2rem solid  #7635dc;
-        }
-
-        /* .nav-item .nav-link.active {
-            border-bottom: none !important;
-        } */
-
-        .nav-tabs .nav-link:hover {
-            background-color: rgb(245, 243, 243);
-            transform: scale(1.1);
-            border: none;
-        }
-
-        .nav-tabs .nav-item a {
-            text-decoration: none;
-            text-decoration-line: none;
-        }
-
-        .corps_planning .nav-item .planning{
-            border-right:.2rem solid  #c5c4c49b;
-        }
-
-    </style>
-    <style>
-        /* .myEtpStyle:hover{
-            text-decoration: underline;
-            color: darkorchid;
-        } */
-        .dropdown-item.active{
-            background-color: transparent !important;
-        }
-
-        .dropdown-item.active:hover{
-            background-color: #ececec !important;
-        }
-        .status_grise {
-            border-radius: 5px;
-            background-color: #637381;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_reprogrammer {
-            border-radius: 5px;
-            background-color: #00CDAC;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_cloturer {
-            border-radius: 5px;
-            background-color: #314755;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_reporter {
-            border-radius: 5px;
-            background-color: #26a0da;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_annulee {
-            border-radius: 5px;
-            background-color: #b31217;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_termine {
-            border-radius: 5px;
-            background-color: #1E9600;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_confirme {
-            border-radius: 5px;
-            background-color: #2B32B2;
-            color: white;
-            align-items: center ;margin: 0 auto;
-            padding-end: 1rem;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .statut_active {
-            border-radius: 5px;
-            background-color: rgb(15, 126, 145);
-            color: whitesmoke;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .modalite {
-            border-radius: 5px;
-            background-color: #26a0da;
-            color: rgb(255, 255, 255);
-            /* width: 60%; */
-            margin: 0 auto;
-            text-align: center;
-            padding: 0.2rem 0.3rem !important;
-            min-width: 140px;
-            display: inline-block;
-        }
-
-        .btn_creer {
-            background-color: white;
-            border: none;
-            border-radius: 30px;
-            padding: .2rem 1rem;
-            color: black;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-        }
-
-        .btn_creer a {
-            font-size: .8rem;
-            position: relative;
-            bottom: .2rem;
-        }
-
-        .btn_creer:hover {
-            background: #6373812a;
-            color: blue;
-        }
-
-        .btn_creer:focus {
-            color: blue;
-            text-decoration: none;
-        }
-
-        .icon_creer {
-            background-image: linear-gradient(60deg, #f206ee, #0765f3);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            font-size: 1.5rem;
-            position: relative;
-            top: .4rem;
-            margin-right: .3rem;
-        }
-
-        .paginationOld {
-            background-clip: text;
-            margin-right: .3rem;
-            font-size: 2rem;
-            position: relative;
-            top: .7rem;
-        }
-
-        .paginationOld:hover {
-            color: #000000;
-            background-color: rgb(239, 239, 239);
-            border-radius: 1.3rem;
-        }
-
-        .nombre_pagination {
-            color: #626262;
-
-        }
-
-        .rapport_finale {
-            background-color: #F16529 !important;
-        }
-
-        .rapport_finale button {
-            color: #ffffff !important;
-        }
-
-        .rapport_finale:hover {
-            background-color: #af3906 !important;
-        }
-
-        .pdf_download {
-            background-color: #e73827 !important;
-            padding: 0.3rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all .5ms ease;
-            color: white !important;
-            position: relative;
-        }
-
-        .pdf_download:hover {
-            background-color: #af3906 !important;
-        }
-
-        .pdf_download button {
-            color: #ffffff !important;
-        }
-
-        tbody tr {
-            vertical-align: middle;
-        }
-
-        .btn-label-session {
-            position: relative;
-            left: -12px;
-            display: inline-block;
-            padding: 6px 12px;
-            background: rgba(37, 37, 37, 0.15);
-            /* background-color: #a8e063; */
-            border-radius: 3px 0 0 3px;
-        }
-
-        .btn-ajout-session {
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        .resultat_stg{
-            background-color: #2cb445;
-            padding: 0.3rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all .5ms ease;
-            position: relative;
-        }
-        .resultat_stg button{
-            color: #ffffff !important;
-        }
-        .resultat_stg:hover{
-            background-color: #1c7f2e;
-        }
-
-        .btn_eval_stg{
-            background-color: #363dbc;
-            padding: 0.3rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all .5ms ease;
-            position: relative;
-        }
-        .btn_eval_stg:hover{
-            background-color: #262b86;
-        }
-            /*info SESSION*/
-        .green{
-            color: #5e35b1;
-            border: 2px solid #43a047;
-            border-radius: 2px;
-            font-size: 16px;
-            font-weight: 700;
-            padding: 4px;
-        }
-
-        .red{
-            color: #5e35b1;
-            border: 2px solid #f4511e;
-            border-radius: 2px;
-            font-size: 16px;
-            font-weight: 700;
-            padding: 4px;
-        }
-
-        .yellow{
-            color: #5e35b1;
-            border: 2px solid #fdd835;
-            border-radius: 2px;
-            font-size: 16px;
-            font-weight: 700;
-            padding: 4px;
-        }
-
-        .saClass{
-            font-size: 21px;
-            color: #637381;
-        }
-        .saSpan{
-            color: #637381;
-            font-size: 14px;
-        }
-        /* fixed top header */
-        .fixedTop{
-            /* max-height: 720px; */
-            overflow-y: scroll;
-        }
-
-        #myDiv{
-            position: fixed;
-            top: 0;
-
-        }
-        .spanClass:hover{
-            color: #673ab7;
-            transition: 0.3s ease-in-out;
-            /* border-bottom: 3px solid #673ab7; */
-        }
-
-        .head{
-            font-size: 14px;
-        }
-
-        .pagination{
-            float: right;
-            margin-bottom: 10px;
-            font-size: 13px;
-        }
-
-        .dataTables_filter > label{
-            display: none;
-        }
-
-        .dataTables_info, .dataTables_length, .headProject {
-            font-size: 13px;
-        }
-
-        .redClass{
-            color: #f44336 !important;
-        }
-
-        .arrowDrop{
-            color: #1e9600;
-            transition: 0.3s !important;
-            transform: rotate(360deg) !important;
-        }
-        .mivadika{
-            transform: rotate(180deg) !important;
-            color: red !important;
-            transition: 0.3s !important;
-        }
-
-        #example_length select{
-            height: 25px;
-            font-size: 13px;
-            vertical-align: middle;
-        }
-
-    </style>
-
+    <link rel="stylesheet" href="{{ asset('assets/css/index2.css') }}">
     <div class="container-fluid mb-5">
         @if (Session::has('pdf_error'))
             <div class="alert alert-danger ms-4 me-4">
@@ -399,8 +24,19 @@
             <div class="col-12 ps-2">
                 @canany(['isCFP'])
                     @if (count($projet) <= 0)
-                        <div class="row d-flex mt-3 titre_projet p-1 mb-1">
-                            <p class="text-center text_aucun">Vous n'avez pas encore du projet.</p>
+                        <div class="container mt-3 p-1 mb-1">
+                            <div id="popup">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <i class='bx bxs-plus-circle icon_upgrade me-3'></i>
+                                        @if($abonnement_cfp[0]->illimite != 1)
+                                            @if($nb_formateur == 0 || $nb_formateur == 0 || $nb_collaboration == 0)Vous n’avez pas encore de projet @if($nb_modules == 0)pour en créer un ajouter d’abord des modules a votre <a data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button" class="text-primary lien_condition">catalogue de formation</a>.@endif @if($nb_formateur == 0)<a href="{{route('liste_formateur')}}" class="text-primary lien_condition">Ajouter des formateurs</a>.@endif @if($nb_collaboration == 0)<a href="{{route('liste_entreprise')}}" class="text-primary lien_condition">Inviter des entreprises.</a>@endif .@endif @if($nb_formateur != 0 && $nb_formateur != 0 && $nb_collaboration != 0)Maintenant vous pouvez créer votre premier projet de formation <a href="{{route('nouveau_groupe',1)}}" class="text-primary lien_condition">intra</a> @if($abonnement_cfp != null) ou <a href="{{route('nouveau_groupe_inter',2)}}" class="text-primary lien_condition">inter</a>@endif.@endif
+                                        @else
+                                            <span>Votre abonnement actuel vous permet de faire un nombre illimités de projets.</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     @endif
                     @if (Session::has('groupe_error'))
@@ -1756,8 +1392,8 @@
                                 <th> Session </th>
                                 <th>Type de formation</th>
                                 <th> Module </th>
-                                <th><i class="bx bx-dollar"></i> {{$ref}}</th>
-                                <th> <i class='bx bx-group'></i> </th>
+                                {{-- <th><i class="bx bx-dollar"></i> {{$ref}}</th> --}}
+                                {{-- <th> <i class='bx bx-group'></i> </th> --}}
                                 <th>Date session</th>
                                 <th>Ville</th>
                                 <th> Centre de formation </th>
@@ -1797,7 +1433,7 @@
                                             @endphp --}}
                                             {{ $pj->nom_module }}
                                         </td>
-                                        <td class="text-end">
+                                        {{-- <td class="text-end">
                                            @if($pj->hors_taxe_net!=null)
                                            {{number_format($pj->hors_taxe_net,0,","," ")}}
                                            @else
@@ -1805,8 +1441,8 @@
                                                     echo "<span>-</span>";
                                                 @endphp
                                            @endif
-                                        </td>
-                                       <td>
+                                        </td> --}}
+                                       {{-- <td>
                                         @if($pj->qte!=null)
                                             {{$pj->qte}}
                                         @else
@@ -1814,7 +1450,7 @@
                                                 echo "<span>-</span>";
                                             @endphp
                                         @endif
-                                         </td>
+                                         </td> --}}
                                         <td class="text-center">
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));

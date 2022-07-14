@@ -185,9 +185,11 @@
             @can('isCFP')
             <li>
                 <a href="{{route('liste_entreprise')}}" class="d-flex entreprise nav_linke">
-                    <i class='bx bx-building-house'></i>
+                    <i class='bx bxs-building-house'></i>
+
                     <span class="links_name">Entreprises</span>
                 </a>
+                <span class="badge_invitation"></span>
 
             </li>
             @endcan
@@ -576,21 +578,8 @@
                 </div> --}}
                 <div class="col-3 d-flex flex-row padding_logo">
                     <span><img src="{{asset('img/logos_all/iconFormation.webp')}}" alt="" class="img-fluid menu_logo me-3"></span>@yield('title')
-                            {{-- <div>
-                                <a href="/home" class="teste">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <div class="titre">
-                                        <i >F</i>
-                                    </div>
-
-                                </a>
-                            </div>
-                            <div style="margin-left:90px;margin-top:-10px;font-size:30px;">@yield('title')</div>--}}
                 </div>
-                <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
+                <div class="col-6 align-items-center justify-content-start d-flex flex-row ">
                     @canany(['isReferent','isStagiaire','isManager','isChefDeService','isReferentSimple'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
@@ -635,27 +624,9 @@
                                                 class="text_racourcis">employés</span></span></a>
                                 </div class="btn_racourcis">
                             @endcanany
-                            {{-- <div class="btn_racourcis me-4">
-                                <a href="{{route('employes')}}" class="text-center" role="button"><span
-                                        class="d-flex flex-column"><i class='bx bxs-group mb-2 mt-1'></i><span
-                                            class="text_racourcis">Equipe</span></span></a>
-                            </div> --}}
                         </div>
                     </div>
 
-
-
-                    {{-- @canany(['isCFP','isFormateur'])
-                    <div class="row">
-                        <div class="searchBoxMod d-flex flex-row py-2">
-                            <div class="btn_racourcis me-4">
-                                <a href="{{route('calendrier')}}" class="text-center " role="button"><span
-                                        class="d-flex flex-column"><i class='bx bxs-calendar-edit mb-2 mt-1'></i><span
-                                            class="text_racourcis">Agenda</span></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    @endcanany --}}
                     @canany('isCFP')
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
@@ -687,22 +658,7 @@
                         </div>
                     </div>
                     @endcanany
-                    {{-- @canany('isStagiaire')
-                    <div class="row">
-                        <div class="searchBoxMod d-flex flex-row py-2">
-                            <div class="btn_racourcis me-4">
-                                <a href="{{route('liste_projet')}}" class="text-center projet" role="button"><span
-                                        class="d-flex flex-column"><i class='bx bx-library mb-2 mt-1'></i><span
-                                            class="text_racourcis">Projets</span></span></a>
-                            </div>
-                            <div class="btn_racourcis me-4">
-                                <a href="{{route('calendrier_formation')}}" class="text-center agenda" role="button"><span
-                                        class="d-flex flex-column"><i class='bx bxs-calendar-week mb-2 mt-1'></i><span
-                                            class="text_racourcis">Agenda</span></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    @endcanany --}}
+
                     @canany(['isFormateur','isFormateurInterne'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
@@ -723,170 +679,8 @@
                     </div>
                     @endcanany
                 </div>
-                <div class="col-5 header-right align-items-center d-flex flex-row">
-                    <div class="col-4 d-flex flex-row justify-content-center apprendCreer pb-3">
-                        {{-- @can('isStagiaire')
-                        <div class="col-5 header-right">
-                            <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
-                                <div class="btn_racourcis" id="text_apprendre">
-                                    {{-- <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    {{-- <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
-                                        <span class="text_racourcis">Apprendre</span></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        @endcan --}}
-                        {{-- @can('isManager')
-                        <div class="col-5 header-right">
-                            <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
-                                <div class="btn_racourcis" id="text_apprendre">
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    {{-- <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
-                                        <span class="text_racourcis">Apprendre</span></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        @endcan --}}
-                        @canany(['isReferent','isReferentSimple'])
-                        <div class="col-5 header-right d-flex flex-row">
-                            <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
-                                <div class="btn_racourcis" id="text_apprendre">
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
-                                        <span class="text_racourcis">Apprendre</span></span>
-                                    </a>
-                                </div>
-                                {{-- <div class="btn_racourcis dropdown prevent_affichage .navigation_module" >
-                                    <a href="#" class="dropdown-toggle" role="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-bell-ring bx-tada-hover mb-2 mt-1'></i>
-                                        <span class="text_racourcis"></span></span>
-                                        <span class="badge_invitation">6</span>
-                                    </a>
-                                    <ul class="dropdown-menu agrandir2" aria-labelledby="notification">
-                                        listes des notifications
-                                    </ul>
-                                </div> --}}
-                                <div class="btn_racourcis dropdown prevent_affichage2" >
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
-                                        <span class="text_racourcis"></span></span>
-                                        <span class="badge_invitation">9</span>
-                                    </a>
-                                    <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
-                                        <div class="m-4 mt-2" role="tabpanel">
-                                            <ul class="nav nav-tabs d-flex flex-row" id="myTab" style="font-size: 10px;">
-                                                <li class="nav-item ">
-                                                    <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#invitation_refuses" class="nav-link" data-bs-toggle="tab">Invitations réfusées</a>
-                                                </li>
-
-                                            </ul>
-
-                                            <div class="tab-content">
-                                                <div class="tab-pane fade show active" id="invitation_attente">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            <ul>
-                                                                liste invitations en attente
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="invitation_refuses">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            <ul>
-                                                                liste des invitations réfusées
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </div>
-                        @endcanany
-                        @can('isCFP')
-                        <div class="col-5 header-right">
-                            <div class="col-12 d-flex flex-row justify-content-end apprendCreer apprendreBox">
-                                <div class="btn_racourcis" id="text_apprendre">
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
-                                        <span class="text_racourcis">Apprendre</span></span>
-                                    </a>
-                                </div>
-                                <div class="btn_racourcis dropdown prevent_affichage " >
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    {{-- <a href="#" class="dropdown-toggle" role="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-bell-ring bx-tada-hover mb-2 mt-1'></i>
-                                        <span class="text_racourcis"></span></span>
-                                        <span class="badge_invitation">6</span>
-                                    </a>
-                                    <ul class="dropdown-menu agrandir2" aria-labelledby="notification">
-                                        listes des notifications
-                                    </ul> --}}
-                                </div>
-                                <div class="btn_racourcis dropdown prevent_affichage2" >
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
-                                        <span class="text_racourcis"></span></span>
-                                        <span class="badge_invitation"></span>
-                                    </a>
-                                    <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
-                                        <div class="m-4 mt-2" role="tabpanel">
-                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab" style="font-size: 10px;">
-                                                <li class="nav-item " >
-                                                    <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#invitation_refuses" class="nav-link" data-bs-toggle="tab">Invitations réfusées</a>
-                                                </li>
-
-                                            </ul>
-
-                                            <div class="tab-content">
-                                                <div class="tab-pane fade show active" id="invitation_attente">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            <ul>
-                                                                <p class="test_affiche1 mt-3 my-2" style="font-size: 12px"></p>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="invitation_refuses">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            <ul class="test_affiche2 mt-3 my-2" style="font-size: 12px">
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        @endcan
-
-                    </div>
-                    <div class="col-8">
+                <div class="col-3 header-right align-items-center">
+                    {{-- <div class="col-12"> --}}
                         <div class="row justify-content-end">
                             <div class="col-12 text-end icones_header">
                                 @can('isSuperAdmin')
@@ -1137,8 +931,7 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
+                    {{-- </div> --}}
                 </div>
                 @can('isCFP')
                     <div>
@@ -1193,228 +986,6 @@
                 @yield('planningEtp')
 
             </div>
-            {{-- content --}}
-            {{-- footer --}}
-            {{-- <div class="footer mt-5">
-                <div class="container-fluid footer_all">
-                    <div class="row w-100">
-                        <div class="col-12">
-                            <div class="container">
-                                <div class="d-flex w-auto footer_one justify-content-center">
-                                    <div class="footer_list me-2">
-                                        <a href="#" class="mx-auto">
-                                            <p>&copy;&nbsp;Copyright 2022 : Formation.mg</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="#">
-                                            <p>Informations légales</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="{{url('contacts')}}" style="color: #801D62;text-decoration:none">
-                                            <p>Contactez-nous</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="{{url('politique_confidentialite')}}" target="_blank">
-                                            <p>Politique de confidentialité</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="{{route('condition_generale_de_vente')}}"
-                                            style="color:#801D68 !important" target="_blank">
-                                            <p>Conditions d'utilisation</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="#">
-                                            <p>Tarifs</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="#">
-                                            <p>Crédits</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list_end ms-2 me-2 text-muted">
-                                        <p>1.01</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            <div class="apprendre mt-3">
-                <div class="row">
-                    <div class="col">
-                        <p class="m-0 titre_apprendre"> Apprendre</p>
-                    </div>
-                    <div class="col text-end close" id="closeApprendre">
-                        <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
-                        <i class="bx bx-x" role="button"></i>
-                    </div>
-                    <hr class="mt-2">
-                    @can('isAdmin')
-                    <div class="tutorielApprendreAdmin">Admin</div>
-                    @endcan
-                    @can('isCFP')
-                    <div class="tutorielApprendreCfp">
-                        <h5>Créer un nouveau projet de formation</h5>
-                        <p class="m-0 p-1">
-                            <span>Pour créer une nouvelle de formation, il faut au préalable compléter les prérequis
-                                suivant :</span>
-                        </p>
-                        <div class="list-group list-group-flush" id="accordion">
-                            <li class="list-group-item align-items-start ">
-                                <a class="accordion-toggle d-flex justify-content-between listeApprendre"
-                                    id="accApprCat" data-bs-toggle="collapse" data-bs-parent="#accordion"
-                                    href="#apprCat">
-                                    <div class="ms-2 me-auto">
-                                        <div class="text-sm">1. Avoir un catalogue de formation</div>
-                                    </div>
-                                    <span class="fas fa-angle-down"></span>
-                                </a>
-                                <div id="apprCat" class="collapse p-1">
-                                    <hr>
-                                    <a data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button"><span>Cliquer ici pour ajouter un module à votre catalogue
-                                            de formation</span></a>
-                                </div>
-                            </li>
-                            {{-- <li class="list-group-item  align-items-start">
-                                <a class="accordion-toggle d-flex justify-content-between listeApprendre"
-                                    id="accApprForm" data-bs-toggle="collapse" data-bs-parent="#accordion"
-                                    href="#apprFormateur">
-                                    <div class="ms-2 me-auto">
-                                        <div class="text-sm">2. Ajouter des formateurs</div>
-                                    </div>
-                                    <span class="fas fa-angle-down"></span>
-                                </a>
-                                <div id="apprFormateur" class="collapse  p-1">
-                                    <hr>
-                                    <a href="{{route('nouveau_formateur')}}"><span>Cliquer ici pour ajouter un formateur</span></a>
-                                </div>
-                            </li> --}}
-
-                            <li class="list-group-item align-items-start listeApprendre">
-                                <a class="accordion-toggle d-flex justify-content-between listeApprendre"
-                                    id="accApprInter" data-bs-toggle="collapse" data-bs-parent="#accordion"
-                                    href="#apprInter">
-                                    <div class="ms-2 me-auto">
-                                        <div class=" text-sm">2. Collaborer avec les entreprises qui ont des projets en
-                                            commun avec vous </div>
-                                    </div>
-                                    <span class="fas fa-angle-down"></span>
-                                </a>
-                                <div id="apprInter" class="collapse">
-                                    <hr>
-                                    <a href="{{route('liste_entreprise')}}"><span>Cliquer ici pour collaborer avec une
-                                            entreprise</span></a>
-                                </div>
-                            </li>
-                        </div>
-                    </div>
-                    <div class="tutorielApprendre"></div>
-                    @endcan
-                    @can('isStagiaire')
-                    <div class="tutorielApprendreStagiaire">Stagiaire</div>
-                    @endcan
-
-                    @canany(['isReferent','isReferentSimple'])
-                    <div class="tutorielApprendreReferent">Referent</div>
-                    @endcan
-
-                    @can('isManager')
-                    <div class="tutorielApprendreManager">Manager</div>
-                    @endcan
-
-                    @canany(['isFormateur','isFormateurInterne'])
-                    <div class="tutorielApprendreFormateur">Formateur</div>
-                    @endcanany
-                    <!-- <h6 class="title_apprendre"><u>Annuaire</u></h6>
-                        <h6 class="title_apprendre"><u>Agenda</u></h6> -->
-
-                </div>
-            </div>
-            {{-- <div class="apprendre mt-3">
-                <div class="row">
-                    <div class="col">
-                        <p class="m-0 titre_apprendre">Apprendre</p>
-                    </div>
-                    <div class="col text-end close" id="close">
-                        <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
-                        <i class="bx bx-x" role="button"></i>
-                    </div>
-                    <hr class="mt-2">
-                    @can('isAdmin')
-                    <div class="tutorielApprendreAdmin">Admin</div>
-                    @endcan
-                    @can('isCFP')
-                    <div class="tutorielApprendreCfp">
-                        <h5>Créer un nouveau projet de formation</h5>
-                        <p class="m-0 p-1">
-                            <span>Pour créer un nouveau de formation, il faut au préalable compléter les prérequis
-                                suivant :</span>
-                        </p>
-                        <ol class="list-group list-group-numbered list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
-                                <div class="ms-2 me-auto">
-                                    <div class="text-sm">Avoir un catalogue de formation</div>
-                                </div>
-                                <button class="btn btn-light btn-sm apprCat" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#apprCat" aria-expanded="false" aria-controls="apprCat"><i
-                                        class="fas fa-angle-down"></i></button>
-                            </li>
-                            <div id="apprCat" class="collapse p-2"><a href="/nouveau_module"><span>Cliquer ici pour
-                                        ajouter un module à votre catalogue de formation</span></a></div>
-                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
-                                <div class="ms-2 me-auto">
-                                    <div class="text-sm">Ajouter des formateurs</div>
-                                </div>
-                                <button class="btn btn-light btn-sm apprCat" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#apprFormateur" aria-expanded="false" aria-controls=""><i
-                                        class="fas fa-angle-down"></i></button>
-                            </li>
-                            <div id="apprFormateur" class="collapse p-2"><a href="nouveau_formateur"><span>Cliquer ici
-                                        pour ajouter un formateur</span></a></div>
-
-                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
-                                <div class="ms-2 me-auto">
-                                    <div class=" text-sm">Collaborer avec les entreprises qui ont des projets en commun
-                                        avec vous </div>
-                                </div>
-                                <button class="btn btn-light btn-sm apprCat " type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#apprInter" aria-expanded="false" aria-controls="apprInter"><i
-                                        class="fas fa-angle-down"></i></button>
-                            </li>
-                            <div id="apprInter" class="collapse p-2"><a href="liste_entreprise"><span>Cliquer ici pour
-                                        collaborer avec une entreprise</span></a></div>
-                    </div>
-                    @endcan
-                    @can('isStagiaire')
-                    <div class="tutorielApprendreStagiaire">Stagiaire</div>
-                    @endcan
-
-                    @can('isReferent')
-                    <div class="tutorielApprendreReferent">Referent</div>
-                    @endcan
-
-                    @can('isManager')
-                    <div class="tutorielApprendreManager">Manager</div>
-                    @endcan
-
-                    @can('isFormateur')
-                    <div class="tutorielApprendreFormateur">Formateur</div>
-                    @endcan
-                    <!-- <h6 class="title_apprendre"><u>Annuaire</u></h6>
-                        <h6 class="title_apprendre"><u>Agenda</u></h6> -->
-
-                </div>
-            </div> --}}
-
-        </div>
-        {{-- footer --}}
     </div>
 
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
@@ -1448,9 +1019,6 @@
         $("#acf-domaine").change(function() {
             var id = $(this).val();
             $(".categ").empty();
-            // $(".categ").append(
-            //     '<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>'
-            // );
 
             $.ajax({
                 url: "/get_formation",
@@ -1499,6 +1067,12 @@
         $('.module_redirect').on('click', function (e) {
             localStorage.setItem('ActiveTabMod', '#publies');
         });
+        $(document).ready(function() {
+            console.log($(".badge_invitation").text());
+            if ($(".badge_invitation").val() != null) {
+
+            }
+        });
 
         $(document).ready(function() {
 
@@ -1521,19 +1095,12 @@
                     $('.badge_invitation').text("");
                     $('.badge_invitation').append(response['invitation'].length);
 
-                    // var userData = JSON.parse(response);
-                    // alert(JSON.stringify(response.length));
                     if(response['invitation'].length == 0){
-                        // alert("eto");
-                        var html = "Aucun invitations en attente";
-                        $('.test_affiche1').append(html);
-                        $('.test_affiche1').css('textAlign','center');
+                        $('.badge_invitation').hide();
 
                     }else{
                         // alert("aiza");
                         for (let i = 0; i < response['invitation'].length; i++){
-                            $('.test_affiche1').append('<li class="invitation_'+response['invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['invitation'][i]['nom_resp']+'</span><span class="me-2">'+response['invitation'][i]['prenom_resp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['invitation'][i]['nom_secteur']+'</span> <span id="'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn btn-sm accepte" title="accepter l\'invitation" role="button"><i class="bx bx-check-double bx_ajouter"></i></span> <span id="ref_'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn refuse" title="refuser l\'invitation" role="button" data-id="'+response['invitation'][i]['demmandeur_etp_id']+'"><i class="bx bx-x bx_supprimer"></i></span></li>');
-
                             $(".accepte").on("click", function(e) {
                                 let id = $(e.target).closest(".accepte").attr("id");
                                 // alert(id);
@@ -1544,8 +1111,7 @@
                                         Id: id,
                                     },
                                     success: function(response) {
-
-                                        console.log(".invitation_" + id);
+                                        $('.badge_invitation').hide();
                                         $(".invitation_" + id).remove();
                                         $('.badge_invitation').text("");
                                         $('.badge_invitation').append(i);
@@ -1567,8 +1133,6 @@
                                         Id: id,
                                     },
                                     success: function(response) {
-                                        // alert("success");
-                                        // console.log(".invitation_" + id);
                                         $(".invitation_" + id).remove();
                                         $('.badge_invitation').text("");
                                         $('.badge_invitation').append(i);
@@ -1581,8 +1145,6 @@
                             });
                         }
                     }
-
-
                 }
                 , error: function(error) {
                     console.log(error);
@@ -1590,36 +1152,36 @@
             });
         });
 
-        $(document).ready(function() {
-            $.ajax({
-                url: '{{ route("aff_refuse_etp_cfp") }}'
-                , type: 'get'
-                , success: function(response) {
-                    if(response['refuse_invitation'].length == 0){
-                        var html = 'Aucun invitations refusée';
-                        $('.test_affiche2').append(html);
-                        $('.test_affiche2').css('textAlign','center');
+        // $(document).ready(function() {
+        //     $.ajax({
+        //         url: '{{ route("aff_refuse_etp_cfp") }}'
+        //         , type: 'get'
+        //         , success: function(response) {
+        //             if(response['refuse_invitation'].length == 0){
+        //                 var html = 'Aucun invitations refusée';
+        //                 $('.test_affiche2').append(html);
+        //                 $('.test_affiche2').css('textAlign','center');
 
-                    }else{
-                        // alert("aiza");
-                        for (let i = 0; i < response['refuse_invitation'].length; i++){
-                            $('.test_affiche2').append('<li class="invitation_'+response['refuse_invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['refuse_invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['refuse_invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['refuse_invitation'][i]['nom_secteur']+'</span></li>');
-                        }
-                    }
-                }
-                , error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
+        //             }else{
+        //                 // alert("aiza");
+        //                 for (let i = 0; i < response['refuse_invitation'].length; i++){
+        //                     $('.test_affiche2').append('<li class="invitation_'+response['refuse_invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['refuse_invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['refuse_invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['refuse_invitation'][i]['nom_secteur']+'</span></li>');
+        //                 }
+        //             }
+        //         }
+        //         , error: function(error) {
+        //             console.log(error);
+        //         }
+        //     });
+        // });
 
-        $('.prevent_affichage').on('click', function(e){
-            e.stopPropagation();
-        });
+        // $('.prevent_affichage').on('click', function(e){
+        //     e.stopPropagation();
+        // });
 
-        $('.prevent_affichage2').on('click', function(e){
-            e.stopPropagation();
-        });
+        // $('.prevent_affichage2').on('click', function(e){
+        //     e.stopPropagation();
+        // });
 
 
     $(".nav .nav_linke").on("click", function(e){

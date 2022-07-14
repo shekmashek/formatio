@@ -806,19 +806,19 @@ class HomeController extends Controller
             }
             // $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
             // $data = DB::select($sql);
-            for($i=0;$i<count($data);$i+=1){
-                $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=?",
-                [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id]);
-                if(count($dataMontantSession)>0){
-                        $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
-                        $data[$i]->qte = $dataMontantSession[0]->qte;
-                        $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
-                } else {
-                    $data[$i]->hors_taxe_net = null;
-                    $data[$i]->qte =null;
-                    $data[$i]->num_facture = null;
-                }
-            }
+            // for($i=0;$i<count($data);$i+=1){
+            //     $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=?",
+            //     [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id]);
+            //     if(count($dataMontantSession)>0){
+            //             $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
+            //             $data[$i]->qte = $dataMontantSession[0]->qte;
+            //             $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
+            //     } else {
+            //         $data[$i]->hors_taxe_net = null;
+            //         $data[$i]->qte =null;
+            //         $data[$i]->num_facture = null;
+            //     }
+            // }
 
             $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$entreprise_id]);
             if(count($lieu_formations)>0){
@@ -1001,9 +1001,17 @@ class HomeController extends Controller
             $nomModules = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
             $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module group by item_status_groupe');
             $nomTypes = DB::select('select type_formation from v_projet_session group by type_formation');
+            //conditions d'aaffichage et apprendre
+            $nb_modules = DB::select('select count(*) from v_module where cfp_id = ?',[$cfp_id]);
+            $nb_formateur = DB::select('select count(*) from v_demmande_cfp_formateur where cfp_id = ?',[$cfp_id]);
+            $nb_collaboration = DB::select('select count(*) from v_demmande_etp_cfp where cfp_id = ?',[$cfp_id]);
+            $abonnement_cfp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_cfp_id,v_tac.nb_projet,v_tac.illimite from v_type_abonnement_cfp v_tac JOIN cfps as cfp on v_tac.cfp_id = cfp.id where cfp_id = ? and statut_compte_id = ? and status = ?',[$cfp_id,2,"Activé"]);
+            // dd($abonnement_cfp);
+            // $nb_formateur
+            // $nb_modules
 
             // dd($data);
-            return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'nomTypes', 'nomModalites', 'nomModules', 'nomStatuts'));
+            return view('projet_session.index2', compact('nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'nomTypes', 'nomModalites', 'nomModules', 'nomStatuts'));
             // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isFormateur')) {

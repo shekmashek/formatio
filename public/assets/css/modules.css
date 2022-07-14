@@ -74,7 +74,9 @@
 .detail__formation__result__avis span{
     font-size: 0.8rem;
 }
-
+.acf-description{
+    font-size: 0.8rem;
+}
 /* liste modules */
 
 .navigation_module .nav-link {
@@ -179,7 +181,7 @@
 .competence_box h5{
     background-color: #637381;
     color: white;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 .suppression_competence{
@@ -354,7 +356,7 @@
     bottom: -10.05px;
     border-left: 53px solid transparent;
     border-right: 53px solid transparent;
-    border-top: 10px solid #01b5af;
+    border-top: 10px solid #02c3ad;
 }
 .ribbon1 span {
     position: relative;
@@ -406,7 +408,7 @@
     width: 0;
     height: 0;
     left: -8.5px;
-    top: 30.05px;
+    top: 15px;
     border-left: 53px solid transparent;
     border-right: 53px solid transparent;
     border-top: 10px solid #01b5af;
@@ -444,24 +446,6 @@ left: -8px;
 top: 0;
 border-radius: 8px 8px 0 0;
 background: linear-gradient(60deg, #02AAB0,#00CDAC);
-}
-
-#popup{
-    height : auto;
-    background-color: rgba(255, 166, 0, 0.125);
-    position: relative;
-    width: 70%;
-    margin: auto;
-    border:2px solid orange;
-    border-radius: 5px;
-    text-align: center;
-    padding: 15px;
-    color: orange;
-    cursor: default;
-}
-
-#popup a:hover{
-    text-decoration: underline;
 }
 
 .aide_pogramme {
@@ -719,8 +703,10 @@ background: linear-gradient(60deg, #02AAB0,#00CDAC);
     transition: all 0.5s ease;
     border-radius: 5px;
 }
-.liste__formation__item:hover .liste__formation {
-    transform: scale(1.5s) !important;
+.liste__formation:hover  {
+    background: linear-gradient(60deg, rgba(255, 68, 0, 0.500),#4222c382);
+    color: white;
+    /* transform: scale(1.5s) ; */
 }
 .liste__formation .liste__formation__item .acf-nom-module{
     color: #7635dc;

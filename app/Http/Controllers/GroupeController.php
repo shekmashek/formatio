@@ -67,6 +67,8 @@ class GroupeController extends Controller
 
     public function createInter(Request $request)
     {
+        $fonct = new FonctionGenerique();
+        $devise = $fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $last_url = url()->previous();
         try{
             $fonct = new FonctionGenerique();
@@ -76,12 +78,11 @@ class GroupeController extends Controller
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             $type_formation = request()->type_formation;
             $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
-            $modules = $fonct->findWhere("moduleformation", ["cfp_id", "status", "etat_id"], [$cfp_id, 2, 1]);
-
+            $modules = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.cfp_id = ?',[$cfp_id]);
             if(count($formations)==0 or count($modules)==0){
                 throw new Exception("Vous n'avez pas encore des modules.");
             }
-            return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
+            return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules','devise'));
         }catch(Exception $e){
             return redirect('liste_module');
         }

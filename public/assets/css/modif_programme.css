@@ -304,6 +304,8 @@ outline: none;
     justify-content: center !important;
     text-transform: uppercase !important;
 }
-/* .accordionWrapper{
-    position: relative ;
-} */
+
+.detail__formation__programme__avis__donnes hr:last-of-type{
+    display: none;
+}
+

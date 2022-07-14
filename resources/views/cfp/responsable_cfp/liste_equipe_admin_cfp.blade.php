@@ -121,6 +121,24 @@ th{
 
 
 <div class="container-fluid pb-1">
+    <div class="container mt-3 p-1 mb-1">
+        <div id="popup">
+            <div class="row">
+                <div class="col text-center">
+                    <i class='bx bxs-up-arrow-circle icon_upgrade me-3'></i>
+                    @if($abonnement_cfp != null)
+                        @if(count($cfp) <= $abonnement_cfp[0]->nb_utilisateur)
+                            <span>Votre abonnement actuel vous permet d'inviter @if($abonnement_cfp[0]->illimite == 1) un nombre illimité d'@else {{$abonnement_cfp[0]->nb_utilisateur}} @endif utilisateurs. Si vous voullez plus d'utilisateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a></span>
+                        @elseif($abonnement_cfp[0]->illimite == 1)
+                            <span>Votre abonnement actuel vous permet d'inviter un nombre illimités d'utilisateurs.</span>
+                        @endif
+                    @else
+                        <span>Actuellement vous n'avez aucun abonnement. Si vous voullez plus de formateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a></span>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
     @if($resp_connecte->activiter == 1)
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
