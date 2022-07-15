@@ -438,7 +438,7 @@
 
                                                         @if ($actif->jour_restant >0)
                                                         <div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">
-                                                            nom envoyé
+                                                            non envoyé
                                                         </div>
                                                         @else
                                                         <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">

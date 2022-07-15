@@ -150,7 +150,7 @@ class SessionController extends Controller
                 $projet = $fonct->findWhere("v_projet_session_inter", ["cfp_id","groupe_id"], [$cfp_id,$id]);
                 $entreprise_id = null;
             }
-
+           
             $frais_annex = DB::select("select * from v_montant_frais_annexe where cfp_id=?",[$cfp_id]);
             // if(count($frais_annex)>0){
             //     if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id  && $frais_annex[0]->projet_id == $projet[0]->projet_id){

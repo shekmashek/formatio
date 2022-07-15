@@ -266,12 +266,13 @@
                                     <p>Montant Brut HT</p>
                                 </div>
                                 <div class="col-2 text-end pe-2">
-                                    <p id="totale_facture_ht" align="right">0</p>
+                                    <p id="totale_facture_ht" align="right"> 0</p>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-8 d-flex flex-row justify-content-end">
-                                    <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" autocomplete="off" min="0" value="0" class="form-control input_tax" name="remise" id="remise">
+                                    <p class="m-0 pt-3 text-end me-3">Remise</p> 
+                                    <input type="number" autocomplete="off" min="0" value="0" class="form-control input_tax" name="remise" id="remise">
                                     <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label="Default select example">
                                         @foreach ($type_remise as $re)
                                         <option value="{{$re->id}}" selected>{{$re->description}}</option>

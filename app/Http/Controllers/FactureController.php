@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use App\cfp;
 use Illuminate\Support\Facades\Auth;
 use App\Collaboration;
+use App\GroupeFacture;
 use App\Models\getImageModel;
 use Monolog\Handler\IFTTTHandler;
 use Illuminate\Http\Response;
@@ -918,6 +919,7 @@ class FactureController extends Controller
         $para = ["groupe_id", "entreprise_id"];
         $path = "";
         $status = null;
+        $prix_sess =0;
 
         if ($request->type_facture > 0 && $request->id_mode_financement > 0 && $request->entreprise_id > 0) {
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$request->entreprise_id]);
@@ -953,7 +955,9 @@ class FactureController extends Controller
                                 $tabDataDesc['other_message'] = $request['other_message'];
                                 $tabDataDesc['remise'] = $request->remise;
                                 $tabDataDesc['remise_id'] = $request->type_remise_id;
-
+                                $prix_sess =$request["facture"][$i] * $request["qte"][$i];
+                                
+                               
                                 $this->fact->insert(
                                     $cfp_id,
                                     $request->projet_id,
@@ -967,7 +971,24 @@ class FactureController extends Controller
                                     $request["reference_bc"],
                                     $tabDataDesc["remise"],
                                     $request["type_facture"]
-                                );
+                                ); 
+                                if ($request->remise) {
+                                    if ( $request->type_remise_id == 1) {
+                                        $montant_remise = ($request->remise)/count($request["session_id"]);
+                                        // $pourcent =  $request->remise / $prix_sess;
+                                        // $montant_remise = $prix_sess * $pourcent;
+                                    }else if( $request->type_remise_id == 2){
+                                        $montant_remise =  ($prix_sess * $request->remise) / 100;
+                                    }
+                                   
+                                    $montant_session =  $prix_sess - $montant_remise;
+                                    $gp_facture = new GroupeFacture();
+                                    $gp_facture->groupe_id = $request["session_id"][$i];
+                                    $gp_facture->qte= $request["qte"][$i];
+                                    $gp_facture->montant= $montant_session;
+                                    $gp_facture->save();
+                                }
+                               
                             }
 
                             if ($request["frais_annexe_id"]) {

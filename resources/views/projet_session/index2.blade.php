@@ -1062,7 +1062,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                     <tbody>
                                         @foreach ($projet as $prj)
                                             <tr>
-                                                <td colspan="9" scope="row" style="border-bottom: none; background: #cccccc;">
+                                                <td colspan="2" scope="row" style="border-bottom: none; background: #cccccc;">
                                                     @php
                                                         if ($prj->totale_session == 1) {
                                                             echo $prj->nom_projet;
@@ -1072,6 +1072,20 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                             echo $prj->nom_projet;
                                                         }
                                                     @endphp
+                                                </td>
+                                                <td colspan="7" scope="row" style="border-bottom: none; background: #cccccc;">
+                                                    <i class="bi bi-currency-dollar"></i>
+                                                    <span class="ml-5" style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize;">
+                                                        Frais annexes
+                                                    </span>&nbsp;
+                                                    @if (count($groupe->fraisAnnexeSession($prj->projet_id,$prj->cfp_id)) > 0)
+                                                        @foreach ($groupe->fraisAnnexeSession($prj->projet_id,$prj->cfp_id) as $frais_ann)
+                                                            {{$frais_ann->hors_taxe }} 
+                                                        @endforeach
+                                                    @else
+                                                        -
+                                                    @endif
+                                                    {{$devise}}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1738,47 +1752,22 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                                 </div>
                                                                                 <div class="row mb-2">
                                                                                     <div class="col-md-4">
-                                                                                        <i class="bi bi-currency-dollar"></i>
-                                                                                            <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
-                                                                                                Frais annexes
-                                                                                            </span>
-                                                                                    </div>
-                                                                                    <div class="col-md-8">
-                                                                                            @php
-                                                                                                $dataFrais = $groupe->dataFraisAnnexe($pj->groupe_id, $pj->entreprise_id);
-
-                                                                                                $somme = 0;
-                                                                                                if (count($dataFrais) > 0) {
-                                                                                                    foreach ($dataFrais as $dataFrai) {
-                                                                                                        $somme += $dataFrai->montantTotal;
-                                                                                                    }
-                                                                                                }
-                                                                                            @endphp
-
-                                                                                        <span style="color: #275b75; font-size: 15px">{{ number_format($somme, 2, ',', ' ') }} <span style="color: #ff0000">{{ $devise }}</span></span>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row mb-2">
-                                                                                    <div class="col-md-4">
                                                                                         <i class="bi bi-cash-coin"></i>
                                                                                             <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
                                                                                                 Coûts
                                                                                             </span>
                                                                                     </div>
                                                                                     <div class="col-md-8">
-                                                                                            @php
-                                                                                                $dataFrais = $groupe->dataFraisAnnexe($pj->groupe_id, $pj->entreprise_id);
-
-                                                                                                $somme = 0;
-                                                                                                if (count($dataFrais) > 0) {
-                                                                                                    foreach ($dataFrais as $dataFrai) {
-                                                                                                        $somme += $dataFrai->montantTotal;
-                                                                                                    }
-                                                                                                }
-                                                                                            @endphp
-
-                                                                                        <span style="color: #275b75; font-size: 15px">{{ number_format($pj->prix, 2) }} <span style="color: #ff0000">{{ $devise }}</span></span>
+                                                                                        <span style="color: #275b75; font-size: 15px">
+                                                                                            @if (count($groupe->dataFraisSession($pj->groupe_id)) > 0)
+                                                                                                @foreach ($groupe->dataFraisSession($pj->groupe_id) as $cout)
+                                                                                                    {{ number_format($cout->montant,0,'.',' ')}}
+                                                                                                @endforeach
+                                                                                            @else
+                                                                                                0.00
+                                                                                            @endif
+                                                                                            <span>{{ $devise }}</span>
+                                                                                        </span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -2060,7 +2049,9 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                 <th> Session </th>
                                 <th>Type de formation</th>
                                 <th> Module </th>
-                                <th><i class="bx bx-dollar"></i> {{$ref}}</th>
+                                @canany(['isReferent', 'isReferentSimple'])
+                                <th><i class="bx bx-dollar"></i> {{ $ref }}</th>
+                                @endcanany
                                 <th> <i class='bx bx-group'></i> </th>
                                 <th>Date session</th>
                                 <th>Ville</th>
@@ -2101,24 +2092,26 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                             @endphp --}}
                                             {{ $pj->nom_module }}
                                         </td>
+                                        @canany(['isReferent', 'isReferentSimple'])
                                         <td class="text-end">
-                                           @if($pj->hors_taxe_net!=null)
-                                           {{number_format($pj->hors_taxe_net,0,","," ")}}
-                                           @else
-                                                @php
-                                                    echo "<span>-</span>";
-                                                @endphp
-                                           @endif
+                                            @if (count($groupe->dataFraisSession($pj->groupe_id)) > 0)
+                                                @foreach ($groupe->dataFraisSession($pj->groupe_id) as $cout)
+                                                    {{ number_format($cout->montant,0,'.',' ')}}
+                                                @endforeach
+                                            @else
+                                                <span>-</span> 
+                                             @endif
                                         </td>
-                                       <td>
-                                        @if($pj->qte!=null)
-                                            {{$pj->qte}}
-                                        @else
-                                            @php
-                                                echo "<span>-</span>";
-                                            @endphp
-                                        @endif
-                                         </td>
+                                        @endcanany
+                                        <td class="text-center">
+                                            @if (count($groupe->dataFraisSession($pj->groupe_id)) > 0)
+                                                @foreach ($groupe->dataFraisSession($pj->groupe_id) as $nbStg)
+                                                    {{$nbStg->qte}}
+                                                @endforeach
+                                            @else
+                                                <span>-</span>
+                                            @endif
+                                        </td>
                                         <td class="text-center">
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));

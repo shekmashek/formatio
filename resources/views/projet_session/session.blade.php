@@ -500,14 +500,13 @@
                         @can('isCFP')
                             <p class="text-dark mt-3"> CA :<strong>
                                     <span>
-                                        @php
-                                            $montant = $groupe->montantSession_of($projet[0]->groupe_id);
-                                            if ($montant == null) {
-                                                echo '<span>-</span>';
-                                            } else {
-                                                number_format($montant, 0, ',', ' ');
-                                            }
-                                        @endphp&nbsp;
+                                        @if (count($groupe->dataFraisSession($projet[0]->groupe_id)) > 0)
+                                            @foreach ($groupe->dataFraisSession($projet[0]->groupe_id) as $cout)
+                                                {{ number_format($cout->montant,0,'.',' ')}}
+                                            @endforeach
+                                        @else
+                                            -
+                                        @endif
                                     </span>
                                     {{ $ref }}</strong> </p>&nbsp;&nbsp;
                             <p class="text-dark mt-3"> FA : <strong>
@@ -524,15 +523,14 @@
                                     {{ $ref }}</strong></p>
                         @endcan
                         @canany(['isReferent', 'isReferentSimple', 'isManager', 'isChefDeService'])
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
                             <p class="text-dark mt-3"> CP : <strong>
-                                    @if (count($dataMontantSession) > 0)
-                                        {{ number_format($dataMontantSession[0]->hors_taxe, 0, ',', ' ') }}
-                                    @else
-                                        @php
-                                            echo '<span>-</span>';
-                                        @endphp
-                                    @endif{{ $ref }}
+                                @if (count($groupe->dataFraisSession($projet[0]->groupe_id)) > 0)
+                                    @foreach ($groupe->dataFraisSession($projet[0]->groupe_id) as $cout)
+                                        {{ number_format($cout->montant,0,'.',' ')}}
+                                    @endforeach
+                                @else
+                                    -
+                                @endif{{ $ref }}
                                 </strong> </p>&nbsp;&nbsp;
                             <p class="text-dark mt-3"> FA : <strong id="frais_annex_entreprise">
                                     @php

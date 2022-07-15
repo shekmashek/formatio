@@ -39,6 +39,10 @@ class Groupe extends Model
         return $this->belongsTo('App\projet', 'projet_id');
     }
 
+    public function groupeFacture(){
+        return $this->hasMany('App\GroupeFacture','groupe_id');
+    }
+
     public function generateNomSession(){
         $groupe = DB::select("select max(id)+1 as nom_groupe from groupes");
         if($groupe[0]->nom_groupe==NULL){
@@ -231,6 +235,24 @@ class Groupe extends Model
             // $all_frais_annexe = DB::select('select SUM(montant) as "montantTotal", entreprise_id, groupe_id, description from frais_annexe_formation where groupe_id = ? and entreprise_id = ? group by entreprise_id, groupe_id, description',[$groupe_id,$etp_id]);
         return $all_frais_annexe;
     }
+
+    public function dataFraisSession($groupe_id){
+        $frais_session = DB::table('groupe_factures')
+                        ->select('montant','qte')
+                        ->where('groupe_id',$groupe_id)
+                        ->get();
+        return  $frais_session;
+    }
+
+    public function fraisAnnexeSession($projet_id,$cfp_id){
+        $frais_annexe_sess = DB::table('v_montant_frais_annexe')
+        ->select('hors_taxe')
+        ->where('projet_id',$projet_id)
+        ->where('cfp_id',$cfp_id)
+        ->get();
+        return $frais_annexe_sess;
+    }
+
 
     public function dataApprenant($cfp_id, $groupe_id){
         $type_formation_id = request()->type_formation;

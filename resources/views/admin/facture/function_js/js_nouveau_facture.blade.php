@@ -281,7 +281,7 @@
         ensemble = Math.ceil(ensemble);
         totale_facture_ht.innerHTML = ensemble;
         totale_facture_ht.innerHTML = totale_facture_ht.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-
+        $('#valeur_brute').append(totale_facture_ht.innerHTML);
         if (type_remise.value == 1) { // MGA
             calc_re = remise.value;
             calc_re = Math.ceil(calc_re);
