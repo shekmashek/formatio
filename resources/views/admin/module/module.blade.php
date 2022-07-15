@@ -834,9 +834,9 @@
                                         </div>
                                         <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                                         </div>
-                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                        @if($info->min_pers != 0 && $info->max_pers != 0)
                                             <div>
-                                                <span class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</span>
+                                                <span class="">&nbsp;{{$info->min_pers}}&nbsp;à&nbsp;{{$info->max_pers}}&nbsp;pax</span>
                                             </div>
                                         @endif
                                     </div>
