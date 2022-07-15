@@ -110,7 +110,7 @@
                         <tr>
                             <th class="headEtp">Nom de l'entreprise</th>
                             <th class="headEtp">Réferent principal</th>
-                            <th class="headEtp">Action</th>
+                            <th class="headEtp hideAction">Action</th>
                         </tr>
                     </thead>
                     <tbody id="data_collaboration" style="font-size: 13px;">
@@ -399,9 +399,7 @@
                 var title = $(this).text();
                 $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
                 // $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
-                $( "th#hideAction > input" ).prop( "disabled", true ).attr( "placeholder", "" );
-                $( "th#hideDate > input" ).prop( "disabled", true ).attr( "placeholder", "" );
-                $( "th#hideVille > input" ).prop( "disabled", true ).attr( "placeholder", "" );
+                $( "th.hideAction > input" ).prop( "disabled", true ).attr( "placeholder", "" );
             } );
 
             function searchByColumn(table){
@@ -448,50 +446,6 @@
                 }
             });
             
-            $('input:checkbox').on('change', function () {
-                var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
-                    return '^' + this.value + '$';
-                }).get().join('|');
-                
-                table.column(0).search(Projet, true, false, false).draw(false);
-
-                var Session = $('input:checkbox[name="session"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(1).search(Session, true, false, false).draw(false);
-
-                var Entreprise = $('input:checkbox[name="entreprise"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(3).search(Entreprise, true, false, false).draw(false);
-
-                var Modalite = $('input:checkbox[name="modalite"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(4).search(Modalite, true, false, false).draw(false);
-                
-                var TypeFormation = $('input:checkbox[name="typeFormation"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(8).search(TypeFormation, true, false, false).draw(false);
-                
-                var Module = $('input:checkbox[name="module"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(2).search(Module, true, false, false).draw(false);
-                
-                var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(7).search(Statut, true, false, false).draw(false);
-            
-            });
 
             searchByColumn(table);
         });

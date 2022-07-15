@@ -290,105 +290,7 @@ class FonctionGenerique extends Model
 
     //start refactor ------------------------------------------------
 
-    // filtre employes
-    public function filtreEmploye($search_param_name, $input){
-
-        $user_id = Auth::user()->id;
-
-        $etp_id = Responsable::where('user_id', [$user_id])->value('entreprise_id');
-
-        $emps = DB::table('users')
-                ->join('v_role_user_etp_stg', 'v_role_user_etp_stg.user_id', 'users.id')
-                ->join('stagiaires', 'stagiaires.user_id', 'v_role_user_etp_stg.user_id')
-                ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
-                ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
-                    'role_id', 'mail_stagiaire', 'photos',
-                    'stagiaires.user_id', 'fonction_stagiaire',
-                    'users.name', 'users.telephone', 'users.email')
-                ->where('stagiaires.entreprise_id', '=', $etp_id)
-                ->where($search_param_name, 'like', '%'. $input .'%')
-                ->get();
-
-        return $emps;
-    }
-
-    //filtre employes new
-    public function filtreEmployeNew($user_id){
-
-        $emps = DB::table('stagiaires')
-                ->select('*')
-                ->where('user_id', '=', $user_id)
-                // ->where('entreprise_id', '=', $etp_id)
-                ->get();
-
-        return $emps;
-    }
-
-    public function afficheInfoNewOne($id){
-        // $emps = DB::table('users')
-        //         ->join('v_role_user_etp_stg', 'v_role_user_etp_stg.user_id', 'users.id')
-        //         ->join('stagiaires', 'stagiaires.user_id', 'v_role_user_etp_stg.user_id')
-        //         ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
-        //         ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
-        //             'role_id', 'mail_stagiaire', 'photos',
-        //             'stagiaires.user_id', 'fonction_stagiaire',
-        //             'users.name', 'users.telephone', 'users.email', 'stagiaires.user_id')
-        //         ->where('stagiaires.user_id', '=', $id)
-        //         ->get();
-        $emps = DB::table('stagiaires')
-                ->select('*')
-                ->where('user_id', '=', $id)
-                ->get();
-
-        return $emps;
-    }
-
-    //filtre Réferent
-    public function filtreReferent($search_param_name, $input){
-
-        $user_id = Auth::user()->id;
-
-        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-
-        $referents = DB::table('users')
-                ->join('v_role_user_etp_referent', 'v_role_user_etp_referent.user_id', 'users.id')
-                ->join('responsables', 'responsables.user_id', 'users.id')
-                ->join('entreprises', 'entreprises.id', 'responsables.entreprise_id')
-                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name',
-                'matricule',
-                'nom_resp', 'prenom_resp',
-                    'role_id', 'email_resp', 'photos',
-                    'responsables.user_id', 'fonction_resp')
-                ->where('responsables.entreprise_id', '=', $etp_id)
-                ->where($search_param_name, 'like', '%'. $input .'%')
-                ->get();
-
-        // dd($referents);
-        return $referents;
-    }
-
-    //filtre Chef
-    public function filtreChef($search_param_name, $input){
-
-        $user_id = Auth::user()->id;
-
-        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-
-        $chefs = DB::table('users')
-                ->join('v_role_user_etp_manager', 'v_role_user_etp_manager.user_id', 'users.id')
-                ->join('chef_departements', 'chef_departements.user_id', 'users.id')
-                ->join('entreprises', 'entreprises.id', 'chef_departements.entreprise_id')
-                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name',
-                    'chef_departements.id', 'nom_chef', 'prenom_chef',
-                    'role_id', 'mail_chef', 'photos',
-                    'chef_departements.user_id', 'fonction_chef')
-                ->where('chef_departements.entreprise_id', '=', $etp_id)
-                ->where($search_param_name, 'like', '%'. $input .'%')
-                ->get();
-
-        // dd($chefs);
-        return $chefs;
-    }
+    
     //end refactor -------------------------------------
 
     public function getNotCollaborer($nomTab, $list)
@@ -619,4 +521,134 @@ class FonctionGenerique extends Model
         return $format;
     }
 
+    // fonction Sarobidy
+    public function projetSession($cfp_id, $from, $to){
+        $projet = DB::table('v_projet_session')
+            ->leftJoin('v_groupe_projet_module', 'v_groupe_projet_module.projet_id', 'v_projet_session.projet_id')
+            ->select('v_projet_session.nom_projet', 'v_projet_session.projet_id', 'v_projet_session.type_formation', 'v_projet_session.totale_session',
+            'v_groupe_projet_module.cfp_id', 'v_groupe_projet_module.date_projet', 'v_groupe_projet_module.groupe_id',
+                'v_groupe_projet_module.nom_groupe', 'v_groupe_projet_module.date_debut', 'v_groupe_projet_module.date_fin', 'v_groupe_projet_module.modalite',
+                'v_groupe_projet_module.item_status_groupe', 'v_groupe_projet_module.nom_module', 'v_groupe_projet_module.modalite_formation',
+                'v_groupe_projet_module.entreprise_id', 'v_groupe_projet_module.prix', 'v_groupe_projet_module.min_participant', 'v_groupe_projet_module.max_participant',
+                'v_groupe_projet_module.formation_id', 'v_groupe_projet_module.nom_formation', 'v_groupe_projet_module.module_id', 'v_groupe_projet_module.type_payement_id',
+                'v_groupe_projet_module.type', 'v_groupe_projet_module.type_formation_id', 'v_groupe_projet_module.class_status_groupe')
+                ->where('v_groupe_projet_module.cfp_id', '=', $cfp_id)
+                ->where('v_groupe_projet_module.date_debut', '>=', $from)
+                ->where('v_groupe_projet_module.date_debut', '<=', $to)
+                ->groupBy('v_projet_session.nom_projet')
+            ->get();
+        
+        return $projet;
+    }
+
+    public function dataSession($cfp_id, $from, $to){
+        $data = DB::table('v_projet_session')
+            ->leftJoin('v_groupe_projet_module', 'v_groupe_projet_module.projet_id', 'v_projet_session.projet_id')
+            ->leftJoin('entreprises', 'v_groupe_projet_module.entreprise_id' ,'entreprises.id' )
+            ->select('v_projet_session.nom_projet', 'v_projet_session.projet_id', 'v_projet_session.type_formation', 'v_projet_session.totale_session',
+            'v_groupe_projet_module.cfp_id', 'v_groupe_projet_module.date_projet', 'v_groupe_projet_module.groupe_id',
+            'v_groupe_projet_module.nom_groupe', 'v_groupe_projet_module.date_debut', 'v_groupe_projet_module.date_fin', 'v_groupe_projet_module.modalite',
+            'v_groupe_projet_module.item_status_groupe', 'v_groupe_projet_module.nom_module', 'v_groupe_projet_module.modalite_formation',
+            'v_groupe_projet_module.entreprise_id', 'v_groupe_projet_module.prix', 'v_groupe_projet_module.min_participant', 'v_groupe_projet_module.max_participant',
+            'v_groupe_projet_module.formation_id', 'v_groupe_projet_module.nom_formation', 'v_groupe_projet_module.module_id', 'v_groupe_projet_module.type_payement_id',
+            'v_groupe_projet_module.type', 'v_groupe_projet_module.type_formation_id', 'v_groupe_projet_module.class_status_groupe', 'entreprises.nom_etp')
+            ->where('v_groupe_projet_module.cfp_id', '=', $cfp_id)
+            ->where('v_groupe_projet_module.date_debut', '>=', $from)
+            ->where('v_groupe_projet_module.date_debut', '<=', $to)
+
+            ->get();
+    
+        return $data;
+    }
+
+    public function dataDrop($item, $table, $grpBy){
+        $req = DB::select('select '.$item.' from '.$table.' group by '.$grpBy.'');
+        return $req;
+    }
+
+    public function filtreEmploye($search_param_name, $input){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = Responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $emps = DB::table('users')
+                ->join('v_role_user_etp_stg', 'v_role_user_etp_stg.user_id', 'users.id')
+                ->join('stagiaires', 'stagiaires.user_id', 'v_role_user_etp_stg.user_id')
+                ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
+                ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
+                    'role_id', 'mail_stagiaire', 'photos',
+                    'stagiaires.user_id', 'fonction_stagiaire',
+                    'users.name', 'users.telephone', 'users.email')
+                ->where('stagiaires.entreprise_id', '=', $etp_id)
+                ->where($search_param_name, 'like', '%'. $input .'%')
+                ->get();
+
+        return $emps;
+    }
+
+    public function filtreEmployeNew($user_id){
+
+        $emps = DB::table('stagiaires')
+                ->select('*')
+                ->where('user_id', '=', $user_id)
+                // ->where('entreprise_id', '=', $etp_id)
+                ->get();
+
+        return $emps;
+    }
+
+    public function afficheInfoNewOne($id){
+        $emps = DB::table('stagiaires')
+                ->select('*')
+                ->where('user_id', '=', $id)
+                ->get();
+
+        return $emps;
+    }
+
+    public function filtreReferent($search_param_name, $input){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $referents = DB::table('users')
+                ->join('v_role_user_etp_referent', 'v_role_user_etp_referent.user_id', 'users.id')
+                ->join('responsables', 'responsables.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'responsables.entreprise_id')
+                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name',
+                'matricule',
+                'nom_resp', 'prenom_resp',
+                    'role_id', 'email_resp', 'photos',
+                    'responsables.user_id', 'fonction_resp')
+                ->where('responsables.entreprise_id', '=', $etp_id)
+                ->where($search_param_name, 'like', '%'. $input .'%')
+                ->get();
+
+        // dd($referents);
+        return $referents;
+    }
+
+    public function filtreChef($search_param_name, $input){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $chefs = DB::table('users')
+                ->join('v_role_user_etp_manager', 'v_role_user_etp_manager.user_id', 'users.id')
+                ->join('chef_departements', 'chef_departements.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'chef_departements.entreprise_id')
+                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name',
+                    'chef_departements.id', 'nom_chef', 'prenom_chef',
+                    'role_id', 'mail_chef', 'photos',
+                    'chef_departements.user_id', 'fonction_chef')
+                ->where('chef_departements.entreprise_id', '=', $etp_id)
+                ->where($search_param_name, 'like', '%'. $input .'%')
+                ->get();
+
+        // dd($chefs);
+        return $chefs;
+    }
 }

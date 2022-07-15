@@ -234,6 +234,10 @@
             font-size: 13px;
             vertical-align: middle;
         }
+
+        .hideAction{
+            display: none;
+        }
     </style>
 
     <div class="container-fluid">
@@ -297,12 +301,12 @@
                                     <span>Service</span>
                                 </th>
                                 @can('isReferent')
-                                    <th scope="col" class="table-head font-weight-light align-middle text-center ">Formateur interne</th>
-                                    <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th>
+                                    <th scope="col" class="table-head font-weight-light align-middle text-center toHide">Formateur interne</th>
+                                    <th scope="col" class="table-head font-weight-light align-middle text-center toHide">Référent</th>
                                 @endcan
                                 <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
                                 @can('isReferent')
-                                    <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
+                                    <th scope="col" class="table-head font-weight-light align-middle text-center toHideAction">Actions</th>
                                 @endcan
                             </tr>
                         </thead>
@@ -534,9 +538,8 @@
                 var title = $(this).text();
                 $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
                 // $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
-                $( "th#hideAction > input" ).prop( "disabled", true ).attr( "placeholder", "" );
-                $( "th#hideDate > input" ).prop( "disabled", true ).attr( "placeholder", "" );
-                $( "th#hideVille > input" ).prop( "disabled", true ).attr( "placeholder", "" );
+                $( "th.toHide > input" ).prop( "disabled", true ).attr( "placeholder", "" );
+                $( "th.toHideAction > input" ).addClass( "hideAction");
             } );
 
             function searchByColumn(table){

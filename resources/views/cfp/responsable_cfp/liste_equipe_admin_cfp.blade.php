@@ -137,6 +137,7 @@
         font-size: 13px;
         vertical-align: middle;
     }
+
 </style>
 
 <div class="container-fluid pb-1">
@@ -177,9 +178,9 @@
                                         <th class="headEtp">E-mail</th>
                                         <th class="headEtp">Téléphone</th>
                                         <th class="headEtp">Fonction</th>
-                                        <th class="text-center headEtp">Réferent principale</th>
-                                        <th class="text-center headEtp">Activer</th>
-                                        <th></th>
+                                        <th class="text-center headEtp hideActive">Réferent principale</th>
+                                        <th class="text-center headEtp hideActive">Activer</th>
+                                        <th class="hideActive"></th>
                                     </tr>
 
                                 </thead>
@@ -368,9 +369,7 @@
                 var title = $(this).text();
                 $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
                 // $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
-                $( "th#hideAction > input" ).prop( "disabled", true ).attr( "placeholder", "" );
-                $( "th#hideDate > input" ).prop( "disabled", true ).attr( "placeholder", "" );
-                $( "th#hideVille > input" ).prop( "disabled", true ).attr( "placeholder", "" );
+                $( "th.hideActive > input" ).prop( "disabled", true ).attr( "placeholder", "" );
             } );
 
             function searchByColumn(table){

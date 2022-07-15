@@ -336,17 +336,19 @@
         vertical-align: middle;
     }
 
+    .myCircle:hover{
+        color: #1e9600;
+    }
+    .hideAction{
+        display: none;
+    }
+
 </style>
 
     <div class="container-fluid mb-5">
         <div class="row">
             <div class="col-12 ps-2">
                 @canany(['isCFP'])
-                    {{-- @if (count($projet) <= 0)
-                        <div class="row d-flex mt-3 titre_projet p-1 mb-1">
-                            <p class="text-center text_aucun">Vous n'avez pas encore du projet.</p>
-                        </div>
-                    @endif --}}
                     @if (Session::has('groupe_error'))
                         <div class="alert alert-danger ms-2 me-2">
                             <ul>
@@ -357,22 +359,34 @@
                     <div class="row">
                         <div class="col-md-6"></div>
                         <div class="col-md-6">
-                            <a href=" {{route('liste_projet')}} " class="btn btn-sm btn-success mt-2 text-white float-end" style="width: 100px;">Actualiser <i class="fa-solid fa-arrow-rotate-right" style="vertical-align: middle"></i></a>
+                            <a href=" {{route('liste_projet')}} " class="btn btn-sm btn-dark mt-2 text-white float-end" style="width: 100px;"><i class='bx bx-caret-left' style="vertical-align: middle"></i> Retour</a>
                         </div>
                         <div class="fixedTop" >
-                            <table id="myDatatablesa" class="display nowrap table shadow-sm">
-                                <thead>
+                            <table id="modifTable" class="display nowrap table shadow-sm">
+                                <thead style="position: sticky; top: 0">
                                     <tr>
-                                        <th class="headProject" style="width: 90px"><i class='bx bx-library'></i> Projet</th>
-                                        <th class="headProject" style="width: 120px"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
-                                        <th class="headProject" style="width: 158px"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
-                                        <th class="headProject" style="width: 144px"><i class='bx bx-building-house'></i> Entreprise</th>
-                                        <th class="headProject" style="width: 114px"><i class='bx bx-calendar-check' ></i> Modalité</th>
-                                        <th class="headProject" style="width: 144px"><i class='bx bx-time-five' ></i> Date du projet</th>
-                                        <th class="headProject" style="width: 144px"><i class='bx bx-home' ></i> Ville</th>
-                                        <th class="headProject" style="width: 118px"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
-                                        <th class="headProject" style="width: 130px"><i class='bx bx-book-content' style="vertical-align: middle"></i>Type formation</th>
-                                        <th class="headProject" style="width: 80px"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-library'></i> Projet</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-building-house'></i> Entreprise</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-check' ></i> Modalité</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-time-five' ></i> Date du projet</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-home' ></i> Ville</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type formation</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="headProject">Projet</th>
+                                        <th class="headProject">Session</th>
+                                        <th class="headProject">Module</th>
+                                        <th class="headProject">Entreprise</th>
+                                        <th class="headProject">Modalité</th>
+                                        <th class="headProject">Date du projet</th>
+                                        <th class="headProject toHide">Ville</th>
+                                        <th class="headProject">Statuts</th>
+                                        <th class="headProject">Type formation</th>
+                                        <th class="headProject hideAction">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -390,7 +404,7 @@
                                             </tr>
                                             @else
                                                 <tr style="background: #e7e7e7; height: 50px;">
-                                                    <td colspan="7">
+                                                    <td colspan="9" style="border: none;">
                                                         @php
                                                             if ($p->totale_session == 1) {
                                                                 echo "<span  style='font-size: 13px;'>".$p->nom_projet."</span><br>";
@@ -401,25 +415,69 @@
                                                             }
                                                         @endphp
                                                     </td>
-                                                    <td style="display: none"></td>
-                                                    <td style="display: none"></td>
-                                                    <td style="display: none"></td>
-                                                    <td style="display: none"></td>
-                                                    <td style="padding-left: 5px">
+                                                    <td style="display: none">
+                                                        @foreach ($data as $pj)
+                                                            @if ($p->projet_id == $pj->projet_id)
+                                                                {{ $pj->nom_groupe }}
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                    <td style="display: none">
+                                                        @foreach ($data as $pj)
+                                                            @if ($p->projet_id == $pj->projet_id)
+                                                                {{ $pj->nom_module }}
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                    <td style="display: none">
+                                                        @foreach ($data as $pj)
+                                                            @if ($p->projet_id == $pj->projet_id)
+                                                                @foreach ($entreprise as $etp)
+                                                                    @if ($etp->groupe_id == $pj->groupe_id)
+                                                                    <span style="display: inline-block; margin-bottom: 15px;">{{ $etp->nom_etp }}</span> <br>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                    <td style="display: none">
+                                                        @foreach ($data as $pj)
+                                                            @if ($p->projet_id == $pj->projet_id)
+                                                                {{ $pj->modalite }}
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-center">
                                                         @can('isCFP')
                                                             @if ($p->type_formation_id == 1)
-                                                                <span role="button" data-bs-toggle="modal"
-                                                                    data-bs-target="#modal_{{ $p->projet_id }}" data-backdrop='static'
-                                                                    title="Nouvelle session" class="btn btn_nouveau py-1">
-                                                                    <i class='bx bx-plus-medical me-1'></i>Session
+                                                                <span role="button" data-bs-toggle="modal" data-bs-target="#modal_{{ $p->projet_id }}" data-backdrop='static' title="Nouvelle session">
+                                                                    <i class='bx bx-plus-circle myCircle' style="font-size: 1.4rem;"></i>
                                                                 </span>
                                                             @endif
                                                         @endcan
                                                     </td>
-                                                    <td></td>
-                                                    <td style="display: none"> </td>
+                                                    <td style="display: none">
+    
+                                                    </td>
+                                                    <td style="display: none">
+                                                        @foreach ($data as $pj)
+                                                            @if ($p->projet_id == $pj->projet_id)
+                                                                {{ $pj->item_status_groupe }}
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                    <td style="display: none">
+                                                        @if ($p->type_formation_id == 1)
+                                                            <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                                                {{ $p->type_formation }}
+                                                            </span>
+                                                        @elseif ($p->type_formation_id == 2)
+                                                            <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                                                {{ $p->type_formation }}
+                                                            </span>
+                                                        @endif
+                                                    </td>
                                                     <td style="display: none"></td>
-                                                    <td></td>
                                                 </tr>
                                                 @foreach ($data as $pj)
                                                 @if ($p->projet_id == $pj->projet_id)
@@ -435,62 +493,89 @@
                                                                 }
                                                             @endphp
                                                         </td>
-                                                        <td  style="display: none"></td>
-                                                        <td  style="display: none"></td>
-                                                        <td  style="display: none"></td>
-                                                        <td  style="display: none"></td>
-                                                        <td  style="display: none"></td>
-                                                        <td  style="display: none"></td>
-                                                        <td  style="display: none"></td>
+                                                        <td style="display: none">{{ $pj->nom_groupe }}</td>
+                                                        <td style="display: none">{{ $pj->nom_module}}</td>
+                                                        <td style="display: none">
+                                                            @foreach ($entreprise as $etp)
+                                                                @if ($etp->groupe_id == $pj->groupe_id)
+                                                                <span style="display: inline-block; margin-bottom: 15px;">{{ $etp->nom_etp }}</span> <br>
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+                                                        <td style="display: none">{{ $pj->modalite }}</td>
+                                                        <td style="display: none">
+                                                            @php
+                                                                $ville = $groupe->dataVille($pj->groupe_id);
+                                                                $salle = explode(',  ', $ville);
+                                                            @endphp
+                                                            <span style="font-size: 12px;">{{ $salle[0] }}</span>
+                                                        </td>
+                                                        <td style="display: none">
+                                                            @php
+                                                                echo "<span class='date_debut'  style='display: inline-block; margin-bottom: 15px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut))."</span>"; echo "<span class='date_fin'>".strftime('%d-%m-%y', strtotime($pj->date_fin))."</span><br>";
+                                                            @endphp
+                                                        </td>
+                                                        <td style="display: none">{{ $pj->item_status_groupe }}</td>
+                                                        <td style="display: none">
+                                                            @if ($p->type_formation_id == 1)
+                                                                <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                                                    {{ $p->type_formation }}
+                                                                </span>
+                                                            @elseif ($p->type_formation_id == 2)
+                                                                <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                                                    {{ $p->type_formation }}
+                                                                </span>
+                                                            @endif
+                                                        </td>
                                                         <td style="display: none"></td>
                                                         <td style="display: none"></td>
-                                                        <td colspan="10" style="border: none">
+                                                        <td style="border: none; padding: 0" colspan="10">
                                                             <div>
-                                                                <table>
+                                                                <table class="table table-responsive">
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <td  style="width: 90px">
+                                                                        <tr style="padding: 0;">
+                                                                            <td style="min-width: 10%;">
                                                                                 <span>
                                                                                     <a data-bs-toggle="collapse" href="#collapseProject_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class='bx bx-down-arrow-circle arrowDrop ' data-id="{{$pj->groupe_id}}"  style="font-size: 20px; vertical-align: middle; color: #1e9600"></i></a>
                                                                                 </span>
                                                                             </td>
-                                                                            <td style="width: 118px;">
+                                                                            <td style="min-width: 10%;">
 
                                                                                 <a href="{{ route('detail_session', [$pj->groupe_id, $p->type_formation_id]) }}">
                                                                                     <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
                                                                                 </a>
                                                                             </td>
-                                                                            <td style="width: 164px">
+                                                                            <td style="min-width: 10%;">
                                                                                 <span style="font-size: 13px">{{ $pj->nom_module }}</span>
                                                                             </td>
-                                                                            <td style="width: 147px">
+                                                                            <td style="min-width: 10%;">
                                                                                 @foreach ($entreprise as $etp)
                                                                                     @if ($etp->groupe_id == $pj->groupe_id)
                                                                                     <span style="font-size: 13px">{{ $etp->nom_etp }}</span>
                                                                                     @endif
                                                                                 @endforeach
                                                                             </td>
-                                                                            <td style="width: 115px">
+                                                                            <td style="min-width: 10%;">
                                                                                 <span style="font-size: 13px">{{ $pj->modalite }}</span>
                                                                             </td>
-                                                                            <td style="width: 144px">
+                                                                            <td style="min-width: 10%;">
                                                                                 @php
                                                                                     echo "<span style='font-size: 13px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";
                                                                                 @endphp
                                                                             </td>
-                                                                            <td style="width: 144px">
+                                                                            <td style="min-width: 10%;">
                                                                                 @php
                                                                                     $ville = $groupe->dataVille($pj->groupe_id);
                                                                                     $salle = explode(',  ', $ville);
                                                                                 @endphp
                                                                                 <span style="font-size: 13px;">{{ $salle[0] }}</span>
                                                                             </td>
-                                                                            <td style="width: 128px">
+                                                                            <td style="min-width: 10%;">
                                                                                 <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1 text-center nom_status" style="width: 100px;">
                                                                                     <span style="font-size: 13px">{{ $pj->item_status_groupe }}</span>
                                                                                 </p>
                                                                             </td>
-                                                                            <td style="width: 104px" class="text-center">
+                                                                            <td class="text-center" style="min-width: 10%;">
                                                                                 @if ($p->type_formation_id == 1)
                                                                                     <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 7px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
                                                                                         {{ $p->type_formation }}
@@ -501,7 +586,7 @@
                                                                                     </span>
                                                                                 @endif
                                                                             </td>
-                                                                            <td style="width: 70px" class="text-center">
+                                                                            <td class="text-center" style="min-width: 10%;">
                                                                                 <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.4rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                                                                 <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
                                                                                     @can('isCFP')
@@ -516,7 +601,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td colspan="10">
+                                                                            <td colspan="10" style="border: none;">
                                                                                 <div class="accordian-body collapse" id="collapseProject_{{$pj->groupe_id}}">
                                                                                     <div class="card">
                                                                                         <div class="row">
@@ -749,6 +834,505 @@
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                    <div>
+                                                        <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
+                                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header  d-flex justify-content-center"
+                                                                        style="background-color:rgb(224,182,187);">
+                                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <small>Vous êtes sur le point d'effacer une donnée,
+                                                                            cette
+                                                                            action est irréversible. Continuer ?</small>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal"> Non </button>
+                                                                        <button type="button" class="btn btn-secondary"><a
+                                                                                href="{{ route('destroy_groupe', [$pj->groupe_id]) }}">Oui</a></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {{-- fin supprimer session --}}
+                                                        {{-- Debut modal edit session --}}
+                                                        <div>
+                                                            <div class="modal fade"
+                                                                id="modal_modifier_session_{{ $pj->groupe_id }}"
+                                                                data-backdrop="static">
+                                                                <div class="modal-dialog modal-lg">
+                                                                    <div class="modal-content p-3">
+                                                                        <div class="modal-title pt-3"
+                                                                            style="height: 50px; align-items: center;">
+                                                                            <h5 class="text-center my-auto">Modifier session
+                                                                                <strong>{{ $pj->nom_groupe }}</strong>
+                                                                            </h5>
+                                                                        </div>
+                                                                        @if ($p->type_formation_id == 1)
+                                                                            <div class="row">
+                                                                                <form
+                                                                                    action="{{ route('modifier_session_intra') }}"
+                                                                                    id="formPayement" method="post">
+                                                                                    @csrf
+                                                                                    <input type="hidden" name="id"
+                                                                                        value="{{ $pj->groupe_id }}">
+                                                                                    <div class="row">
+                                                                                        <div class="form-group">
+                                                                                            <div class="form-row d-flex">
+                                                                                                <div class="col">
+                                                                                                    <div class="row ps-3 mt-2">
+                                                                                                        <div
+                                                                                                            class="form-group mt-1 mb-1">
+                                                                                                            <input type="text"
+                                                                                                                id="min"
+                                                                                                                class="form-control input"
+                                                                                                                name="date_debut"
+                                                                                                                required
+                                                                                                                onfocus="(this.type='date')"
+                                                                                                                value="{{ $pj->date_debut }}">
+                                                                                                            <label
+                                                                                                                class="ml-3 form-control-placeholder"
+                                                                                                                for="min">Date
+                                                                                                                debut du
+                                                                                                                session<strong
+                                                                                                                    class="text-danger">*</strong></label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="row ps-3 mt-2">
+                                                                                                        <div
+                                                                                                            class="form-group mt-1">
+                                                                                                            <select
+                                                                                                                class="form-select selectP input"
+                                                                                                                id="formation_session_id"
+                                                                                                                name="formation_id"
+                                                                                                                aria-label="Default select example">
+                                                                                                                <option
+                                                                                                                    value="{{ $pj->formation_id }}">
+                                                                                                                    {{ $pj->nom_formation }}
+                                                                                                                </option>
+                                                                                                                @foreach ($formation as $form)
+                                                                                                                    <option
+                                                                                                                        value="{{ $form->id }}">
+                                                                                                                        {{ $form->nom_formation }}
+                                                                                                                    </option>
+                                                                                                                @endforeach
+                                                                                                            </select>
+                                                                                                            <label
+                                                                                                                class="ml-3 form-control-placeholder"
+                                                                                                                for="formation_id">Formations<strong
+                                                                                                                    class="text-danger">*</strong></label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col">
+                                                                                                    <div class="row ps-3 mt-2">
+                                                                                                        <div
+                                                                                                            class="form-group mt-1 mb-1">
+                                                                                                            <input type="text"
+                                                                                                                id="min"
+                                                                                                                class="form-control input"
+                                                                                                                name="date_fin"
+                                                                                                                required
+                                                                                                                onfocus="(this.type='date')"
+                                                                                                                value="{{ $pj->date_fin }}">
+                                                                                                            <label
+                                                                                                                class="ml-3 form-control-placeholder"
+                                                                                                                for="min">Date
+                                                                                                                fin du
+                                                                                                                session<strong
+                                                                                                                    class="text-danger">*</strong></label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="row ps-3 mt-2">
+                                                                                                        <div
+                                                                                                            class="form-group mt-1 mb-1">
+                                                                                                            <select
+                                                                                                                class="form-select selectP input"
+                                                                                                                id="module_id"
+                                                                                                                name="module_id"
+                                                                                                                aria-label="Default select example">
+                                                                                                                <option
+                                                                                                                    value="{{ $pj->module_id }}">
+                                                                                                                    {{ $pj->nom_module }}
+                                                                                                                </option>
+                                                                                                                @foreach ($module as $mod)
+                                                                                                                    <option
+                                                                                                                        value="{{ $mod->id }}">
+                                                                                                                        {{ $mod->nom_module }}
+                                                                                                                    </option>
+                                                                                                                @endforeach
+                                                                                                            </select>
+                                                                                                            <label
+                                                                                                                class="ml-3 form-control-placeholder"
+                                                                                                                for="module_id">Modules<strong
+                                                                                                                    class="text-danger">*</strong></label>
+                                                                                                        </div>
+                                                                                                    </div>
+        
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-row">
+                                                                                                <div class="row ps-3 mt-2">
+                                                                                                    <div
+                                                                                                        class="form-group mt-1 mb-1">
+                                                                                                        <select
+                                                                                                            class="form-select selectP input"
+                                                                                                            id="payement_id"
+                                                                                                            name="payement"
+                                                                                                            aria-label="Default select example">
+                                                                                                            <option
+                                                                                                                value="{{ $pj->type_payement_id }}"
+                                                                                                                hidden>
+                                                                                                                {{ $pj->type }}
+                                                                                                            </option>
+                                                                                                            @foreach ($payement as $paye)
+                                                                                                                <option
+                                                                                                                    value="{{ $paye->id }}">
+                                                                                                                    {{ $paye->type }}
+                                                                                                                </option>
+                                                                                                            @endforeach
+                                                                                                        </select>
+                                                                                                        <label
+                                                                                                            class=" form-control-placeholder"
+                                                                                                            for="payement_id">Mode
+                                                                                                            de Payement<strong
+                                                                                                                class="text-danger">*</strong></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-row d-flex">
+                                                                                                <div class="col">
+                                                                                                    <div class="row ps-3">
+                                                                                                        <div
+                                                                                                            class="form-group ">
+                                                                                                            <input type="text"
+                                                                                                                id="min"
+                                                                                                                class="form-control input"
+                                                                                                                min="1" max="50"
+                                                                                                                name="min_part"
+                                                                                                                required
+                                                                                                                onfocus="(this.type='number')"
+                                                                                                                value="{{ $pj->min_participant }}">
+                                                                                                            <label
+                                                                                                                class="ml-3 form-control-placeholder"
+                                                                                                                for="min">Nombre
+                                                                                                                de participant
+                                                                                                                minimal</label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="text-center mb-1">
+                                                                                                        <button type="submit"
+                                                                                                            form="formPayement"
+                                                                                                            class="btn btn_enregistrer">Valider</button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col">
+                                                                                                    <div class="row ps-3">
+                                                                                                        <div
+                                                                                                            class="form-group ">
+                                                                                                            <input type="text"
+                                                                                                                id="min"
+                                                                                                                class="form-control input"
+                                                                                                                min="1" max="50"
+                                                                                                                name="max_part"
+                                                                                                                required
+                                                                                                                onfocus="(this.type='number')"
+                                                                                                                value="{{ $pj->max_participant }}">
+                                                                                                            <label
+                                                                                                                class="ml-3 form-control-placeholder"
+                                                                                                                for="min">Nombre
+                                                                                                                de participant
+                                                                                                                maximal</label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="text-center mb-1">
+                                                                                                        <button type="button"
+                                                                                                            class="btn  btn_annuler"
+                                                                                                            data-bs-dismiss="modal">Annuler</button>
+                                                                                                    </div>
+                                                                                                </div>
+        
+                                                                                            </div>
+                                                                                        </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        @endif
+                                                                        @if ($p->type_formation_id == 2)
+                                                                            <div class="row">
+                                                                                <div class="form-group">
+                                                                                    <div class="form-row d-flex">
+                                                                                        <form
+                                                                                            action="{{ route('modifier_session_inter') }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <input type="hidden" name="id"
+                                                                                                value="{{ $pj->groupe_id }}">
+                                                                                            <div class="col">
+                                                                                                <div class="row ps-3 mt-2">
+                                                                                                    <div
+                                                                                                        class="form-group mt-1 mb-1">
+                                                                                                        <input type="text"
+                                                                                                            id="min"
+                                                                                                            class="form-control input"
+                                                                                                            name="date_debut"
+                                                                                                            required
+                                                                                                            onfocus="(this.type='date')"
+                                                                                                            value="{{ $pj->date_debut }}">
+                                                                                                        <label
+                                                                                                            class="form-control-placeholder"
+                                                                                                            for="min">Date
+                                                                                                            debut<strong
+                                                                                                                class="text-danger">*</strong></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="row ps-3 mt-2">
+                                                                                                    <div
+                                                                                                        class="form-group mt-1 mb-1">
+                                                                                                        <input type="text"
+                                                                                                            id="min"
+                                                                                                            class="form-control input"
+                                                                                                            min="1" max="50"
+                                                                                                            name="min_part"
+                                                                                                            required
+                                                                                                            onfocus="(this.type='number')"
+                                                                                                            value="{{ $pj->min_participant }}">
+                                                                                                        <label
+                                                                                                            class="form-control-placeholder"
+                                                                                                            for="min">Participant
+                                                                                                            minimal</label>
+                                                                                                    </div>
+                                                                                                </div>
+        
+                                                                                                <div class="text-center ps-3">
+                                                                                                    <button type="submit"
+                                                                                                        class="btn btn_enregistrer">Valider</button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col">
+                                                                                                <div class="row ps-3 mt-2">
+                                                                                                    <div
+                                                                                                        class="form-group mt-1 mb-1">
+                                                                                                        <input type="text"
+                                                                                                            id="min"
+                                                                                                            class="form-control input"
+                                                                                                            name="date_fin"
+                                                                                                            required
+                                                                                                            onfocus="(this.type='date')"
+                                                                                                            value="{{ $pj->date_fin }}">
+                                                                                                        <label
+                                                                                                            class=" form-control-placeholder"
+                                                                                                            for="min">Date
+                                                                                                            fin<strong
+                                                                                                                class="text-danger">*</strong></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="row ps-3 mt-2">
+                                                                                                    <div
+                                                                                                        class="form-group mt-1 mb-1">
+                                                                                                        <input type="text"
+                                                                                                            id="min"
+                                                                                                            class="form-control input"
+                                                                                                            min="1" max="50"
+                                                                                                            name="max_part"
+                                                                                                            required
+                                                                                                            onfocus="(this.type='number')"
+                                                                                                            value="{{ $pj->max_participant }}">
+                                                                                                        <label
+                                                                                                            class="form-control-placeholder"
+                                                                                                            for="min">Participant
+                                                                                                            maximal</label>
+                                                                                                    </div>
+                                                                                                </div>
+        
+        
+                                                                                                <div class="text-center ps-3">
+                                                                                                    <button type="button"
+                                                                                                        class="btn btn_annuler"
+                                                                                                        data-bs-dismiss="modal"
+                                                                                                        aria-label="Close">Annuler</button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+        
+                                                        {{-- Fin modal edit session --}}
+                                                        {{-- debut modal nouveau session --}}
+                                                        <div>
+                                                            <div id="modal_{{ $pj->projet_id }}"
+                                                                class="modal fade modal_projets">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="w-100 text-center">Nouvelle Session pour
+                                                                                le&nbsp;{{ $pj->nom_projet }}
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form action="{{ route('insert_session') }}"
+                                                                                method="POST"
+                                                                                class="justify-content-center me-5">
+                                                                                @csrf
+                                                                                <input type="hidden" name="type_formation"
+                                                                                    value="1">
+                                                                                <input type="hidden" name="projet"
+                                                                                    value="{{ $pj->projet_id }}">
+                                                                                    <h5 class="mb-4 text-center">Ajouter votre
+                                                                                        nouvelle
+                                                                                        Session</h5>
+                                                                                    <div class="form-group">
+                                                                                        <div class="row mt-2">
+                                                                                            <div
+                                                                                                class="col-lg-6 text-end mt-2">
+                                                                                                <span>Date debut de la
+                                                                                                    session<strong
+                                                                                                        class="text-danger">*</strong></span>
+                                                                                            </div>
+                                                                                            <div class="col-lg-6"><input
+                                                                                                    type="date" id="min"
+                                                                                                    class="form-control input"
+                                                                                                    name="date_debut"
+                                                                                                    style="width: 12rem;"
+                                                                                                    required></div>
+                                                                                        </div>
+                                                                                        <div class="row mt-2">
+                                                                                            <div
+                                                                                                class="col-lg-6 text-end mt-2">
+                                                                                                <span>Date fin de la
+                                                                                                    session<strong
+                                                                                                        class="text-danger">*</strong></span>
+                                                                                            </div>
+                                                                                            <div class="col-lg-6"><input
+                                                                                                    type="date" id="min"
+                                                                                                    class="form-control input"
+                                                                                                    name="date_fin"
+                                                                                                    style="width: 12rem;"
+                                                                                                    required></div>
+                                                                                        </div>
+                                                                                        <div class="row mt-2">
+                                                                                            <div
+                                                                                                class="col-lg-6 text-end mt-2">
+                                                                                                <span>Modalité<strong
+                                                                                                        class="text-danger">*</strong>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                            <div class="col-lg-6 text-end">
+                                                                                                <select
+                                                                                                    class="form-select input_select"
+                                                                                                    name="modalite"
+                                                                                                    aria-label="Default select example"
+                                                                                                    style="width: 15rem;"
+                                                                                                    required>
+                                                                                                    <option value="null">
+                                                                                                        Sélectionnez</option>
+                                                                                                    <option value="Présentiel">
+                                                                                                        Présentielle</option>
+                                                                                                    <option value="En ligne">En
+                                                                                                        ligne</option>
+                                                                                                    <option
+                                                                                                        value="Présentiel/En ligne">
+                                                                                                        Présentiel/En ligne
+                                                                                                    </option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row mt-3">
+                                                                                            <div class="col-lg-6 text-end"><button type="submit"
+                                                                                                    class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Enregistrer</button></div>
+                                                                                            <div class="col-lg-6">
+                                                                                                <button type="button" class="btn  btn_annuler" data-dismiss="modal">
+                                                                                                    <i class='bx bx-x me-1'></i> Annuler
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                            </form>
+                                                                        </div>
+        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {{-- fin --}}
+                                                        {{-- debut modal edit projet --}}
+                                                        <div>
+                                                            <div id="edit_prj_{{ $pj->projet_id }}"
+                                                                class="modal fade modal_projets">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="text-center w-100">Modification de la
+                                                                                Status du
+                                                                                Session dans le&nbsp;{{ $pj->nom_projet }}
+                                                                            </h5>
+        
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form
+                                                                                action="{{ route('update_projet', $pj->projet_id) }}"
+                                                                                id="zsxsq" method="POST">
+                                                                                @csrf
+                                                                                <div class="row ps-3 mt-2">
+                                                                                    <div class="form-group mt-1 mb-1">
+                                                                                        <select
+                                                                                            class="form-select selectP input"
+                                                                                            id="formation_id"
+                                                                                            name="formation_id"
+                                                                                            aria-label="Default select example">
+                                                                                            <option onselected hidden>choisir la
+                                                                                                status
+                                                                                                du session</option>
+                                                                                            @foreach ($status as $stat)
+                                                                                                <option
+                                                                                                    value="{{ $stat->id }}">
+                                                                                                    {{ $stat->status }}
+                                                                                                </option>
+                                                                                            @endforeach
+                                                                                        </select>
+                                                                                        <label
+                                                                                            class="ml-3 form-control-placeholder"
+                                                                                            for="formation_id">Status</label>
+                                                                                    </div>
+                                                                                </div>
+        
+        
+                                                                                <div class="mt-4 mb-4">
+                                                                                    <div
+                                                                                        class="mt-4 mb-4 d-flex justify-content-around">
+                                                                                        <div class="text-center ps-3"><button
+                                                                                                type="submit"
+                                                                                                form="formPayement"
+                                                                                                class="btn btn_enregistrer">Valider</button>
+                                                                                        </div>
+                                                                                        <div class="text-center ps-3"><button
+                                                                                                type="button"
+                                                                                                class="btn btn_annuler"
+                                                                                                data-bs-dismiss="modal"
+                                                                                                aria-label="Close">Annuler</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+        
+                                                                        </div>
+                                                                    </div>
+        
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 @endif
                                             @endforeach
                                             @endif
@@ -761,544 +1345,52 @@
                 @endcanany
             </div>
         </div>
-
-        <div class="row w-100">
-
-            <div class="col-12 ps-5">
-                <div class="row">
-                    @canany(['isCFP'])
-                        <div class="m" id="corps">
-                            <table class="table shadow-sm p-3 mb-5 bg-body rounded">
-                                <tbody>
-                                    @foreach ($projet as $prj)
-                                        @foreach ($data as $pj)
-                                            @if ($prj->projet_id == $pj->projet_id)
-                                            {{-- fin table eto ambany --}}
-                                            {{-- start all modal --}}
-                                            <div>
-                                                <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
-                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header  d-flex justify-content-center"
-                                                                style="background-color:rgb(224,182,187);">
-                                                                <h6 class="modal-title">Avertissement !</h6>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <small>Vous êtes sur le point d'effacer une donnée,
-                                                                    cette
-                                                                    action est irréversible. Continuer ?</small>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal"> Non </button>
-                                                                <button type="button" class="btn btn-secondary"><a
-                                                                        href="{{ route('destroy_groupe', [$pj->groupe_id]) }}">Oui</a></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {{-- fin supprimer session --}}
-                                                {{-- Debut modal edit session --}}
-                                                <div>
-                                                    <div class="modal fade"
-                                                        id="modal_modifier_session_{{ $pj->groupe_id }}"
-                                                        data-backdrop="static">
-                                                        <div class="modal-dialog modal-lg">
-                                                            <div class="modal-content p-3">
-                                                                <div class="modal-title pt-3"
-                                                                    style="height: 50px; align-items: center;">
-                                                                    <h5 class="text-center my-auto">Modifier session
-                                                                        <strong>{{ $pj->nom_groupe }}</strong>
-                                                                    </h5>
-                                                                </div>
-                                                                @if ($prj->type_formation_id == 1)
-                                                                    <div class="row">
-                                                                        <form
-                                                                            action="{{ route('modifier_session_intra') }}"
-                                                                            id="formPayement" method="post">
-                                                                            @csrf
-                                                                            <input type="hidden" name="id"
-                                                                                value="{{ $pj->groupe_id }}">
-                                                                            <div class="row">
-                                                                                <div class="form-group">
-                                                                                    <div class="form-row d-flex">
-                                                                                        <div class="col">
-                                                                                            <div class="row ps-3 mt-2">
-                                                                                                <div
-                                                                                                    class="form-group mt-1 mb-1">
-                                                                                                    <input type="text"
-                                                                                                        id="min"
-                                                                                                        class="form-control input"
-                                                                                                        name="date_debut"
-                                                                                                        required
-                                                                                                        onfocus="(this.type='date')"
-                                                                                                        value="{{ $pj->date_debut }}">
-                                                                                                    <label
-                                                                                                        class="ml-3 form-control-placeholder"
-                                                                                                        for="min">Date
-                                                                                                        debut du
-                                                                                                        session<strong
-                                                                                                            class="text-danger">*</strong></label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row ps-3 mt-2">
-                                                                                                <div
-                                                                                                    class="form-group mt-1">
-                                                                                                    <select
-                                                                                                        class="form-select selectP input"
-                                                                                                        id="formation_session_id"
-                                                                                                        name="formation_id"
-                                                                                                        aria-label="Default select example">
-                                                                                                        <option
-                                                                                                            value="{{ $pj->formation_id }}">
-                                                                                                            {{ $pj->nom_formation }}
-                                                                                                        </option>
-                                                                                                        @foreach ($formation as $form)
-                                                                                                            <option
-                                                                                                                value="{{ $form->id }}">
-                                                                                                                {{ $form->nom_formation }}
-                                                                                                            </option>
-                                                                                                        @endforeach
-                                                                                                    </select>
-                                                                                                    <label
-                                                                                                        class="ml-3 form-control-placeholder"
-                                                                                                        for="formation_id">Formations<strong
-                                                                                                            class="text-danger">*</strong></label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col">
-                                                                                            <div class="row ps-3 mt-2">
-                                                                                                <div
-                                                                                                    class="form-group mt-1 mb-1">
-                                                                                                    <input type="text"
-                                                                                                        id="min"
-                                                                                                        class="form-control input"
-                                                                                                        name="date_fin"
-                                                                                                        required
-                                                                                                        onfocus="(this.type='date')"
-                                                                                                        value="{{ $pj->date_fin }}">
-                                                                                                    <label
-                                                                                                        class="ml-3 form-control-placeholder"
-                                                                                                        for="min">Date
-                                                                                                        fin du
-                                                                                                        session<strong
-                                                                                                            class="text-danger">*</strong></label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row ps-3 mt-2">
-                                                                                                <div
-                                                                                                    class="form-group mt-1 mb-1">
-                                                                                                    <select
-                                                                                                        class="form-select selectP input"
-                                                                                                        id="module_id"
-                                                                                                        name="module_id"
-                                                                                                        aria-label="Default select example">
-                                                                                                        <option
-                                                                                                            value="{{ $pj->module_id }}">
-                                                                                                            {{ $pj->nom_module }}
-                                                                                                        </option>
-                                                                                                        @foreach ($module as $mod)
-                                                                                                            <option
-                                                                                                                value="{{ $mod->id }}">
-                                                                                                                {{ $mod->nom_module }}
-                                                                                                            </option>
-                                                                                                        @endforeach
-                                                                                                    </select>
-                                                                                                    <label
-                                                                                                        class="ml-3 form-control-placeholder"
-                                                                                                        for="module_id">Modules<strong
-                                                                                                            class="text-danger">*</strong></label>
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="form-row">
-                                                                                        <div class="row ps-3 mt-2">
-                                                                                            <div
-                                                                                                class="form-group mt-1 mb-1">
-                                                                                                <select
-                                                                                                    class="form-select selectP input"
-                                                                                                    id="payement_id"
-                                                                                                    name="payement"
-                                                                                                    aria-label="Default select example">
-                                                                                                    <option
-                                                                                                        value="{{ $pj->type_payement_id }}"
-                                                                                                        hidden>
-                                                                                                        {{ $pj->type }}
-                                                                                                    </option>
-                                                                                                    @foreach ($payement as $paye)
-                                                                                                        <option
-                                                                                                            value="{{ $paye->id }}">
-                                                                                                            {{ $paye->type }}
-                                                                                                        </option>
-                                                                                                    @endforeach
-                                                                                                </select>
-                                                                                                <label
-                                                                                                    class=" form-control-placeholder"
-                                                                                                    for="payement_id">Mode
-                                                                                                    de Payement<strong
-                                                                                                        class="text-danger">*</strong></label>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="form-row d-flex">
-                                                                                        <div class="col">
-                                                                                            <div class="row ps-3">
-                                                                                                <div
-                                                                                                    class="form-group ">
-                                                                                                    <input type="text"
-                                                                                                        id="min"
-                                                                                                        class="form-control input"
-                                                                                                        min="1" max="50"
-                                                                                                        name="min_part"
-                                                                                                        required
-                                                                                                        onfocus="(this.type='number')"
-                                                                                                        value="{{ $pj->min_participant }}">
-                                                                                                    <label
-                                                                                                        class="ml-3 form-control-placeholder"
-                                                                                                        for="min">Nombre
-                                                                                                        de participant
-                                                                                                        minimal</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="text-center mb-1">
-                                                                                                <button type="submit"
-                                                                                                    form="formPayement"
-                                                                                                    class="btn btn_enregistrer">Valider</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col">
-                                                                                            <div class="row ps-3">
-                                                                                                <div
-                                                                                                    class="form-group ">
-                                                                                                    <input type="text"
-                                                                                                        id="min"
-                                                                                                        class="form-control input"
-                                                                                                        min="1" max="50"
-                                                                                                        name="max_part"
-                                                                                                        required
-                                                                                                        onfocus="(this.type='number')"
-                                                                                                        value="{{ $pj->max_participant }}">
-                                                                                                    <label
-                                                                                                        class="ml-3 form-control-placeholder"
-                                                                                                        for="min">Nombre
-                                                                                                        de participant
-                                                                                                        maximal</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="text-center mb-1">
-                                                                                                <button type="button"
-                                                                                                    class="btn  btn_annuler"
-                                                                                                    data-bs-dismiss="modal">Annuler</button>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                        </form>
-                                                                    </div>
-                                                                @endif
-                                                                @if ($prj->type_formation_id == 2)
-                                                                    <div class="row">
-                                                                        <div class="form-group">
-                                                                            <div class="form-row d-flex">
-                                                                                <form
-                                                                                    action="{{ route('modifier_session_inter') }}"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <input type="hidden" name="id"
-                                                                                        value="{{ $pj->groupe_id }}">
-                                                                                    <div class="col">
-                                                                                        <div class="row ps-3 mt-2">
-                                                                                            <div
-                                                                                                class="form-group mt-1 mb-1">
-                                                                                                <input type="text"
-                                                                                                    id="min"
-                                                                                                    class="form-control input"
-                                                                                                    name="date_debut"
-                                                                                                    required
-                                                                                                    onfocus="(this.type='date')"
-                                                                                                    value="{{ $pj->date_debut }}">
-                                                                                                <label
-                                                                                                    class="form-control-placeholder"
-                                                                                                    for="min">Date
-                                                                                                    debut<strong
-                                                                                                        class="text-danger">*</strong></label>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row ps-3 mt-2">
-                                                                                            <div
-                                                                                                class="form-group mt-1 mb-1">
-                                                                                                <input type="text"
-                                                                                                    id="min"
-                                                                                                    class="form-control input"
-                                                                                                    min="1" max="50"
-                                                                                                    name="min_part"
-                                                                                                    required
-                                                                                                    onfocus="(this.type='number')"
-                                                                                                    value="{{ $pj->min_participant }}">
-                                                                                                <label
-                                                                                                    class="form-control-placeholder"
-                                                                                                    for="min">Participant
-                                                                                                    minimal</label>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="text-center ps-3">
-                                                                                            <button type="submit"
-                                                                                                class="btn btn_enregistrer">Valider</button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col">
-                                                                                        <div class="row ps-3 mt-2">
-                                                                                            <div
-                                                                                                class="form-group mt-1 mb-1">
-                                                                                                <input type="text"
-                                                                                                    id="min"
-                                                                                                    class="form-control input"
-                                                                                                    name="date_fin"
-                                                                                                    required
-                                                                                                    onfocus="(this.type='date')"
-                                                                                                    value="{{ $pj->date_fin }}">
-                                                                                                <label
-                                                                                                    class=" form-control-placeholder"
-                                                                                                    for="min">Date
-                                                                                                    fin<strong
-                                                                                                        class="text-danger">*</strong></label>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row ps-3 mt-2">
-                                                                                            <div
-                                                                                                class="form-group mt-1 mb-1">
-                                                                                                <input type="text"
-                                                                                                    id="min"
-                                                                                                    class="form-control input"
-                                                                                                    min="1" max="50"
-                                                                                                    name="max_part"
-                                                                                                    required
-                                                                                                    onfocus="(this.type='number')"
-                                                                                                    value="{{ $pj->max_participant }}">
-                                                                                                <label
-                                                                                                    class="form-control-placeholder"
-                                                                                                    for="min">Participant
-                                                                                                    maximal</label>
-                                                                                            </div>
-                                                                                        </div>
-
-
-                                                                                        <div class="text-center ps-3">
-                                                                                            <button type="button"
-                                                                                                class="btn btn_annuler"
-                                                                                                data-bs-dismiss="modal"
-                                                                                                aria-label="Close">Annuler</button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                {{-- Fin modal edit session --}}
-                                                {{-- debut modal nouveau session --}}
-                                                <div>
-                                                    <div id="modal_{{ $pj->projet_id }}"
-                                                        class="modal fade modal_projets">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="w-100 text-center">Nouvelle Session pour
-                                                                        le&nbsp;{{ $pj->nom_projet }}
-                                                                    </h5>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form action="{{ route('insert_session') }}"
-                                                                        method="POST"
-                                                                        class="justify-content-center me-5">
-                                                                        @csrf
-                                                                        <input type="hidden" name="type_formation"
-                                                                            value="1">
-                                                                        <input type="hidden" name="projet"
-                                                                            value="{{ $pj->projet_id }}">
-                                                                            <h5 class="mb-4 text-center">Ajouter votre
-                                                                                nouvelle
-                                                                                Session</h5>
-                                                                            <div class="form-group">
-                                                                                <div class="row mt-2">
-                                                                                    <div
-                                                                                        class="col-lg-6 text-end mt-2">
-                                                                                        <span>Date debut de la
-                                                                                            session<strong
-                                                                                                class="text-danger">*</strong></span>
-                                                                                    </div>
-                                                                                    <div class="col-lg-6"><input
-                                                                                            type="date" id="min"
-                                                                                            class="form-control input"
-                                                                                            name="date_debut"
-                                                                                            style="width: 12rem;"
-                                                                                            required></div>
-                                                                                </div>
-                                                                                <div class="row mt-2">
-                                                                                    <div
-                                                                                        class="col-lg-6 text-end mt-2">
-                                                                                        <span>Date fin de la
-                                                                                            session<strong
-                                                                                                class="text-danger">*</strong></span>
-                                                                                    </div>
-                                                                                    <div class="col-lg-6"><input
-                                                                                            type="date" id="min"
-                                                                                            class="form-control input"
-                                                                                            name="date_fin"
-                                                                                            style="width: 12rem;"
-                                                                                            required></div>
-                                                                                </div>
-                                                                                <div class="row mt-2">
-                                                                                    <div
-                                                                                        class="col-lg-6 text-end mt-2">
-                                                                                        <span>Modalité<strong
-                                                                                                class="text-danger">*</strong>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 text-end">
-                                                                                        <select
-                                                                                            class="form-select input_select"
-                                                                                            name="modalite"
-                                                                                            aria-label="Default select example"
-                                                                                            style="width: 15rem;"
-                                                                                            required>
-                                                                                            <option value="null">
-                                                                                                Sélectionnez</option>
-                                                                                            <option value="Présentiel">
-                                                                                                Présentielle</option>
-                                                                                            <option value="En ligne">En
-                                                                                                ligne</option>
-                                                                                            <option
-                                                                                                value="Présentiel/En ligne">
-                                                                                                Présentiel/En ligne
-                                                                                            </option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row mt-3">
-                                                                                    <div class="col-lg-6 text-end"><button type="submit"
-                                                                                            class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Enregistrer</button></div>
-                                                                                    <div class="col-lg-6">
-                                                                                        <button type="button" class="btn  btn_annuler" data-dismiss="modal">
-                                                                                            <i class='bx bx-x me-1'></i> Annuler
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                    </form>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {{-- fin --}}
-                                                {{-- debut modal edit projet --}}
-                                                <div>
-                                                    <div id="edit_prj_{{ $pj->projet_id }}"
-                                                        class="modal fade modal_projets">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="text-center w-100">Modification de la
-                                                                        Status du
-                                                                        Session dans le&nbsp;{{ $pj->nom_projet }}
-                                                                    </h5>
-
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form
-                                                                        action="{{ route('update_projet', $pj->projet_id) }}"
-                                                                        id="zsxsq" method="POST">
-                                                                        @csrf
-                                                                        <div class="row ps-3 mt-2">
-                                                                            <div class="form-group mt-1 mb-1">
-                                                                                <select
-                                                                                    class="form-select selectP input"
-                                                                                    id="formation_id"
-                                                                                    name="formation_id"
-                                                                                    aria-label="Default select example">
-                                                                                    <option onselected hidden>choisir la
-                                                                                        status
-                                                                                        du session</option>
-                                                                                    @foreach ($status as $stat)
-                                                                                        <option
-                                                                                            value="{{ $stat->id }}">
-                                                                                            {{ $stat->status }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                                <label
-                                                                                    class="ml-3 form-control-placeholder"
-                                                                                    for="formation_id">Status</label>
-                                                                            </div>
-                                                                        </div>
-
-
-                                                                        <div class="mt-4 mb-4">
-                                                                            <div
-                                                                                class="mt-4 mb-4 d-flex justify-content-around">
-                                                                                <div class="text-center ps-3"><button
-                                                                                        type="submit"
-                                                                                        form="formPayement"
-                                                                                        class="btn btn_enregistrer">Valider</button>
-                                                                                </div>
-                                                                                <div class="text-center ps-3"><button
-                                                                                        type="button"
-                                                                                        class="btn btn_annuler"
-                                                                                        data-bs-dismiss="modal"
-                                                                                        aria-label="Close">Annuler</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {{-- end all modal --}}
-                                            @if ($prj->type_formation_id == 2)
-                                                @break
-                                            @endif
-                                        @endif
-                                        @endforeach
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                @endcanany
-            </div>
-        </div>
-
 @endsection
 @section('script')
-
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <script>
-        $(document).ready( function () {
-            console.log('ffff');
-            var table = $('#myDatatablesa').DataTable({
-                scrollY:        "500px",
+        $(document).ready(function () {
+            $('#modifTable thead tr:eq(1) th').each( function () {
+                var title = $(this).text();
+                $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px; margin-bottom: 0"/>');
+
+                // $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
+                $( "th.toHide > input" ).prop( "disabled", true ).attr( "placeholder", "" );
+                $( "th.toHideAction > input" ).addClass( "hideAction");
+            } );
+
+            function searchByColumn(table){
+                var defaultSearch = 0;
+
+                $(document).on('change keyup', '#select-column', function(){
+                    defaultSearch = this.value; 
+                });
+
+                $(document).on('change keyup', '#search-by-column', function(){
+                    table.search('').column().search('').draw();
+                    table.column(defaultSearch).search(this.value).draw();
+                });
+            }
+            
+            $( '#modifTable thead'  ).on( 'keyup', ".column_search",function () {
+        
+                table
+                    .column( $(this).parent().index() )
+                    .search( this.value )
+                    .draw();
+            } );
+
+            var table = $('#modifTable').removeAttr('width').DataTable({
+                initComplete : function() {
+                    $("#myDatatablesa_filter").detach().appendTo('#new-search-area');
+                },
+                scrollY:        "600px",
+                // scrollX:        true,
+                // scrollCollapse: true,
                 orderCellsTop: true,
                 fixedHeader: true,
-                "searching": false,
                 "language": {
                     "paginate": {
                     "previous": "précédent",
@@ -1312,9 +1404,10 @@
                     "lengthMenu":     "Affichage _MENU_ ",
                 }
             });
-        } );
-    </script>
-    <script>
+
+            searchByColumn(table);
+        });
+
         $(document).ready(function () {
             $('.arrowDrop').on('click', function(){
                 if ($(this).hasClass('mivadika')){
