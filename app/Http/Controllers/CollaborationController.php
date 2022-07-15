@@ -144,10 +144,12 @@ class CollaborationController extends Controller
             $nb_formateur = DB::select('SELECT * from demmande_cfp_formateur where demmandeur_cfp_id = ? and MONTH(created_at) = ? ',[$cfp_id,$current_month]);
             $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
             if($abonnement_cfp != null){
+
                 if($abonnement_cfp[0]->nb_formateur <= count($nb_formateur) && $abonnement_cfp[0]->illimite == 0){
                     return back()->with('error', "Vous avez atteint le nombre maximum de formateur, veuillez upgrader votre compte pour ajouter plus de formateur");
                 }
                 if(User::where('email', $req->email_format)->exists() == false){
+
                 /**creer formateur(nom, email) */
                     $user = new User();
                     $user->name = $req->nom_format . " " . $req->prenom_format;
@@ -157,6 +159,7 @@ class CollaborationController extends Controller
                     $user->save();
 
                     $user_formateur_id = $fonct->findWhereMulitOne("users", ["email"], [$req->email_format])->id;
+
                     DB::beginTransaction();
                     try {
                         $fonct->insert_role_user($user_formateur_id, "4",false,true); // formateur
@@ -173,6 +176,7 @@ class CollaborationController extends Controller
                     $frm->user_id = $user_formateur_id;
                     $frm->save();
                 }
+                else return back()->with('error', "Cet email est déjà inscrit dans la plateforme");
                 /**inserer formateur dans demande frmateur */
                 $formateur = $this->fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$req->email_format]);
                 if ($formateur != null) {
