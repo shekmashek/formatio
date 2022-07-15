@@ -43,7 +43,7 @@ class EvaluationChaudController extends Controller
         $data = $fonct->findWhereMulitOne('v_stagiaire_groupe',['stagiaire_id','groupe_id'],[$stg_id,request()->groupe]);; // return les information du project avec detail et information du stagiaire
         // $stagiaire = $data['stagiaire'];
         // $detail = $data['detail'];
-
+        // dd($champ_reponse);
         return view("admin.evaluation.evaluationChaud.evaluationChaud", compact('data', 'champ_reponse', 'qst_mere', 'qst_fille'));
     }
 
@@ -69,7 +69,7 @@ class EvaluationChaudController extends Controller
             // return back()->with('avis','avis pour la formation');
         }catch(Exception $e){
             DB::rollback();
-            return redirect()->back()->with('error_evaluation',$message);
+            return redirect()->back()->with('error_evaluation',$e->getMessage());
         }
     }
 
@@ -174,7 +174,7 @@ class EvaluationChaudController extends Controller
 
             //le rythme de la formation
             // q7
-                $res_q7 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? and point < 4 order by point desc',[$groupe,10]);
+                $res_q7 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? order by point desc',[$groupe,10]);
                 if(count($res_q7)<=0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }

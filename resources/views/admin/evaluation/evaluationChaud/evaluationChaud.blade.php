@@ -115,7 +115,7 @@
                                         @else
                                             <table class="table table-striped">
                                                 <thead>
-                                                    <tr>
+                                                    <tr class="text-center">
                                                         @foreach ($champ_reponse as $champ_reponses)
                                                             @if ($champ_reponses->id_qst_fille == $qst_filles->id)
                                                                 <th scope="col">{{ $champ_reponses->descr_champs }}</th>
@@ -127,7 +127,7 @@
                                                     <tr>
                                                         @foreach ($champ_reponse as $champ_reponses)
                                                             @if ($champ_reponses->id_qst_fille == $qst_filles->id)
-                                                                <th scope="row">
+                                                                <th scope="row" class="text-center">
                                                                     <input required class="form-check-input" type="radio"
                                                                         name="case_qst_fille_{{ $qst_filles->id }}"
                                                                         value="{{ $champ_reponses->descr_champs . 'concat' . $champ_reponses->id.'concat'.$champ_reponses->point_champ }}">

@@ -1756,8 +1756,8 @@
                                 <th> Session </th>
                                 <th>Type de formation</th>
                                 <th> Module </th>
-                                <th><i class="bx bx-dollar"></i> {{$ref}}</th>
-                                <th> <i class='bx bx-group'></i> </th>
+                                {{-- <th><i class="bx bx-dollar"></i> {{$ref}}</th>
+                                <th> <i class='bx bx-group'></i> </th> --}}
                                 <th>Date session</th>
                                 <th>Ville</th>
                                 <th> Centre de formation </th>
@@ -1797,7 +1797,7 @@
                                             @endphp --}}
                                             {{ $pj->nom_module }}
                                         </td>
-                                        <td class="text-end">
+                                        {{-- <td class="text-end">
                                            @if($pj->hors_taxe_net!=null)
                                            {{number_format($pj->hors_taxe_net,0,","," ")}}
                                            @else
@@ -1814,7 +1814,7 @@
                                                 echo "<span>-</span>";
                                             @endphp
                                         @endif
-                                         </td>
+                                         </td> --}}
                                         <td class="text-center">
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
