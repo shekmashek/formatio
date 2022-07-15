@@ -827,7 +827,11 @@ class HomeController extends Controller
                 $lieuFormation = null;
             }
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
-            return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            $nb_modules = DB::select('select count(*) from v_module where cfp_id = ?',[$entreprise_id]);
+            $nb_employes = DB::select('select count(emp.id) from employers as emp join entreprises as etp on emp.entreprise_id = etp.id where etp.type_entreprise_id = ?',[1]);
+            $nb_collaboration = DB::select('select count(*) from v_demmande_etp_cfp where entreprise_id = ?',[$entreprise_id]);
+            $abonnement_etp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_etp_id,v_tac.illimite from v_type_abonnement_etp v_tac JOIN entreprises as etp on v_tac.entreprise_id = etp.id where v_tac.entreprise_id = ? and etp.statut_compte_id = ? and v_tac.status = ?',[$entreprise_id,2,"Activé"]);
+            return view('projet_session.index2', compact('data','ref','nb_employes','nb_collaboration','abonnement_etp','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isManager') ) {
             $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;

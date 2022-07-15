@@ -423,6 +423,14 @@ class CollaborationController extends Controller
         return $this->collaboration->suprime_invitation_collaboration_cfp_etp($id);
     }
 
+    // public function suppresion_invite_cfp_etp($id)
+    // {
+    //     $user_id = Auth::user()->id;
+    //     $resp_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id]);
+    //     DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ?', [$id]);
+
+    // }
+
     public function refuser(Request $request)
     {
         $id = $request->Id;
