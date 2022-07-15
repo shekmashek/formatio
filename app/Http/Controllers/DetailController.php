@@ -376,8 +376,8 @@ class DetailController extends Controller
                         // 'duree' => date_diff(strtotime("$value->date_detail $value->h_debut"),strtotime("$value->date_detail $value->h_fin")),
                         'projet' => $value->groupe_interne->projet_interne,
                         'type_formation' => $value->groupe_interne->projet_interne->type_formation ? $value->groupe_interne->projet_interne->type_formation : 'Interne',
-                        'backgroundColor' => $value->color,
-                        'borderColor' => $value->color,
+                        'backgroundColor' => $value->groupe_interne->couleur ? $value->groupe_interne->couleur : $value->color,
+                        'borderColor' => $value->groupe_interne->couleur ? $value->groupe_interne->couleur : $value->color,
                     );
                 } else {
                     $events[] = array(
@@ -413,14 +413,14 @@ class DetailController extends Controller
                         'type_formation' => $value->groupe->projet->type_formation,
                         'nom_type_formation' => $value->groupe->projet->type_formation->type_formation,
                         'nom_cfp' => $value->groupe->projet->cfp->nom,
-                        'backgroundColor' => $value->color,
-                        'borderColor' => $value->color,
+                        'backgroundColor' => $value->groupe->couleur ? $value->groupe->couleur : $value->color,
+                        'borderColor' => $value->groupe->couleur ? $value->groupe->couleur : $value->color,
                     );
                 }
 
             }
 
-            // return($events);
+            return($events);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             if ($groupe_etp->count() > 0) {
