@@ -521,7 +521,7 @@
             </li>
 
             @endcan --}}
-            @canany(['isFormateur','isFormateurInterne'])
+            @canany(['isFormateur'])
             <li>
                 <a href="{{route('profilProf',Auth::user()->id)}}" class="d-flex moncv nav_linke">
                     <i class='bx bxs-notepad'></i>
