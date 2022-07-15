@@ -151,6 +151,11 @@ class AdminController extends Controller
 
         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple') ) {
             // $user = responsable::where('user_id', $id_user)->value('photos');
+            $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
+            $refuse_demmande_cfp = $fonct->findWhere("v_refuse_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
+            $invitation = $fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]);
+            $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
+            $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
             $user = $fonct->findWhereMulitOne(("responsables"),["user_id"],[$id_user])->photos;
             $photo ='';
             if($user == null){
@@ -158,11 +163,11 @@ class AdminController extends Controller
                 $photo = 'non';
                 // $user = 'users/users.png';
             } else{
-                 $user = 'images/employes/' . $user;
+                $user = 'images/employes/' . $user;
                 $photo = 'oui';
             }
             // $user = 'responsables/' . $user;
-            return response()->json(['user'=>$user,'photo'=>$photo]);
+            return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$invitation,'refuse_invitation'=>$refuse_demmande_cfp]);
         }
 
         if (Gate::allows('isFormateur')) {
@@ -231,7 +236,7 @@ class AdminController extends Controller
                 $photo = 'non';
                 // $user = 'users/users.png';
             } else{
-                $user = 'images/responsables/' . $user;
+                $user = 'images/employes/' . $user;
                 $photo = 'oui';
             }
         //    return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$etp1]);

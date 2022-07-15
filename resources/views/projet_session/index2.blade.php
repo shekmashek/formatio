@@ -37,6 +37,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="text-center mt-5">
+                                <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
+                                <p>Aucun projet en cours</p>
+                            </div>
                         </div>
                     @endif
                     @if (Session::has('groupe_error'))
@@ -1214,8 +1218,11 @@
 
                 @canany(['isFormateur'])
                     @if (count($data) <= 0)
-                        <div class="d-flex mt-3 titre_projet p-1 mb-1">
-                            <span class="text-center">Vous n'avez pas encore du projet.</span>
+                        <div class="container mt-3 p-1 mb-1">
+                            <div class="text-center mt-5">
+                                <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
+                                <p>Aucun projet en cours</p>
+                            </div>
                         </div>
                     @else
                         <table class="table table-hover m-0 p-0 mt-2 table-borderless">
@@ -1311,8 +1318,11 @@
 
                 @can('isFormateurInterne')
                     @if (count($data) <= 0)
-                        <div class="d-flex mt-3 titre_projet p-1 mb-1">
-                            <span class="text-center">Vous n'avez pas encore du projet.</span>
+                        <div class="container mt-3 p-1 mb-1">
+                            <div class="text-center mt-5">
+                                <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
+                                <p>Aucun projet en cours</p>
+                            </div>
                         </div>
                     @else
                         <table class="table table-hover m-0 p-0 mt-2 table-borderless">
@@ -1382,8 +1392,23 @@
 
                 @canany(['isReferent','isReferentSimple','isManager','isChefDeService'])
                     @if (count($data) <= 0)
-                        <div class="d-flex mt-3 titre_projet p-1 mb-1">
-                            <span class="text-center">Vous n'avez pas encore du projet.</span>
+                        <div class="container mt-3 p-1 mb-1">
+                            <div id="popup">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <i class='bx bxs-plus-circle icon_upgrade me-3'></i>
+                                        @if($abonnement_etp[0]->illimite != 1)
+                                            @if($nb_employes == 0 || $nb_collaboration == 0)Vous n’avez pas encore de projet pour en créer un @if($nb_employes == 0)<a href="{{route('liste_formateur')}}" class="text-primary lien_condition">Ajouter des employers</a>.@endif @if($nb_collaboration == 0)<a href="{{route('liste_entreprise')}}" class="text-primary lien_condition">Inviter des organismes de formation.</a>@endif .@endif @if($nb_employes != 0 && $nb_collaboration != 0)Maintenant vous pouvez avoir votre premier projet de formation .@endif
+                                        @else
+                                            <span>Votre abonnement actuel vous permet de faire un nombre illimités de projets avec vos collaborateurs.</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-5">
+                                <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
+                                <p>Aucun projet en cours</p>
+                            </div>
                         </div>
                     @else
                         <table class="table shadow-sm table-striped">
@@ -1499,9 +1524,12 @@
                 @endcanany
                 @can('isStagiaire')
                     @if (count($data) <= 0)
-                        <div class="d-flex mt-3 titre_projet p-1 mb-1">
-                            <span class="text-center">Vous n'avez pas encore du projet.</span>
+                    <div class="container mt-3 p-1 mb-1">
+                        <div class="text-center mt-5">
+                            <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
+                            <p>Aucun projet en cours</p>
                         </div>
+                    </div>
                     @else
                         <div class="row mb-5 justify-content-md-start">
                             <div class="col-md-3 border-bottom">

@@ -44,10 +44,11 @@ class CfpController extends Controller
         $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
         $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
         $cfp = $fonct->concatTwoList($etp1Collaborer, $etp2Collaborer);
-
+        $abonnement_etp = DB::select('select v_tep.nom_type,v_tep.type_abonnements_etp_id from v_type_abonnement_etp v_tep JOIN entreprises as etp on v_tep.entreprise_id = etp.id where v_tep.entreprise_id = ? and etp.statut_compte_id = ? or etp.statut_compte_id = ?',[$entreprise_id,1,3]);
+        // dd($invitation);
 
         //$cfp=DB::select('select logo_cfp,nom,cfp_id,photos_resp_cfp,nom_resp_cfp,prenom_resp_cfp ,SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, SUBSTRING(nom_resp_cfp, 1, 1) AS nm from v_demmande_etp_cfp where entreprise_id=?',[$entreprise_id]);
-        return view('cfp.cfp', compact('cfp', 'refuse_demmande_cfp', 'invitation'));
+        return view('cfp.cfp', compact('cfp', 'refuse_demmande_cfp', 'invitation','abonnement_etp'));
     }
 
 

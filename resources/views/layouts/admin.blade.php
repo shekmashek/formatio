@@ -199,6 +199,7 @@
                     <i class='bx bxs-business'></i>
                     <span class="links_name">Organisme</span>
                 </a>
+                <span class="badge_invitation_etp"></span>
 
             </li>
             @endcanany
@@ -1000,7 +1001,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script src="{{asset('js/admin.js')}}"></script>
-    <script src="{{asset('js/apprendre.js')}}"></script>
+    {{-- <script src="{{asset('js/apprendre.js')}}"></script> --}}
 
     @if (Route::currentRouteName() != 'calendrier_formation' && Route::currentRouteName() != 'calendrier')
     {{-- ce script bloque le jquery.min et jquery-ui --}}
@@ -1067,12 +1068,6 @@
         $('.module_redirect').on('click', function (e) {
             localStorage.setItem('ActiveTabMod', '#publies');
         });
-        $(document).ready(function() {
-            console.log($(".badge_invitation").text());
-            if ($(".badge_invitation").val() != null) {
-
-            }
-        });
 
         $(document).ready(function() {
 
@@ -1092,13 +1087,26 @@
                         var html = response['user'][0]['nm']+''+response['user'][0]['pr'];
                         $('.photo_users').append(html);
                     }
+                    // console.log(JSON.stringify(response['invitation']));
+
+                    // console.log(response['invitation'].length);
                     $('.badge_invitation').text("");
+                    $('.badge_invitation_etp').text("");
                     $('.badge_invitation').append(response['invitation'].length);
+                    $('.badge_invitation_etp').append(response['invitation'].length);
+                    $('.count_invit').append(response['invitation'].length);
+                    $('.count_invit_etp').append(response['invitation'].length);
 
                     if(response['invitation'].length == 0){
                         $('.badge_invitation').hide();
-
+                        $('.badge_invitation_etp').hide();
                     }else{
+                        $('.badge_invitation').show();
+                        $('.badge_invitation').css('display','grid');
+                        $('.badge_invitation').css('place-content','center');
+                        $('.badge_invitation_etp').show();
+                        $('.badge_invitation_etp').css('display','grid');
+                        $('.badge_invitation_etp').css('place-content','center');
                         // alert("aiza");
                         for (let i = 0; i < response['invitation'].length; i++){
                             $(".accepte").on("click", function(e) {
@@ -1111,10 +1119,11 @@
                                         Id: id,
                                     },
                                     success: function(response) {
-                                        $('.badge_invitation').hide();
                                         $(".invitation_" + id).remove();
                                         $('.badge_invitation').text("");
                                         $('.badge_invitation').append(i);
+                                        $('.badge_invitation_etp').text("");
+                                        $('.badge_invitation_etp').append(i);
                                         toastr.success('Une invitation a été accéptée');
                                     },
                                     error: function(error) {
@@ -1136,6 +1145,8 @@
                                         $(".invitation_" + id).remove();
                                         $('.badge_invitation').text("");
                                         $('.badge_invitation').append(i);
+                                        $('.badge_invitation_etp').text("");
+                                        $('.badge_invitation_etp').append(i);
                                         toastr.warning('Une invitation à été réfuser');
                                     },
                                     error: function(error) {
@@ -1151,38 +1162,6 @@
                 }
             });
         });
-
-        // $(document).ready(function() {
-        //     $.ajax({
-        //         url: '{{ route("aff_refuse_etp_cfp") }}'
-        //         , type: 'get'
-        //         , success: function(response) {
-        //             if(response['refuse_invitation'].length == 0){
-        //                 var html = 'Aucun invitations refusée';
-        //                 $('.test_affiche2').append(html);
-        //                 $('.test_affiche2').css('textAlign','center');
-
-        //             }else{
-        //                 // alert("aiza");
-        //                 for (let i = 0; i < response['refuse_invitation'].length; i++){
-        //                     $('.test_affiche2').append('<li class="invitation_'+response['refuse_invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['refuse_invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['refuse_invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['refuse_invitation'][i]['nom_secteur']+'</span></li>');
-        //                 }
-        //             }
-        //         }
-        //         , error: function(error) {
-        //             console.log(error);
-        //         }
-        //     });
-        // });
-
-        // $('.prevent_affichage').on('click', function(e){
-        //     e.stopPropagation();
-        // });
-
-        // $('.prevent_affichage2').on('click', function(e){
-        //     e.stopPropagation();
-        // });
-
 
     $(".nav .nav_linke").on("click", function(e){
         localStorage.setItem('indiceSidebar', this);
