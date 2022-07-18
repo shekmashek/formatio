@@ -679,7 +679,7 @@
                     @endcanany
 
                 </div>
-            </div>
+            </div><i class='bx bx-check-circle'></i>
         </section> --}}
     <section>
         <div class="row p-0 d-flex flex-row" role="tabpanel">
@@ -694,10 +694,10 @@
                                 onclick="openCity(event, 'detail')" style="width: 100%">
                                 <p class="m-0 pt-2 pb-2">PLANNING</p>
                                 @if ($test == 0)
-                                    <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                    <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                 @endif
                                 @if ($test != 0)
-                                    <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                    <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                 @endif
                             </button>
                         </a>
@@ -746,10 +746,10 @@
                                         onclick="openCity(event, 'apprenant')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">APPRENANTS</p>
                                         @if (count($stagiaire) == 0)
-                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                            <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                         @endif
                                         @if (count($stagiaire) != 0)
-                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                            <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                                 </a>
@@ -763,9 +763,9 @@
                                     onclick="openCity(event, 'ressource')" style="width: 100%">
                                     <p class="m-0 pt-2 pb-2">RESSOURCES</p>
                                     @if (count($ressource) == 0)
-                                        <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                        <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                     @else
-                                        <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                        <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                     @endif
                                 </button>
                             </a>
@@ -779,9 +779,9 @@
                                         onclick="openCity(event, 'frais')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">FRAIS ANNEXES</p>
                                         @if (count($all_frais_annexe) <= 0)
-                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                            <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                         @else
-                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                            <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                             </div>
@@ -807,7 +807,7 @@
                                     <button class="planning d-flex justify-content-between chaud-tab"
                                         onclick="openCity(event, 'chaud')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">EVALUATION</p>
-                                        <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                        <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                     </button>
                                 </a>
                             </div>
@@ -822,9 +822,9 @@
                                         @php
                                             $pres = $groupe->statut_presences($projet[0]->groupe_id);
                                             if ($pres == '#00ff00') {
-                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                                echo '<i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>';
                                             } elseif ($pres == '#bdbebd') {
-                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                                echo '<i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>';
                                             }
                                         @endphp
                                     </button>
@@ -837,9 +837,9 @@
                                         onclick="openCity(event, 'evaluation')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">PRE EVALUATION</p>
                                         @if ($evaluation_avant <= 0)
-                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                            <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                         @else
-                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                            <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                                 </a>
@@ -854,9 +854,9 @@
                                         @php
                                             $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
                                             if ($statut_eval == 0) {
-                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                                echo '<i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>';
                                             } elseif ($statut_eval == 1) {
-                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                                echo '<i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>';
                                             }
                                         @endphp
                                     </button>
@@ -873,9 +873,9 @@
                                         @php
                                             $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
                                             if ($statut_eval == 0) {
-                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                                echo '<i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>';
                                             } elseif ($statut_eval == 1) {
-                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                                echo '<i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>';
                                             }
                                         @endphp
                                     </button>

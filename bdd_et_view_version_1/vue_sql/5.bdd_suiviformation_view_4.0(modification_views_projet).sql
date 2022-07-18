@@ -648,6 +648,7 @@ create or replace view v_participant_groupe_detail as
 create or replace view v_emargement as
     select
         pgd.*,
+        dps.status as statut_presence,
         ifnull(dps.text_status,"non") as text_status,
         ifnull(dps.color_status,"non") as color_status
     from v_participant_groupe_detail pgd

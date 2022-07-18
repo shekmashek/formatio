@@ -41,6 +41,7 @@
         .row_flex{
           display: flex;
           /* width: fit-content; */
+          margin-top: 2rem;
           justify-content: flex-end;
         }
           #my-pie-chart {
@@ -796,7 +797,7 @@
 }
 .marge_top .row_flex {
     justify-content: space-between;
-    border-right: 1px solid rgb(222, 222, 222);
+    /* border-right: 1px solid rgb(222, 222, 222); */
     margin-bottom: 10px;
 }
 

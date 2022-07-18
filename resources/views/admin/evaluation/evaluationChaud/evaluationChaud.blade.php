@@ -3,23 +3,8 @@
     <h3 class="text_header m-0 mt-1">Evaluation à chaud</h3>
 @endsection
 @section('content')
-    {{-- <body>
-
-    <div class="container-fluid mt-5">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h4 class="btn-warning">Evaluation à Chaud Par Stagiaire</h4>
-            </div>
-        </div>
-    </div> --}}
-
-    {{-- <div class="container mt-4">
-        <div class="row"> --}}
-
     <div class="col-md-5 card  p-3 mb-5 bg-body rounded ms-4">
-        {{-- <h4 class="card-title"> Information de l'entreprise et Formateur</h4> --}}
         <div class="card-body">
-
             <h6 class="card-title my-1">Centre de formation: {{ $data->nom_cfp }}</h6>
             <h6 class="card-title my-1">Groupe: {{ $data->nom_groupe }}</h6>
             <h6 class="card-title my-1">Date de la session: {{ date('d-m-Y', strtotime($data->date_debut)) }} au
@@ -29,33 +14,6 @@
         </div>
 
     </div>
-
-    {{-- <div class="col-md-2"></div> --}}
-
-    {{-- <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded"> --}}
-
-    {{-- <div class="card shadow p-3 mb-5 bg-body rounded"> --}}
-    {{-- <h4 class="card-title"> Information du Stagiaire</h4>
-                <div class="card-body">
-                    <h5 class="card-title"><img src="" class="profil-stagiaire" alt="..."> {{$detail->nom_stagiaire.' '.$detail->prenom_stagiaire}}</h5>
-                    <h6 class="card-title my-1">Matricule: {{$detail->matricule}}</h6>
-                    <h6 class="card-title my-1">Foncion: {{$detail->fonction_stagiaire}} </h6>
-                    <h6 class="card-title my-1">Mail: <a href="#">{{$detail->mail_stagiaire}}</a> </h6>
-                    <h6 class="card-title my-1">Tel: {{$detail->telephone_stagiaire}}</h6>
-                </div> --}}
-    {{-- </div> --}}
-
-    {{-- {{-- </div> --}}
-
-    {{-- <h4 class="card-title text-center">Formateur: <img src="" class="profil-stagiaire" alt="..." /> Nom formateur</h5> --}}
-
-    {{-- </div>
-    </div> --}}
-
-    {{-- <div class="container"> --}}
-
-    {{-- <h5 class="text-center">Evaluation</h5> --}}
-
     @if (Session::has('error_evaluation'))
         <div class="alert alert-danger ms-2 me-2">
             <ul>
