@@ -806,6 +806,8 @@ Route::post('/budgetthematique','PlanFormationController@ajoutThematique');
 Route::post('/Modthematique','PlanFormationController@modthematique');
 Route::get('/getEmployer','PlanFormationController@getemployer');
 Route::post('/modcout','PlanFormationController@modcout');
+Route::get('/cloturePlan/{id}','PlanFormationController@cloture')->name('plan.cloture');
+Route::get('/besoin_valide_pdf/{id}','PlanFormationController@planPDF')->name('plan.besoinPDFV');
 /////////////////fin modification Mahafaly //////////////////////////////
 
 //ajouter nouveau plan

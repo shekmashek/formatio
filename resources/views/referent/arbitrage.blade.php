@@ -19,6 +19,9 @@
        padding: 5px;
 
    }
+   td,th{
+       font-size:15px;
+   }
    .nav-tabs .nav-link{
        color: black;
    }
@@ -51,15 +54,16 @@
                     
                 </div>
                 <div class="float-end">
+                    <a href="{{route('plan.cloture',$an->id)}}" class="btn text-light" style="background:#9359ff" href=""><i class='bx bx-calendar-check'></i>&nbsp;Cloturé</a>
                     <a class="btn btn-dark text-light" href="/ListedemandeFormation/{{$an->id}}"><i class="fa-solid fa-caret-left"></i>&nbsp;Retour</a>
-                    @endforeach
+                  
                 </div>
             </div>
         </div>
         <div class="col-md-12 mt-3">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  <button style="width: 50%" class="nav-link  arbdep" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Arbitrage par departement</button>
+                  <button style="width: 50%" class="nav-link active arbdep" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Arbitrage par departement</button>
                   <button style="width: 50%" class="nav-link arbm" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Arbitrage par module</button>
                   
                 </div>
@@ -74,7 +78,7 @@
                                         <th>Département</th>
                                         <th>Plan prév </th>
                                         <th>Budget(Ar)</th>
-                                        <th>Ecart(Ar)</th>
+                                        <th>Ecart</th>
                                     </tr>
                                     
                                 </thead>
@@ -94,12 +98,12 @@
                                                 
                                             </td>
                                             <td>
-                                                    
+                                                     
                                                     @if($ar->budget != null)
-                                                        <a href="" id="{{$ar->departement_entreprises_id}}" class="modifier"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#d0af41" class="fa-solid fa-pen-clip"></i></a>
-                                                        <input type="number" style="height:30px;" value="{{$ar->budget}}" name="bud{{$ar->departement_entreprises_id}}" id="{{$ar->departement_entreprises_id}}" class="form-control text-end tes" required>  
+                                                        <a href="" id="{{$ar->departement_entreprises_id}}" data="{{$an->id}}" class="modifier"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#d0af41" class="bx bx-edit-alt"></i></a>
+                                                        <input type="text" style="height:30px;" value="{{number_format($ar->budget, 0, ',', '.')}}" name="bud{{$ar->departement_entreprises_id}}" id="{{$ar->departement_entreprises_id}}" class="form-control text-end tes" required>  
                                                     @else
-                                                    <a href="" id="{{$ar->departement_entreprises_id}}" class="ajout"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#41D053" class="fa-solid fa-circle-check"></i></a>
+                                                    <a href="" id="{{$ar->departement_entreprises_id}}" data="{{$an->id}}" class="ajout"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#41D053" class="fa-solid fa-circle-check"></i></a>
                                                     <input type="number" style="height:30px;" value="" placeholder="veillez entré votre budget" name="bud{{$ar->departement_entreprises_id}}" id="{{$ar->departement_entreprises_id}}" class="form-control text-end tes" >  
                                                     @endif
                                                     
@@ -107,7 +111,11 @@
                                                
                                             </td>
                                             <td>
-                                                <input type="text" style="height:30px" name="ecart{{$ar->departement_entreprises_id}}" id="ecart{{$ar->departement_entreprises_id}}"  class="form-control text-end" disabled>
+                                                @foreach($ecart as $ec)
+                                                @if( $ar->departement_entreprises_id == $ec->departement_entreprises_id)
+                                                <input type="text" style="height:30px"  value="{{number_format($ec->budget-$ec->somme, 0, ',', '.')}} Ar" class="form-control text-end" disabled>
+                                                @endif
+                                                @endforeach
                                             </td>
                                         </tr>
                                         
@@ -124,10 +132,10 @@
                                 <thead>
                                     <tr class="text-dark" style="text-align:center">
                                         <th>Module</th>
-                                        <th style="text-align: center">Participant</th>
+                                        <th style="text-align: center">Pax</th>
                                         <th>Plan prévisionnelle</th>
                                         <th>Budget (Ar)</th>
-                                        <th>Ecart (Ar)</th>
+                                        <th>Ecart </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -136,7 +144,7 @@
                                         <td>
                                             {{$mo->nom_formation}} 
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             @foreach($module as $mod)
                                             @if($mod->thematique_id == $mo->thematique_id)
                                                {{ $mod->c}}
@@ -163,25 +171,21 @@
                                         <td>
 
                                             @if($mo->budget == null)
-                                                <a id="{{$mo->thematique_id}}" class="thematique"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#41D053" class="fa-solid fa-circle-check"></i></a>
-                                                <input style="height:30px" placeholder="veillez entre votre budget"  type="number" id="{{$mo->thematique_id}}" name="bud{{$mo->thematique_id}}" class="form-control mod text-end" >
+                                                <a id="{{$mo->thematique_id}}" data="{{$an->id}}"  class="thematique"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#41D053" class="fa-solid fa-circle-check"></i></a>
+                                                <input style="height:30px" placeholder="veillez entre votre budget" data="{{$an->id}}"  type="number" id="{{$mo->thematique_id}}" name="bud{{$mo->thematique_id}}" class="form-control mod text-end" >
                                             @else
-                                            <a id="{{$mo->thematique_id}}" class="modthematique"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#d0af41" class="fa-solid fa-pen-clip"></i></a>
-                                            <input style="height:30px"   type="number" id="{{$mo->thematique_id}}" name="bud{{$mo->thematique_id}}" class="form-control mod text-end" value="{{$mo->budget}}">
+                                            <a id="{{$mo->thematique_id}}" data="{{$an->id}}"  class="modthematique"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#d0af41" class="bx bx-edit-alt"></i></a>
+                                            <input style="height:30px"   type="text" id="{{$mo->thematique_id}}" name="bud{{$mo->thematique_id}}" class="form-control mod text-end" value="{{number_format($mo->budget, 0, ',', '.')}}">
                                             @endif
                                             
                                         </td>
                                         <td>
-                                            {{-- <?php 
-                                            // if ($mo->budget == null) {
-                                            //     $s = 1;
-                                            // }
-                                            // else {
-                                            //     $s=intval($mo->budget)+1;
-                                            // }
-                                            // $ecart = intval($t) - $s;
-                                            ?> --}}
-                                            <input style="height:30px"  type="text" name="ecart{{$mo->thematique_id}}" value="" class="form-control text-end" disabled>
+                                            
+                                            @foreach($ecartMod as $ecarM)
+                                            @if($mo->thematique_id == $ecarM->thematique_id)
+                                            <input type="text" style="height:30px"  value="{{number_format( $ecarM->budget-$ecarM->somme, 0, ',', '.')}} Ar" class="form-control text-end" disabled>
+                                            @endif
+                                            @endforeach
                                         </td> 
                                     </tr>
                                     @endforeach
@@ -195,7 +199,7 @@
         </div>
         <div class="col-md-12 mt-3">
             <h3 style="font-size: 16px;">Les demandes :</h3>
-            <table class="table table-hover " style="wifth:600px" id="example" 
+            <table class="table table-bordered table-responsive" style="wifth:600px" id="example" 
                 
                 
                 {{-- data-toolbar=".toolbar" --}}
@@ -240,9 +244,7 @@
                                     @endif
                                @endforeach
                                 @if(isset($mat)) 
-                                    {{ $mat }}
-                                    
-                                    
+                                    {{ $mat }}     
                                 @endif
                             </td>
                             <td>
@@ -339,14 +341,14 @@
                                     @endif    
                                 @endforeach
                             </td>
-                            <td>    
+                            <td class="text-center">    
                                 @foreach($besoin as $be)   
                                     @if ($be->stagiaire_id == $st->stagiaire_id)            
                                         <?php $stat = $be->statut?>
                                         @if($stat == '0')
-                                        <span style="padding: 1px" class="bg-warning mt-2 text-sm rounded text-white">En attente</span> <br>
+                                        <span style="padding: 1px" class=" mt-2 text-sm rounded text-white"><i class='bx bx-loader-circle bx-spin' style="color: rgba(255, 170, 0, 0.922);font-size:20px"></i></span> <br>
                                         @elseif($stat== '1')
-                                            <span  class=" mt-3 rounded text-white" style="background:#41D053;padding: 1px">validé</span> <br>
+                                            <span  class=" mt-3 rounded text-white" style=";padding: 1px"><i class='bx bx-user-check' style="color: rgba(54, 230, 15, 0.922);font-size:20px" ></i></span> <br>
                                         @else
                                             <span class=" rounded text-white mt-3" style="background:#f54c49">Non-validé</span> <br>
                                         @endif
@@ -358,23 +360,28 @@
                                 @foreach($besoin as $be)   
                                     @if ($be->stagiaire_id == $st->stagiaire_id)  
                                         @if($be->cout == '0')
-                                        <input style="height: 30px;width:150px" type="text"  value="{{number_format(300000, 0, ',', '.')}} " name="cout_{{$be->id}}" class="form-control text-end">   
+                                        <input style="height: 30px;width:150px;font-size:12px" type="number"  value="300.000" name="cout_{{$be->id}}" class="form-control text-end">   
                                         @else
-                                        <a  class="coudre" id="{{$be->id}}"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#d0af41" class="fa-solid fa-pen-clip"></i></a>
-                                        <input style="height: 30px;width:150px" type="text"  value="{{number_format($be->cout, 0, ',', '.')}}" name="cout_{{$be->id}}"  class="form-control text-end "> 
+                                        @if($be->arbitrage == '1')
+                                        <a  class="coudre" id="{{$be->id}}"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#d0af41" class="bx bx-edit-alt"></i></a>
+                                        <input style="height: 30px;width:150px;font-size:12px;background:rgba(134, 218, 136, 0.2)" type="number"  value="{{number_format($be->cout, 0, ',', '.')}}" name="cout_{{$be->id}}"  class="form-control text-end "> 
+                                        @else
+                                        <a  class="coudre" id="{{$be->id}}"><i style="margin-left: 10px;margin-top:7px;position: absolute;color:#d0af41" class="bx bx-edit-alt"></i></a>
+                                        <input style="height: 30px;width:150px;font-size:12px" type="number"  value="{{number_format($be->cout, 0, ',', '.')}}" name="cout_{{$be->id}}"  class="form-control text-end "> 
+                                        @endif
                                         @endif
 
                                     @endif 
                                 @endforeach
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @foreach($besoin as $be)   
                                 @if ($be->stagiaire_id == $st->stagiaire_id) 
                                     <?php $arbitre = $be->arbitrage ?>  
                                     @if($arbitre == '1')
-                                    <a  data-id="{{$be->id}}" class="refu" style=""><span class=" rounded text-white mt-3" style="background:#f54c49">Réfuser</span></a> <br>
+                                    <a  data-id="{{$be->id}}" class="refu " ><span class=" rounded text-white mt-3" style=""><i class='bx bx-x-circle mt-2' style="color: #c31212;font-size:22px"></i></span></a> <br>
                                     @else
-                                    <a  data-id="{{$be->id}}" class=" valide"  style="" ><span  class=" mt-3 rounded text-white" style="background:#41D053;padding: 1px">validé</span></a><br>
+                                    <a  data-id="{{$be->id}}" class=" valide" data={{$an->id}} style="" ><span  class=" mt-3 rounded text-white" style="padding: 1px"><i class="fa-solid fa-circle-check mt-2" style="color: #41D053;font-size:20px"></i></span></a><br>
                                     @endif         
                                    
                                 @endif    
@@ -386,6 +393,7 @@
                        
                     </tbody>
                 </table>
+                @endforeach
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jqueryui@1.11.1/jquery-ui.min.js"></script>
@@ -475,6 +483,7 @@
                 var departement_id = $("input[name=departement_id_"+id+"]").val()
                 var service_id = $("input[name=service_id_"+id+"]").val()
                 var thematique_id = $("input[name=thematique_id_"+id+"]").val()
+                var anne_id = $(this).attr("data")
                 
                 $.ajax({
                     method: "POST",
@@ -491,6 +500,7 @@
                         service_id:service_id,
                         thematique_id:thematique_id,
                         id:id,
+                        anne_id:anne_id,
                     },
                     
                     success:function(response){
@@ -526,17 +536,20 @@
 
             $(".ajout").on('click', function () {
                 var id = $(this).attr("id")
+                var anne_id = $(this).attr("data")
                 var budget = $("input[name=bud"+id+"]").val()
+                // alert(id);
                 $.ajax({
                     method:"POST",
                     url:"/budgetPlan",
                     data:{
                         id:id,
                         budget:budget,
+                        anne_id:anne_id,
                     },
                     dataType : 'json',
                     success:function(response){
-                        location.reload()
+                        // location.reload()
                         console.log(response)
                         
                     },
@@ -548,13 +561,16 @@
             $(".modifier").on('click', function () {
                 var id = $(this).attr("id")
                 var budget = $("input[name=bud"+id+"]").val()
-                // alert(id)
+                var anne_id = $(this).attr("data")
+
+                alert(anne_id);
                 $.ajax({
                     method:"POST",
                     url:"/budgetPlanMod",
                     data:{
                         id:id,
                         budget:budget,
+                        anne_id:anne_id,
                     },
                     dataType : 'json',
                     success:function(response){
@@ -572,13 +588,15 @@
             $(".thematique").on('click', function () {
                 var id = $(this).attr("id")
                 var budget = $("input[name=bud"+id+"]").val()
-                
+                var anne_id = $(this).attr("data")
+                // alert(anne_id)
                 $.ajax({
                     method:"POST",
                     url:"/budgetthematique",
                     data:{
                         id:id,
                         budget:budget,
+                        anne_id:anne_id,
                     },
                     dataType : 'json',
                     success:function(response){
@@ -594,8 +612,11 @@
                 })
             });
             $(".modthematique").on('click', function () {
+                
                 var id = $(this).attr("id")
                 var budget = $("input[name=bud"+id+"]").val()
+                alert(budget)
+                var anne_id = $(this).attr("data")
                 
                 $.ajax({
                     method:"POST",
@@ -603,6 +624,7 @@
                     data:{
                         id:id,
                         budget:budget,
+                        anne_id:anne_id,
                     },
                     dataType : 'json',
                     success:function(response){

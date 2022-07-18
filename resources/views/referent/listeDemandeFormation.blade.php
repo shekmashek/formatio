@@ -74,7 +74,7 @@
                         <tbody>
                             <tr>
                             <td>
-                                <div  id="collapseExample_{{$p->AnneePlan}}">
+                                <div  class="collapse" id="collapseExample_{{$p->AnneePlan}}">
                                     <div class="row">
                                         <div class="col-md-6 p-4">
                                             <h5>Plan Previsionnel</h5>

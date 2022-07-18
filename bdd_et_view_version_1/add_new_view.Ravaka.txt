@@ -6,6 +6,7 @@ f.domaine_id,
 f.id as formation_id,
 besoin.stagiaire_id ,
 besoin.objectif,
+
 besoin.date_previsionnelle as date_prev,
 besoin.organisme,
 besoin.statut,

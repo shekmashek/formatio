@@ -87,7 +87,7 @@
                         <input type="text" name="organisme" class="form-control" >
                     </div>
                     <div class="input-groupe mt-2">
-                        <label for="">heure de formation:</label>
+                        <label for="">durée de la formation formation:</label>
                         <input type="number" name="dure" class="form-control" >
                     </div>
                     <div class="input-groupe mt-2">
@@ -102,9 +102,9 @@
                     <div class="input-groupe mt-4">
                         <label for="">Priorité:</label>
                         <select name="priorite" id="" class="form-control">
-                            <option value="Peu critique" > Peu critique</option>
-                            <option value="Critique">Critique</option>
-                            <option value="Trés critique">Trés critique</option>
+                            <option value="1 Peu critique" > 1 Peu critique</option>
+                            <option value="2 Critique"> 2 Critique</option>
+                            <option value="3 Trés critique">3 Trés critique</option>
                             
                         </select>
                     </div>

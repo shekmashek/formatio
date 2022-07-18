@@ -96,9 +96,10 @@
                                 <th>Service</th>
                                 <th>domaine</th>
                                 <th>thematique</th>
-                                <th>date prévisionnelle</th>
+                                <th>date</th>
                                 <th>Organisme</th>
                                 <th>Urgence</th> 
+                                <th>Priorité</th>
                                 <th></th>
                             </tr>
                             <tbody>
@@ -161,12 +162,21 @@
                                     <th><input type="date" name="date" style="width: 100px;height:30px;font-size:12px" class="form-control" required></th>
                                     <th><input style="width: 100px;height:30px;font-size:12px" name="organisme" type="text" class="form-control" required></th>
                                     <th>
-                                        <select name="type" class="form-control"  style="width: 150px;height:30px;font-size:12px" id="" required>
+                                        <select name="type" class="form-control"  style="width: 100px;height:30px;font-size:12px" id="" required>
                                             <option value="urgent" >urgent</option>
                                             <option value="non-urgent" >non-urgent</option>    
                                         </select>
                                     </th>
-                                    <th><button class="btn btn-info text-light" type="submit" style="width: 90px;height:30px;font-size:12px">Ajouter</button></th>
+                                    <th>
+                                        <select name="type_demande" class="form-control"  style="width: 100px;height:30px;font-size:12px" id="" required>
+                                            <option value="1 Pritique" >1 critique</option>
+                                            <option value="2 Peu critique" >2 peu critique</option>  
+                                            <option value="3 Trés critique" >3 Trés critique</option>    
+                                        </select>
+                                    </th>
+                                    
+                                    <th><button class="btn btn-info text-light" type="submit" style="width: 80px;height:30px;font-size:12px">Ajouter</button></th>
+                                    
                                 </tr>
                             </form>
                             </tbody>
@@ -216,77 +226,22 @@
                             <th>Organisme</th>
                             <th>Urgence</th>
                             <th>N+1</th>
+                            <th>Priorité</th>
                         </tr>
                     </thead>
                     
                     <tbody>
                         @foreach ($stagiaire as $st)
                         <tr>
-                            <td>
-                                @foreach ($besoin as $be)
-                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
-                                        <?php $mat = $be->stagiaire->matricule;
-                                        break;?>
-                                    @else
-                                    <?php $mat = ''; ?>
-                                    @endif
-                               @endforeach
-                                @if(isset($mat)) 
-                                    {{ $mat }}
-                                @endif
-                            </td>
-                            <td>
-                                @foreach ($besoin as $be)
-                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
-                                        <?php $nom = $be->stagiaire->nom_stagiaire;
-                                        break;?>
-                                    @else
-                                    <?php $nom = ''; ?>
-                                    @endif
-                               @endforeach
-                                @if(isset($nom)) 
-                                    {{ $nom }}
-                                @endif
-                            </td>
-                            
-                            <td>
-                                @foreach ($besoin as $be)
-                                @if ($be->stagiaire_id == $st->stagiaire_id)            
-                                    <?php $fonc = $st->fonction_stagiaire ?>
-                                @endif 
-                                @endforeach
-                                @if(isset($fonc)) 
-                                {{ $fonc}}
-                                @endif
-                            </td>
-                            <td>
-                                @foreach ($besoin as $be)
-                                @if ($be->stagiaire_id == $st->stagiaire_id)            
-                                    <?php $fonc = $st->nom_departement ?>                                    
-                                    @endif 
-                                @endforeach
-                                @if(isset($fonc))
-                                    {{ $fonc}}
-                                @endif
-                            </td>
-                            <td>
-                                @foreach ($besoin as $be)
-                                @if ($be->stagiaire_id == $st->stagiaire_id)            
-                                    <?php $fonc = $st->nom_service ?> 
-                                    @endif 
-                                @endforeach
-                                @if(isset($fonc))
-                                    @if($fonc == null)
-                                        <?php echo ('non categorisé')?>
-                                    @else
-                                        {{$fonc}}
-                                    @endif
-                                @endif
-                            </td>
+                            <td>{{ $st->matricule }}</td>
+                            <td>{{ $st->nom_stagiaire }}</td>
+                            <td>{{ $st->fonction_stagiaire }}</td>
+                            <td>{{ $st->nom_departement }}</td>
+                            <td>{{ $st->nom_service }}</td>
                             <td>    
                                 @foreach($besoin as $be)   
                                     @if ($be->stagiaire_id == $st->stagiaire_id)            
-                                    &nbsp; {{$be->formation->nom_formation }} <br>
+                                    &nbsp; {{$be->nom_formation }} <br>
                                     @endif    
                                 @endforeach
                             </td>
@@ -302,7 +257,7 @@
                                     @if ($be->stagiaire_id == $st->stagiaire_id)            
                                      &nbsp; {{$be->organisme}} <br>
                                     @endif    
-                            @endforeach
+                                @endforeach
                             </td>
                             <td>    
                                 @foreach($besoin as $be)   
@@ -326,6 +281,13 @@
                                 @endforeach
                                 
                             </td>
+                            <td>
+                                @foreach($besoin as $be)   
+                                @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                 &nbsp; {{$be->priorite}} <br>
+                                @endif    
+                            @endforeach
+                            </td>
                             @endforeach
                         </tr>
                     </tbody>
@@ -348,10 +310,16 @@
                 select: true,
                 responsive:true,
                 search:true,
+                // paging: false,
+                // searching: false
                 language:{
                     url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/fr-FR.json",
                 },
             });
+            $(".reload").on('click',function(){
+                var table = $('#example').DataTable().ajax.reload()
+                // alert('test')
+            }) 
             table.on( 'column-reorder', function ( e, settings, details ) {
                 var headerCell = $( table.column( details.to ).header() );
             
@@ -373,10 +341,7 @@
             $(function() {
                 $('#example').bootstrapTable()
             }) 
-            $(".reload").on('click',function(){
-                $('#example').bootstrapTable().clear().draw();
-                // alert('test')
-            }) 
+           
             $('a.toggle-vis').on('click', function (e) {
             e.preventDefault();
     
