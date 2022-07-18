@@ -340,7 +340,7 @@
     </div>
 </div>
 <script>
-    $(".montrer").on('click', function(e) {
+    $(".information").on('click', function(e) {
 
         let id = $(this).data("id");
         $.ajax({
