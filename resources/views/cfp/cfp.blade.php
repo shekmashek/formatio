@@ -340,12 +340,12 @@
     </div>
 </div>
 <script>
-    $(".montrer").on('click', function(e) {
-
+    $(".information").on('click', function(e) {
         let id = $(this).data("id");
+        // alert(id);
         $.ajax({
             method: "GET"
-            , url: "/afficher_info_of"
+            , url: "{{route('afficher_info_of')}}"
             , data: {
                 Id: id
             }
