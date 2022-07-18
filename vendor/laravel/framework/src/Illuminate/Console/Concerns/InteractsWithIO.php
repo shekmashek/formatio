@@ -2,6 +2,7 @@
 
 namespace Illuminate\Console\Concerns;
 
+use Closure;
 use Illuminate\Console\OutputStyle;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
@@ -63,7 +64,7 @@ trait InteractsWithIO
      * Get the value of a command argument.
      *
      * @param  string|null  $key
-     * @return string|array|null
+     * @return array|string|bool|null
      */
     public function argument($key = null)
     {
@@ -216,7 +217,7 @@ trait InteractsWithIO
      *
      * @param  array  $headers
      * @param  \Illuminate\Contracts\Support\Arrayable|array  $rows
-     * @param  string  $tableStyle
+     * @param  \Symfony\Component\Console\Helper\TableStyle|string  $tableStyle
      * @param  array  $columnStyles
      * @return void
      */
@@ -235,6 +236,38 @@ trait InteractsWithIO
         }
 
         $table->render();
+    }
+
+    /**
+     * Execute a given callback while advancing a progress bar.
+     *
+     * @param  iterable|int  $totalSteps
+     * @param  \Closure  $callback
+     * @return mixed|void
+     */
+    public function withProgressBar($totalSteps, Closure $callback)
+    {
+        $bar = $this->output->createProgressBar(
+            is_iterable($totalSteps) ? count($totalSteps) : $totalSteps
+        );
+
+        $bar->start();
+
+        if (is_iterable($totalSteps)) {
+            foreach ($totalSteps as $value) {
+                $callback($value, $bar);
+
+                $bar->advance();
+            }
+        } else {
+            $callback($bar);
+        }
+
+        $bar->finish();
+
+        if (is_iterable($totalSteps)) {
+            return $totalSteps;
+        }
     }
 
     /**
@@ -332,7 +365,20 @@ trait InteractsWithIO
         $this->comment('*     '.$string.'     *');
         $this->comment(str_repeat('*', $length));
 
-        $this->output->newLine();
+        $this->newLine();
+    }
+
+    /**
+     * Write a blank line.
+     *
+     * @param  int  $count
+     * @return $this
+     */
+    public function newLine($count = 1)
+    {
+        $this->output->newLine($count);
+
+        return $this;
     }
 
     /**
