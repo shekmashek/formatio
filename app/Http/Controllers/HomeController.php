@@ -800,6 +800,19 @@ class HomeController extends Controller
             // fin pagination
 
             $data = DB::select('select projet_id,nom_projet,type_formation_id,type_formation,groupe_id,nom_groupe,module_id,nom_module,date_debut,date_fin,cfp_id,nom_cfp,modalite,item_status_groupe,class_status_groupe from v_groupe_projet_entreprise where entreprise_id = ?',[$entreprise_id]);
+            
+            // $nomCfps = DB::select('select nom_cfp  from v_groupe_projet_entreprise group by nom_cfp asc');
+            // $nomSessions = DB::select('select nom_groupe from v_groupe_projet_entreprise group by nom_groupe order by groupe_id asc');
+            // $nomModalites = DB::select('select modalite from v_groupe_projet_module group by modalite');
+            // $nomModules = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
+            // $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module group by item_status_groupe');
+            // $nomTypes = DB::select('select type_formation from v_projet_session group by type_formation');
+            // $nomProjet = DB::table('v_projet_session')
+            //     ->select('nom_projet')
+            //     ->groupBy('nom_projet')
+            //     ->orderBy('projet_id', 'ASC')
+            //     ->get();
+
             $dataInterne = DB::select('select projet_id,nom_projet,type_formation_id,type_formation,groupe_id,nom_groupe,module_id,nom_module,date_debut,date_fin,0 as cfp_id,"-" as nom_cfp,modalite,item_status_groupe,class_status_groupe from v_groupe_entreprise_interne where entreprise_id = ?',[$entreprise_id]);
             foreach($dataInterne as $interne) {
                 array_push($data,$interne);
@@ -947,7 +960,12 @@ class HomeController extends Controller
             // fin pagination
             // $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request, $nb_par_page, $offset);
             // $projet = DB::select($sql);
-            $projet = DB::select('select * from v_projet_session where cfp_id = ?',[$cfp_id]);
+
+            $projet = DB::table('v_projet_session')
+                ->select('nom_projet', 'projet_id', 'type_formation_id', 'totale_session', 'type_formation')
+                ->where('cfp_id', '=', $cfp_id)
+                ->get();
+
             $devise = DB::select('select * from devise')[0]->devise;
 
             // $lieu_formation =DB::table('details')->groupBy("groupe_id")->get();

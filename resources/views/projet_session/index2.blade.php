@@ -323,7 +323,7 @@
             /* border-bottom: 3px solid #673ab7; */
         }
 
-        #modifTable_length label, #modifTable_length select, #modifTable_filter label, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
+        .modifTable_length label, .modifTable_length select, .modifTable_filter label, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
             font-size: 13px;
         }
 
@@ -386,7 +386,7 @@
                     @endif
                     <div class="row">
                         <div class="fixedTop shadow-sm p-3 mb-5 bg-body rounded">
-                            <table id="modifTable" class="table">
+                            <table class="table modifTable">
                                 <thead style="position: sticky; top: 0">
                                     <tr>
                                         <th class="headProject" style="min-width: 10%;"><i class='bx bx-library'></i> Projet</th>
@@ -415,7 +415,7 @@
                                     <tr>
                                         <th class="headProject">
                                             <div class="btn-group btn-group-sm dropend shadow-sm" style="width: 100%">
-                                                <button type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button id="myBtn" type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
                                                   <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
                                                 </button>
 
@@ -1706,7 +1706,7 @@
                                 <span class="text-center">Vous n'avez pas encore du projet.</span>
                             </div>
                         @else
-                            <table id="modifTable" class="table">
+                            <table class="table modifTable">
                                 <thead style="position: sticky; top: 0">
                                     <tr>
                                         <th class="headProject" style="min-width: 10%;"><i class='bx bx-library'></i> Projet</th>
@@ -2475,7 +2475,6 @@
 
     <script type='text/javascript'>
         $(document).ready(function() {
-            
             var options = {
                 html: true,
                 title: "Optional: HELLO(Will overide the default-the inline title)",
@@ -2488,11 +2487,10 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#modifTable thead tr:eq(1) th').each( function () {
+            $('.modifTable thead tr:eq(1) th').each( function () {
                 var title = $(this).text();
                 $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px; margin-bottom: 0"/>');
 
-                // $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
                 $( "th.toHide > input" ).prop( "disabled", true ).attr( "placeholder", "" );
                 $( "th.toHideAction > input" ).addClass( "hideAction");
             } );
@@ -2510,7 +2508,7 @@
                 });
             }
             
-            $( '#modifTable thead'  ).on( 'keyup', ".column_search",function () {
+            $( '.modifTable thead'  ).on( 'keyup', ".column_search",function () {
         
                 table
                     .column( $(this).parent().index() )
@@ -2518,7 +2516,8 @@
                     .draw();
             } );
 
-            var table = $('#modifTable').removeAttr('width').DataTable({
+            var table = $('.modifTable').removeAttr('width').DataTable({
+
                 initComplete : function() {
                     $("#myDatatablesa_filter").detach().appendTo('#new-search-area');
                 },
@@ -2541,49 +2540,49 @@
                     "lengthMenu":     "Affichage _MENU_ ",
                 }
             });
-            
+
             $('input:checkbox').on('change', function () {
                 var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
                     return '^' + this.value + '$';
                 }).get().join('|');
                 
-                table.column(0).search(Projet, true, false, false).draw(false);
+                table.column(0).search(Projet, true, false, false).draw();
 
                 var Session = $('input:checkbox[name="session"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(1).search(Session, true, false, false).draw(false);
+                table.column(1).search(Session, true, false, false).draw();
 
                 var Entreprise = $('input:checkbox[name="entreprise"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(3).search(Entreprise, true, false, false).draw(false);
+                table.column(3).search(Entreprise, true, false, false).draw();
 
                 var Modalite = $('input:checkbox[name="modalite"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(4).search(Modalite, true, false, false).draw(false);
+                table.column(4).search(Modalite, true, false, false).draw();
                 
                 var TypeFormation = $('input:checkbox[name="typeFormation"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(8).search(TypeFormation, true, false, false).draw(false);
+                table.column(8).search(TypeFormation, true, false, false).draw();
                 
                 var Module = $('input:checkbox[name="module"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(2).search(Module, true, false, false).draw(false);
+                table.column(2).search(Module, true, false, false).draw();
                 
                 var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(7).search(Statut, true, false, false).draw(false);
+                table.column(7).search(Statut, true, false, false).draw();
             
             });
 
