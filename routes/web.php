@@ -1611,4 +1611,6 @@ Route::get('supprimer_salle_etp/{id?}','SalleFormationEtpController@destroy')->n
 Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->name('modifier_salle_etp');
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
 
-
+//route multilangage
+Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+Route::get('/languageDemo', 'App\Http\Controllers\HomeController@languageDemo');

@@ -1813,4 +1813,8 @@ class HomeController extends Controller
 
         return response()->json($etp);
     }
+
+    public function languageDemo(){
+        return view('languageDemo');
+    }
 }

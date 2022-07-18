@@ -712,6 +712,18 @@
                                     </ul>
                                 @endcanany
                                 @canany(['isReferent','isReferentSimple'])
+                                    {{-- <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span> {{ Config::get('languages')[App::getLocale()]['display'] }}
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        @foreach (Config::get('languages') as $lang => $language)
+                                            @if ($lang != App::getLocale())
+                                                    <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"><span class="flag-icon flag-icon-{{$language['flag-icon']}}"></span> {{$language['display']}}</a>
+                                            @endif
+                                        @endforeach
+                                        </div>
+                                    </li> --}}
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
                                         <li id="employe">
@@ -1007,6 +1019,8 @@
     {{-- ce script bloque le jquery.min et jquery-ui --}}
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     @endif
+
+
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
