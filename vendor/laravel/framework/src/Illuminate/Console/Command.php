@@ -38,14 +38,14 @@ class Command extends SymfonyCommand
     /**
      * The console command description.
      *
-     * @var string|null
+     * @var string
      */
     protected $description;
 
     /**
      * The console command help text.
      *
-     * @var string|null
+     * @var string
      */
     protected $help;
 
@@ -111,7 +111,7 @@ class Command extends SymfonyCommand
      * @param  \Symfony\Component\Console\Output\OutputInterface  $output
      * @return int
      */
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $this->laravel->make(
             OutputStyle::class, ['input' => $input, 'output' => $output]
@@ -131,7 +131,9 @@ class Command extends SymfonyCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        return (int) $this->laravel->call([$this, 'handle']);
+        $method = method_exists($this, 'handle') ? 'handle' : '__invoke';
+
+        return (int) $this->laravel->call([$this, $method]);
     }
 
     /**
@@ -161,8 +163,10 @@ class Command extends SymfonyCommand
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
@@ -170,7 +174,7 @@ class Command extends SymfonyCommand
     /**
      * {@inheritdoc}
      */
-    public function setHidden(bool $hidden)
+    public function setHidden(bool $hidden = true): static
     {
         parent::setHidden($this->hidden = $hidden);
 
