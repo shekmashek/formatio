@@ -74,7 +74,7 @@
                         <tbody>
                             <tr>
                             <td>
-                                <div  class="collapse" id="collapseExample_{{$p->AnneePlan}}">
+                                <div  id="collapseExample_{{$p->AnneePlan}}">
                                     <div class="row">
                                         <div class="col-md-6 p-4">
                                             <h5>Plan Previsionnel</h5>
@@ -185,10 +185,13 @@
                                         <div class="row mt-3" style="margin-top: -20px">
 
                                             <div>
+                                                @if($p->cloture == 0)
                                                 <span  class="te "><a href="{{route('liste.demande',$p->id)}}" class="btn btn-info  mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
+                                                @else
+                                                <span  class="te "><a href="{{route('plan.cloture',$p->id)}}" class="btn btn-info  mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Résultat de l'arbitrage</a> </span>
+                                                @endif
                                                 <span class="te "> <a href="{{route('besoin.PDF',$p->id)}}" class="btn btn-primary  mt-2 text-light"> <i class="fa-solid fa-file-pdf" ></i>&nbsp; Export liste</a> </span>
-
-                                        </div>
+                                            </div>
                                     </div>
                                         {{-- <div class="col-md-6 p-4 ">
                                             <h5>Reccueil de besoins</h5>

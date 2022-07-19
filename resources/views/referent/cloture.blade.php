@@ -47,7 +47,12 @@
                     
                 </div>
                 <div class="float-end"> 
+                    @if($an->cloture == 1) 
+                    <a class="btn btn text-light" style="background: #9359ff" href="/ArbitragePlan/{{$an->id}}">Acceder a l'arbitrage</a>
+                    <a class="btn btn-dark text-light" href="/liste_demande_stagiaire"><i class="fa-solid fa-caret-left"></i>&nbsp;Retour</a>
+                    @else
                     <a class="btn btn-dark text-light" href="/ArbitragePlan/{{$an->id}}"><i class="fa-solid fa-caret-left"></i>&nbsp;Retour</a>
+                    @endif
                     @endforeach
                 </div>
             </div>
@@ -213,26 +218,66 @@
 
                             </div>
                             <div class="col-md-1">
-                                <button style="float: right;width:165px;" class="btn btn-primary mb-2"><i class='bx bxs-file-pdf'></i> Export PDF</button>
+                                <a href="{{route('plan.besoin_departement_PDF',$an->id)}}" style="float: right;width:165px;" class="btn btn-primary mb-2 text-light"><i class='bx bxs-file-pdf'></i> Export PDF</a>
                             </div>
                             
                         </div>
                         <table class="table table-hover mt-5" id="departement">
                             <thead>
                                 <tr >
+                                    <th></th>
                                     <th class="text-center">Département</th>
                                     <th class="text-center">Budget</th>
-                                    <th class="text-center">Pax</th>
+                                    <th class="text-center">Besoins</th>
                                     
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($departement as $dep)
                                     <tr class="text-center">
+                                        <td class="text-start">
+                                            <a  style="font-size:15px" data-bs-toggle="collapse" href="#collapseExample_{{$dep->departement_entreprises_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class='bx bx-down-arrow-circle'></i></a>
+                                        </td>
                                         <td>{{$dep->nom_departement}}</td>
                                         <td>{{number_format($dep->budget, 0, ',', '.')}} Ar</td>
-                                        <td></td>
+                                        <td>
+                                            @foreach($paxdep as $pax)
+                                            @if($dep->departement_entreprises_id == $pax->departement_entreprises_id)
+                                                {{$pax->pax}}
+                                            @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <div class="collapse" id="collapseExample_{{$dep->departement_entreprises_id}}">
+                                                <div class="card card-body">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <th>IM</th>
+                                                            <th>Nom</th>
+                                                            <th>Email</th>
+                                                            <th>Module</th>                        
+                                                            <th>Budget</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($besoindep as $bd)
+                                                            @if($dep->departement_entreprises_id == $bd->departement_entreprises_id)
+                                                                <tr class="text-start">
+                                                                    <td>{{$bd->matricule}}</td>
+                                                                    <td>{{$bd->nom_stagiaire}}</td>
+                                                                    <td>{{$bd->mail_stagiaire}}</td>
+                                                                    <td>{{$bd->nom_formation}}</td>
+                                                                    
+                                                                    <td>{{number_format($bd->cout, 0, ',', '.')}} Ar</td>
+                                                                </tr>
+                                                            @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
+                                    
                                 @endforeach
                             </tbody>
                         </table>
@@ -244,7 +289,7 @@
 
                             </div>
                             <div class="col-md-1">
-                                <button style="float: right;width:165px;" class="btn btn-primary mb-2"><i class='bx bxs-file-pdf'></i> Export PDF</button>
+                                <a href="{{route('plan.besoin_module_PDF',$an->id)}}" style="float: right;width:165px;" class="btn btn-primary mb-2 text-light"><i class='bx bxs-file-pdf'></i> Export PDF</a>
                             </div>
                             
                         </div>

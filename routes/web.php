@@ -808,6 +808,8 @@ Route::get('/getEmployer','PlanFormationController@getemployer');
 Route::post('/modcout','PlanFormationController@modcout');
 Route::get('/cloturePlan/{id}','PlanFormationController@cloture')->name('plan.cloture');
 Route::get('/besoin_valide_pdf/{id}','PlanFormationController@planPDF')->name('plan.besoinPDFV');
+Route::get('/plan_departement/{id}','PlanFormationController@plandepartement')->name('plan.besoin_departement_PDF');
+Route::get('/plan_module_PDF/{id}','PlanFormationController@planmodule')->name('plan.besoin_module_PDF');
 /////////////////fin modification Mahafaly //////////////////////////////
 
 //ajouter nouveau plan

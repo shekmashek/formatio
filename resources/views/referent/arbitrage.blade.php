@@ -54,7 +54,7 @@
                     
                 </div>
                 <div class="float-end">
-                    <a href="{{route('plan.cloture',$an->id)}}" class="btn text-light" style="background:#9359ff" href=""><i class='bx bx-calendar-check'></i>&nbsp;Cloturé</a>
+                    <a href="{{route('plan.cloture',$an->id)}}" class="btn text-light" style="background:#9359ff" ><i class='bx bx-calendar-check'></i>&nbsp;Cloturé</a>
                     <a class="btn btn-dark text-light" href="/ListedemandeFormation/{{$an->id}}"><i class="fa-solid fa-caret-left"></i>&nbsp;Retour</a>
                   
                 </div>
