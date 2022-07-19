@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+
 
 class Language
 {
@@ -15,13 +17,16 @@ class Language
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+
+        public function handle(Request $request, Closure $next)
     {
-        if (Session()->has('applocale') AND array_key_exists(Session()->get('applocale'), config('languages'))) {
-            App::setLocale(Session()->get('applocale'));
+        // dd($request);
+        if (Session::get("locale") != null) {
+            App::setLocale(Session::get("locale"));
         }
-        else { // This is optional as Laravel will automatically set the fallback language if there is none specified
-            App::setLocale(config('app.fallback_locale'));
+        else{
+            Session::put("locale","fr");
+            App::setLocale(Session::get("locale"));
         }
         return $next($request);
     }

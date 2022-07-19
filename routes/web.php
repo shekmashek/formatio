@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
+use App\Http\Controllers\LanguageController;
 use App\PlanFormation;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
@@ -1612,5 +1613,4 @@ Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->na
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
 
 //route multilangage
-Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
-Route::get('/languageDemo', 'App\Http\Controllers\HomeController@languageDemo');
+Route::get("locale/{lange}", [LanguageController::class, 'langChange']);
