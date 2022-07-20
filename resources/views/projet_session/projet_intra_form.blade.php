@@ -4,10 +4,6 @@
 @endsection
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
-    {{-- select2 --}}
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <style>
         .select2-container .select2-selection--single .select2-selection__rendered {
             padding: 4px 1rem !important;
@@ -152,16 +148,11 @@
         }
 
     </style>
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
-    {{-- <script src="{{asset('js/projet_inter_intra.js')}}"></script> --}}
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
-            $(".my_input_select").select2({
-                dir: 'fr'
-            })
+            $(".my_input_select").select2();
         });
-
     </script>
     <script>
         $('#module_id').on('select2:select', function(event){
