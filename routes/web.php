@@ -1608,4 +1608,6 @@ Route::get('supprimer_salle_etp/{id?}','SalleFormationEtpController@destroy')->n
 Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->name('modifier_salle_etp');
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
 
+Route::get('rapport_presence/{groupe?}','SessionController@rapport_presence')->name('rapport_presence');
+
 

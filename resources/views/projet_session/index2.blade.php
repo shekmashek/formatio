@@ -802,7 +802,7 @@
                                                                                     <li class="action_projet"><a class="dropdown-item" href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
                                                                                     @if ($prj->type_formation_id == 1)
                                                                                         <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank" style="font-size: 13px">Rapport</a></li>
-                                                                                        <li class="action_projet"><a class="dropdown-item" href="#" style="font-size: 13px">Rapport de presence</a></li>
+                                                                                        <li class="action_projet"><a class="dropdown-item" href="{{ route('rapport_presence', [$pj->groupe_id]) }}" style="font-size: 13px">Rapport de presence</a></li>
                                                                                     @endif
                                                                                 </ul>
                                                                             </td>
