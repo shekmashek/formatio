@@ -563,7 +563,7 @@
                 var budget = $("input[name=bud"+id+"]").val()
                 var anne_id = $(this).attr("data")
 
-                alert(anne_id);
+                // alert(anne_id);
                 $.ajax({
                     method:"POST",
                     url:"/budgetPlanMod",

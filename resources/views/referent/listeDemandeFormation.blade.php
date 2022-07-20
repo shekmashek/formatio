@@ -185,7 +185,7 @@
                                         <div class="row mt-3" style="margin-top: -20px">
 
                                             <div>
-                                                @if($p->cloture == 0)
+                                                @if($p->cloture == '0')
                                                 <span  class="te "><a href="{{route('liste.demande',$p->id)}}" class="btn btn-info  mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
                                                 @else
                                                 <span  class="te "><a href="{{route('plan.cloture',$p->id)}}" class="btn btn-info  mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Résultat de l'arbitrage</a> </span>

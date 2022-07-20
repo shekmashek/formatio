@@ -116,7 +116,7 @@ class PlanFormationController extends Controller
     public function liste($id){
         $users_id = Auth::user()->id;
         $entreprise_id = stagiaire::where('user_id', $users_id)->value('entreprise_id');
-        $departement = DB::select('select * from v_stagiaire_departement_budget_plan where entreprise_id = ?',[$entreprise_id]);
+        $departement = DB::select('select * from v_stagiaire_departement_budget_plan where entreprise_id = ? and anneePlan_id = ?',[$entreprise_id,$id]);
         $employer = DB::select('select * from employers where entreprise_id = ? ',[$entreprise_id]);
         $domaine = DB::select('select * from domaines');
         // $besoin = besoins::where('anneePlan_id',$id)->get();
