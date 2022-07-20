@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Mail;
 use phpseclib3\Crypt\RC2;
 use App\Mail\acceptation_session;
 use App\Mail\annuler_session;
+use App\Mail\invitation_ajouter_employer;
 use App\Models\getImageModel;
 use App\Presence;
 use PDF;
@@ -756,5 +757,19 @@ class SessionController extends Controller
                 ->get();
 
         return response()->json($info);
+    }
+
+    public function invitation_ajouter_employer(Request $request){
+        $fonct = new FonctionGenerique();
+        $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
+        $name_session = $session->nom_groupe;
+        $employe = $request->employe;
+        $name_cfp = $session->nom_cfp;
+        $date_debut = $session->date_debut;
+        $date_fin = $session->date_fin;
+        $mail_acteur = $session->mail_cfp;
+        $mail_etp = $session->email_etp;
+        Mail::to($mail_etp)->send(new invitation_ajouter_employer($mail_acteur,$name_session,$name_cfp,$date_debut,$date_fin,$employe));
+        return back();
     }
 }
