@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text_header m-0 mt-1">Modification photo</h3>
+<h3 class="text_header m-0 mt-1">@lang('translation.Modification') @lang('translation.Image')</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
@@ -27,8 +27,8 @@
    @endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Photo de profil
-            <strong>Taille du fichier:(1.7 MB max)</strong>
+        <p style="text-align: left">@lang('translation.ImageDeProfil')
+            <strong>@lang('translation.TailleDuFichier') : (1.7 MB @lang('translation.max'))</strong>
         </p>
         <form   class="btn-submit" action="{{route('update_photos_resp')}}" method="post" enctype="multipart/form-data">
             @csrf
@@ -62,7 +62,7 @@
 
 <input id="file-input" type="file" name="image" value="{{$chef->photos}}"/><br>
 
-<button  class="btn_enregistrer  mt-1 btn modification "><I class="bx bx-check me-1"></I> Enregistrer</button>
+<button  class="btn_enregistrer  mt-1 btn modification "><I class="bx bx-check me-1"></I>@lang('translation.Enregistrer')</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>
@@ -71,18 +71,18 @@
 </div>
 <style>
 
-    .image-ronde{
-      width : 120px; height : 120px;
-      border: none;
-      -moz-border-radius : 75px;
-      -webkit-border-radius : 75px;
-      border-radius : 75px;
-      cursor: pointer;
+.image-ronde{
+    width : 120px; height : 120px;
+    border: none;
+    -moz-border-radius : 75px;
+    -webkit-border-radius : 75px;
+    border-radius : 75px;
+    cursor: pointer;
+}
+    .image-upload > input
+    {
+        display: none;
     }
-        .image-upload > input
-        {
-            display: none;
-        }
           </style>
 
 
