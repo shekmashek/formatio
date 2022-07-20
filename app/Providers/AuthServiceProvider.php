@@ -31,38 +31,38 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isInvite',function($id){
             /**ENTREPRISE */
             //on verifie d'abord le responsable
-            $responsable = DB::select('select * from v_responsable_entreprise where user_id = ?',[Auth::id()]);
+            $responsable = DB::select('select entreprise_id from v_responsable_entreprise where user_id = ?',[Auth::id()]);
             if($responsable!=null){
-                $statut_compte = DB::select('select * from entreprises where id = ?',[$responsable[0]->entreprise_id]);
+                $statut_compte = DB::select('select statut_compte_id from entreprises where id = ?',[$responsable[0]->entreprise_id]);
                 if($statut_compte[0]->statut_compte_id == 1)
                 return "isInvite";
             }
              //on verifie ensuite  le stagiaire
-            $stagiaire = DB::select('select * from stagiaires where user_id = ?',[Auth::id()]);
+            $stagiaire = DB::select('select entreprise_id from stagiaires where user_id = ?',[Auth::id()]);
              if($stagiaire!=null){
-                 $statut_compte = DB::select('select * from entreprises where id = ?',[$stagiaire[0]->entreprise_id]);
+                 $statut_compte = DB::select('select statut_compte_id from entreprises where id = ?',[$stagiaire[0]->entreprise_id]);
                  if($statut_compte[0]->statut_compte_id == 1)
                  return "isInvite";
              }
               //on verifie le manager
-            $manager = DB::select('select * from chef_departements where user_id = ?',[Auth::id()]);
+            $manager = DB::select('select entreprise_id from chef_departements where user_id = ?',[Auth::id()]);
             if($manager!=null){
-                $statut_compte = DB::select('select * from entreprises where id = ?',[$manager[0]->entreprise_id]);
+                $statut_compte = DB::select('select statut_compte_id from entreprises where id = ?',[$manager[0]->entreprise_id]);
                 if($statut_compte[0]->statut_compte_id == 1)
                 return "isInvite";
             }
              /**OF */
-            $responsable_cfp = DB::select('select * from v_responsable_cfp where user_id = ?',[Auth::id()]);
+            $responsable_cfp = DB::select('select cfp_id from v_responsable_cfp where user_id = ?',[Auth::id()]);
             if($responsable_cfp!=null){
-                 $statut_compte = DB::select('select * from cfps where id = ?',[$responsable_cfp[0]->cfp_id]);
+                 $statut_compte = DB::select('select statut_compte_id from cfps where id = ?',[$responsable_cfp[0]->cfp_id]);
                  if($statut_compte[0]->statut_compte_id == 1)
                  return "isInvite";
             }
-            $formateur = DB::select('select * from formateurs where user_id = ?',[Auth::id()]);
+            $formateur = DB::select('select id from formateurs where user_id = ?',[Auth::id()]);
             if($formateur!=null){
                 $verification_collaboration = DB::select('select * from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
                 if($verification_collaboration!=null){
-                    $cfps = DB::select('select * from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
+                    $cfps = DB::select('select statut_compte_id from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
                     if($cfps[0]->statut_compte_id == 1)
                     return "isInvite";
                 }
@@ -71,39 +71,39 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isPremium',function($id){
             /**ENTREPRISE */
             //on verifie d'abord le responsable
-            $responsable = DB::select('select * from v_responsable_entreprise where user_id = ?',[Auth::id()]);
+            $responsable = DB::select('select entreprise_id from v_responsable_entreprise where user_id = ?',[Auth::id()]);
             if($responsable!=null){
-                $statut_compte = DB::select('select * from entreprises where id = ?',[$responsable[0]->entreprise_id]);
+                $statut_compte = DB::select('select statut_compte_id from entreprises where id = ?',[$responsable[0]->entreprise_id]);
                 if($statut_compte[0]->statut_compte_id == 2)
                 return "isPremium";
             }
              //on verifie ensuite  le stagiaire
-            $stagiaire = DB::select('select * from stagiaires where user_id = ?',[Auth::id()]);
+            $stagiaire = DB::select('select entreprise_id from stagiaires where user_id = ?',[Auth::id()]);
              if($stagiaire!=null){
-                 $statut_compte = DB::select('select * from entreprises where id = ?',[$stagiaire[0]->entreprise_id]);
+                 $statut_compte = DB::select('select statut_compte_id from entreprises where id = ?',[$stagiaire[0]->entreprise_id]);
                  if($statut_compte[0]->statut_compte_id == 2)
                  return "isPremium";
              }
               //on verifie le manager
-            $manager = DB::select('select * from chef_departements where user_id = ?',[Auth::id()]);
+            $manager = DB::select('select entreprise_id from chef_departements where user_id = ?',[Auth::id()]);
             if($manager!=null){
-                $statut_compte = DB::select('select * from entreprises where id = ?',[$manager[0]->entreprise_id]);
+                $statut_compte = DB::select('select statut_compte_id from entreprises where id = ?',[$manager[0]->entreprise_id]);
                 if($statut_compte[0]->statut_compte_id == 2)
                 return "isPremium";
             }
              /**OF */
-            $responsable_cfp = DB::select('select * from v_responsable_cfp where user_id = ?',[Auth::id()]);
+            $responsable_cfp = DB::select('select cfp_id from v_responsable_cfp where user_id = ?',[Auth::id()]);
             if($responsable_cfp!=null){
-                 $statut_compte = DB::select('select * from cfps where id = ?',[$responsable_cfp[0]->cfp_id]);
+                 $statut_compte = DB::select('select statut_compte_id from cfps where id = ?',[$responsable_cfp[0]->cfp_id]);
                  if($statut_compte[0]->statut_compte_id == 2)
                  return "isPremium";
             }
-            $formateur = DB::select('select * from formateurs where user_id = ?',[Auth::id()]);
+            $formateur = DB::select('select id from formateurs where user_id = ?',[Auth::id()]);
             if($formateur!=null){
                 $verification_collaboration = DB::select('select * from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
 
                 if($verification_collaboration!=null){
-                    $cfps = DB::select('select * from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
+                    $cfps = DB::select('select statut_compte_id from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
                     if($cfps[0]->statut_compte_id == 2)
                     return "isPremium";
                 }
@@ -112,38 +112,38 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isPending',function($id){
              /**ENTREPRISE */
             //on verifie d'abord le responsable
-            $responsable = DB::select('select * from v_responsable_entreprise where user_id = ?',[Auth::id()]);
+            $responsable = DB::select('select entreprise_id from v_responsable_entreprise where user_id = ?',[Auth::id()]);
             if($responsable!=null){
-                $statut_compte = DB::select('select * from entreprises where id = ?',[$responsable[0]->entreprise_id]);
+                $statut_compte = DB::select('select statut_compte_id from entreprises where id = ?',[$responsable[0]->entreprise_id]);
                 if($statut_compte[0]->statut_compte_id == 3)
                 return "isPending";
             }
              //on verifie ensuite  le stagiaire
-            $stagiaire = DB::select('select * from stagiaires where user_id = ?',[Auth::id()]);
+            $stagiaire = DB::select('select entreprise_id from stagiaires where user_id = ?',[Auth::id()]);
              if($stagiaire!=null){
-                 $statut_compte = DB::select('select * from entreprises where id = ?',[$stagiaire[0]->entreprise_id]);
+                 $statut_compte = DB::select('select statut_compte_id from entreprises where id = ?',[$stagiaire[0]->entreprise_id]);
                  if($statut_compte[0]->statut_compte_id == 3)
                  return "isPending";
              }
               //on verifie le manager
-            $manager = DB::select('select * from chef_departements where user_id = ?',[Auth::id()]);
+            $manager = DB::select('select entreprise_id from chef_departements where user_id = ?',[Auth::id()]);
             if($manager!=null){
-                $statut_compte = DB::select('select * from entreprises where id = ?',[$manager[0]->entreprise_id]);
+                $statut_compte = DB::select('select statut_compte_id from entreprises where id = ?',[$manager[0]->entreprise_id]);
                 if($statut_compte[0]->statut_compte_id == 3)
                 return "isPending";
             }
              /**OF */
-            $responsable_cfp = DB::select('select * from v_responsable_cfp where user_id = ?',[Auth::id()]);
+            $responsable_cfp = DB::select('select cfp_id from v_responsable_cfp where user_id = ?',[Auth::id()]);
             if($responsable_cfp!=null){
-                 $statut_compte = DB::select('select * from cfps where id = ?',[$responsable_cfp[0]->cfp_id]);
+                 $statut_compte = DB::select('select statut_compte_id from cfps where id = ?',[$responsable_cfp[0]->cfp_id]);
                  if($statut_compte[0]->statut_compte_id == 3)
                  return "isPending";
             }
-            $formateur = DB::select('select * from formateurs where user_id = ?',[Auth::id()]);
+            $formateur = DB::select('select id from formateurs where user_id = ?',[Auth::id()]);
             if($formateur!=null){
-                $verification_collaboration = DB::select('select * from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
+                $verification_collaboration = DB::select('select demmandeur_cfp_id from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
                 if($verification_collaboration!=null){
-                    $cfps = DB::select('select * from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
+                    $cfps = DB::select('select statut_compte_id from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
                     if($cfps[0]->statut_compte_id == 3)
                     return "isPending";
                 }
@@ -152,19 +152,19 @@ class AuthServiceProvider extends ServiceProvider
 
         //access principal
         Gate::define('isAdminPrincipale',function($users_roles){
-            $rqt =  DB::select('select * from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 1)
                     return "isAdminPrincipale";
         });
         Gate::define('isReferentSimple',function($users_roles){
-            $rqt =  DB::select('select * from role_users  where user_id = ? and prioriter = false and activiter = true',[Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users  where user_id = ? and prioriter = false and activiter = true',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 2)
                     return "referentPrincipale";
         });
         Gate::define('isStagiairePrincipale',function($users_roles){
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 3)
                     return "stagiairePrincipale";
@@ -172,21 +172,21 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('isFormateurPrincipale',function($users_roles){
             // return $users_roles->role_id == 4;
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 4)
                     return "formateurPrincipale";
         });
         Gate::define('isManagerPrincipale',function($users_roles){
             // return $users_roles->role_id == 5;
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 5)
                     return "managerPrincipale";
         });
         Gate::define('isSuperAdminPrincipale',function($users_roles){
             // return $users_roles->role_id == 6;
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 6)
                     return "superAdminPrincipale";
@@ -194,7 +194,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isCFPPrincipale',function($users){
             // return $users_roles->role_id == 7;
-            $rqt =  DB::select('select * from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]);
            if($rqt!=null)
                 if( $rqt[0]->role_id == 7)
                     return  "cfpPrincipale";
@@ -202,7 +202,7 @@ class AuthServiceProvider extends ServiceProvider
 
         //autres roles
         Gate::define('isAdmin',function($users_roles){
-            $rqt =  DB::select('select * from role_users where  user_id = ? and activiter=true', [Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users where  user_id = ? and activiter=true', [Auth::id()]);
             if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 1)
@@ -213,7 +213,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('isReferent',function($users_roles){
-            $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true and prioriter = true', [Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users where  user_id = ?  and activiter=true and prioriter = true', [Auth::id()]);
             if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 2)
@@ -223,7 +223,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('isStagiaire',function($users_roles){
-            $rqt =  DB::select('select * from role_users where  user_id = ? and activiter=true', [Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users where  user_id = ? and activiter=true', [Auth::id()]);
             if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 3)
@@ -234,7 +234,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('isFormateurInterne',function($users_roles){
-            $rqt =  DB::select('select * from role_users where  user_id = ? and activiter=true', [Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users where  user_id = ? and activiter=true', [Auth::id()]);
             if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 8)
@@ -245,7 +245,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isFormateur',function($users_roles){
             // return $users_roles->role_id == 4;
-            $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
             if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 4)
@@ -256,7 +256,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isManager',function($users_roles){
             // return $users_roles->role_id == 5;
-            $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
             if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 5)
@@ -267,7 +267,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isSuperAdmin',function($users_roles){
             // return $users_roles->role_id == 6;
-            $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
+            $rqt =  DB::select('select role_id from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
             if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 6)
@@ -278,7 +278,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isCFP',function($users_roles){
             // return $users_roles->role_id == 7;
-           $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
+           $rqt =  DB::select('select role_id from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
            if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 7)
@@ -289,7 +289,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isChefDeService',function($users_roles){
             // return $users_roles->role_id == 9;
-           $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
+           $rqt =  DB::select('select role_id from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
            if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 9)

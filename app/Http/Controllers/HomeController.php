@@ -71,7 +71,7 @@ class HomeController extends Controller
     public function affichage_role(Request  $request)
     {
         $user_id = $request->id_user;
-        $liste_role = DB::select('select * from v_user_role where user_id = ?', [$user_id]);
+        $liste_role = DB::select('select role_id,role_description,user_id,activiter from v_user_role where user_id = ?', [$user_id]);
         return response()->json($liste_role);
     }
     //remplissage des info manquantes
