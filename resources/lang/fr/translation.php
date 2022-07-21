@@ -136,7 +136,7 @@ return [
     'MettreÀJours' => 'Mettre à jours',
     'dAutre' => 'd\'autre',
     // cours
-    'Aucun' => 'Aucun',
+    'Ajouter' => 'Ajouter',
     'Aucun' => 'Aucun',
     'Aucun' => 'Aucun',
     'Aucun' => 'Aucun',

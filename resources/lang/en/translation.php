@@ -136,7 +136,7 @@ return [
     'MettreÀJours' => 'Update',
     'dAutre' => 'more',
     //cours
-    'Aucun' => 'no',
+    'Ajouter' => 'Add',
     'Aucun' => 'no',
     'Aucun' => 'no',
     'Aucun' => 'no',
