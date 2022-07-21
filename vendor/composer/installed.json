@@ -1683,12 +1683,12 @@
             },
             "installation-source": "dist",
             "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Promise\\": "src/"
-                },
                 "files": [
                     "src/functions_include.php"
-                ]
+                ],
+                "psr-4": {
+                    "GuzzleHttp\\Promise\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2001,17 +2001,17 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.21.0",
-            "version_normalized": "9.21.0.0",
+            "version": "v9.21.3",
+            "version_normalized": "9.21.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "a8a529d371faaa38bde087aa6171a5b53a6a8760"
+                "reference": "66bfa61e61ffceddb6370b57306c76ead7667622"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/a8a529d371faaa38bde087aa6171a5b53a6a8760",
-                "reference": "a8a529d371faaa38bde087aa6171a5b53a6a8760",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/66bfa61e61ffceddb6370b57306c76ead7667622",
+                "reference": "66bfa61e61ffceddb6370b57306c76ead7667622",
                 "shasum": ""
             },
             "require": {
@@ -2136,7 +2136,7 @@
                 "symfony/postmark-mailer": "Required to enable support for the Postmark mail transport (^6.0).",
                 "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^2.0)."
             },
-            "time": "2022-07-19T14:12:19+00:00",
+            "time": "2022-07-20T18:00:32+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {

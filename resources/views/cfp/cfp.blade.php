@@ -367,11 +367,7 @@
                     $("#adrlot2").text(userData[$i].adresse_quartier);
                     $("#adrlot3").text(userData[$i].adresse_ville);
                     $("#adrlot4").text(userData[$i].adresse_region);
-                    // $("#adrqurt").text(userData[$i].adresse_Quartier);
-                    // $("#adrv").text(userData[$i].adresse_ville);
-                    // $("#adrr").text(userData[$i].adresse_region);
                     $("#mail").text(': '+userData[$i].email);
-
                     $("#nomEtp").text(userData[$i].nom);
                 }
             }

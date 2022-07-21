@@ -11,8 +11,8 @@
 {{-- <div class="container-fluid pb-1" id="Page1">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();">
         <i class='bx bx-filter icon_creer'></i>Afficher les filtres
-    </a>
-    <div class="m-4" role="tabpanel" >
+    </a> --}}
+    {{-- <div class="m-4" role="tabpanel" >
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
@@ -22,7 +22,7 @@
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
-            </li>
+            </li> --}}
             {{-- <a href="#" onclick="return show('Page2','Page1');" title="afficher en mode liste"><i class='bx bx-list-ul view_icon'></i></a> --}}
         {{-- </ul>
 

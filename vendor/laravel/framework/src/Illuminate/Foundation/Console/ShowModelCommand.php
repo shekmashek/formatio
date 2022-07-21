@@ -7,12 +7,17 @@ use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Types\DecimalType;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Composer;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
 use SplFileObject;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Exception\ProcessSignaledException;
+use Symfony\Component\Process\Exception\RuntimeException;
+use Symfony\Component\Process\Process;
 
 #[AsCommand(name: 'model:show')]
 class ShowModelCommand extends Command
@@ -52,6 +57,13 @@ class ShowModelCommand extends Command
                 {--json : Output the model as JSON}';
 
     /**
+     * The Composer instance.
+     *
+     * @var \Illuminate\Support\Composer
+     */
+    protected $composer;
+
+    /**
      * The methods that can be called in a model to indicate a relation.
      *
      * @var array
@@ -71,6 +83,19 @@ class ShowModelCommand extends Command
     ];
 
     /**
+     * Create a new command instance.
+     *
+     * @param  \Illuminate\Support\Composer  $composer
+     * @return void
+     */
+    public function __construct(Composer $composer)
+    {
+        parent::__construct();
+
+        $this->composer = $composer;
+    }
+
+    /**
      * Execute the console command.
      *
      * @return void
@@ -78,9 +103,11 @@ class ShowModelCommand extends Command
     public function handle()
     {
         if (! interface_exists('Doctrine\DBAL\Driver')) {
-            return $this->components->error(
-                'Displaying model information requires [doctrine/dbal].'
-            );
+            if (! $this->components->confirm('Displaying model information requires the Doctrine DBAL (doctrine/dbal) package. Would you like to install it?')) {
+                return 1;
+            }
+
+            return $this->installDependencies();
         }
 
         $class = $this->qualifyModel($this->argument('model'));
@@ -201,16 +228,21 @@ class ShowModelCommand extends Command
                 return collect($this->relationMethods)
                     ->contains(fn ($relationMethod) => str_contains($code, '$this->'.$relationMethod.'('));
             })
-            ->values()
             ->map(function (ReflectionMethod $method) use ($model) {
                 $relation = $method->invoke($model);
+
+                if (! $relation instanceof Relation) {
+                    return null;
+                }
 
                 return [
                     'name' => $method->getName(),
                     'type' => Str::afterLast(get_class($relation), '\\'),
                     'related' => get_class($relation->getRelated()),
                 ];
-            });
+            })
+            ->filter()
+            ->values();
     }
 
     /**
@@ -345,10 +377,10 @@ class ShowModelCommand extends Command
      */
     protected function getCastsWithDates($model)
     {
-        return collect([
-            ...collect($model->getDates())->flip()->map(fn () => 'datetime'),
-            ...$model->getCasts(),
-        ]);
+        return collect($model->getDates())
+            ->flip()
+            ->map(fn () => 'datetime')
+            ->merge($model->getCasts());
     }
 
     /**
@@ -431,7 +463,7 @@ class ShowModelCommand extends Command
      */
     protected function qualifyModel(string $model)
     {
-        if (class_exists($model)) {
+        if (str_contains($model, '\\') && class_exists($model)) {
             return $model;
         }
 
@@ -448,5 +480,37 @@ class ShowModelCommand extends Command
         return is_dir(app_path('Models'))
             ? $rootNamespace.'Models\\'.$model
             : $rootNamespace.$model;
+    }
+
+    /**
+     * Install the command's dependencies.
+     *
+     * @return void
+     *
+     * @throws \Symfony\Component\Process\Exception\ProcessSignaledException
+     */
+    protected function installDependencies()
+    {
+        $command = collect($this->composer->findComposer())
+            ->push('require doctrine/dbal')
+            ->implode(' ');
+
+        $process = Process::fromShellCommandline($command, null, null, null, null);
+
+        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+            try {
+                $process->setTty(true);
+            } catch (RuntimeException $e) {
+                $this->components->warn($e->getMessage());
+            }
+        }
+
+        try {
+            $process->run(fn ($type, $line) => $this->output->write($line));
+        } catch (ProcessSignaledException $e) {
+            if (extension_loaded('pcntl') && $e->getSignal() !== SIGINT) {
+                throw $e;
+            }
+        }
     }
 }
