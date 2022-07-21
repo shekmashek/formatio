@@ -364,17 +364,17 @@
                         <div class="fixedTop" >
                             <table id="modifTable" class="display nowrap table shadow-sm">
                                 <thead style="position: sticky; top: 0">
-                                    <tr>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-library'></i> Projet</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-building-house'></i> Entreprise</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-check' ></i> Modalité</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-time-five' ></i> Date du projet</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-home' ></i> Ville</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type formation</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
+                                    <tr style="background: #c7c9c939">
+                                        <th class="headProject" style="width: 10%;"><i class='bx bx-library'></i> Projet</th>
+                                        <th class="headProject" style="width: 10%;"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
+                                        <th class="headProject" style="width: 10%;"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
+                                        <th class="headProject" style="width: 10%;"><i class='bx bx-building-house'></i> Entreprise</th>
+                                        <th class="headProject" style="width: 10%;"><i class='bx bx-calendar-check' ></i> Modalité</th>
+                                        <th class="headProject" style="width: 10%;"><i class='bx bx-time-five' ></i> Date du projet</th>
+                                        <th class="headProject" style="width: 10%;"><i class='bx bx-home' ></i> Ville</th>
+                                        <th class="headProject" style="width: 10%;"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
+                                        <th class="headProject" style="width: 10%;"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type formation</th>
+                                        <th class="headProject" style="width: 10%;"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
                                     </tr>
                                     <tr>
                                         <th class="headProject">Projet</th>
@@ -403,7 +403,7 @@
                                                 <td colspan="10" class="text-primary">Aucun résultat</td>
                                             </tr>
                                             @else
-                                                <tr style="background: #e7e7e7; height: 50px;">
+                                                <tr style="background: #c7c9c939; height: 50px;">
                                                     <td colspan="9" style="border: none;">
                                                         @php
                                                             if ($p->totale_session == 1) {
@@ -534,48 +534,48 @@
                                                                 <table class="table table-responsive">
                                                                     <tbody>
                                                                         <tr style="padding: 0;">
-                                                                            <td style="min-width: 10%;">
+                                                                            <td style="width: 10%;">
                                                                                 <span>
                                                                                     <a data-bs-toggle="collapse" href="#collapseProject_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class='bx bx-down-arrow-circle arrowDrop ' data-id="{{$pj->groupe_id}}"  style="font-size: 20px; vertical-align: middle; color: #1e9600"></i></a>
                                                                                 </span>
                                                                             </td>
-                                                                            <td style="min-width: 10%;">
+                                                                            <td style="width: 10%;">
 
                                                                                 <a href="{{ route('detail_session', [$pj->groupe_id, $p->type_formation_id]) }}">
                                                                                     <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
                                                                                 </a>
                                                                             </td>
-                                                                            <td style="min-width: 10%;">
+                                                                            <td style="width: 10%;">
                                                                                 <span style="font-size: 13px">{{ $pj->nom_module }}</span>
                                                                             </td>
-                                                                            <td style="min-width: 10%;">
+                                                                            <td style="width: 10%;">
                                                                                 @foreach ($entreprise as $etp)
                                                                                     @if ($etp->groupe_id == $pj->groupe_id)
                                                                                     <span style="font-size: 13px">{{ $etp->nom_etp }}</span>
                                                                                     @endif
                                                                                 @endforeach
                                                                             </td>
-                                                                            <td style="min-width: 10%;">
+                                                                            <td style="width: 10%;">
                                                                                 <span style="font-size: 13px">{{ $pj->modalite }}</span>
                                                                             </td>
-                                                                            <td style="min-width: 10%;">
+                                                                            <td style="width: 10%;">
                                                                                 @php
                                                                                     echo "<span style='font-size: 13px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";
                                                                                 @endphp
                                                                             </td>
-                                                                            <td style="min-width: 10%;">
+                                                                            <td style="width: 10%;">
                                                                                 @php
                                                                                     $ville = $groupe->dataVille($pj->groupe_id);
                                                                                     $salle = explode(',  ', $ville);
                                                                                 @endphp
                                                                                 <span style="font-size: 13px;">{{ $salle[0] }}</span>
                                                                             </td>
-                                                                            <td style="min-width: 10%;">
+                                                                            <td style="width: 10%;">
                                                                                 <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1 text-center nom_status" style="width: 100px;">
                                                                                     <span style="font-size: 13px">{{ $pj->item_status_groupe }}</span>
                                                                                 </p>
                                                                             </td>
-                                                                            <td class="text-center" style="min-width: 10%;">
+                                                                            <td class="text-center" style="width: 10%;">
                                                                                 @if ($p->type_formation_id == 1)
                                                                                     <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 7px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
                                                                                         {{ $p->type_formation }}
@@ -586,7 +586,7 @@
                                                                                     </span>
                                                                                 @endif
                                                                             </td>
-                                                                            <td class="text-center" style="min-width: 10%;">
+                                                                            <td class="text-center" style="width: 10%;">
                                                                                 <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.4rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                                                                 <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
                                                                                     @can('isCFP')
