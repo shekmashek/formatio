@@ -757,9 +757,9 @@
                                         listes des notifications
                                     </ul>
                                 </div> --}}
-                                <div class="btn_racourcis dropdown prevent_affichage2" >
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
+                                {{-- <div class="btn_racourcis dropdown prevent_affichage2" >
+                                    <span class="text_apprendre" role="button"><i
+                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                                         <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
@@ -799,7 +799,7 @@
                                             </div>
                                         </div>
                                     </ul>
-                                </div>
+                                </div> --}}
                             </div>
 
                         </div>
@@ -824,9 +824,9 @@
                                         listes des notifications
                                     </ul> --}}
                                 </div>
-                                <div class="btn_racourcis dropdown prevent_affichage2" >
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
+                                {{-- <div class="btn_racourcis dropdown prevent_affichage2" >
+                                    <span class="text_apprendre" role="button"><i
+                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                                         <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
@@ -865,7 +865,7 @@
                                             </div>
                                         </div>
                                     </ul>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         @endcan
