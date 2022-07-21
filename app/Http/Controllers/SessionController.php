@@ -684,13 +684,21 @@ class SessionController extends Controller
     }
 
     public function rapport_presence(Request $request){
-        $groupe = $request->groupe;
-        $info_groupe = DB::select('select groupe_id,nom_groupe,date_debut,date_fin,nom_cfp,mail_cfp,nom_module,entreprise_id,nom_etp,email_etp from v_groupe_projet_module g join entreprises e on g.entreprise_id = e.id where groupe_id = ?', [$groupe])[0];
-        $data_detail = DB::select('select groupe_id,stagiaire_id,detail_id,statut_presence from v_emargement where groupe_id = ? order by detail_id asc',[$groupe]);
-        $data_session = DB::select('select groupe_id,stagiaire_id,nom_stagiaire,prenom_stagiaire,statut_presence_groupe_text,nombre_presence from v_rapport_presence where groupe_id = ?',[$groupe]);
-        $seances = DB::select('select id,date_detail,h_debut,h_fin from details where groupe_id = ? order by id asc',[$groupe]);
-        return view('projet_session.rapport_presence', compact('data_session','data_detail','info_groupe','seances'));
+        try{
+            $groupe = $request->groupe;
+                $info_groupe = DB::select('select groupe_id,nom_groupe,date_debut,date_fin,nom_cfp,mail_cfp,nom_module,entreprise_id,nom_etp,email_etp from v_groupe_projet_module g join entreprises e on g.entreprise_id = e.id where groupe_id = ?', [$groupe])[0];
+                $data_detail = DB::select('select groupe_id,stagiaire_id,detail_id,statut_presence from v_emargement where groupe_id = ? order by detail_id asc',[$groupe]);
+                $data_session = DB::select('select groupe_id,stagiaire_id,nom_stagiaire,matricule,prenom_stagiaire,photos,sans_photos,statut_presence_groupe_text,statut_presence_groupe,nombre_presence from v_rapport_presence where groupe_id = ?',[$groupe]);
+                if(count($data_session)<1){
+                    throw new Exception('Fiche de présence pas encore disponible.');
+                }
+                $seances = DB::select('select id,date_detail,h_debut,h_fin from details where groupe_id = ? order by id asc',[$groupe]);
+                return view('projet_session.rapport_presence', compact('data_session','data_detail','info_groupe','seances'));
+        }catch(Exception $e){
+            return back()->with('pdf_error',$e->getMessage());
+        }
     }
+        
 
 
     //Affiche infos session

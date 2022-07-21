@@ -19,7 +19,7 @@ select
     sans_photos,
     case 
         when (sum(e.statut_presence) - n.nombre_detail) = 0 then 'Présent' 
-        when (sum(e.statut_presence) - n.nombre_detail) < 0 and sum(e.statut_presence) > 0 then 'Partiellement présent'
+        when (sum(e.statut_presence) - n.nombre_detail) < 0 and sum(e.statut_presence) > 0 then 'Présent partiellement'
         when sum(e.statut_presence) = 0 then 'Absent'
     end statut_presence_groupe_text,
     case 
