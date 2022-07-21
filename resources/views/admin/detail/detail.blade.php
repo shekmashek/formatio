@@ -641,6 +641,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
     $(document).ready(function() {
+        console.log('gg');
         $('#body_planning').DataTable( {
             keys: true
         });
