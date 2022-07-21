@@ -108,7 +108,7 @@
             </div>
         @endif
         <table class="table table-hover" id="modifTable">
-            <thead>
+            <thead style="background: #c7c9c939">
                 <tr>
                     <th class="headEtp">Organisme de Formation</th>
                     <th class="headEtp">Réferent principal</th>

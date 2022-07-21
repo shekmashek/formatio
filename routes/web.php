@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
+use App\Http\Controllers\TestController;
 use App\PlanFormation;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
@@ -1607,6 +1608,5 @@ Route::post('enregistrer_salle_etp','SalleFormationEtpController@store')->name('
 Route::get('supprimer_salle_etp/{id?}','SalleFormationEtpController@destroy')->name('supprimer_salle_etp');
 Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->name('modifier_salle_etp');
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
-
 
 

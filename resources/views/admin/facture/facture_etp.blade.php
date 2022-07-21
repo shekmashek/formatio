@@ -196,7 +196,7 @@
     </style>
 
     <div class="container-fluid">
-        <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a>
+        {{-- <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a> --}}
 
         @if(isset($invoice_dte) && isset($due_dte))
         <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">

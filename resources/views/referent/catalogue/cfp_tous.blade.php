@@ -5,7 +5,6 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/annuaire.css')}}">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 
 <div class="container-fluid pt-4">
     <div class="row fix_top_row">
@@ -121,7 +120,6 @@
                 </a>
                 @endif
 
-                <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
             </div>
         </div>
     </div>

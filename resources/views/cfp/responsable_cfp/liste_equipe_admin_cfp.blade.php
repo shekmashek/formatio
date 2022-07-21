@@ -161,7 +161,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <table class="mt-4 table  table-borderless table-lg" id="modifTable">
-                                <thead class="thead_projet" style="border-bottom: 1px solid black;">
+                                <thead class="thead_projet" style="border-bottom: 1px solid black; background: #c7c9c939">
                                     <tr>
                                         <th></th>
                                         <th class="headEtp">Nom</th>
@@ -172,21 +172,10 @@
                                         <th class="text-center headEtp">Activer</th>
                                         <th></th>
                                     </tr>
-                                    <tr>
-                                        <th></th>
-                                        <th class="headEtp">Nom</th>
-                                        <th class="headEtp">E-mail</th>
-                                        <th class="headEtp">Téléphone</th>
-                                        <th class="headEtp">Fonction</th>
-                                        <th class="text-center headEtp hideActive">Réferent principale</th>
-                                        <th class="text-center headEtp hideActive">Activer</th>
-                                        <th class="hideActive"></th>
-                                    </tr>
-
                                 </thead>
                                 <tbody id="data_collaboration" style="font-size: 11.5px;">
                                     @foreach($cfp as $responsables_cfp)
-                                        <tr class="information" data-id="" >
+                                        <tr class="information">
                                             @if($responsables_cfp->photos_resp_cfp == NULL or $responsables_cfp->photos_resp_cfp == '' or $responsables_cfp->photos_resp_cfp == 'XXXXXXX')
                                                 <td role="button" class="randomColor m-auto mt-2 text-uppercase" style="width:40px;height:40px; border-radius:100%; color:white; display: grid; place-content: center">
                                                     <span class=""> {{$responsables_cfp->nom}} {{$responsables_cfp->pr}} </span>
@@ -196,19 +185,19 @@
                                                     <img src="{{asset("images/responsables/".$responsables_cfp->photos_resp_cfp)}}" style="width:40px;height:40px; border-radius:100%">
                                                 </td>
                                             @endif
-                                            <td class="td_hover" role="button" style="vertical-align: middle">
+                                            <td style="vertical-align: middle">
                                                 {{$responsables_cfp->nom_resp_cfp}} &nbsp; {{$responsables_cfp->prenom_resp_cfp}}
                                             </td>
-                                            {{-- <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->prenom_resp_cfp}}</td> --}}
-                                            <td class="td_hover" role="button" style="vertical-align: middle">
+                                            {{-- <td style="vertical-align: middle">{{$responsables_cfp->prenom_resp_cfp}}</td> --}}
+                                            <td style="vertical-align: middle">
                                                 {{$responsables_cfp->email_resp_cfp}}
                                             </td>
-                                            <td class="td_hover" role="button" style="vertical-align: middle">
+                                            <td style="vertical-align: middle">
                                                 @php
                                                   echo $groupe->formatting_phone($responsables_cfp->telephone_resp_cfp);
                                                 @endphp
                                             </td>
-                                            <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
+                                            <td style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
 
                                             <td style="vertical-align: middle" class="text-center">
                                                 @if($responsables_cfp->prioriter == 1 && $responsables_cfp->activiter == 1 && $responsables_cfp->id == $resp_connecte->id)
@@ -397,7 +386,7 @@
                 initComplete : function() {
                     $("#myDatatablesa_filter").detach().appendTo('#new-search-area');
                 },
-                scrollY:        "400px",
+                scrollY:        "500px",
                 // scrollX:        true,
                 // scrollCollapse: true,
                 orderCellsTop: true,

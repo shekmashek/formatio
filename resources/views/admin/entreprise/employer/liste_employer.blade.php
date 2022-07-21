@@ -241,8 +241,6 @@
     </style>
 
     <div class="container-fluid">
-        <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a>
-
         <div class="m-4">
 
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
@@ -274,7 +272,7 @@
             <div class="row">
                 <div class="fixedTop mt-2">
                     <table id="modifTable" class="table">
-                        <thead style="position: sticky; top: 0">
+                        <thead style="position: sticky; top: 0; background: #c7c9c939">
                             <tr>
                                 <th class="id">ID</th>
                                 <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>
@@ -290,23 +288,6 @@
                                 <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
                                 @can('isReferent')
                                     <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
-                                @endcan
-                            </tr>
-                            <tr>
-                                <th class="id">ID</th>
-                                <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>
-                                <th scope="col" class="table-head font-weight-light align-middle text-center ">Contacts</th>
-                                <th scope="col" class="table-head font-weight-light align-middle text-center ">
-                                    <span class="d-block">Département</span>
-                                    <span>Service</span>
-                                </th>
-                                @can('isReferent')
-                                    <th scope="col" class="table-head font-weight-light align-middle text-center toHide">Formateur interne</th>
-                                    <th scope="col" class="table-head font-weight-light align-middle text-center toHide">Référent</th>
-                                @endcan
-                                <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
-                                @can('isReferent')
-                                    <th scope="col" class="table-head font-weight-light align-middle text-center toHideAction">Actions</th>
                                 @endcan
                             </tr>
                         </thead>

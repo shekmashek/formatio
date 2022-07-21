@@ -101,16 +101,11 @@
                     </div>
                 @endif
                 <table class="table table-hover" id="modifTable">
-                    <thead>
+                    <thead style="background: #c7c9c939">
                         <tr>
                             <th class="headEtp">Nom de l'entreprise</th>
                             <th class="headEtp">Réferent principal</th>
                             <th class="headEtp">Action</th>
-                        </tr>
-                        <tr>
-                            <th class="headEtp">Nom de l'entreprise</th>
-                            <th class="headEtp">Réferent principal</th>
-                            <th class="headEtp hideAction">Action</th>
                         </tr>
                     </thead>
                     <tbody id="data_collaboration" style="font-size: 13px;">

@@ -270,20 +270,7 @@
             </div>
             <div class="col-12 mt-2">
                 <table  id="modifTable" class="table">
-                    <thead style="position: sticky; top: 0">
-                        <tr>
-                            <th class="id">ID</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Contacts</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">
-                                <span class="d-block">Département</span>
-                                <span>Service</span>
-                            </th>
-                            @can('isReferent')
-                                <th scope="col" class="table-head font-weight-light align-middle text-center">Référent Principal</th>
-                            @endcan
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
-                        </tr>
+                    <thead style="position: sticky; top: 0; background: #c7c9c939">
                         <tr>
                             <th class="id">ID</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>

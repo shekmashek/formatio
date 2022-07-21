@@ -39,7 +39,7 @@ class Composer
      * Regenerate the Composer autoloader files.
      *
      * @param  string|array  $extra
-     * @return void
+     * @return int
      */
     public function dumpAutoloads($extra = '')
     {
@@ -47,17 +47,17 @@ class Composer
 
         $command = array_merge($this->findComposer(), ['dump-autoload'], $extra);
 
-        $this->getProcess($command)->run();
+        return $this->getProcess($command)->run();
     }
 
     /**
      * Regenerate the optimized Composer autoloader files.
      *
-     * @return void
+     * @return int
      */
     public function dumpOptimized()
     {
-        $this->dumpAutoloads('--optimize');
+        return $this->dumpAutoloads('--optimize');
     }
 
     /**
@@ -106,5 +106,23 @@ class Composer
         $this->workingPath = realpath($path);
 
         return $this;
+    }
+
+    /**
+     * Get the version of Composer.
+     *
+     * @return string|null
+     */
+    public function getVersion()
+    {
+        $command = array_merge($this->findComposer(), ['-V', '--no-ansi']);
+
+        $process = $this->getProcess($command);
+
+        $process->run();
+
+        $output = $process->getOutput();
+
+        return explode(' ', $output)[2] ?? null;
     }
 }

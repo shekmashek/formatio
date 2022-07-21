@@ -158,7 +158,7 @@
                             </div>
                         </div>
                             <table class="table  table-borderless table-lg table-hover" id="modifTable">
-                                <thead style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
+                                <thead style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px; background: #c7c9c939">
                                     <tr>
                                         <th>Nom</th>
                                         <th>Téléphone</th>
