@@ -36,7 +36,6 @@
         <h3><u>Adresse</u> :{{$ent->Adresse_quartier}}  </h3>
         <h3><u>Region</u>   &nbsp;:&nbsp;{{$ent->Adresse_region}} </h3>
         <h3><u>Email</u>&nbsp; &nbsp; : {{$ent->email_etp}} </h3>
-       
     </div>
     <div style="height: 100px;width:150px;background-color:white;margin-left:81%;margin-top:-200px">
         {{-- <img src="{{ url('/images/CFP/Educ21-06-22.jpg') }}" /> --}}
@@ -53,12 +52,10 @@
     @endforeach
     <table class="table table-hover mt-5" style="width: 100%" >
         <thead>
-            <tr >
-                
+            <tr>      
                 <th class="text-center">Département</th>
                 <th class="text-center">Budget</th>
-                <th class="text-center">Nombre formation</th>
-                
+                <th class="text-center">Nombre formation</th>   
             </tr>
         </thead>
         <tbody>
