@@ -330,7 +330,7 @@
 
                                     <table class="table table-hover facture_table">
                                         <thead>
-                                            <tr style="background: background: #c7c9c939">
+                                            <tr style="background: #c7c9c939">
                                                 <th>#</th>
                                                 <th style="max-width: 12%">Type</th>
                                                 <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
@@ -733,7 +733,7 @@
 
                                         <table class="table table-hover facture_table">
                                             <thead>
-                                                <tr>
+                                                <tr style="background: #c7c9c939">
                                                     <th>#</th>
                                                     <th style="max-width: 12%">Type</th>
                                                     <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
@@ -913,7 +913,7 @@
 
                                                 <table class="table table-hover facture_table">
                                                     <thead>
-                                                        <tr>
+                                                        <tr style="background: #c7c9c939">
                                                             <th>#</th>
                                                             <th style="max-width: 12%">Type</th>
                                                             <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
@@ -1075,7 +1075,7 @@
                                                                 <div class="alert alert-light" role="alert">Vos Encaissements:</div>
                                                                     <table  class="table table-hover table-sm">
                                                                         <thead>
-                                                                            <tr>
+                                                                            <tr style="background: #c7c9c939">
                                                                                 <th scope="col">N° F#</th>
                                                                                 <th scope="col">Montant facturer</th>
                                                                                 <th scope="col">Paiement</th>
@@ -1203,7 +1203,7 @@
                                                         {{------------------------------------------------------------------------------- pagination facture payer--}}
                                                         @include("admin.facture.pagination_cfp.pagination_facture_payer")
                                                         <table class="table table-hover facture_table">
-                                                            <tr>
+                                                            <tr style="background: #c7c9c939">
                                                                 <th>#</th>
                                                                 <th scope="col">Type</th>
                                                                 <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>

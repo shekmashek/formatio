@@ -106,6 +106,10 @@
         font-size: 13px;
         vertical-align: middle;
     }
+
+    .dataTables_filter input{
+       position: relative;
+    }
 </style>
 <div class="container-fluid justify-content-center pb-3">
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
@@ -176,7 +180,7 @@
                             </div>
                         </div>
                             <table class="table  table-borderless table-lg table-hover" id="modifTable">
-                                <thead style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px; background: #c7c9c939">
+                                <thead style="font-size: 12.5px; color: #676767; line-height: 20px; background: #c7c9c939">
                                     <tr>
                                         <th>Nom</th>
                                         <th>Téléphone</th>
@@ -187,14 +191,6 @@
                                             <th>Action</th>
                                         @endcanany
                                     </tr>
-                                    {{-- <tr>
-                                        <th>Nom</th>
-                                        <th>Téléphone</th>
-                                        <th>E-mail</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>Action</th>
-                                    </tr> --}}
                                 </thead>
                                 <tbody id="data_collaboration" style="font-size: 11.5px">
 
