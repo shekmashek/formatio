@@ -17,6 +17,13 @@
         padding: 4px ;
         font-size: 18px;
     }
+    td{
+        font-size: 15px;
+
+    }
+    th{
+        font-size: 16px;
+    }
 </style>
 <body>
     @foreach ($plan as $pl)
@@ -49,22 +56,22 @@
             <thead>
                 <tr>
                     <th>IM</th>
-                    <th>Nom stagiaire</th>
-                    <th>Email</th>
+                    <th >Nom </th>
+                   
                     <th>Fonction</th>
                     
                     <th>Thematique</th>
                     <th>Date prévisionnelle</th>
                     <th>Organisme</th>
-                    <th>Priorité</th>
-                    
+                    <th>Urgence</th>
+                    <th>Démandé par</th>
                 </tr>
             </thead>
             <tbody>
                 
                 @foreach ($stagiaire as $st)
                 <tr>
-                    <td>
+                    <td style="width: 50px">
                         @foreach ($besoin as $be)
                             @if ($be->stagiaire_id == $st->stagiaire_id)            
                                 <?php $mat = $be->stagiaire->matricule;
@@ -96,10 +103,10 @@
                             {{ $nom }}
                         @endif
                     </td>
-                    <td>
+                    {{-- <td style="width: 150px">
                         @foreach ($besoin as $be)
                         @if ($be->stagiaire_id == $st->stagiaire_id)            
-                            <?php $email = $st->mail_stagiaire ?>
+                         
                            
                             
                             @endif 
@@ -107,7 +114,7 @@
                         @if(isset($email)) 
                         {{ $email}}
                         @endif
-                    </td>
+                    </td> --}}
                     <td>
                         @foreach ($besoin as $be)
                         @if ($be->stagiaire_id == $st->stagiaire_id)            
@@ -118,38 +125,53 @@
                         {{ $fonc}}
                         @endif
                     </td>
-                    <td>    
+                    <td >    
                         @foreach($besoin as $be)   
                             @if ($be->stagiaire_id == $st->stagiaire_id)            
-                            -{{$be->formation->nom_formation }} <br>
+                            {{$be->formation->nom_formation }} <br>
                             @endif    
                         @endforeach
                     </td>
                     <td>    
                         @foreach($besoin as $be)   
                             @if ($be->stagiaire_id == $st->stagiaire_id)            
-                            -&nbsp; @php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp <br>
+                            &nbsp; @php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp <br>
                             @endif    
                         @endforeach
                     </td>
                     <td>    
                         @foreach($besoin as $be)   
                             @if ($be->stagiaire_id == $st->stagiaire_id)            
-                             -&nbsp; {{$be->organisme}} <br>
+                             &nbsp; {{$be->organisme}} <br>
                             @endif    
-                    @endforeach
+                        @endforeach
                     </td>
                     <td>    
                         @foreach($besoin as $be)   
                             @if ($be->stagiaire_id == $st->stagiaire_id)            
-                             -&nbsp; {{$be->type}} <br>
+                             &nbsp; {{$be->type}} <br>
                             @endif    
+                        @endforeach
+                    </td>
+                    <td>
+                        @foreach($besoin as $be)   
+                        @if ($be->stagiaire_id == $st->stagiaire_id)            
+                        @if($be->reponse_stagiaire == '1')
+                             collaborateur <br>
+                        @elseif($be->reponse_stagiaire == '0')
+                             Manager <br>
+
+                        @else
+                             RH <br>
+                        @endif
+                        @endif    
                     @endforeach
                     </td>
-                    @endforeach
+                   
                 </tr>
-               
+                @endforeach
             </tbody>
+           
         </table>
     </div>
 </body>

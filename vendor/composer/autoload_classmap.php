@@ -159,6 +159,7 @@ return array(
     'App\\TypeFormation' => $baseDir . '/app/TypeFormation.php',
     'App\\TypePayement' => $baseDir . '/app/TypePayement.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\arbitrage' => $baseDir . '/app/arbitrage.php',
     'App\\besoins' => $baseDir . '/app/besoins.php',
     'App\\branche' => $baseDir . '/app/branche.php',
     'App\\demande_devis' => $baseDir . '/app/demande_devis.php',
