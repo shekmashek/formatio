@@ -29,10 +29,14 @@
                                 <div class="row">
                                     <div class="col text-center">
                                         <i class='bx bxs-plus-circle icon_upgrade me-3'></i>
-                                        @if($abonnement_cfp[0]->illimite != 1)
-                                            @if($nb_formateur == 0 || $nb_formateur == 0 || $nb_collaboration == 0)Vous n’avez pas encore de projet @if($nb_modules == 0)pour en créer un ajouter d’abord des modules a votre <a data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button" class="text-primary lien_condition">catalogue de formation</a>.@endif @if($nb_formateur == 0)<a href="{{route('liste_formateur')}}" class="text-primary lien_condition">Ajouter des formateurs</a>.@endif @if($nb_collaboration == 0)<a href="{{route('liste_entreprise')}}" class="text-primary lien_condition">Inviter des entreprises.</a>@endif .@endif @if($nb_formateur != 0 && $nb_formateur != 0 && $nb_collaboration != 0)Maintenant vous pouvez créer votre premier projet de formation <a href="{{route('nouveau_groupe',1)}}" class="text-primary lien_condition">intra</a> @if($abonnement_cfp != null) ou <a href="{{route('nouveau_groupe_inter',2)}}" class="text-primary lien_condition">inter</a>@endif.@endif
+                                        @if($abonnement_etp == null)
+                                            <span>Vous n'êtes pas encore abonnée. Veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition"> vous abonner</a> pour plus de fonctionnalité </span>
                                         @else
-                                            <span>Votre abonnement actuel vous permet de faire un nombre illimités de projets.</span>
+                                            @if($abonnement_cfp[0]->illimite != 1)
+                                                @if($nb_formateur == 0 || $nb_formateur == 0 || $nb_collaboration == 0)Vous n’avez pas encore de projet @if($nb_modules == 0)pour en créer un ajouter d’abord des modules a votre <a data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button" class="text-primary lien_condition">catalogue de formation</a>.@endif @if($nb_formateur == 0)<a href="{{route('liste_formateur')}}" class="text-primary lien_condition">Ajouter des formateurs</a>.@endif @if($nb_collaboration == 0)<a href="{{route('liste_entreprise')}}" class="text-primary lien_condition">Inviter des entreprises.</a>@endif .@endif @if($nb_formateur != 0 && $nb_formateur != 0 && $nb_collaboration != 0)Maintenant vous pouvez créer votre premier projet de formation <a href="{{route('nouveau_groupe',1)}}" class="text-primary lien_condition">intra</a> @if($abonnement_cfp != null) ou <a href="{{route('nouveau_groupe_inter',2)}}" class="text-primary lien_condition">inter</a>@endif.@endif
+                                            @else
+                                                <span>Votre abonnement actuel vous permet de faire un nombre illimités de projets.</span>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -1397,10 +1401,14 @@
                                 <div class="row">
                                     <div class="col text-center">
                                         <i class='bx bxs-plus-circle icon_upgrade me-3'></i>
-                                        @if($abonnement_etp[0]->illimite != 1)
-                                            @if($nb_employes == 0 || $nb_collaboration == 0)Vous n’avez pas encore de projet pour en créer un @if($nb_employes == 0)<a href="{{route('liste_formateur')}}" class="text-primary lien_condition">Ajouter des employers</a>.@endif @if($nb_collaboration == 0)<a href="{{route('liste_entreprise')}}" class="text-primary lien_condition">Inviter des organismes de formation.</a>@endif .@endif @if($nb_employes != 0 && $nb_collaboration != 0)Maintenant vous pouvez avoir votre premier projet de formation .@endif
+                                        @if($abonnement_etp == null)
+                                            <span>Vous n'êtes pas encore abonnée. Veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition"> vous abonner</a> pour plus de fonctionnalité </span>
                                         @else
-                                            <span>Votre abonnement actuel vous permet de faire un nombre illimités de projets avec vos collaborateurs.</span>
+                                            @if($abonnement_etp[0]->illimite != 1)
+                                                @if($nb_employes == 0 || $nb_collaboration == 0)Vous n’avez pas encore de projet pour en créer un @if($nb_employes == 0)<a href="{{route('liste_formateur')}}" class="text-primary lien_condition">Ajouter des employers</a>.@endif @if($nb_collaboration == 0)<a href="{{route('liste_entreprise')}}" class="text-primary lien_condition">Inviter des organismes de formation.</a>@endif .@endif @if($nb_employes != 0 && $nb_collaboration != 0)Maintenant vous pouvez avoir votre premier projet de formation .@endif
+                                            @else
+                                                <span>Votre abonnement actuel vous permet de faire un nombre illimités de projets avec vos collaborateurs.</span>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>

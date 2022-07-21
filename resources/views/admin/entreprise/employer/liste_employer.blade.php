@@ -298,6 +298,11 @@
                     Référents
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                    grig view
+                    </a>
+                </li>
         </ul>
 
         <div class="row">
