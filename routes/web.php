@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\AbonnementController;
-use App\Http\Controllers\NiveauController;
-use App\Http\Controllers\LanguageController;
-use App\PlanFormation;
-use FontLib\Table\Type\name;
+// use App\Http\Controllers\AbonnementController;
+// use App\Http\Controllers\NiveauController;
+// use App\Http\Controllers\LanguageController;
+// use App\PlanFormation;
+// use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use phpseclib3\Crypt\RC2;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+// use Illuminate\Support\Facades\Storage;
+// use phpseclib3\Crypt\RC2;
+// use SimpleSoftwareIO\QrCode\Facades\QrCode;
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -1613,4 +1613,4 @@ Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->na
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
 
 //route multilangage
-Route::get("locale/{lange}", [LanguageController::class, 'langChange']);
+Route::get('locale/{langue}', 'LanguageController@langChange')->name('locale');

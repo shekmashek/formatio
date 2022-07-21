@@ -686,8 +686,9 @@
                             <div class="col-12 text-end icones_header">
                                 <a class="dropdown-toggle p-1" id="dropdownMenuLang" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">@if(Session::get("locale") == "fr") <img src="{{asset('flags/fr.svg')}}" class="me-2" alt="drapeau pays" width="22px" height="22px">@else <img src="{{asset('flags/gb.svg')}}" class="me-2" alt="drapeau pays" width="22px" height="22px">@endif</a>
                                 <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLang">
-                                    <li><a class="dropdown-item" href="locale/en"> <img src="{{asset('flags/gb.svg')}}" class="me-2" alt="drapeau pays" width="16px" height="18px">&nbsp;@lang('translation.Anglais')</a></li>
-                                    <li><a class="dropdown-item" href="locale/fr"> <img src="{{asset('flags/fr.svg')}}" class="me-2" alt="drapeau pays" width="16px" height="18px">&nbsp;@lang('translation.Français')</a></li>
+                                    <form action="" method="post"></form>
+                                    <li><a class="dropdown-item" href="{{route('locale','en')}}"> <img src="{{asset('flags/gb.svg')}}" class="me-2" alt="drapeau pays" width="16px" height="18px">&nbsp;@lang('translation.Anglais')</a></li>
+                                    <li><a class="dropdown-item" href="{{route('locale','fr')}}"> <img src="{{asset('flags/fr.svg')}}" class="me-2" alt="drapeau pays" width="16px" height="18px">&nbsp;@lang('translation.Français')</a></li>
                                 </ul>
                                 @can('isSuperAdmin')
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
@@ -1216,7 +1217,6 @@
 </script>
 
 @stack('extra-js')
-
 </body>
 
 </html>

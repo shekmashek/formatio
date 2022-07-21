@@ -13,11 +13,11 @@ class LanguageController extends Controller
      *
      * @return string
     */
-    public function langChange($locale)
+    public function langChange($langue)
     {
-        // dd($locale);
-        App::setLocale($locale);
-        Session::put("locale",$locale);
-        return redirect()->back();
+        // dd($langue);
+        App::setLocale($langue);
+        Session::put("locale",$langue);
+        return back();
     }
 }

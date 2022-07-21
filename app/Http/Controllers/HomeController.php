@@ -121,7 +121,8 @@ class HomeController extends Controller
             }
             $totale_invitation = $this->collaboration->count_invitation();
             $phone_tmp = $this->fonct->findWhere("stagiaires",["id"],[$id_stg]);
-            return view('layouts.accueil_admin', compact('totale_invitation','phone_tmp'));
+            // return view('layouts.accueil_admin', compact('totale_invitation','phone_tmp'));\
+            return redirect()->route('calendrier_formation');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -1814,5 +1815,5 @@ class HomeController extends Controller
         return response()->json($etp);
     }
 
-  
+
 }
