@@ -6,10 +6,12 @@ use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Mail\Markdown;
-use Traversable;
+use Illuminate\Support\Traits\Conditionable;
 
 class MailMessage extends SimpleMessage implements Renderable
 {
+    use Conditionable;
+
     /**
      * The view to be rendered.
      *
@@ -297,9 +299,7 @@ class MailMessage extends SimpleMessage implements Renderable
      */
     protected function arrayOfAddresses($address)
     {
-        return is_array($address) ||
-               $address instanceof Arrayable ||
-               $address instanceof Traversable;
+        return is_iterable($address) || $address instanceof Arrayable;
     }
 
     /**
@@ -315,18 +315,19 @@ class MailMessage extends SimpleMessage implements Renderable
             );
         }
 
-        return Container::getInstance()
-            ->make(Markdown::class)
-            ->render($this->markdown, $this->data());
+        $markdown = Container::getInstance()->make(Markdown::class);
+
+        return $markdown->theme($this->theme ?: $markdown->getTheme())
+                ->render($this->markdown, $this->data());
     }
 
     /**
-     * Register a callback to be called with the Swift message instance.
+     * Register a callback to be called with the Symfony message instance.
      *
      * @param  callable  $callback
      * @return $this
      */
-    public function withSwiftMessage($callback)
+    public function withSymfonyMessage($callback)
     {
         $this->callbacks[] = $callback;
 

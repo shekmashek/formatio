@@ -30,7 +30,7 @@
     <div class="container" style="display: flex;">
         <h1 style="margin-left:-17px; ">Plan Previsionnel {{$pl->AnneePlan}}</h1>
         @foreach($entreprise as $ent)
-        <h1 style="margin-left:83%;margin-top:10px">{{ $ent->nom_etp}}</h1><br>
+        <h1 style="margin-left:60%;margin-top:10px">{{ $ent->nom_etp}}</h1><br>
         <h1></h1>
     </div>
     <div style="margin-top:-160px;" >
@@ -42,7 +42,7 @@
     <div style="height: 100px;width:150px;background-color:white;margin-left:81%;margin-top:-200px">
         {{-- <img src="{{ url('/images/CFP/Educ21-06-22.jpg') }}" /> --}}
         {{-- <img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('/images/cfp/Educ21-06-22.jpg'))) }}"> --}}
-        <img src="{{ public_path('images/CFP/cac.png') }}" style="width: 100%;height:100%">
+        <img src="{{ public_path('images/CFP/'.$ent->logo) }}" style="width: 100%;height:100%">
         {{-- <img src="public/images/CFP/Educ21-06-22.jpg" style="width: 100%;height:100%"> --}}
        
 

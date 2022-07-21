@@ -4,11 +4,15 @@ namespace Illuminate\Foundation\Console;
 
 use Closure;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
+use Illuminate\Routing\ViewController;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use ReflectionClass;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Terminal;
 
 class RouteListCommand extends Command
 {
@@ -18,6 +22,15 @@ class RouteListCommand extends Command
      * @var string
      */
     protected $name = 'route:list';
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     */
+    protected static $defaultName = 'route:list';
 
     /**
      * The console command description.
@@ -36,16 +49,32 @@ class RouteListCommand extends Command
     /**
      * The table headers for the command.
      *
-     * @var array
+     * @var string[]
      */
     protected $headers = ['Domain', 'Method', 'URI', 'Name', 'Action', 'Middleware'];
 
     /**
-     * The columns to display when using the "compact" flag.
+     * The terminal width resolver callback.
+     *
+     * @var \Closure|null
+     */
+    protected static $terminalWidthResolver;
+
+    /**
+     * The verb colors for the command.
      *
      * @var array
      */
-    protected $compactColumns = ['method', 'uri', 'action'];
+    protected $verbColors = [
+        'ANY' => 'red',
+        'GET' => 'blue',
+        'HEAD' => '#6C7280',
+        'OPTIONS' => '#6C7280',
+        'POST' => 'yellow',
+        'PUT' => 'yellow',
+        'PATCH' => 'yellow',
+        'DELETE' => 'red',
+    ];
 
     /**
      * Create a new route command instance.
@@ -67,6 +96,8 @@ class RouteListCommand extends Command
      */
     public function handle()
     {
+        $this->router->flushMiddlewareGroups();
+
         if (empty($this->router->getRoutes())) {
             return $this->error("Your application doesn't have any routes.");
         }
@@ -89,7 +120,7 @@ class RouteListCommand extends Command
             return $this->getRouteInformation($route);
         })->filter()->all();
 
-        if ($sort = $this->option('sort')) {
+        if (($sort = $this->option('sort')) !== 'precedence') {
             $routes = $this->sortRoutes($sort, $routes);
         }
 
@@ -111,8 +142,8 @@ class RouteListCommand extends Command
         return $this->filterRoute([
             'domain' => $route->domain(),
             'method' => implode('|', $route->methods()),
-            'uri'    => $route->uri(),
-            'name'   => $route->getName(),
+            'uri' => $route->uri(),
+            'name' => $route->getName(),
             'action' => ltrim($route->getActionName(), '\\'),
             'middleware' => $this->getMiddleware($route),
         ]);
@@ -153,17 +184,15 @@ class RouteListCommand extends Command
      */
     protected function displayRoutes(array $routes)
     {
-        if ($this->option('json')) {
-            $this->line(json_encode(array_values($routes)));
+        $routes = collect($routes);
 
-            return;
-        }
-
-        $this->table($this->getHeaders(), $routes);
+        $this->output->writeln(
+            $this->option('json') ? $this->asJson($routes) : $this->forCli($routes)
+        );
     }
 
     /**
-     * Get before filters.
+     * Get the middleware for the route.
      *
      * @param  \Illuminate\Routing\Route  $route
      * @return string
@@ -184,9 +213,17 @@ class RouteListCommand extends Command
     protected function filterRoute(array $route)
     {
         if (($this->option('name') && ! Str::contains($route['name'], $this->option('name'))) ||
-             $this->option('path') && ! Str::contains($route['uri'], $this->option('path')) ||
-             $this->option('method') && ! Str::contains($route['method'], strtoupper($this->option('method')))) {
+            $this->option('path') && ! Str::contains($route['uri'], $this->option('path')) ||
+            $this->option('method') && ! Str::contains($route['method'], strtoupper($this->option('method')))) {
             return;
+        }
+
+        if ($this->option('except-path')) {
+            foreach (explode(',', $this->option('except-path')) as $path) {
+                if (Str::contains($route['uri'], $path)) {
+                    return;
+                }
+            }
         }
 
         return $route;
@@ -209,17 +246,7 @@ class RouteListCommand extends Command
      */
     protected function getColumns()
     {
-        $availableColumns = array_map('strtolower', $this->headers);
-
-        if ($this->option('compact')) {
-            return array_intersect($availableColumns, $this->compactColumns);
-        }
-
-        if ($columns = $this->option('columns')) {
-            return array_intersect($availableColumns, $this->parseColumns($columns));
-        }
-
-        return $availableColumns;
+        return array_map('strtolower', $this->headers);
     }
 
     /**
@@ -244,6 +271,143 @@ class RouteListCommand extends Command
     }
 
     /**
+     * Convert the given routes to JSON.
+     *
+     * @param  \Illuminate\Support\Collection  $routes
+     * @return string
+     */
+    protected function asJson($routes)
+    {
+        return $routes
+            ->map(function ($route) {
+                $route['middleware'] = empty($route['middleware']) ? [] : explode("\n", $route['middleware']);
+
+                return $route;
+            })
+            ->values()
+            ->toJson();
+    }
+
+    /**
+     * Convert the given routes to regular CLI output.
+     *
+     * @param  \Illuminate\Support\Collection  $routes
+     * @return array
+     */
+    protected function forCli($routes)
+    {
+        $routes = $routes->map(
+            fn ($route) => array_merge($route, [
+                'action' => $this->formatActionForCli($route),
+                'method' => $route['method'] == 'GET|HEAD|POST|PUT|PATCH|DELETE|OPTIONS' ? 'ANY' : $route['method'],
+                'uri' => $route['domain'] ? ($route['domain'].'/'.$route['uri']) : $route['uri'],
+            ]),
+        );
+
+        $maxMethod = mb_strlen($routes->max('method'));
+
+        $terminalWidth = $this->getTerminalWidth();
+
+        return $routes->map(function ($route) use ($maxMethod, $terminalWidth) {
+            [
+                'action' => $action,
+                'domain' => $domain,
+                'method' => $method,
+                'middleware' => $middleware,
+                'uri' => $uri,
+            ] = $route;
+
+            $middleware = Str::of($middleware)->explode("\n")->filter()->whenNotEmpty(
+                fn ($collection) => $collection->map(
+                    fn ($middleware) => sprintf('         %s⇂ %s', str_repeat(' ', $maxMethod), $middleware)
+                )
+            )->implode("\n");
+
+            $spaces = str_repeat(' ', max($maxMethod + 6 - mb_strlen($method), 0));
+
+            $dots = str_repeat('.', max(
+                $terminalWidth - mb_strlen($method.$spaces.$uri.$action) - 6 - ($action ? 1 : 0), 0
+            ));
+
+            $dots = empty($dots) ? $dots : " $dots";
+
+            if ($action && ! $this->output->isVerbose() && mb_strlen($method.$spaces.$uri.$action.$dots) > ($terminalWidth - 6)) {
+                $action = substr($action, 0, $terminalWidth - 7 - mb_strlen($method.$spaces.$uri.$dots)).'…';
+            }
+
+            $method = Str::of($method)->explode('|')->map(
+                fn ($method) => sprintf('<fg=%s>%s</>', $this->verbColors[$method] ?? 'default', $method),
+            )->implode('<fg=#6C7280>|</>');
+
+            return [sprintf(
+                '  <fg=white;options=bold>%s</> %s<fg=white>%s</><fg=#6C7280>%s %s</>',
+                $method,
+                $spaces,
+                preg_replace('#({[^}]+})#', '<fg=yellow>$1</>', $uri),
+                $dots,
+                str_replace('   ', ' › ', $action),
+            ), $this->output->isVerbose() && ! empty($middleware) ? "<fg=#6C7280>$middleware</>" : null];
+        })->flatten()->filter()->prepend('')->push('')->toArray();
+    }
+
+    /**
+     * Get the formatted action for display on the CLI.
+     *
+     * @param  array  $route
+     * @return string
+     */
+    protected function formatActionForCli($route)
+    {
+        ['action' => $action, 'name' => $name] = $route;
+
+        if ($action === 'Closure' || $action === ViewController::class) {
+            return $name;
+        }
+
+        $name = $name ? "$name   " : null;
+
+        $rootControllerNamespace = $this->laravel[UrlGenerator::class]->getRootControllerNamespace()
+            ?? ($this->laravel->getNamespace().'Http\\Controllers');
+
+        if (str_starts_with($action, $rootControllerNamespace)) {
+            return $name.substr($action, mb_strlen($rootControllerNamespace) + 1);
+        }
+
+        $actionClass = explode('@', $action)[0];
+
+        if (class_exists($actionClass) && str_starts_with((new ReflectionClass($actionClass))->getFilename(), base_path('vendor'))) {
+            $actionCollection = collect(explode('\\', $action));
+
+            return $name.$actionCollection->take(2)->implode('\\').'   '.$actionCollection->last();
+        }
+
+        return $name.$action;
+    }
+
+    /**
+     * Get the terminal width.
+     *
+     * @return int
+     */
+    public static function getTerminalWidth()
+    {
+        return is_null(static::$terminalWidthResolver)
+            ? (new Terminal)->getWidth()
+            : call_user_func(static::$terminalWidthResolver);
+    }
+
+    /**
+     * Set a callback that should be used when resolving the terminal width.
+     *
+     * @param  \Closure|null  $callback
+     * @return void
+     */
+    public static function resolveTerminalWidthUsing($resolver)
+    {
+        static::$terminalWidthResolver = $resolver;
+    }
+
+    /**
      * Get the console command options.
      *
      * @return array
@@ -251,14 +415,13 @@ class RouteListCommand extends Command
     protected function getOptions()
     {
         return [
-            ['columns', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Columns to include in the route table'],
-            ['compact', 'c', InputOption::VALUE_NONE, 'Only show method, URI and action columns'],
             ['json', null, InputOption::VALUE_NONE, 'Output the route list as JSON'],
             ['method', null, InputOption::VALUE_OPTIONAL, 'Filter the routes by method'],
             ['name', null, InputOption::VALUE_OPTIONAL, 'Filter the routes by name'],
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Filter the routes by path'],
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Only show routes matching the given path pattern'],
+            ['except-path', null, InputOption::VALUE_OPTIONAL, 'Do not display the routes matching the given path pattern'],
             ['reverse', 'r', InputOption::VALUE_NONE, 'Reverse the ordering of the routes'],
-            ['sort', null, InputOption::VALUE_OPTIONAL, 'The column (domain, method, uri, name, action, middleware) to sort by', 'uri'],
+            ['sort', null, InputOption::VALUE_OPTIONAL, 'The column (precedence, domain, method, uri, name, action, middleware) to sort by', 'uri'],
         ];
     }
 }

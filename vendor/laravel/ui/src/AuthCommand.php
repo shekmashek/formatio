@@ -30,7 +30,7 @@ class AuthCommand extends Command
      * @var array
      */
     protected $views = [
-        'auth/login.stub' => 'auth/connexion.php',
+        'auth/login.stub' => 'auth/login.blade.php',
         'auth/passwords/confirm.stub' => 'auth/passwords/confirm.blade.php',
         'auth/passwords/email.stub' => 'auth/passwords/email.blade.php',
         'auth/passwords/reset.stub' => 'auth/passwords/reset.blade.php',

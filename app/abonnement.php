@@ -20,3 +20,4 @@ class Abonnement extends Model
         return $this->belongsTo('App\categorie_paiement');
     }
 }
+    

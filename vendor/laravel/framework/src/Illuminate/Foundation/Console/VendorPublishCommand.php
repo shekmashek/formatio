@@ -4,10 +4,12 @@ namespace Illuminate\Foundation\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\Events\VendorTagPublished;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use League\Flysystem\Adapter\Local as LocalAdapter;
+use Illuminate\Support\Str;
 use League\Flysystem\Filesystem as Flysystem;
+use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
 use League\Flysystem\MountManager;
 
 class VendorPublishCommand extends Command
@@ -42,6 +44,15 @@ class VendorPublishCommand extends Command
                     {--all : Publish assets for all service providers without prompt}
                     {--provider= : The service provider that has assets you want to publish}
                     {--tag=* : One or many tags that have assets you want to publish}';
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     */
+    protected static $defaultName = 'vendor:publish';
 
     /**
      * The console command description.
@@ -159,14 +170,18 @@ class VendorPublishCommand extends Command
     {
         $published = false;
 
-        foreach ($this->pathsToPublish($tag) as $from => $to) {
+        $pathsToPublish = $this->pathsToPublish($tag);
+
+        foreach ($pathsToPublish as $from => $to) {
             $this->publishItem($from, $to);
 
             $published = true;
         }
 
         if ($published === false) {
-            $this->error('Unable to locate publishable resources.');
+            $this->comment('No publishable resources for tag ['.$tag.'].');
+        } else {
+            $this->laravel['events']->dispatch(new VendorTagPublished($tag, $pathsToPublish));
         }
     }
 
@@ -245,8 +260,10 @@ class VendorPublishCommand extends Command
     protected function moveManagedFiles($manager)
     {
         foreach ($manager->listContents('from://', true) as $file) {
-            if ($file['type'] === 'file' && (! $manager->has('to://'.$file['path']) || $this->option('force'))) {
-                $manager->put('to://'.$file['path'], $manager->read('from://'.$file['path']));
+            $path = Str::after($file['path'], 'from://');
+
+            if ($file['type'] === 'file' && (! $manager->fileExists('to://'.$path) || $this->option('force'))) {
+                $manager->write('to://'.$path, $manager->read($file['path']));
             }
         }
     }
