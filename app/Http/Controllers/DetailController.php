@@ -420,7 +420,7 @@ class DetailController extends Controller
 
             }
 
-            return($events);
+            // return($events);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             if ($groupe_etp->count() > 0) {

@@ -100,12 +100,22 @@
   
   .ui-state-default:hover {
     background: #6a7883;
-    color: #ffffff;
+    color: #ffffff!important;
     border: 1px solid #6a7883;
     border-radius: 99px;
     position: relative;
     margin: -1px;
   }
+
+  .ui-state-active {
+    background: #6a7883;
+    color: #ffffff!important;
+    border: 1px solid #6a7883;
+    border-radius: 99px;
+    position: relative;
+    margin: -1px;
+  }
+
   
   .ui-datepicker-calendar .ui-state-highlight {
     color: rgb(5, 5, 5)!important;
