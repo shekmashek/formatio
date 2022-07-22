@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Profil</h3>
+    <h3 class="text_header m-0 mt-1">@lang('translation.Profil')</h3>
 @endsection
 @section('content')
     {{-- <div class="page-content page-container" id="page-content">
@@ -77,10 +77,10 @@
                              <div class="col-lg-4">
 
                                  <div class="form-control">
-                                     <p class="text-center">Informations générales</p>
+                                     <p class="text-center">@lang('translation.Informations') @lang('translation.générales')</p>
 
                                      <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #e8dfe5;">
-                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-image-alt'></i>&nbsp; PHOTO
+                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-image-alt'></i>&nbsp; @lang('translation.Image')
 
                                      </p>
 
@@ -102,7 +102,7 @@
                                     </div>
                                     <div  style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_nom_manager',$id_chef->id)}}" >
-                                     <p class="p-1 m-0" id="nom" style="font-size: 12px;"><i class='bx bx-user' ></i>&nbsp; NOM<span style="float: right;">{{$id_chef->nom_emp}} {{$id_chef->prenom_emp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" id="nom" style="font-size: 12px;"><i class='bx bx-user' ></i>&nbsp;@lang('translation.Nom')<span style="float: right;">{{$id_chef->nom_emp}} {{$id_chef->prenom_emp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p></a>
 
@@ -110,9 +110,9 @@
 
                                     <div id="nom"style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_genre_manager',$id_chef->id)}}" >
-                                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-male-female' style="color: rgb(116, 116, 116)"></i>&nbsp; GENRE
+                                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-male-female' style="color: rgb(116, 116, 116)"></i>&nbsp; @lang('translation.Genre')
                                         @if ($genre ==null)
-                                        <span style="float: right; color:red">incomplète&nbsp;
+                                        <span style="float: right; color:red">@lang('translation.incomplète')&nbsp;
                                       @else
                                      <span style="float: right;">{{$genre}}&nbsp;
                                         @endif
@@ -124,7 +124,7 @@
                                     </div>
                                     <div id="nom"style="border-bottom: solid 1px #e8dfe5;">
                                         <a href="{{route('editer_pwd_manager',$id_chef->id)}}" >
-                                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-key' style='' ></i>&nbsp; Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-key' style='' ></i>&nbsp;@lang('translation.motDePasse')<span style="float: right;">@lang('translation.motDePasse')&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                         </a>
                                        </div>
@@ -136,18 +136,18 @@
                                  <div class="col-lg-4">
 
                                      <div class="form-control">
-                                         <p class="text-center">Coordonnées</p>
+                                         <p class="text-center">@lang('translation.Coordonnées')</p>
 
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href="{{route('editer_mail_manager',$id_chef->id)}}" >
-                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-envelope' style='' ></i>&nbsp;ADRESSE E-MAIL<span style="float: right;">{{$id_chef->email_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-envelope' style='' ></i>&nbsp;@lang('translation.E-mail')<span style="float: right;">{{$id_chef->email_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                          </p>
                                              </a>
                                          </div>
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href=" {{route('editer_phone_manager',$id_chef->id)}}" >
-                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone' style='' ></i>&nbsp;TELEPHONE<span style="float: right;">{{$id_chef->telephone_emp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone' style='' ></i>&nbsp;@lang('translation.Téléphone')<span style="float: right;">{{$id_chef->telephone_emp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                                          </p>
                                              </a>
@@ -155,7 +155,7 @@
 
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href="{{route('editer_cin_manager',$id_chef->id)}} " >
-                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bxs-user-badge' style='color:rgba(0,0,0,0.49)'  ></i>&nbsp;CIN<span style="float: right;">{{$id_chef->cin_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bxs-user-badge' style='color:rgba(0,0,0,0.49)'  ></i>&nbsp;@lang('translation.CIN')<span style="float: right;">{{$id_chef->cin_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          </p>
                                              </a>
                                          </div>
@@ -167,11 +167,11 @@
                              <div class="col-lg-4">
 
                                  <div class="form-control">
-                                     <p class="text-center">Informations professionnelles</p>
+                                     <p class="text-center">@lang('translation.Informations') @lang('translation.professionnelles')</p>
 
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
 
-                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-id-card'></i>&nbsp;Matricule<span style="float: right;">{{$id_chef->matricule_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-id-card'></i>&nbsp;@lang('translation.Matricule')<span style="float: right;">{{$id_chef->matricule_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p>
 
@@ -179,7 +179,7 @@
 
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                          <a href="{{route('editer_fonction_manager',$id_chef->id)}}  " >
-                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-list-minus'  ></i>&nbsp;Fonction<span style="float: right;">{{$id_chef->fonction_emp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-list-minus'  ></i>&nbsp;@lang('translation.Fonction')<span style="float: right;">{{$id_chef->fonction_emp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p>
                                          </a>
@@ -187,7 +187,7 @@
                                      </div>
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                         {{-- <a href="{{route('editer_niveau',$id_chef->id)}}  " > --}}
-                                    <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-building'  ></i>&nbsp;Entreprise<span style="float: right;">{{$nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-building'  ></i>&nbsp;@lang('translation.Entreprise')<span style="float: right;">{{$nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                     </p>
                                         </a>

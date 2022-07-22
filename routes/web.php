@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\TestController;
@@ -7,9 +6,9 @@ use App\PlanFormation;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use phpseclib3\Crypt\RC2;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+// use Illuminate\Support\Facades\Storage;
+// use phpseclib3\Crypt\RC2;
+// use SimpleSoftwareIO\QrCode\Facades\QrCode;
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -1644,3 +1643,5 @@ Route::get('rapport_presence_interne/{groupe?}','ProjetInterneController@rapport
 
 
 Route::get('invitation_ajouter_employer/{groupe?}/{employe?}','SessionController@invitation_ajouter_employer')->name('invitation_ajouter_employer');
+//route multilangage
+Route::get('locale/{langue}', 'LanguageController@langChange')->name('locale');

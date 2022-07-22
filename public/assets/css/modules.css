@@ -704,9 +704,9 @@ background: linear-gradient(60deg, #02AAB0,#00CDAC);
     border-radius: 5px;
 }
 .liste__formation:hover  {
-    background: linear-gradient(60deg, rgba(255, 68, 0, 0.500),#4222c382);
-    color: white;
-    /* transform: scale(1.5s) ; */
+    /* background: linear-gradient(60deg, rgba(255, 68, 0, 0.500),#4222c382);
+    color: white; */
+    transform: scale(1.5s) ;
 }
 .liste__formation .liste__formation__item .acf-nom-module{
     color: #7635dc;

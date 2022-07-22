@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text_header m-0 mt-1">Manager</h3>
+<h3 class="text_header m-0 mt-1">@lang('translation.Manager')</h3>
 @endsection
 @inject('groupe','App\groupe')
 @section('content')
@@ -26,29 +26,29 @@
                     <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                         <li class="nav-item ms-5">
                             <a href="#" class="btn_next referentClass" id="employé" data-bs-toggle="tab" data-bs-target="#tab-employé" type="button" role="tab" aria-controls="tab-employé" aria-selected="false">
-                                Référents
+                                @lang('translation.Réferent')
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="btn_next employeClass" id="referent" data-bs-toggle="tab" data-bs-target="#tab-employe" type="button" role="tab" aria-controls="tab-referent" aria-selected="true">
-                                Employés
+                                @lang('translation.Employés')
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="btn_next" id="formateur" data-bs-toggle="tab" data-bs-target="#tab-referent" type="button" role="tab" aria-controls="tab-referent" aria-selected="true">
-                                Formateur interne
+                                @lang('translation.FormateurInterne')
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="btn_next chefClass" id="manager" data-bs-toggle="tab" data-bs-target="#tab-manager" type="button" role="tab" aria-controls="tab-manager" aria-selected="false">
-                                Chef de département
+                                @lang('translation.ChefDeDépartement')
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md">
                     <div class="">
-                        <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+                        <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>@lang('translation.Afficher') @lang('translation.LesFiltres')</a>
                     </div>
                 </div>
             </div>
@@ -67,12 +67,12 @@
                                 <thead>
                                     <tr class="text-center titre_table">
                                         <th></th>
-                                        <th>Nom</th>
-                                        <th>Matricule</th>
-                                        <th>Fonction</th>
-                                        <th>E-mail</th>
-                                        <th>Téléphone</th>
-                                        <th>Role</th>
+                                        <th>@lang('translation.Matricule')</th>
+                                        <th>@lang('translation.Nom')</th>
+                                        <th>@lang('translation.Fonction')</th>
+                                        <th>@lang('translation.E-mail')</th>
+                                        <th>@lang('translation.Téléphone')</th>
+                                        <th>@lang('translation.Role')</th>
 
                                     </tr>
                                 </thead>
@@ -86,7 +86,7 @@
                                                 </p>
                                             </center>
                                             @else
-                                            <a href="{{asset('images/responsables/'.$referent[$i]->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/responsables/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                            <a href="{{asset('images/responsables/'.$referent[$i]->photos)}}"><img title="@lang('translation.clickerPourVoirLimage')" src="{{asset('images/responsables/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
                                             @endif
                                         </td>
                                         <td>
@@ -178,7 +178,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header d-flex justify-content-center" style="background-color:rgb(96,167,134);">
-                                        <h6 class="modal-title text-white"> Modification </h6>
+                                        <h6 class="modal-title text-white">@lang('translation.>@lang('translation.Modification')')</h6>
                                     </div>
                                     <div class="modal-body">
                                         <form action="{{route('modifDepartement', $referent[$i]->id)}}" method="get" class="btn-submit">
@@ -187,35 +187,34 @@
                                             <input type="hidden" name="_method" value="PUT">
                                             {{-- --}}
                                             <div class="form-group">
-                                                <label for="name"><small><b>Nom</b></small></label><br>
+                                                <label for="name"><small><b>@lang('translation.Nom')</b></small></label><br>
                                                 <input type="text" class="form-control" value="{{$referent[$i]->nom_resp}}" autocomplete="off" id="" name="nom_chef" placeholder="Nom">
                                             </div>
                                             <div class="form-group">
-                                                <label for="prenom"><small><b>Prénom</b></small></label><br>
+                                                <label for="prenom"><small><b>@lang('translation.Prénom')</b></small></label><br>
                                                 <input type="text" class="form-control" autocomplete="off" value="{{$referent[$i]->prenom_resp}}" id="" name="prenom_chef" placeholder="Prénom">
                                             </div>
                                             <div class="form-group">
-                                                <label for="prenom"><small><b>Genre</b></small></label><br>
+                                                <label for="prenom"><small><b>@lang('translation.Genre')</b></small></label><br>
                                                 <input type="text" class="form-control" autocomplete="off" value="{{$referent[$i]->sexe_resp}}" id="" name="genre_chef" placeholder="Genre">
                                             </div>
                                             <div class="form-group">
-                                                <label for="fonction"><small><b>Fonction</b></small></label><br>
+                                                <label for="fonction"><small><b>@lang('translation.Fonction')</b></small></label><br>
                                                 <input type="text" class="form-control" autocomplete="off" id="" value="{{$referent[$i]->fonction_resp}}" name="fonction_chef" placeholder="Fonction">
                                             </div>
                                             <div class="form-group">
-                                                <label for="email"><small><b>E-mail</b></small></label><br>
+                                                <label for="email"><small><b>@lang('translation.E-mail')</b></small></label><br>
                                                 <input type="email" class="form-control" autocomplete="off" id="" value="{{$referent[$i]->email_resp}}" name="mail_chef" placeholder="E-mail">
                                             </div>
                                             <div class="form-group">
-                                                <label for="phone"><small><b>Téléphone</b></small></label><br>
+                                                <label for="phone"><small><b>@lang('translation.Téléphone')</b></small></label><br>
                                                 <input type="text" class="form-control" autocomplete="off" id="" value="{{$referent[$i]->telephone_resp}}" name="telephone_chef" placeholder="Téléphone">
                                             </div>
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>&nbsp;
-                                        <button type="submit" class="btn btn-success modification " id=""><span class="fa fa-pencil"></span>
-                                            Modifier</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('translation.Fermer')</button>&nbsp;
+                                        <button type="submit" class="btn btn-success modification " id=""><span class="fa fa-pencil"></span>@lang('translation.Modifier')</button>
                                         </form>
                                     </div>
                                 </div>
@@ -237,14 +236,14 @@
                             <thead>
                                 <tr class="text-center titre_table">
                                     <th></th>
-                                    <th>Nom</th>
-                                    <th>Matricule</th>
-                                    <th>Fonction</th>
-                                    <th>E-mail</th>
-                                    <th>Téléphone</th>
-                                    <th>Role asigné</th>
-                                    <th class="rnla">Role non asigné</th>
-                                    <th class="rnlh">Netoyé</th>
+                                    <th>@lang('translation.Nom')</th>
+                                    <th>@lang('translation.Matricule')</th>
+                                    <th>@lang('translation.Fonction')</th>
+                                    <th>@lang('translation.E-mail')</th>
+                                    <th>@lang('translation.Téléphone')</th>
+                                    <th>@lang('translation.Role') @lang('translation.assigné')</th>
+                                    <th class="rnla">@lang('translation.Role') @lang('translation.non') @lang('translation.assigné')</th>
+                                    <th class="rnlh">@lang('translation.Nettoyé')</th>
 
                                 </tr>
                             </thead>
@@ -258,7 +257,7 @@
                                             </p>
                                         </center>
                                         @else
-                                        <a href="{{asset('images/stagiaires/'.$stagiaires[$i]->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$stagiaires[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                        <a href="{{asset('images/stagiaires/'.$stagiaires[$i]->photos)}}"><img title="@lang('translation.clickerPourVoirLimage')" src="{{asset('images/stagiaires/'.$stagiaires[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
 
                                         @endif
                                     </td>
@@ -289,9 +288,9 @@
                                         <div align="left">
                                             @for($ii = 0; $ii < count($roles_not_actif_stg[$i]["role_inactif"]); $ii++) @if($stagiaires[$i]->user_id ==
                                                 $roles_not_actif_stg[$i]["user_id"])
-                                                <span style="color:blueviolet">attribué role pour
+                                                <span style="color:blueviolet">@lang('translation.attribuer') @lang('translation.Role') @lang('translation.pour')
                                                     {{$roles_not_actif_stg[$i]["role_inactif"][$ii]->role_name}}
-                                                    <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$stagiaires[$i]->user_id,$roles_not_actif_stg[$i]["role_inactif"][$ii]->id])}}"><i class='bx bxs-edit-alt background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                    <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$stagiaires[$i]->user_id,$roles_not_actif_stg[$i]["role_inactif"][$ii]->id])}}"><i class='bx bxs-edit-alt background_grey' style="color: #0052D4 !important;font-size: 15px" title="@lang('translation.Modifier') @lang('translation.LesInformations')"></i></a></button>
                                                 </span> <br>
                                                 @endif
                                                 @endfor
@@ -316,7 +315,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header d-flex justify-content-center" style="background-color:rgb(96,167,134);">
-                                                    <h6 class="modal-title text-white"> Modification </h6>
+                                                    <h6 class="modal-title text-white"> >@lang('translation.Modification') </h6>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form action="{{route('modifDepartement', $stagiaires[$i]->id)}}" method="get" class="btn-submit">
@@ -325,35 +324,35 @@
                                                         <input type="hidden" name="_method" value="PUT">
                                                         {{-- --}}
                                                         <div class="form-group">
-                                                            <label for="name"><small><b>Nom</b></small></label><br>
+                                                            <label for="name"><small><b>@lang('translation.Nom')</b></small></label><br>
                                                             <input type="text" class="form-control" value="{{$stagiaires[$i]->nom_stagiaire}}" autocomplete="off" id="" name="nom_chef" placeholder="Nom">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="prenom"><small><b>Prénom</b></small></label><br>
+                                                            <label for="prenom"><small><b>@lang('translation.Prénom')</b></small></label><br>
                                                             <input type="text" class="form-control" autocomplete="off" value="{{$stagiaires[$i]->prenom_stagiaire}}" id="" name="prenom_chef" placeholder="Prénom">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="prenom"><small><b>Genre</b></small></label><br>
+                                                            <label for="prenom"><small><b>@lang('translation.Genre')</b></small></label><br>
                                                             <input type="text" class="form-control" autocomplete="off" value="{{$stagiaires[$i]->genre_stagiaire}}" id="" name="genre_chef" placeholder="Genre">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="fonction"><small><b>Fonction</b></small></label><br>
+                                                            <label for="fonction"><small><b>@lang('translation.Fonction')</b></small></label><br>
                                                             <input type="text" class="form-control" autocomplete="off" id="" value="{{$stagiaires[$i]->fonction_stagiaire}}" name="fonction_chef" placeholder="Fonction">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="email"><small><b>E-mail</b></small></label><br>
+                                                            <label for="email"><small><b>@lang('translation.E-mail')</b></small></label><br>
                                                             <input type="email" class="form-control" autocomplete="off" id="" value="{{$stagiaires[$i]->mail_stagiaire}}" name="mail_chef" placeholder="E-mail">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="phone"><small><b>Téléphone</b></small></label><br>
+                                                            <label for="phone"><small><b>@lang('translation.Téléphone')</b></small></label><br>
                                                             <input type="text" class="form-control" autocomplete="off" id="" value="{{$stagiaires[$i]->telephone_stagiaire}}" name="telephone_chef" placeholder="Téléphone">
                                                         </div>
 
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>&nbsp;
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('translation.Fermer')</button>&nbsp;
                                                     <button type="submit" class="btn btn-success modification " id=""><span class="fa fa-pencil"></span>
-                                                        Modifier</button>
+                                                        @lang('translation.Modifier')</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -374,14 +373,14 @@
                             <thead>
                                 <tr class="text-center titre_table">
                                     <th></th>
-                                    <th>Nom</th>
-                                    <th>Matricule</th>
-                                    <th>Fonction</th>
-                                    <th>E-mail</th>
-                                    <th>Téléphone</th>
-                                    <th>Role asigné</th>
-                                    <th class="rlc">Role non asigné</th>
-                                    <th class="rlc">Netoyé</th>
+                                    <th>@lang('translation.Nom')</th>
+                                    <th>@lang('translation.Matricule')</th>
+                                    <th>@lang('translation.Fonction')</th>
+                                    <th>@lang('translation.E-mail')</th>
+                                    <th>@lang('translation.Téléphone')</th>
+                                    <th>@lang('translation.Role') @lang('translation.assigné')</th>
+                                    <th class="rlc">@lang('translation.Role') @lang('translation.non') @lang('translation.assigné')</th>
+                                    <th class="rlc">@lang('translation.Nettoyé')</th>
                                 </tr>
                             </thead>
                             <tbody id="dynamic_rowC">
@@ -532,7 +531,7 @@
     <div class="row">
         <div class="row">
             <div class="col-md-11">
-                <p class="m-0" style="color: #0052D4; text-transform: uppercase">Filter vos équipes</p>
+                <p class="m-0" style="color: #0052D4; text-transform: uppercase">@lang('translation.Filtrer') @lang('translation.vos') @lang('translation.equipes')</p>
             </div>
             <div class="col-md-1 text-end">
                 <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
@@ -577,7 +576,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingOne">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                Référents
+                                @lang('translation.Réferent')
                             </button>
                         </h2>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
@@ -605,7 +604,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                Employés
+                                @lang('translation.Employés')
                             </button>
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
@@ -633,7 +632,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                Formateur interne
+                                @lang('translation.FormateurInterne')
                             </button>
                         </h2>
                         <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
@@ -668,7 +667,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingFour">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
-                                Chef de département
+                                @lang('translation.ChefDeDépartement')
                             </button>
                         </h2>
                         <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
@@ -708,7 +707,7 @@
 <div class="infos mt-3">
     <div class="row">
         <div class="col">
-            <p class="m-0 text-center">INFORMATION</p>
+            <p class="m-0 text-center">@lang('translation.Informations')</p>
         </div>
         <div class="col text-end">
             <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
@@ -733,7 +732,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-1"><i class='bx bx-user'></i></div>
-                <div class="col-md-3">Nom_prénoms</div>
+                <div class="col-md-3">@lang('translation.Nom') & @lang('translation.Prénom')</div>
                 <div class="col-md">
                     <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
                     <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
@@ -744,7 +743,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
-                <div class="col-md-3">Matricule</div>
+                <div class="col-md-3">@lang('translation.Matricule')</div>
                 <div class="col-md">
                     <span id="matriculess" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
                 </div>
@@ -754,7 +753,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-1"><i class='bx bx-envelope'></i></div>
-                <div class="col-md-3">E-mail</div>
+                <div class="col-md-3">@lang('translation.E-mail')</div>
                 <div class="col-md"><span id="mail_stagiaire"></span></div>
             </div>
         </div>
@@ -762,7 +761,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-1"><i class='bx bx-phone'></i></div>
-                <div class="col-md-3">Télephone</div>
+                <div class="col-md-3">@lang('translation.Téléphone')</div>
                 <div class="col-md">
                     <span></span><span id="telephone_stagiaire"></span>
                 </div>
@@ -772,7 +771,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
-                <div class="col-md-3">Adresse</div>
+                <div class="col-md-3">@lang('translation.Adresse')</div>
                 <div class="col-md"><span id="adresse"></span></div>
             </div>
 

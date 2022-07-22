@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text_header m-0 mt-1">Modification nom</h3>
+<h3 class="text_header m-0 mt-1">@lang('translation.Modification') @lang('translation.Nom')</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
@@ -8,7 +8,7 @@
 
 
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('profil_manager')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i>Retour</button></a>
+  <a href="{{route('profil_manager')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i>@lang('translation.Précedent')</button></a>
 </div>
 <center>
 <div class="col-lg-4">
@@ -22,14 +22,14 @@
 
                     <input type="text" value="{{$chef->nom_chef}}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
-                    <label class="ml-3 form-control-placeholder">Nom</label>
+                    <label class="ml-3 form-control-placeholder">@lang('translation.Nom')</label>
 
                 </div>
                 </div>
                     <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control test input" value="{{$chef->prenom_chef}}"  name="prenom">
-                        <label class="ml-3 form-control-placeholder" >Prénom</label>
+                        <label class="ml-3 form-control-placeholder" >@lang('translation.Prénom')</label>
 
                         </div>
                     </div>
@@ -69,7 +69,7 @@
 
 
 
-<button class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
+<button class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

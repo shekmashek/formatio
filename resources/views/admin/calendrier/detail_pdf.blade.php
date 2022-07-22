@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    
+    <title>@lang('translation.Document')</title>
+
    <style>
         .photo{
             border-radius: 50%;
@@ -59,8 +59,8 @@
                     <span class="contenu mt-3 ps-2 pe-2 ms-2" id="module"> {{$detail[$i]->nom_module}}</span><br><br>
                     <span  class="contenu ps-3 pt-2">{{$detail[$i]->nom_projet}}</span>&nbsp;&nbsp;
                     <span class="contenu ps-3 pt-2">{{$detail[$i]->nom_groupe}}</span>&nbsp;&nbsp;
-                    <img src="{{public_path('images/icone/times.png')}}" style="width: 20px" /> <span>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($detail[$i]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($detail[$i]->date_fin)); @endphp</span>
-                    &nbsp;&nbsp;<img src="{{public_path('images/icone/group.png')}}" style="width: 20px"/> <span> apprenants inscrits: {{$nb_stg}}</span><br><br>
+                    <img src="{{public_path('images/icone/times.png')}}" style="width: 20px" /> <span>@lang('translation.Du') @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($detail[$i]->date_debut)).' @lang("translation.au") '.strftime('%A %e %B %Y', strtotime($detail[$i]->date_fin)); @endphp</span>
+                    &nbsp;&nbsp;<img src="{{public_path('images/icone/group.png')}}" style="width: 20px"/> <span> @lang('translation.ApprenantsInscrits') : {{$nb_stg}}</span><br><br>
                     <img src="{{public_path('images/icone/home.png')}}" style="width: 20px"/><span>{{$lieu_formation[0]}}</span>
                     &nbsp;&nbsp;<img src="{{public_path('images/icone/door-open.png')}}" style="width: 20px"><span>{{$lieu_formation[1]}}</span><br><br>
                     <img src="{{public_path('images/icone/home.png')}}" style="width: 20px"><span>{{$detail[$i]->nom_etp}} <img src = "{{ public_path('images/entreprises/'.$detail[$i]->logo_entreprise)}}" width="50px" ></span>
@@ -72,7 +72,7 @@
                     <label for=""><strong>Statut:</strong>&nbsp; {{$status[0]->item_status_groupe}}</label><br><br>
                     <label for=""><strong>Formation:</strong>&nbsp; {{$detail[$i]->nom_formation}}</label><br><br>
                     <label for=""><strong>Module:</strong>&nbsp; {{$detail[$i]->nom_module}}</label><br><br> --}}
-                    <br><br><label for=""><strong>Formateur:</strong><br>
+                    <br><br><label for=""><strong>@lang('translation.Formateur') : </strong><br>
                     <ul>
                         @php
                             $t1 = substr($detail[$i]->numero_formateur,0,3);
@@ -88,18 +88,18 @@
                     </ul>
                     <span>{{$nb_seance}}</span><br><br>
                     @for($j = 0; $j < count($date_groupe); $j++)
-                        <label for="">- Séance {{$j+1}} : </label>&nbsp;<img src = "{{ public_path('images/icone/calendar.png')}}" width="20px" class="photo">{{$date_groupe[$j]->date_detail}}&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/times.png')}}" width="20px" class="photo">&nbsp;{{$date_groupe[$j]->h_debut}}h - {{$date_groupe[$j]->h_fin}}h <br>
+                        <label for="">- @lang('translation.Séance') {{$j+1}} : </label>&nbsp;<img src = "{{ public_path('images/icone/calendar.png')}}" width="20px" class="photo">{{$date_groupe[$j]->date_detail}}&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/times.png')}}" width="20px" class="photo">&nbsp;{{$date_groupe[$j]->h_debut}}h - {{$date_groupe[$j]->h_fin}}h <br>
                     @endfor
                     <div style="margin-top: 20px">
-                    <label for=""><strong>Liste des apprenants</strong></label>
+                    <label for=""><strong>@lang('translation.ListeDesApprenants')</strong></label>
                     <table>
                         <tr>
                             <th></th>
-                            <th>Matricule</th>
-                            <th>Noms</th>
-                            <th>Fonction</th>
-                            <th>E-mail</th>
-                            <th>Téléphone</th>
+                            <th>@lang('translation.Matricule')</th>
+                            <th>@lang('translation.Nom')</th>
+                            <th>@lang('translation.Fonction')</th>
+                            <th>@lang('translation.E-mail')</th>
+                            <th>@lang('translation.Téléphone')</th>
                         </tr>
 
                             @for ($k = 0;$k< count($stg);$k++)
@@ -128,13 +128,13 @@
             <div style="margin-top: 20px">
 
 
-            <label for=""><strong >Les matériels nécessaires</strong></label>
+            <label for=""><strong >@lang('translation.LesMaterielsNécessaires')</strong></label>
             <table>
                 <tr>
-                    <th>Matériel nécessaire</th>
-                    <th> Demandé(e) par</th>
-                    <th> Pris en charge par</th>
-                    <th> Note</th>
+                    <th>@lang('translation.MaterielNécessaire')</th>
+                    <th>@lang('translation.DemandéPar')</th>
+                    <th>@lang('translation.PrisEnChargePar')</th>
+                    <th>@lang('translation.Note')</th>
                 </tr>
 
                    @foreach ($ressource as $res )

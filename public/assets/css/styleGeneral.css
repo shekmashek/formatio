@@ -1005,6 +1005,21 @@ a{
     display: none;
 }
 
+.badge_invitation_etp{
+    padding: 6px ;
+    color: white;
+    background-color: orangered;
+    font-size: .8rem;
+    border: none;
+    border-radius: 50px;
+    position: absolute;
+    bottom: 25px;
+    right: 20px;
+    height: 19px;
+    display: none;
+}
+
+
 .index{
     padding: 6px ;
     color: white;

@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Calendrier</p>
+    <p class="text_header m-0 mt-1">@lang('translation.Calendrier')</p>
 @endsection
 
 
@@ -318,7 +318,7 @@
                         <h2 class="form-control accordion-header border-0 border-bottom" id="materiel_heading">
                             <button class="accordion-button p-2 collapsed" id="materiel_button" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#materiel_collapse" aria-expanded="false" aria-controls="materiel_collapse">
-                              Materiel nécessaire
+                                @lang('translation.MaterielNécessaire')
                             </button>
                         </h2>
 
@@ -343,7 +343,7 @@
                         <h2 class="accordion-header border-0 border-bottom" id="headingTwo">
                             <button class="accordion-button p-2 collapsed" id="container_button" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                              Participants
+                                @lang('translation.Participants')
                             </button>
                         </h2>
 
@@ -568,7 +568,7 @@
 
                     // add the number of session before the session list
                     nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
-                    nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 mb-3 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
+                    nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 mb-3 width_80" placeholder="@lang("translation.NombreSession")" aria-label="nbr_session" aria-describedby="basic-addon1">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
 
                     session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
                     lieu_offcanvas.value = info.event.extendedProps.lieu;
