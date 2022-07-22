@@ -855,9 +855,22 @@
                                                     <a href="#" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconPersonel.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span>personel</span></a>
                                                 </div>
                                                 <div class="col-4 px-0 logo_suite">
-                                                    <a href="http://127.0.0.1:8001/" target="_blank" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconRecrutement.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span>recrutement</span></a>
+                                                    <a href="#" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconTemps.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span>temps</span></a>
                                                 </div>
                                             </div>
+                                            @can('isReferent')
+                                            <div class="row mt-4">
+                                                <div class="col-4 px-0 logo_suite">
+                                                    <a href="http://127.0.0.1:8001/" target="_blank" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconRh.webp')}}" alt="logo formation" width="50px" height="45px" class="img-responsive mb-1"><span class="mt-1">RH.mg</span></a>
+                                                </div>
+                                                <div class="col-4 px-0 logo_suite">
+                                                    <a href="#" target="_blank" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconRecrutement.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span class="mt-2">recrutement</span></a>
+                                                </div>
+                                                <div class="col-4 px-0 ">
+                                                    {{-- <a href="#" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconConge.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span>congé</span></a> --}}
+                                                </div>
+                                            </div>
+                                            @endcan
                                         </div>
                                     </div>
                                 </div>
