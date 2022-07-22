@@ -13,8 +13,9 @@ insert into
 insert into
     points value(4);
 
-alter table reponse_evaluationchaud add column statut int(2) default 0;
-alter table reponse_evaluationchaud add column points int(11) default 0;
+insert into
+    points value(5);
+
 
 create
 or replace view v_question_fille as

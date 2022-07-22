@@ -1,3 +1,4 @@
+
 <style>
     #faire_presence:hover {
         cursor: pointer;
@@ -173,8 +174,6 @@
 </div>
 
 
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
     $(document).ready(function() {

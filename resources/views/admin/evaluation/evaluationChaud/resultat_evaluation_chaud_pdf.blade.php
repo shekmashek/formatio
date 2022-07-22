@@ -41,6 +41,7 @@
         .row_flex{
           display: flex;
           /* width: fit-content; */
+          margin-top: 2rem;
           justify-content: flex-end;
         }
           #my-pie-chart {
@@ -120,7 +121,7 @@
             }
           #my-pie-chart::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -131,7 +132,7 @@
           }
           #my-pie-chart2::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -143,7 +144,7 @@
 
           #my-pie-chart3::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -155,7 +156,7 @@
 
           #my-pie-chart4::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -168,7 +169,7 @@
 
           #my-pie-chart5::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -180,7 +181,7 @@
 
           #my-pie-chart6::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -193,7 +194,7 @@
 
           #my-pie-chart7::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -205,7 +206,7 @@
 
           #my-pie-chart8::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -217,7 +218,7 @@
 
           #my-pie-chart9::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -229,7 +230,7 @@
 
           #my-pie-chart10::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -241,7 +242,7 @@
 
           #my-pie-chart11::before{
             content: '';
-            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            background: conic-gradient(rgb(46, 181, 134) 0.00% calc(var(--test)*1%),rgb(123, 240, 199) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(156, 252, 160) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(251, 238, 145) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 188, 126) calc(var(--test4)*1%) calc(var(--test5)*1%), rgb(255, 255, 255) calc(var(--test5)*1%) 100%);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -298,6 +299,12 @@
     cursor: pointer;
 }
 
+.table-rating-bar .bar-container .bar-105 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-5 {
     width: var(--progress_bar);
     height: 8px;
@@ -327,6 +334,12 @@
 }
 
 
+.table-rating-bar .bar-container .bar-106 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-6 {
     width: var(--progress_bar);
     height: 8px;
@@ -366,6 +379,12 @@
 }
 
 
+.table-rating-bar .bar-container .bar-111 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-11 {
     width: var(--progress_bar);
     height: 8px;
@@ -404,6 +423,12 @@
     border-radius: 20px;
 }
 
+.table-rating-bar .bar-container .bar-116 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-16 {
     width: var(--progress_bar);
     height: 8px;
@@ -433,6 +458,12 @@
     border-radius: 20px;
 }
 
+.table-rating-bar .bar-container .bar-120 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-20 {
     width: var(--progress_bar);
     height: 8px;
@@ -462,6 +493,12 @@
     border-radius: 20px;
 }
 
+.table-rating-bar .bar-container .bar-124 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-24 {
     width: var(--progress_bar);
     height: 8px;
@@ -499,6 +536,18 @@
     border-radius: 20px;
 }
 
+.table-rating-bar .bar-container .bar-229 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(126, 137, 255);
+    border-radius: 20px;
+}
+.table-rating-bar .bar-container .bar-129 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(126, 137, 255);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-29 {
     width: var(--progress_bar);
     height: 8px;
@@ -522,6 +571,12 @@
     border-radius: 20px;
 }
 
+.table-rating-bar .bar-container .bar-132 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-32 {
     width: var(--progress_bar);
     height: 8px;
@@ -551,6 +606,12 @@
     border-radius: 20px;
 }
 
+.table-rating-bar .bar-container .bar-136 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-36 {
     width: var(--progress_bar);
     height: 8px;
@@ -581,6 +642,12 @@
     border-radius: 20px;
 }
 
+.table-rating-bar .bar-container .bar-140 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-40 {
     width: var(--progress_bar);
     height: 8px;
@@ -634,6 +701,12 @@
 }
 
 
+.table-rating-bar .bar-container .bar-147 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-47 {
     width: var(--progress_bar);
     height: 8px;
@@ -665,6 +738,12 @@
 
 
 
+.table-rating-bar .bar-container .bar-151 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(46, 181, 134);
+    border-radius: 20px;
+}
 .table-rating-bar .bar-container .bar-51 {
     width: var(--progress_bar);
     height: 8px;
@@ -718,7 +797,7 @@
 }
 .marge_top .row_flex {
     justify-content: space-between;
-    border-right: 1px solid rgb(222, 222, 222);
+    /* border-right: 1px solid rgb(222, 222, 222); */
     margin-bottom: 10px;
 }
 
@@ -765,7 +844,7 @@
                 <span id="texte">Les objectifs de la formation ont-ils été clairement annoncés ?</span>
                 </div>
                 <div class=" circle_1">
-                <div id="my-pie-chart" class="circle " style="--test: {{ $res_q1[0]->pourcentage }}; --test2: {{ $res_q1[1]->pourcentage + $res_q1[0]->pourcentage}}; --test3: {{ $res_q1[0]->pourcentage + $res_q1[1]->pourcentage + $res_q1[2]->pourcentage}}; --test4: {{ $res_q1[3]->pourcentage + $res_q1[0]->pourcentage + $res_q1[1]->pourcentage + $res_q1[2]->pourcentage}}">
+                <div id="my-pie-chart" class="circle " style="--test: {{ $res_q1[0]->pourcentage }}; --test2: {{ $res_q1[1]->pourcentage + $res_q1[0]->pourcentage}}; --test3: {{ $res_q1[0]->pourcentage + $res_q1[1]->pourcentage + $res_q1[2]->pourcentage}}; --test4: {{ $res_q1[3]->pourcentage + $res_q1[0]->pourcentage + $res_q1[1]->pourcentage + $res_q1[2]->pourcentage}};--test5: {{ $res_q1[4]->pourcentage + $res_q1[3]->pourcentage + $res_q1[0]->pourcentage + $res_q1[1]->pourcentage + $res_q1[2]->pourcentage}}">
                     <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q1[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
                 </div>
@@ -776,7 +855,7 @@
                 <span id="texte">Avez-vous eu une discussion avec votre hiérarchie concernant  cette formation ?</span>
             </div>
             <div class=" circle_1">
-                <div id="my-pie-chart2" class="circle " style="--test: {{ $res_q2[0]->pourcentage }}; --test2: {{ $res_q2[1]->pourcentage + $res_q2[0]->pourcentage}}; --test3: {{ $res_q2[0]->pourcentage + $res_q2[1]->pourcentage + $res_q2[2]->pourcentage}}; --test4: {{ $res_q2[3]->pourcentage + $res_q2[0]->pourcentage + $res_q2[1]->pourcentage + $res_q2[2]->pourcentage}}">
+                <div id="my-pie-chart2" class="circle " style="--test: {{ $res_q2[0]->pourcentage }}; --test2: {{ $res_q2[1]->pourcentage + $res_q2[0]->pourcentage}}; --test3: {{ $res_q2[0]->pourcentage + $res_q2[1]->pourcentage + $res_q2[2]->pourcentage}}; --test4: {{ $res_q2[3]->pourcentage + $res_q2[0]->pourcentage + $res_q2[1]->pourcentage + $res_q2[2]->pourcentage}}; --test5: {{ $res_q2[4]->pourcentage + $res_q2[3]->pourcentage + $res_q2[0]->pourcentage + $res_q2[1]->pourcentage + $res_q2[2]->pourcentage}}">
                 <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q2[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
             </div>
@@ -788,10 +867,10 @@
             <div class="table-rating-bar justify-content-center" style="margin-bottom: 10px; margin-top: 20px">
                 <table class="text-left mx-auto">
                     <tr>
-                        <td class="rating-label">Totalement</td>
+                        <td class="rating-label">Excellent</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-5"
+                                <div class="bar-105"
                                     style="--progress_bar: {{ $res_q1[0]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -800,10 +879,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">En partie</td>
+                        <td class="rating-label">Bien</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-4"
+                                <div class="bar-5"
                                     style="--progress_bar: {{ $res_q1[1]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -812,10 +891,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Insuffisament</td>
+                        <td class="rating-label">Moyen</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-3"
+                                <div class="bar-4"
                                     style="--progress_bar: {{ $res_q1[2]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -824,15 +903,27 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Pas du tout</td>
+                        <td class="rating-label">Faible</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-2"
+                                <div class="bar-3"
                                     style="--progress_bar: {{ $res_q1[3]->pourcentage }}%;">
                                 </div>
                             </div>
                         </td>
                         <td class="text-right"><span class="rating-label">{{ $res_q1[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q1[3]->pourcentage }}%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rating-label">Insatisfaisant</td>
+                        <td class="rating-bar">
+                            <div class="bar-container">
+                                <div class="bar-2"
+                                    style="--progress_bar: {{ $res_q1[4]->pourcentage }}%;">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right"><span class="rating-label">{{ $res_q1[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q1[4]->pourcentage }}%</span>
                         </td>
                     </tr>
 
@@ -841,10 +932,10 @@
             <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
                 <table class="text-left mx-auto">
                     <tr>
-                        <td class="rating-label">Totalement</td>
+                        <td class="rating-label">Excellent</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-6"
+                                <div class="bar-106"
                                     style="--progress_bar: {{ $res_q2[0]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -853,10 +944,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">En partie</td>
+                        <td class="rating-label">Bien</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-7"
+                                <div class="bar-6"
                                     style="--progress_bar: {{ $res_q2[1]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -865,10 +956,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Insuffisament</td>
+                        <td class="rating-label">Moyen</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-8"
+                                <div class="bar-7"
                                     style="--progress_bar: {{ $res_q2[2]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -877,15 +968,27 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Pas du tout</td>
+                        <td class="rating-label">Faible</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-9"
+                                <div class="bar-8"
                                     style="--progress_bar: {{ $res_q2[3]->pourcentage }}%;">
                                 </div>
                             </div>
                         </td>
                         <td class="text-right"><span class="rating-label">{{ $res_q2[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q2[3]->pourcentage }}%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rating-label">Insatisfaisant</td>
+                        <td class="rating-bar">
+                            <div class="bar-container">
+                                <div class="bar-9"
+                                    style="--progress_bar: {{ $res_q2[4]->pourcentage }}%;">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right"><span class="rating-label">{{ $res_q2[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q2[4]->pourcentage }}%</span>
                         </td>
                     </tr>
                 </table>
@@ -922,7 +1025,7 @@
                 <span id="texte">La durée du stage vous a t-elle semblé adaptée ?</span>
             </div>
             <div class=" circle_1">
-                <div id="my-pie-chart3" class="circle " style="--test: {{ $res_q3[0]->pourcentage }}; --test2: {{ $res_q3[1]->pourcentage + $res_q3[0]->pourcentage}}; --test3: {{ $res_q3[0]->pourcentage + $res_q3[1]->pourcentage + $res_q3[2]->pourcentage}}; --test4: {{ $res_q3[3]->pourcentage + $res_q3[0]->pourcentage + $res_q3[1]->pourcentage + $res_q3[2]->pourcentage}}">
+                <div id="my-pie-chart3" class="circle " style="--test: {{ $res_q3[0]->pourcentage }}; --test2: {{ $res_q3[1]->pourcentage + $res_q3[0]->pourcentage}}; --test3: {{ $res_q3[0]->pourcentage + $res_q3[1]->pourcentage + $res_q3[2]->pourcentage}}; --test4: {{ $res_q3[3]->pourcentage + $res_q3[0]->pourcentage + $res_q3[1]->pourcentage + $res_q3[2]->pourcentage}}; --test5: {{ $res_q3[4]->pourcentage + $res_q3[3]->pourcentage + $res_q3[0]->pourcentage + $res_q3[1]->pourcentage + $res_q3[2]->pourcentage}}">
                 <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q3[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
             </div>
@@ -934,10 +1037,10 @@
             <div class="table-rating-bar justify-content-center" style="margin-bottom: 10px; margin-top: 20px">
                 <table class="text-left mx-auto">
                     <tr>
-                        <td class="rating-label">Totalement</td>
+                        <td class="rating-label">Excellent</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-11"
+                                <div class="bar-111"
                                     style="--progress_bar: {{ $res_q3[0]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -946,10 +1049,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">En partie</td>
+                        <td class="rating-label">Bien</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-12"
+                                <div class="bar-11"
                                     style="--progress_bar: {{ $res_q3[1]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -958,10 +1061,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Insuffisament</td>
+                        <td class="rating-label">Moyen</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-13"
+                                <div class="bar-12"
                                     style="--progress_bar: {{ $res_q3[2]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -970,15 +1073,27 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Pas du tout</td>
+                        <td class="rating-label">Faible</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-14"
+                                <div class="bar-13"
                                     style="--progress_bar: {{ $res_q3[3]->pourcentage }}%;">
                                 </div>
                             </div>
                         </td>
                         <td class="text-right"><span class="rating-label">{{ $res_q3[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q3[3]->pourcentage }}%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rating-label">Insatisfaisant</td>
+                        <td class="rating-bar">
+                            <div class="bar-container">
+                                <div class="bar-14"
+                                    style="--progress_bar: {{ $res_q3[4]->pourcentage }}%;">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right"><span class="rating-label">{{ $res_q3[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q3[4]->pourcentage }}%</span>
                         </td>
                     </tr>
                 </table>
@@ -1015,7 +1130,7 @@
                 <span id="texte">Le formateur était-il clair et dynamique ?</span>
                 </div>
                 <div class=" circle_1">
-                <div id="my-pie-chart4" class="circle " style="--test: {{ $res_q4[0]->pourcentage }}; --test2: {{ $res_q4[1]->pourcentage + $res_q4[0]->pourcentage}}; --test3: {{ $res_q4[0]->pourcentage + $res_q4[1]->pourcentage + $res_q4[2]->pourcentage}}; --test4: {{ $res_q4[3]->pourcentage + $res_q4[0]->pourcentage + $res_q4[1]->pourcentage + $res_q4[2]->pourcentage}}">
+                <div id="my-pie-chart4" class="circle " style="--test: {{ $res_q4[0]->pourcentage }}; --test2: {{ $res_q4[1]->pourcentage + $res_q4[0]->pourcentage}}; --test3: {{ $res_q4[0]->pourcentage + $res_q4[1]->pourcentage + $res_q4[2]->pourcentage}}; --test4: {{ $res_q4[3]->pourcentage + $res_q4[0]->pourcentage + $res_q4[1]->pourcentage + $res_q4[2]->pourcentage}}; --test5: {{ $res_q4[4]->pourcentage + $res_q4[3]->pourcentage + $res_q4[0]->pourcentage + $res_q4[1]->pourcentage + $res_q4[2]->pourcentage}}">
                     <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q4[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
                 </div>
@@ -1026,7 +1141,7 @@
                 <span id="texte">Les exercices et activités étaient-ils pertinents ?</span>
                 </div>
                 <div class=" circle_1">
-                <div id="my-pie-chart5" class="circle " style="--test: {{ $res_q5[0]->pourcentage }}; --test2: {{ $res_q5[1]->pourcentage + $res_q5[0]->pourcentage}}; --test3: {{ $res_q5[0]->pourcentage + $res_q5[1]->pourcentage + $res_q5[2]->pourcentage}}; --test4: {{ $res_q5[3]->pourcentage + $res_q5[0]->pourcentage + $res_q5[1]->pourcentage + $res_q5[2]->pourcentage}}">
+                <div id="my-pie-chart5" class="circle " style="--test: {{ $res_q5[0]->pourcentage }}; --test2: {{ $res_q5[1]->pourcentage + $res_q5[0]->pourcentage}}; --test3: {{ $res_q5[0]->pourcentage + $res_q5[1]->pourcentage + $res_q5[2]->pourcentage}}; --test4: {{ $res_q5[3]->pourcentage + $res_q5[0]->pourcentage + $res_q5[1]->pourcentage + $res_q5[2]->pourcentage}}; --test5: {{ $res_q5[4]->pourcentage + $res_q5[3]->pourcentage + $res_q5[0]->pourcentage + $res_q5[1]->pourcentage + $res_q5[2]->pourcentage}}">
                     <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q5[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
                 </div>
@@ -1037,7 +1152,7 @@
                 <span id="texte">Le formateur a t-il adapté la formation aux stagiaires ?</span>
                 </div>
                 <div class=" circle_1">
-                <div id="my-pie-chart6" class="circle " style="--test: {{ $res_q6[0]->pourcentage }}; --test2: {{ $res_q6[1]->pourcentage + $res_q6[0]->pourcentage}}; --test3: {{ $res_q6[0]->pourcentage + $res_q6[1]->pourcentage + $res_q6[2]->pourcentage}}; --test4: {{ $res_q6[3]->pourcentage + $res_q6[0]->pourcentage + $res_q6[1]->pourcentage + $res_q6[2]->pourcentage}}">
+                <div id="my-pie-chart6" class="circle " style="--test: {{ $res_q6[0]->pourcentage }}; --test2: {{ $res_q6[1]->pourcentage + $res_q6[0]->pourcentage}}; --test3: {{ $res_q6[0]->pourcentage + $res_q6[1]->pourcentage + $res_q6[2]->pourcentage}}; --test4: {{ $res_q6[3]->pourcentage + $res_q6[0]->pourcentage + $res_q6[1]->pourcentage + $res_q6[2]->pourcentage}}; --test5: {{ $res_q6[4]->pourcentage + $res_q6[3]->pourcentage + $res_q6[0]->pourcentage + $res_q6[1]->pourcentage + $res_q6[2]->pourcentage}}">
                     <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q6[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
                 </div>
@@ -1049,10 +1164,10 @@
             <div class="table-rating-bar justify-content-center" style="margin-bottom: 10px; margin-top: 20px">
                 <table class="text-left mx-auto">
                     <tr>
-                        <td class="rating-label">Totalement</td>
+                        <td class="rating-label">Excellent</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-16"
+                                <div class="bar-116"
                                     style="--progress_bar: {{ $res_q4[0]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1061,22 +1176,22 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">En partie</td>
+                        <td class="rating-label">Bien</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-17"
+                                <div class="bar-16"
                                     style="--progress_bar: {{ $res_q4[1]->pourcentage }}%;">
                                 </div>
                             </div>
                         </td>
-                        <td class="text-right"><span class="rating-label">{{ $res_q4[1]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q4[1]->pourcentage }}%</span>
+                        <td class="text-right"><span class="rating-label">{{ $res_q4[1]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q3[1]->pourcentage }}%</span>
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Insuffisament</td>
+                        <td class="rating-label">Moyen</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-18"
+                                <div class="bar-17"
                                     style="--progress_bar: {{ $res_q4[2]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1085,15 +1200,27 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Pas du tout</td>
+                        <td class="rating-label">Faible</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-19"
+                                <div class="bar-18"
                                     style="--progress_bar: {{ $res_q4[3]->pourcentage }}%;">
                                 </div>
                             </div>
                         </td>
                         <td class="text-right"><span class="rating-label">{{ $res_q4[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q4[3]->pourcentage }}%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rating-label">Insatisfaisant</td>
+                        <td class="rating-bar">
+                            <div class="bar-container">
+                                <div class="bar-19"
+                                    style="--progress_bar: {{ $res_q4[4]->pourcentage }}%;">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right"><span class="rating-label">{{ $res_q4[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q4[4]->pourcentage }}%</span>
                         </td>
                     </tr>
 
@@ -1102,10 +1229,10 @@
             <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
                 <table class="text-left mx-auto">
                     <tr>
-                        <td class="rating-label">Totalement</td>
+                        <td class="rating-label">Excellent</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-20"
+                                <div class="bar-120"
                                     style="--progress_bar: {{ $res_q5[0]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1114,10 +1241,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">En partie</td>
+                        <td class="rating-label">Bien</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-21"
+                                <div class="bar-20"
                                     style="--progress_bar: {{ $res_q5[1]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1126,10 +1253,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Insuffisament</td>
+                        <td class="rating-label">Moyen</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-22"
+                                <div class="bar-21"
                                     style="--progress_bar: {{ $res_q5[2]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1138,10 +1265,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Pas du tout</td>
+                        <td class="rating-label">Faible</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-23"
+                                <div class="bar-22"
                                     style="--progress_bar: {{ $res_q5[3]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1149,15 +1276,27 @@
                         <td class="text-right"><span class="rating-label">{{ $res_q5[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q5[3]->pourcentage }}%</span>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="rating-label">Insatisfaisant</td>
+                        <td class="rating-bar">
+                            <div class="bar-container">
+                                <div class="bar-23"
+                                    style="--progress_bar: {{ $res_q5[4]->pourcentage }}%;">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right"><span class="rating-label">{{ $res_q5[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q5[4]->pourcentage }}%</span>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
                 <table class="text-left mx-auto">
                     <tr>
-                        <td class="rating-label">Totalement</td>
+                        <td class="rating-label">Excellent</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-24"
+                                <div class="bar-124"
                                     style="--progress_bar: {{ $res_q6[0]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1166,10 +1305,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">En partie</td>
+                        <td class="rating-label">Bien</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-25"
+                                <div class="bar-24"
                                     style="--progress_bar: {{ $res_q6[1]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1178,10 +1317,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Insuffisament</td>
+                        <td class="rating-label">Moyen</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-26"
+                                <div class="bar-25"
                                     style="--progress_bar: {{ $res_q6[2]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1190,15 +1329,27 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Pas du tout</td>
+                        <td class="rating-label">Faible</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-27"
+                                <div class="bar-26"
                                     style="--progress_bar: {{ $res_q6[3]->pourcentage }}%;">
                                 </div>
                             </div>
                         </td>
                         <td class="text-right"><span class="rating-label">{{ $res_q6[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q6[3]->pourcentage }}%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rating-label">Insatisfaisant</td>
+                        <td class="rating-bar">
+                            <div class="bar-container">
+                                <div class="bar-27"
+                                    style="--progress_bar: {{ $res_q6[4]->pourcentage }}%;">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right"><span class="rating-label">{{ $res_q6[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q6[4]->pourcentage }}%</span>
                         </td>
                     </tr>
                 </table>
@@ -1234,10 +1385,10 @@
     <div class="table-rating-bar justify-content-center " style="font-size: 13px; margin-top:8px">
         <table class="text-left mx-auto">
             <tr>
-                <td class="rating-label" style="color: rgb(65, 65, 65)">Adapté</td>
+                <td class="rating-label" style="color: rgb(65, 65, 65)">Excellent</td>
                 <td class="rating-bar">
                     <div class="bar-container">
-                        <div class="bar-29"
+                        <div class="bar-229"
                             style="--progress_bar: {{ $res_q7[0]->pourcentage }}%;">
                         </div>
                     </div>
@@ -1247,13 +1398,13 @@
             </tr>
         </table>
     </div>
-    <div class="table-rating-bar justify-content-center marge_top" style="font-size: 13px;">
+    <div class="table-rating-bar justify-content-center " style="font-size: 13px; margin-top:8px">
         <table class="text-left mx-auto">
             <tr>
-                <td class="rating-label" style="color: rgb(65, 65, 65)">Trop rapide</td>
+                <td class="rating-label" style="color: rgb(65, 65, 65)">Bien</td>
                 <td class="rating-bar">
                     <div class="bar-container">
-                        <div class="bar-30"
+                        <div class="bar-129"
                             style="--progress_bar: {{ $res_q7[1]->pourcentage }}%;">
                         </div>
                     </div>
@@ -1263,18 +1414,50 @@
             </tr>
         </table>
     </div>
-    <div class="table-rating-bar justify-content-center marge_top" style="font-size: 13px;">
+    <div class="table-rating-bar justify-content-center " style="font-size: 13px; margin-top:8px">
         <table class="text-left mx-auto">
             <tr>
-                <td class="rating-label" style="color: rgb(65, 65, 65)">Trop lent</td>
+                <td class="rating-label" style="color: rgb(65, 65, 65)">Moyen</td>
                 <td class="rating-bar">
                     <div class="bar-container">
-                        <div class="bar-31"
+                        <div class="bar-29"
                             style="--progress_bar: {{ $res_q7[2]->pourcentage }}%;">
                         </div>
                     </div>
                 </td>
                 <td class="text-right"><span class="rating-label">{{ $res_q7[2]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q7[2]->pourcentage }}%</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="table-rating-bar justify-content-center marge_top" style="font-size: 13px;">
+        <table class="text-left mx-auto">
+            <tr>
+                <td class="rating-label" style="color: rgb(65, 65, 65)">Faible</td>
+                <td class="rating-bar">
+                    <div class="bar-container">
+                        <div class="bar-30"
+                            style="--progress_bar: {{ $res_q7[3]->pourcentage }}%;">
+                        </div>
+                    </div>
+                </td>
+                <td class="text-right"><span class="rating-label">{{ $res_q7[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q7[3]->pourcentage }}%</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="table-rating-bar justify-content-center marge_top" style="font-size: 13px;">
+        <table class="text-left mx-auto">
+            <tr>
+                <td class="rating-label" style="color: rgb(65, 65, 65)">Insatisfaisant</td>
+                <td class="rating-bar">
+                    <div class="bar-container">
+                        <div class="bar-31"
+                            style="--progress_bar: {{ $res_q7[4]->pourcentage }}%;">
+                        </div>
+                    </div>
+                </td>
+                <td class="text-right"><span class="rating-label">{{ $res_q7[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q7[4]->pourcentage }}%</span>
                 </td>
             </tr>
         </table>
@@ -1294,7 +1477,7 @@
                 <span id="texte">Le programme était-il clair et précis ?</span>
             </div>
             <div class=" circle_1">
-                <div id="my-pie-chart7" class="circle " style="--test: {{ $res_q8[0]->pourcentage }}; --test2: {{ $res_q8[1]->pourcentage + $res_q8[0]->pourcentage}}; --test3: {{ $res_q8[0]->pourcentage + $res_q8[1]->pourcentage + $res_q8[2]->pourcentage}}; --test4: {{ $res_q8[3]->pourcentage + $res_q8[0]->pourcentage + $res_q8[1]->pourcentage + $res_q8[2]->pourcentage}}">
+                <div id="my-pie-chart7" class="circle " style="--test: {{ $res_q8[0]->pourcentage }}; --test2: {{ $res_q8[1]->pourcentage + $res_q8[0]->pourcentage}}; --test3: {{ $res_q8[0]->pourcentage + $res_q8[1]->pourcentage + $res_q8[2]->pourcentage}}; --test4: {{ $res_q8[3]->pourcentage + $res_q8[0]->pourcentage + $res_q8[1]->pourcentage + $res_q8[2]->pourcentage}}; --test5: {{ $res_q8[4]->pourcentage + $res_q8[3]->pourcentage + $res_q8[0]->pourcentage + $res_q8[1]->pourcentage + $res_q8[2]->pourcentage}}">
                 <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q8[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
             </div>
@@ -1305,7 +1488,7 @@
                 <span id="texte">Le programme était-il adapté à vos besoins ?</span>
             </div>
             <div class=" circle_1">
-                <div id="my-pie-chart8" class="circle " style="--test: {{ $res_q9[0]->pourcentage }}; --test2: {{ $res_q9[1]->pourcentage + $res_q9[0]->pourcentage}}; --test3: {{ $res_q9[0]->pourcentage + $res_q9[1]->pourcentage + $res_q9[2]->pourcentage}}; --test4: {{ $res_q9[3]->pourcentage + $res_q9[0]->pourcentage + $res_q9[1]->pourcentage + $res_q9[2]->pourcentage}}">
+                <div id="my-pie-chart8" class="circle " style="--test: {{ $res_q9[0]->pourcentage }}; --test2: {{ $res_q9[1]->pourcentage + $res_q9[0]->pourcentage}}; --test3: {{ $res_q9[0]->pourcentage + $res_q9[1]->pourcentage + $res_q9[2]->pourcentage}}; --test4: {{ $res_q9[3]->pourcentage + $res_q9[0]->pourcentage + $res_q9[1]->pourcentage + $res_q9[2]->pourcentage}}; --test5: {{ $res_q9[4]->pourcentage + $res_q9[3]->pourcentage + $res_q9[0]->pourcentage + $res_q9[1]->pourcentage + $res_q9[2]->pourcentage}}">
                 <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q9[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
             </div>
@@ -1316,7 +1499,7 @@
                 <span id="texte">Les supports de formation étaient-ils clairs et utiles ?</span>
             </div>
             <div class=" circle_1">
-                <div id="my-pie-chart9" class="circle " style="--test: {{ $res_q10[0]->pourcentage }}; --test2: {{ $res_q10[1]->pourcentage + $res_q10[0]->pourcentage}}; --test3: {{ $res_q10[0]->pourcentage + $res_q10[1]->pourcentage + $res_q10[2]->pourcentage}}; --test4: {{ $res_q10[3]->pourcentage + $res_q10[0]->pourcentage + $res_q10[1]->pourcentage + $res_q10[2]->pourcentage}}">
+                <div id="my-pie-chart9" class="circle " style="--test: {{ $res_q10[0]->pourcentage }}; --test2: {{ $res_q10[1]->pourcentage + $res_q10[0]->pourcentage}}; --test3: {{ $res_q10[0]->pourcentage + $res_q10[1]->pourcentage + $res_q10[2]->pourcentage}}; --test4: {{ $res_q10[3]->pourcentage + $res_q10[0]->pourcentage + $res_q10[1]->pourcentage + $res_q10[2]->pourcentage}}; --test5: {{ $res_q10[4]->pourcentage + $res_q10[3]->pourcentage + $res_q10[0]->pourcentage + $res_q10[1]->pourcentage + $res_q10[2]->pourcentage}}">
                 <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q10[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
             </div>
@@ -1328,10 +1511,10 @@
             <div class="table-rating-bar justify-content-center" style="margin-bottom: 10px; margin-top: 20px">
             <table class="text-left mx-auto">
                 <tr>
-                    <td class="rating-label">Totalement</td>
+                    <td class="rating-label">Excellent</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-32"
+                            <div class="bar-132"
                                 style="--progress_bar: {{ $res_q8[0]->pourcentage }}%;">
                             </div>
                         </div>
@@ -1340,10 +1523,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rating-label">En partie</td>
+                    <td class="rating-label">Bien</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-33"
+                            <div class="bar-32"
                                 style="--progress_bar: {{ $res_q8[1]->pourcentage }}%;">
                             </div>
                         </div>
@@ -1352,10 +1535,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rating-label">Insuffisament</td>
+                    <td class="rating-label">Moyen</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-34"
+                            <div class="bar-33"
                                 style="--progress_bar: {{ $res_q8[2]->pourcentage }}%;">
                             </div>
                         </div>
@@ -1364,15 +1547,27 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rating-label">Pas du tout</td>
+                    <td class="rating-label">Faible</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-35"
+                            <div class="bar-34"
                                 style="--progress_bar: {{ $res_q8[3]->pourcentage }}%;">
                             </div>
                         </div>
                     </td>
                     <td class="text-right"><span class="rating-label">{{ $res_q8[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q8[3]->pourcentage }}%</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rating-label">Insatisfaisant</td>
+                    <td class="rating-bar">
+                        <div class="bar-container">
+                            <div class="bar-35"
+                                style="--progress_bar: {{ $res_q8[4]->pourcentage }}%;">
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-right"><span class="rating-label">{{ $res_q8[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q8[4]->pourcentage }}%</span>
                     </td>
                 </tr>
 
@@ -1381,10 +1576,10 @@
             <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
             <table class="text-left mx-auto">
                 <tr>
-                    <td class="rating-label">Totalement</td>
+                    <td class="rating-label">Excellent</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-36"
+                            <div class="bar-136"
                                 style="--progress_bar: {{ $res_q9[0]->pourcentage }}%;">
                             </div>
                         </div>
@@ -1393,10 +1588,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rating-label">En partie</td>
+                    <td class="rating-label">Bien</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-37"
+                            <div class="bar-36"
                                 style="--progress_bar: {{ $res_q9[1]->pourcentage }}%;">
                             </div>
                         </div>
@@ -1405,10 +1600,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rating-label">Insuffisament</td>
+                    <td class="rating-label">Moyen</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-38"
+                            <div class="bar-37"
                                 style="--progress_bar: {{ $res_q9[2]->pourcentage }}%;">
                             </div>
                         </div>
@@ -1417,15 +1612,27 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rating-label">Pas du tout</td>
+                    <td class="rating-label">Faible</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-39"
+                            <div class="bar-38"
                                 style="--progress_bar: {{ $res_q9[3]->pourcentage }}%;">
                             </div>
                         </div>
                     </td>
-                    <td class="text-right"><span class="rating-label">{{ $res_q9[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q9[0]->pourcentage }}%</span>
+                    <td class="text-right"><span class="rating-label">{{ $res_q9[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q9[3]->pourcentage }}%</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rating-label">Insatisfaisant</td>
+                    <td class="rating-bar">
+                        <div class="bar-container">
+                            <div class="bar-39"
+                                style="--progress_bar: {{ $res_q9[4]->pourcentage }}%;">
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-right"><span class="rating-label">{{ $res_q9[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q9[4]->pourcentage }}%</span>
                     </td>
                 </tr>
             </table>
@@ -1433,10 +1640,10 @@
             <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
             <table class="text-left mx-auto">
                 <tr>
-                    <td class="rating-label">Totalement</td>
+                    <td class="rating-label">Excellent</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-40"
+                            <div class="bar-140"
                                 style="--progress_bar: {{ $res_q10[0]->pourcentage }}%;">
                             </div>
                         </div>
@@ -1445,10 +1652,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rating-label">En partie</td>
+                    <td class="rating-label">Bien</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-41"
+                            <div class="bar-40"
                                 style="--progress_bar: {{ $res_q10[1]->pourcentage }}%;">
                             </div>
                         </div>
@@ -1457,10 +1664,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rating-label">Insuffisament</td>
+                    <td class="rating-label">Moyen</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-42"
+                            <div class="bar-41"
                                 style="--progress_bar: {{ $res_q10[2]->pourcentage }}%;">
                             </div>
                         </div>
@@ -1469,15 +1676,27 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="rating-label">Pas du tout</td>
+                    <td class="rating-label">Faible</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-43"
+                            <div class="bar-42"
                                 style="--progress_bar: {{ $res_q10[3]->pourcentage }}%;">
                             </div>
                         </div>
                     </td>
                     <td class="text-right"><span class="rating-label">{{ $res_q10[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q10[3]->pourcentage }}%</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rating-label">Insatisfaisant</td>
+                    <td class="rating-bar">
+                        <div class="bar-container">
+                            <div class="bar-43"
+                                style="--progress_bar: {{ $res_q10[4]->pourcentage }}%;">
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-right"><span class="rating-label">{{ $res_q10[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q10[4]->pourcentage }}%</span>
                     </td>
                 </tr>
             </table>
@@ -1514,7 +1733,7 @@
                     <span id="texte">Cette formation améliore t-elle vos compétences ?</span>
                 </div>
                 <div class=" circle_1">
-                    <div id="my-pie-chart10" class="circle " style="--test: {{ $res_q11[0]->pourcentage }}; --test2: {{ $res_q11[1]->pourcentage + $res_q11[0]->pourcentage}}; --test3: {{ $res_q11[0]->pourcentage + $res_q11[1]->pourcentage + $res_q11[2]->pourcentage}}; --test4: {{ $res_q11[3]->pourcentage + $res_q11[0]->pourcentage + $res_q11[1]->pourcentage + $res_q11[2]->pourcentage}}">
+                    <div id="my-pie-chart10" class="circle " style="--test: {{ $res_q11[0]->pourcentage }}; --test2: {{ $res_q11[1]->pourcentage + $res_q11[0]->pourcentage}}; --test3: {{ $res_q11[0]->pourcentage + $res_q11[1]->pourcentage + $res_q11[2]->pourcentage}}; --test4: {{ $res_q11[3]->pourcentage + $res_q11[0]->pourcentage + $res_q11[1]->pourcentage + $res_q11[2]->pourcentage}}; --test5: {{ $res_q11[4]->pourcentage + $res_q11[3]->pourcentage + $res_q11[0]->pourcentage + $res_q11[1]->pourcentage + $res_q11[2]->pourcentage}}">
                     <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q11[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                     </div>
                 </div>
@@ -1525,7 +1744,7 @@
                 <span id="texte">Ces nouvelles compétences vont-elles être applicables dans votre travail ?</span>
                 </div>
                 <div class=" circle_1">
-                <div id="my-pie-chart11" class="circle " style="--test: {{ $res_q12[0]->pourcentage }}; --test2: {{ $res_q12[1]->pourcentage + $res_q12[0]->pourcentage}}; --test3: {{ $res_q12[0]->pourcentage + $res_q12[1]->pourcentage + $res_q12[2]->pourcentage}}; --test4: {{ $res_q12[3]->pourcentage + $res_q12[0]->pourcentage + $res_q12[1]->pourcentage + $res_q12[2]->pourcentage}}">
+                <div id="my-pie-chart11" class="circle " style="--test: {{ $res_q12[0]->pourcentage }}; --test2: {{ $res_q12[1]->pourcentage + $res_q12[0]->pourcentage}}; --test3: {{ $res_q12[0]->pourcentage + $res_q12[1]->pourcentage + $res_q12[2]->pourcentage}}; --test4: {{ $res_q12[3]->pourcentage + $res_q12[0]->pourcentage + $res_q12[1]->pourcentage + $res_q12[2]->pourcentage}}; --test5: {{ $res_q12[4]->pourcentage + $res_q12[3]->pourcentage + $res_q12[0]->pourcentage + $res_q12[1]->pourcentage + $res_q12[2]->pourcentage}}">
                     <span class="center"> <span style="font-size: 12px;"><b> {{ $note_10_q12[0]->note }} </b></span> <span style="font-size: 10px"> / 10 </span></span>
                 </div>
                 </div>
@@ -1537,10 +1756,10 @@
                 <div class="table-rating-bar justify-content-center" style="margin-bottom: 10px; margin-top: 20px">
                 <table class="text-left mx-auto">
                     <tr>
-                        <td class="rating-label">Totalement</td>
+                        <td class="rating-label">Excellent</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-47"
+                                <div class="bar-147"
                                     style="--progress_bar: {{ $res_q11[0]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1549,10 +1768,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">En partie</td>
+                        <td class="rating-label">Bien</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-48"
+                                <div class="bar-47"
                                     style="--progress_bar: {{ $res_q11[1]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1561,10 +1780,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Insuffisament</td>
+                        <td class="rating-label">Moyen</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-49"
+                                <div class="bar-48"
                                     style="--progress_bar: {{ $res_q11[2]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1573,15 +1792,27 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Pas du tout</td>
+                        <td class="rating-label">Faible</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-50"
+                                <div class="bar-49"
                                     style="--progress_bar: {{ $res_q11[3]->pourcentage }}%;">
                                 </div>
                             </div>
                         </td>
                         <td class="text-right"><span class="rating-label">{{ $res_q11[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q11[3]->pourcentage }}%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rating-label">Satisfaisant</td>
+                        <td class="rating-bar">
+                            <div class="bar-container">
+                                <div class="bar-50"
+                                    style="--progress_bar: {{ $res_q11[4]->pourcentage }}%;">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right"><span class="rating-label">{{ $res_q11[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q11[4]->pourcentage }}%</span>
                         </td>
                     </tr>
 
@@ -1590,10 +1821,10 @@
                 <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
                 <table class="text-left mx-auto">
                     <tr>
-                        <td class="rating-label">Totalement</td>
+                        <td class="rating-label">Excellent</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-51"
+                                <div class="bar-151"
                                     style="--progress_bar: {{ $res_q12[0]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1602,10 +1833,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">En partie</td>
+                        <td class="rating-label">Bien</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-52"
+                                <div class="bar-51"
                                     style="--progress_bar: {{ $res_q12[1]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1614,10 +1845,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Insuffisament</td>
+                        <td class="rating-label">Moyen</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-53"
+                                <div class="bar-52"
                                     style="--progress_bar: {{ $res_q12[2]->pourcentage }}%;">
                                 </div>
                             </div>
@@ -1626,15 +1857,27 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="rating-label">Pas du tout</td>
+                        <td class="rating-label">Faible</td>
                         <td class="rating-bar">
                             <div class="bar-container">
-                                <div class="bar-54"
+                                <div class="bar-53"
                                     style="--progress_bar: {{ $res_q12[3]->pourcentage }}%;">
                                 </div>
                             </div>
                         </td>
                         <td class="text-right"><span class="rating-label">{{ $res_q12[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q12[3]->pourcentage }}%</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rating-label">Insatisfaisant</td>
+                        <td class="rating-bar">
+                            <div class="bar-container">
+                                <div class="bar-54"
+                                    style="--progress_bar: {{ $res_q12[4]->pourcentage }}%;">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right"><span class="rating-label">{{ $res_q12[4]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q12[4]->pourcentage }}%</span>
                         </td>
                     </tr>
                 </table>

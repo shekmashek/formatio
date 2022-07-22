@@ -288,6 +288,7 @@ class HomeController extends Controller
             $fonct = new FonctionGenerique();
 
             $user_id = Auth::user()->id;
+            // dd($user_id);
             // cfp_id
             //  $cfp_id = Cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
@@ -764,7 +765,7 @@ class HomeController extends Controller
         $type_formation_id = $request->type_formation;
         $data = [];
         $nb_par_page = 5;
-        $ref = DB::select('select * from devise')[0]->devise;
+        $ref = DB::select('select * from devise limit 1')[0]->devise;
         if ($page == null) {
             $page = 1;
         }
@@ -777,28 +778,6 @@ class HomeController extends Controller
         }
         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
             $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
-            // pagination
-            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?', [$entreprise_id])[0]->nb_projet;
-            $fin_page = ceil($nb_projet / $nb_par_page);
-            if ($page == 1) {
-                $offset = 0;
-                $debut = 1;
-                if ($nb_par_page > $nb_projet) {
-                    $fin = $nb_projet;
-                } else {
-                    $fin = $nb_par_page;
-                }
-            } elseif ($page == $fin_page) {
-                $offset = ($page - 1) * $nb_par_page;
-                $debut = ($page - 1) * $nb_par_page;
-                $fin =  $nb_projet;
-            } else {
-                $offset = ($page - 1) * $nb_par_page;
-                $debut = ($page - 1) * $nb_par_page;
-                $fin =  $page * $nb_par_page;
-            }
-            // fin pagination
-
             $data = DB::select('select projet_id,nom_projet,type_formation_id,type_formation,groupe_id,nom_groupe,module_id,nom_module,date_debut,date_fin,cfp_id,nom_cfp,modalite,item_status_groupe,class_status_groupe from v_groupe_projet_entreprise where entreprise_id = ?',[$entreprise_id]);
 
             // $nomCfps = DB::select('select nom_cfp  from v_groupe_projet_entreprise group by nom_cfp asc');
@@ -817,40 +796,25 @@ class HomeController extends Controller
             foreach($dataInterne as $interne) {
                 array_push($data,$interne);
             }
-            // $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
-            // $data = DB::select($sql);
-            // for($i=0;$i<count($data);$i+=1){
-            //     $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=?",
-            //     [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id]);
-            //     if(count($dataMontantSession)>0){
-            //             $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
-            //             $data[$i]->qte = $dataMontantSession[0]->qte;
-            //             $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
-            //     } else {
-            //         $data[$i]->hors_taxe_net = null;
-            //         $data[$i]->qte =null;
-            //         $data[$i]->num_facture = null;
-            //     }
-            // }
 
-            $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$entreprise_id]);
+            $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu limit 1",[$entreprise_id]);
             if(count($lieu_formations)>0){
                 $lieuFormation = explode(',',$lieu_formations[0]->lieu);
             }else{
                 $lieuFormation = null;
             }
-            $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
+            $stagiaires = [];
             $nb_modules = DB::select('select count(*) from v_module where cfp_id = ?',[$entreprise_id]);
             $nb_employes = DB::select('select count(emp.id) from employers as emp join entreprises as etp on emp.entreprise_id = etp.id where etp.type_entreprise_id = ?',[1]);
             $nb_collaboration = DB::select('select count(*) from v_demmande_etp_cfp where entreprise_id = ?',[$entreprise_id]);
             $abonnement_etp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_etp_id,v_tac.illimite from v_type_abonnement_etp v_tac JOIN entreprises as etp on v_tac.entreprise_id = etp.id where v_tac.entreprise_id = ? and etp.statut_compte_id = ? and v_tac.status = ?',[$entreprise_id,2,"Activé"]);
-            return view('projet_session.index2', compact('data','ref','nb_employes','nb_collaboration','abonnement_etp','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            return view('projet_session.index2', compact('data','ref','nb_employes','nb_collaboration','abonnement_etp','stagiaires','lieuFormation', 'type_formation_id', 'page'));
         }
         if (Gate::allows('isManager') ) {
             $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
-            $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
+            $id_departement = DB::select('select * from chef_departements  where user_id = ? limit 1', [$user_id])[0]->departement_entreprises_id;
             // pagination
-            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where departement_id = ?) and entreprise_id = ?', [$id_departement,$entreprise_id])[0]->nb_projet;
+            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where departement_id = ?) and entreprise_id = ? limit 1', [$id_departement,$entreprise_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
                 $offset = 0;
@@ -872,19 +836,19 @@ class HomeController extends Controller
             // fin pagination
             $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where departement_id = ".$id_departement." )", $request, $nb_par_page, $offset);
             $data = DB::select($sql);
-            for($i=0;$i<count($data);$i+=1){
-                $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
-                [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
-                if(count($dataMontantSession)>0){
-                        $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
-                        $data[$i]->qte = $dataMontantSession[0]->qte;
-                        $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
-                } else {
-                    $data[$i]->hors_taxe_net = null;
-                    $data[$i]->qte =null;
-                    $data[$i]->num_facture = null;
-                }
-            }
+            // for($i=0;$i<count($data);$i+=1){
+            //     $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
+            //     [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
+            //     if(count($dataMontantSession)>0){
+            //             $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
+            //             $data[$i]->qte = $dataMontantSession[0]->qte;
+            //             $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
+            //     } else {
+            //         $data[$i]->hors_taxe_net = null;
+            //         $data[$i]->qte =null;
+            //         $data[$i]->num_facture = null;
+            //     }
+            // }
 
             $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$entreprise_id]);
             if(count($lieu_formations)>0){
@@ -988,21 +952,21 @@ class HomeController extends Controller
             // dd($data);
 
             // affiche chiffre d'affaire
-            for($i=0;$i<count($data);$i+=1){
-                $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where cfp_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
-                [$cfp_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
-                if(count($dataMontantSession)>0){
-                    $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,1);
-                    $data[$i]->qte = $dataMontantSession[0]->qte;
-                    $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
+            // for($i=0;$i<count($data);$i+=1){
+            //     $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where cfp_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
+            //     [$cfp_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
+            //     if(count($dataMontantSession)>0){
+            //         $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,1);
+            //         $data[$i]->qte = $dataMontantSession[0]->qte;
+            //         $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
 
-                } else {
-                    $data[$i]->hors_taxe_net = null;
-                    $data[$i]->qte =null;
-                    $data[$i]->num_facture = null;
-                }
+            //     } else {
+            //         $data[$i]->hors_taxe_net = null;
+            //         $data[$i]->qte =null;
+            //         $data[$i]->num_facture = null;
+            //     }
 
-            }
+            // }
 
             $type_formation = DB::select('select * from type_formations');
 
@@ -1078,7 +1042,7 @@ class HomeController extends Controller
             $module = $fonct->findAll("modules");
             $type_formation = DB::select('select * from type_formations');
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'status', 'type_formation_id', 'projet_formation', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation_id', 'projet_formation', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isStagiaire')) {
             $evaluation = new EvaluationChaud();

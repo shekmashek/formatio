@@ -117,7 +117,6 @@
 </style>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
     $("#ajouter_ressource").on('click', function(e) {
         var ressource = $("#description_ressource").val();
@@ -162,7 +161,7 @@
                     html += userData[i].demandeur;
                     html += '</section>';
                     html += '</div>';
-                    
+
                     html += '<div class="col-md-2">';
                     html += '<section>';
                     html += userData[i].pris_en_charge;

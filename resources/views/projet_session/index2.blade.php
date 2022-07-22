@@ -984,7 +984,7 @@
         .modifTable_length label, .modifTable_length select, .modifTable_filter label, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
             font-size: 13px;
         }
-        
+
         .dataTables_length label, .dataTables_filter label {
             font-size: 12px;
         }
@@ -1455,6 +1455,7 @@
                                                                                     <li class="action_projet"><a class="dropdown-item" href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
                                                                                     @if ($prj->type_formation_id == 1)
                                                                                         <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank" style="font-size: 13px">Rapport</a></li>
+                                                                                        <li class="action_projet"><a class="dropdown-item" href="{{ route('rapport_presence', [$pj->groupe_id]) }}" style="font-size: 13px">Rapport de presence</a></li>
                                                                                     @endif
                                                                                 </ul>
                                                                             </td>
@@ -2519,6 +2520,8 @@
                                                     @else
                                                         <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">Expoter en PDF</a></li>
                                                         <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
+                                                        <li class="action_projet"><a class="dropdown-item" href="{{ route('rapport_presence', [$pj->groupe_id]) }}" style="font-size: 13px">Rapport de presence</a></li>
+
                                                         @php
                                                             $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
                                                         @endphp
@@ -3200,7 +3203,7 @@
                 var defaultSearch = 0;
 
                 $(document).on('change keyup', '#select-column', function(){
-                    defaultSearch = this.value; 
+                    defaultSearch = this.value;
                 });
 
                 $(document).on('change keyup', '#search-by-column', function(){
@@ -3208,9 +3211,9 @@
                     table.column(defaultSearch).search(this.value).draw();
                 });
             }
-            
+
             $( '.modifTable thead'  ).on( 'keyup', ".column_search",function () {
-        
+
                 table
                     .column( $(this).parent().index() )
                     .search( this.value )
@@ -3246,45 +3249,45 @@
                 var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
                     return '^' + this.value + '$';
                 }).get().join('|');
-                
+
                 table.column(0).search(Projet, true, false, false).draw();
 
                 var Session = $('input:checkbox[name="session"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(1).search(Session, true, false, false).draw();
 
                 var Entreprise = $('input:checkbox[name="entreprise"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(3).search(Entreprise, true, false, false).draw();
 
                 var Modalite = $('input:checkbox[name="modalite"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(4).search(Modalite, true, false, false).draw();
-                
+
                 var TypeFormation = $('input:checkbox[name="typeFormation"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(8).search(TypeFormation, true, false, false).draw();
-                
+
                 var Module = $('input:checkbox[name="module"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(2).search(Module, true, false, false).draw();
-                
+
                 var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(7).search(Statut, true, false, false).draw();
-            
+
             });
 
             searchByColumn(table);

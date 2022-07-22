@@ -1005,10 +1005,6 @@
     <script src="{{asset('js/admin.js')}}"></script>
     {{-- <script src="{{asset('js/apprendre.js')}}"></script> --}}
 
-    @if (Route::currentRouteName() != 'calendrier_formation' && Route::currentRouteName() != 'calendrier')
-    {{-- ce script bloque le jquery.min et jquery-ui --}}
-    {{-- <script src="{{ asset('assets/js/jquery.js') }}"></script> --}}
-    @endif
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
