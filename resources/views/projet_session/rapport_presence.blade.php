@@ -30,17 +30,24 @@
                             @endphp)</span>
                         </h6>
                     </div>
+                    @if ($info_groupe->type_formation_id == 3)
+                        <div class="card-subtitle mb-2">
+                            <h6>Session interne</h6>
+                        </div>
+                    @endif
                     <div class="card-subtitle mb-2">
                         <h6>
                             <span>Module : {{ $info_groupe->nom_module }}</span>
                         </h6>
                     </div>
-                    <div class="card-subtitle mb-2">
-                        <h6>Organisme de formation : {{ $info_groupe->nom_cfp }}</h6>
-                    </div>
-                    <div class="card-subtitle mb-2">
-                        <h6>Entreprise : {{ $info_groupe->nom_etp }}</h6>
-                    </div>
+                    @if($info_groupe->type_formation_id != 3)
+                        <div class="card-subtitle mb-2">
+                            <h6>Organisme de formation : {{ $info_groupe->nom_cfp }}</h6>
+                        </div>
+                        <div class="card-subtitle mb-2">
+                            <h6>Entreprise : {{ $info_groupe->nom_etp }}</h6>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

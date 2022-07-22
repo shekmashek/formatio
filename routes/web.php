@@ -1609,5 +1609,6 @@ Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->na
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
 
 Route::get('rapport_presence/{groupe?}','SessionController@rapport_presence')->name('rapport_presence');
+Route::get('rapport_presence_interne/{groupe?}','ProjetInterneController@rapport_presence')->name('rapport_presence_interne');
 
 

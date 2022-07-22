@@ -1844,16 +1844,18 @@
                                                 @if ($pj->type_formation_id == 3)
                                                     <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_interne_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
                                                     <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation_interne', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
+                                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('rapport_presence_interne', [$pj->groupe_id]) }}">Rapport de presence</a></li>
                                                 @else
                                                     <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
                                                     <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
-                                                    <li class="action_projet"><a class="dropdown-item " href="#">Rapport de presence</a></li>
+                                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('rapport_presence', [$pj->groupe_id]) }}">Rapport de presence</a></li>
                                                     @php
                                                         $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
                                                     @endphp
                                                     @if($reponse == 1)
                                                         <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}">Evaluation à froid</a></li>
                                                     @endif
+                                                    
                                                 @endif
                                               </ul>
                                         </td>
