@@ -249,7 +249,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <script type="text/javascript">
-            $(document).ready(function () {
+        $(document).ready(function () {
             $('#modifTable thead tr:eq(1) th').each( function () {
                 var title = $(this).text();
                 $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px; margin-bottom: 0"/>');

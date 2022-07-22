@@ -1,5 +1,3 @@
-<script src="{{ asset('assets/js/jquery.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
     /*   $(document).ready(function() {

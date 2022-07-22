@@ -2442,7 +2442,7 @@
                                             </td>
                                             <td class="text-center">
                                                 @if ($pj->type_formation_id == 3)
-                                                <a href="{{ route('detail_session_interne', [$pj->groupe_id]) }}"><span class="spanClass" style="border-bottom: 3px solid #673ab7">{{ $pj->nom_groupe }}</span></a>
+                                                <a style="font-size: 13px" href="{{ route('detail_session_interne', [$pj->groupe_id]) }}"><span class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span></a>
                                                 @else
                                                     <a href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">
                                                         <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
