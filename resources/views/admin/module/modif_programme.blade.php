@@ -275,8 +275,8 @@
                                                         <div class="newRowCours"></div>
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
-                                                    <button type="button" class="btn btn_fermer remove_input" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
                                                     <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                                    <button type="button" class="btn btn_annuler remove_input" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                                 </div>
                                                 </form>
                                             </div>
@@ -589,8 +589,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_fermer" id="fermer4" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                     </div>
                                 </form>
                             </div>
@@ -617,8 +617,8 @@
                                             <label for="nom_module" class="form-control-placeholder">Nom module</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -758,8 +758,8 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -786,8 +786,8 @@
 
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -813,8 +813,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -840,8 +840,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -867,8 +867,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -894,8 +894,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -921,8 +921,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>

@@ -3,13 +3,23 @@
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 <div class="container">
     <div class="row">
-        {{-- <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5> --}}
+        <div class="row mb-4 mt-3">
+            <div class="col-6">
+                <h5>Nouvelle session de projet Inter</h5>
+            </div>
+            <div class="col-6 text-end">
+                <div>
+                    <a class="new_list_nouvelle " href="{{url()->previous()}}">
+                    <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
+                </a>
+                </div>
+            </div>
+        </div>
         <form action="{{ route('nouveau_session_inter',['type_formation'=>2]) }}" id="formPayement" method="POST"
             class="form_session p-2 m-0">
             @csrf
             <input type="hidden" name="module_id" value="{{$module_id}}">
             <div class="row">
-                <h5 class="mb-4 text-center">Création d'une nouvelle session de projet Inter</h5>
                 @if (Session::has('groupe_error'))
                     <div class="alert alert-danger ms-2 me-2">
                         <ul>
@@ -48,15 +58,16 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-lg-6">
-                            <a href="{{ route('nouveau_groupe_inter',[2]) }}"><button type="button" class="btn  btn_enregistrer py-1"
-                            data-dismiss="modal"><i class='bx bxs-chevron-left me-1'></i>Retour en arrière</button></a>
-                        </div>
+                    <div class="row justify-content-center mt-3">
                         <div class="col-lg-6 text-end"><button type="submit" form="formPayement"
-                            class="btn btn_nouveau py-1"><i class='bx bx-check me-1'></i>Créer</button>
+                            class="btn btn_enregistrer py-1"><i class='bx bx-check me-1'></i>Créer</button>
+                        </div>
+                        <div class="col-lg-6 text-start">
+                            <a href="{{ route('nouveau_groupe_inter',[2]) }}"><button type="button" class="btn btn_annuler py-1"
+                            data-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button></a>
                         </div>
                     </div>
+                </div>
             </div>
         </form>
     </div>

@@ -5,10 +5,29 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 {{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
-<div class="container-fluid pt-5">
+<div class="container-fluid">
     {{-- <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5> --}}
     <div class="m-4">
-        <h6>Listes des formations disponibles</h6>
+        <div class="row mb-4">
+            <div class="col-6">
+                <h5>Nouveau Projet Inter</h5>
+            </div>
+            <div class="col-6 text-end">
+                <div>
+                    <a class="new_list_nouvelle " href="{{url()->previous()}}">
+                    <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
+                </a>
+                </div>
+            </div>
+        </div>
+        <div class="row instruction mb-3">
+            <div class="col-11">
+                <p class="mb-0 text-center">Pour créer un projet inter, vous devez choisir le module de formation et cliquer sur <a class="btn_nouveau position_button" role="button"><i class="bx bx-plus-medical"></i>Session Inter</a> pour compléter les informations requises pour le projet 😊!</p>
+            </div>
+            <div class="col-1 text-end">
+                <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();"></i>
+            </div>
+        </div>
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
 
             <li class="nav-item">
@@ -161,7 +180,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="new_btn_programme text-center">
-                                        <button type="button" class="btn btn_competence non_pub" id="{{$info->module_id}}"><a href="{{route('session_inter', $info->module_id)}}">Session Inter</a></button>
+                                        <button type="button" class="btn_nouveau p-1" id="{{$info->module_id}}"><i class="bx bx-plus-medical me-1"></i><a href="{{route('session_inter', $info->module_id)}}">Session Inter</a></button>
                                     </div>
                                 </div>
                                 @if($info->jours_restant > 0)
@@ -314,7 +333,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="new_btn_programme text-center">
-                                        <button type="button" class="btn btn_competence non_pub" id="{{$info->module_id}}"><a href="{{route('session_inter', $info->module_id)}}">Session Inter</a></button>
+                                        <button type="button" class="btn_nouveau p-1" id="{{$info->module_id}}"><i class="bx bx-plus-medical me-1"></i><a href="{{route('session_inter', $info->module_id)}}">Session Inter</a></button>
                                     </div>
                                 </div>
                                 @if($info->jours_restant > 0)
@@ -397,5 +416,9 @@
             }
         });
     });
+
+    function cacher_instruction() {
+        $(".instruction").hide();
+    }
 </script>
 @endsection

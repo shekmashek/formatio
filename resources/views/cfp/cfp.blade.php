@@ -30,7 +30,7 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#collabore" role="tab">collaborateurs
+                <a class="nav-link" data-toggle="tab" href="#collabore" role="tab">Organisme de formation
                     {{count($cfp)}}</a>
             </li>
             <li class="nav-item" role="presentation">
@@ -43,7 +43,7 @@
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#invitation" class=" btn_nouveau" role="button"><i
-                        class='bx bx-plus-medical me-2'></i>Inviter collaborateur</a>
+                        class='bx bx-plus-medical me-2'></i>Inviter une Organisme de Formation</a>
             </li>
         </ul>
 
@@ -58,7 +58,7 @@
                 @if (count($cfp)<=0)
                 <div class="text-center mt-5">
                     <img src="{{asset('img/networking.webp')}}" alt="folder empty" width="300px" height="300px">
-                    <p class="mt-3">Aucun centre de formation collaborer</p>
+                    <p class="mt-3">Aucun Organisme de Formation collaborer</p>
             </div>
             @else
             <table class="table table-hover">
@@ -104,25 +104,25 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header d-flex justify-content-center"
-                                        style="background-color:rgb(192, 37, 55);">
+                                    style="background-color:#ee0707; color: white">
                                         <h4 class="modal-title text-white">Avertissement !</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le
-                                            point
-                                            d'effacer une donnée, cette action est irréversible. Continuer
-                                            ?</small>
+                                        <p class="text-center text-muted">Vous êtes sur le point d'effacer une donnée,
+                                            cette
+                                            action
+                                            est irréversible. </p>
+                                        <p class="text-center text-muted">Continuer ?</p>
                                     </div>
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer annuler" style="color: red"
-                                            data-bs-dismiss="modal" aria-label="Close">Non</button>
                                         <form action="{{route('mettre_fin_cfp_etp') }}" method="POST">
                                             @csrf
                                             <input name="cfp_id" type="text" value="{{$cfp->cfp_id}}" hidden>
                                             <div class="mt-4 mb-4">
-                                                <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                <button type="submit" class="btn btn_enregistrer btnP"><i class="bx bx-trash"></i> Supprimer</button>
                                             </div>
                                         </form>
+                                        <button type="button" class="btn btn_annuler annuler" data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x"></i> Annuler</button>
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-center">
-                        <h4 class="modal-title text-white">Inviter une entreprise</h4>
+                        <h4 class="modal-title text-white">Inviter une Organisme de Formation</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form form_colab mt-3" action="{{ route('create_etp_cfp') }}" method="POST">
@@ -151,6 +151,16 @@
                                     <label for="" class="form-control-placeholder">nom de l'organisme</label>
                                 </div>
                                 <div class="form-group mt-2">
+                                    <input type="text" class="form-control input" name="nom_cfp" required
+                                        placeholder="nom du responsable">
+                                    <label for="" class="form-control-placeholder">nom du responsable</label>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" class="form-control input" name="nom_cfp" required
+                                        placeholder="prenom du responsable">
+                                    <label for="" class="form-control-placeholder">prenom du responsable</label>
+                                </div>
+                                <div class="form-group mt-2">
                                     <input type="email" class="form-control input" name="email_cfp" required
                                         placeholder="e-mail du responsable">
                                     <label for="" class="form-control-placeholder">e-mail du responsable</label>
@@ -158,10 +168,10 @@
 
                             </div>
                             <div class="mt-3 text-center">
-                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i
-                                        class='bx bx-block me-1'></i>fermer</button>
                                 <button type="submit" class="btn btn_enregistrer"><i
                                         class='bx bx-check me-1'></i>Envoyer l'invitation</button>
+                                <button type="button" class="btn btn_annuler redirect_annuler" data-bs-dismiss="modal"><i
+                                        class='bx bx-x me-1'></i>annuler</button>
                             </div>
                         </form>
                     </div>
@@ -386,8 +396,14 @@
     if(tabActive){
         $('#myTab a[href="' + tabActive + '"]').tab('show');
         $('#myTab a[href="' + tabActive + '"]').addClass('active');
-
     }
+    $('.redirect_annuler').on('click', function (e) {
+        let tabActive = localStorage.getItem('indicecfp');
+        if(tabActive){
+            $('#myTab a[href="' + tabActive + '"]').tab('show');
+            $('#myTab a[href="' + tabActive + '"]').addClass('active');
+        }
+    });
 
     $('.accept_etp').on('click', function (e) {
         localStorage.setItem('indicecfp', '#collabore');

@@ -944,11 +944,12 @@
                                         @csrf
                                         <div class="modal-header .avertissement  d-flex justify-content-center"
                                             style="color: white">
-                                            <h6 class="modal-title">Domaine de Formation</h6>
+                                            <h6 class="modal-title">Créer un Nouveau module</h6>
                                         </div>
                                         <div class="modal-body mb-3">
                                             <div class="form-group" >
-                                                <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 40px;" required>
+                                                {{-- <p class="text-center">Pour créer un nouveau module choisissez d'abord votre domaine de formation et la thématique</p> --}}
+                                                <select class="form-control select_formulaire input mt-2" id="acf-domaine" name="domaine" style="height: 40px;" required>
                                                     <option value="null" disable selected hidden>Choisissez la
                                                         domaine de formation ...</option>
                                                     @php
@@ -968,8 +969,8 @@
                                                 <p id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</p>
                                             </div>
                                         <div class="modal-footer justify-content-center">
-                                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
                                             <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Créer votre module</button>
+                                            <button type="button" class="btn btn_annuler redirect_annule" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1211,6 +1212,8 @@
         ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
         ($('.btn_racourcis a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     }
+
+
 </script>
 
 @stack('extra-js')
