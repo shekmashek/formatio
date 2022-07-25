@@ -3168,8 +3168,8 @@
             </div>
         </div>
     </div>
+    @include('projet_session.functions.projet_stg');
 @endsection
-
 @section('script')
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
