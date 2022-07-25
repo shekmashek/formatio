@@ -264,6 +264,18 @@
         .btn_eval_stg:hover{
             background-color: #262b86;
         }
+
+        .btn_eval_stg_froid{
+            background-color: #28a2b2;
+            padding: 0.3rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .5ms ease;
+            position: relative;
+        }
+        .btn_eval_stg_froid:hover{
+            background-color: #61acb6;
+        }
             /*info SESSION*/
         .green{
             color: #5e35b1;
@@ -2544,7 +2556,7 @@
                             </div>
                         @else
                             <div class="row mb-5 justify-content-md-start">
-                                <div class="col-md-3 border-bottom">
+                                <div class="col-md-4 border-bottom">
                                     <div class="text_retourner">
                                         <span style="--i:1">P</span>
                                         <span style="--i:2">r</span>
@@ -2598,8 +2610,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <div class="btn-group col-sm-10">
+                                        <div class="col-md-3">
+                                            <div class="btn-group col-sm-11">
                                                 <button type="button" class="form-select" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Tous les formations
                                                 </button>
@@ -2670,13 +2682,13 @@
                                         @endif
                                             <div class="row mt-2 titre_projet mb-1 pt-2 pb-2 w-100 g-0">
                                                 <div class="col-md-1 p-0">
-                                                <h6 class="m-0"><a href="#collapseprojet_{{ $pj->groupe_id }}" class="mb-0 changer_carret d-flex" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
+                                                    <h6 class="m-0"><a href="#collapseprojet_{{ $pj->groupe_id }}" class="mb-0 changer_carret d-flex" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
                                                 </div>
-                                                <div class="col-md-2 text-start">
+                                                <div class="col-md-3 text-start">
                                                     <h6 class="nom_module">{{ $pj->nom_module }}</h6>
                                                     <span class="nom_formation text-black-50">{{ $pj->nom_formation }}</span>
                                                 </div>
-                                                <div class="col-md-2 p-0 d-flex justify-content-start">
+                                                <div class="col-md-2">
                                                     @if($pj->type_formation_id == 3)
                                                     <span style="background: #b32cb8; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
                                                         Interne
@@ -2685,10 +2697,10 @@
                                                         <img src="{{ asset('images/CFP/' . $pj->logo) }}" alt="{{ $pj->logo }}" style="width:64px;height:34px"/>
                                                     @endif
                                                 </div>
-                                                <div class="col-md-1 p-0 d-flex justify-content-start">
+                                                <div class="col-md-1">
                                                     <a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn" style="width:57x;height:20px;font-size: 11px;padding-top: initial;"><i class="bx bxs-file-pdf"></i>PDF</button></a>
                                                 </div>
-                                                <div class="col-md-2 p-0 d-flex justify-content-start">
+                                                <div class="col-md-2">
                                                     @if($pj->type_formation_id == 3)
                                                         @if ($statut_eval_interne == 0)
                                                             <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud_interne', [$pj->groupe_id]) }}"><button class="btn" style="width:116px;height:20px;font-size: 11px;padding-top: initial;color: #ffffff !important">Evaluation à faire</button></a>
@@ -2699,14 +2711,26 @@
                                                         @if ($statut_eval == 0)
                                                             <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn" style="width:116px;height:20px;font-size: 11px;padding-top: initial;color: #ffffff !important">Evaluation à faire</button></a>
                                                         @elseif ($statut_eval == 1)
-                                                            <p class="mt-3" style="color: green">Evaluation terminé</p>
+                                                            <p class="mt-2" style="color: green">Evaluation terminé</p>
                                                         @endif
                                                     @endif
 
                                                 </div>
-                                                <div class="col-md-1 p-0 d-flex justify-content-start">
+                                                <div class="col-md-1">
                                                     <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn" style="width:63px;height:20px;font-size: 11px;padding-top: initial;">Résultat</button></a>
                                                 </div>
+                                                @php
+                                                    $eval_stg = $froidEval->test_evaluation_froid_stg($pj->groupe_id,$pj->stagiaire_id);
+                                                @endphp
+                                                @if ($eval_stg == 0)
+                                                    <div class="col-md-2">
+                                                        <a class="btn_eval_stg_froid" href="{{ route('evaluation_froid',[$pj->groupe_id]) }}"><button class="btn" style="color:white; height:20px;font-size: 11px;padding: 0.04rem;">Evaluation à froid</button></a>
+                                                    </div>
+                                                @elseif($eval_stg == 1)
+                                                    <div class="col-md-2">
+                                                    </div>
+                                                @endif
+                                                
                                             </div>
                                             <div class="collapse" id="collapseprojet_{{ $pj->groupe_id }}">
                                                 {{-- section --}}

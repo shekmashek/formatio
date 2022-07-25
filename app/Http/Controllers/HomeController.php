@@ -41,6 +41,8 @@ use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
 use Exception;
+use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 use function Ramsey\Uuid\v1;
 
@@ -1671,11 +1673,20 @@ class HomeController extends Controller
     //liste par entreprise
     public function iframe_etp()
     {
-        $fonct = new FonctionGenerique();
-        $id_etp = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-        $iframe_etp = $fonct->findWhereMulitOne("v_entreprise_iframe", ["entreprise_id"], [$id_etp[0]->entreprise_id]);
+        try {
+            $fonct = new FonctionGenerique();
+            $id_etp = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+            $iframe_etp = $fonct->findWhereMulitOne("v_entreprise_iframe", ["entreprise_id"], [$id_etp[0]->entreprise_id]);
 
-        return view('layouts.bi', compact('iframe_etp'));
+            // $response = Http::get('http://rh.mg/api/test');
+            // $data = $response->json();
+            // dd($data);
+            return view('layouts.bi', compact('iframe_etp'));
+        } catch(\Illuminate\Http\Client\ConnectionException $e) {
+            dd('erreur');
+        }
+        
+        
     }
     //liste par of
     public function iframe_cfp()

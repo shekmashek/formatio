@@ -6,12 +6,12 @@ create table question_evaluation_froid(
     point_max int(2) default 0
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(2,'Je mets en pratique régulièrement à mon poste de travail les connaissances acquises au cours de la formation',5);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(4,'À quelle fréquence ?',2);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(4,'À quoi cela est-il dû ? (plusieurs réponses sont possibles, cochez la (ou les) case(s) correspondante(s))',7);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(4,'Si vous ne les avez pas encore mises en pratique, quelles en sont les raisons ? (plusieurs réponses possibles)',10);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(3,'Quels ont été les impacts de cette formation sur votre situation professionnelle ? (ex : évolution de poste / promotion, évaluation positive, meilleure intégration, reconnaissance, rétribution...)',2);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(4,'Pour aller plus loin dans le développement de mes compétences, je pense avoir besoin... (merci de préciser votre besoin en commentaire)',2);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(1,2,'À quelle fréquence ?',2);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(2,4,'Je mets en pratique régulièrement à mon poste de travail les connaissances acquises au cours de la formation',5);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(3,4,'À quoi cela est-il dû ? (plusieurs réponses sont possibles, cochez la (ou les) case(s) correspondante(s))',7);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(4,4,'Si vous ne les avez pas encore mises en pratique, quelles en sont les raisons ? (plusieurs réponses possibles)',10);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(5,3,'Quels ont été les impacts de cette formation sur votre situation professionnelle ? (ex : évolution de poste / promotion, évaluation positive, meilleure intégration, reconnaissance, rétribution...)',2);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(6,4,'Pour aller plus loin dans le développement de mes compétences, je pense avoir besoin... (merci de préciser votre besoin en commentaire)',2);
 
 create table reponse_question_eval_froid(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

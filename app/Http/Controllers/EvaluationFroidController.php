@@ -42,8 +42,8 @@ class EvaluationFroidController extends Controller
 
     public function store(Request $request)
     {
-        // try{
-            // DB::beginTransaction();
+        try{
+            DB::beginTransaction();
             $user_id = Auth::user()->id;
             $stg_id = stagiaire::where('user_id',$user_id)->value('id');
             $input = $request->all();
@@ -74,12 +74,12 @@ class EvaluationFroidController extends Controller
                     }
                 }
             }
-            // DB::commit();
+            DB::commit();
             return redirect()->route('liste_projet');
-        // }catch(Exception $e){
-        //     DB::rollBack();
-        //     return back()->with('eval_error',$e->getMessage());
-        // }
+        }catch(Exception $e){
+            DB::rollBack();
+            return back()->with('eval_error',$e->getMessage());
+        }
     }
 
     public function show(Request $request)

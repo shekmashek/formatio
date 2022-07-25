@@ -117,7 +117,7 @@
     <div class="downlad_pdf">
         <button class="btn get_pdf me-5"><i class='bx bxs-file-pdf'></i>PDF</button>
     </div>
-    <div id="statistique" class="row">
+    <div id="statistique" class="row mb-5">
         <div class="container_code col-lg-12">
             {{-- <div class="form-control"> --}}
             <div class="text_center">

@@ -18,4 +18,12 @@ class FroidEvaluation extends Model
         }
         return 0;
     }
+
+    public function test_evaluation_froid_stg($groupe, $stg){
+        $test = DB::select('select 1 from resultat_eval_froid_stagiaire where groupe_id = ? and stagiaire_id = ? limit 1', [$groupe, $stg]);
+        if($test == null){
+            return 0;
+        }
+        return 1;
+    }
 }

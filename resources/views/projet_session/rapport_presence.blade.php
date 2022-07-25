@@ -137,7 +137,7 @@
         var opt = {
             margin: 0.3,
             width : 400,
-            filename:'rapport_evaluation_a_chaud.pdf',
+            filename:'rapport_de_presence.pdf',
             pagebreak : { mode: ['avoid-all','css', 'legacy']},
             image:        { type: 'jpeg', quality: 0.98 },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
