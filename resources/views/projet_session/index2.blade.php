@@ -996,6 +996,7 @@
             color: #1e9600;
             transition: 0.3s !important;
             transform: rotate(360deg) !important;
+            z-index: -1;
         }
         .mivadika{
             transform: rotate(180deg) !important;
@@ -1064,30 +1065,227 @@
                             <table class="table modifTable">
                                 <thead style="position: sticky; top: 0">
                                     <tr style="background: #c7c9c939">
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-library'></i> Projet</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-building-house'></i> Entreprise</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-check' ></i> Modalité</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-time-five' ></i> Date du projet</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-home' ></i> Ville</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type formation</th>
-                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
+                                        <th style="width: 6%">
+                                            <div class="dropdown">
+                                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-library'></i> Projet
+                                                </button>
+                                                <ul class="dropdown-menu main p-2">
+                                                    <li>
+                                                        <input type="text" class="column_search form-control form-control-sm">
+                                                    </li>
+                                                    <li>
+                                                        <input class="form-check-input select_all" type="checkbox" id="select_all">
+                                                        <label class="form-check-label label" for="select_all" style="font-size: 12px">Selectionez tout</label>
+                                                    </li>
+                                                    <ul>
+                                                        @foreach ($nomProjet as $prj)
+                                                            <div class="form-check">
+                                                                <li>
+                                                                    <input class="checkbox form-check-input" type="checkbox" name="Projet" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
+                                                                </li>
+                                                            </div>
+                                                        @endforeach
+                                                    </ul>
+                                              </ul>
+                                            </div>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <div class="dropdown">
+                                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bxs-book-open' style="color: #2e3950"></i> Session
+                                                </button>
+                                                <ul style="background: red" class="dropdown-menu main p-2">
+                                                    <li>
+                                                        <input type="text" class="column_search form-control form-control-sm">
+                                                    </li>
+                                                    <li>
+                                                        <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                                        <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                                    </li>
+                                                    <ul>
+                                                        @foreach ($nomSessions as $sess)
+                                                            <div class="form-check">
+                                                                <li>
+                                                                    <input class="checkbox form-check-input" type="checkbox" name="session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
+                                                                </li>
+                                                            </div>
+                                                        @endforeach
+                                                    </ul>
+                                              </ul>
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="headProject" style="width: 14%;"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
+                                        {{-- <th>
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-building-house'></i> Entreprise
+                                                </button>
+                                                <ul class="dropdown-menu main p-2">
+                                                    <li>
+                                                        <input type="text" class="column_search form-control form-control-sm">
+                                                    </li>
+                                                    <li>
+                                                        <input class="form-check-input select_all" type="checkbox">
+                                                        <label class="form-check-label label" style="font-size: 12px">Selectionez tout</label>
+                                                    </li>
+                                                    <ul>
+                                                        @foreach ($data as $pj)
+                                                            @foreach ($nomEntreprises as $etp)
+                                                                @if ($etp->groupe_id == $pj->groupe_id)
+                                                                    <div class="form-check">
+                                                                        <li>
+                                                                            <input class="checkbox form-check-input" type="checkbox" name="entreprise" value="{{ $etp->nom_etp}}">{{ $etp->nom_etp}}
+                                                                        </li>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                        @endforeach
+                                                    </ul>
+                                              </ul>
+                                            </div>
+                                        </th> --}}
+                                        
+                                        <th class="headProject" style="width: 10%;"><i class='bx bx-building-house'></i> Entreprise</th>
+                                        <th style="width: 10%">
+                                            <div class="dropdown">
+                                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-calendar-check' ></i> Modalité
+                                                </button>
+                                                <ul class="dropdown-menu main p-2">
+                                                    <li>
+                                                        <input type="text" class="column_search form-control form-control-sm">
+                                                    </li>
+                                                    <li>
+                                                        <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                                        <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                                    </li>
+                                                    <ul>
+                                                        @foreach ($nomModalites as $mdlt)
+                                                            <div class="form-check">
+                                                                <li>
+                                                                    <input class="checkbox form-check-input" type="checkbox" name="modalite" value="{{ $mdlt->modalite}}"><span style="font-size: 12px">{{ $mdlt->modalite}}</span>
+                                                                </li>
+                                                            </div>
+                                                        @endforeach
+                                                    </ul>
+                                              </ul>
+                                            </div>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <div class="dropdown">
+                                                <a id="example" tabindex="0" class="btn btn-sm btn-default" role="button" data-bs-toggle="popover" title="Recherche entre 2 périodes" style="width: 100%;">
+                                                    <i class='bx bx-time-five'></i> <span style="font-size: 13px">Date</span> &nbsp;&nbsp;<i class='bx bx-caret-down' style="font-size: 12px"></i>
+                                                </a>
+                                            </div>
+                                            <div hidden>
+                                                <div data-name="popover-content">
+                                                    <table>
+                                                        <thead>
+                                                            <form action="{{ route('project.filterBydate') }}" method="post">
+                                                                @csrf
+                                                                <tr>
+                                                                    <th style="font-size: 12px; font-weight: 400;">De</th>
+                                                                    <th style="font-size: 12px; font-weight: 400;">A</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        <div class="input-group input-group-sm" style="width: 98%;">
+                                                                            <input type="date" name="from" id="from" value="{{ date('Y-m-d')}}" class="form-control form-control-sm @error('from') is-invalid @enderror" style="font-size: 13px">
+                                                                            <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' style="font-size: 20px"></i></span>
+                                                                            @error('from')
+                                                                                <span class="text-danger" style="font-size: 12px">{{ "Ce champs est obligatoire" }}</span>
+                                                                            @enderror
+                                                                        </div>
+                                                                    </th>
+                                                                    <th>
+                                                                        <div class="input-group input-group-sm" style="width: 98%;">
+                                                                            <input type="date" name="to" id="to" value="{{ date('Y-m-d')}}" class="form-control form-control-sm @error('to') is-invalid @enderror" style="font-size: 13px">
+                                                                            <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' style="font-size: 20px"></i></span>
+                                                                            @error('to')
+                                                                                <span class="text-danger" style="font-size: 12px">{{ "Ce champs est obligatoire" }}</span>
+                                                                            @enderror
+                                                                        </div>
+                                                                    </th>
+                                                                    <th>
+                                                                        <button type="submit" class="btn btn-sm btn-primary">Filtrer <i class='bx bx-search-alt-2' style="font-size: 20px; vertical-align: middle;"></i></button>
+                                                                    </th>
+                                                                </tr>
+                                                            </form>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <div class="dropdown">
+                                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-home' ></i> Ville
+                                                </button>
+                                            </div>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <div class="dropdown">
+                                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts
+                                                </button>
+                                                <ul class="dropdown-menu main p-2">
+                                                    <li>
+                                                        <input type="text" class="column_search form-control form-control-sm">
+                                                    </li>
+                                                    <li>
+                                                        <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                                        <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                                    </li>
+                                                    <ul>
+                                                        @foreach ($nomStatuts as $stt)
+                                                            <div class="form-check">
+                                                                <li>
+                                                                    <input class="checkbox form-check-input" type="checkbox" name="statut" value="{{ $stt->item_status_groupe}}"><span style="font-size: 12px">{{ $stt->item_status_groupe}}</span>
+                                                                </li>
+                                                            </div>
+                                                        @endforeach
+                                                    </ul>
+                                              </ul>
+                                            </div>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <div class="dropdown">
+                                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-book-content' style="vertical-align: middle"></i> Type
+                                                </button>
+                                                <ul class="dropdown-menu main p-2">
+                                                    <li>
+                                                        <input type="text" class="column_search form-control form-control-sm">
+                                                    </li>
+                                                    <li>
+                                                        <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                                        <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                                    </li>
+                                                    <ul>
+                                                        @foreach ($ntps as $ntp)
+                                                            <div class="form-check">
+                                                                <li>
+                                                                    <input class="checkbox form-check-input" type="checkbox" name="TypeF" value="{{ $ntp->type_formation}}"><span style="font-size: 12px">{{ $ntp->type_formation}}</span>
+                                                                </li>
+                                                            </div>
+                                                        @endforeach
+                                                    </ul>
+                                              </ul>
+                                            </div>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <div class="dropdown">
+                                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-menu' style="vertical-align: middle"></i> Action
+                                                </button>
+                                            </div>
+                                        </th>
+                                        {{-- <th class="headProject" style="min-width: 10%;"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th> --}}
                                     </tr>
-                                    <tr>
-                                        <th class="headProject">Projet</th>
-                                        <th class="headProject">Session</th>
-                                        <th class="headProject">Module</th>
-                                        <th class="headProject">Entreprise</th>
-                                        <th class="headProject">Modalité</th>
-                                        <th class="headProject">Date du projet</th>
-                                        <th class="headProject toHide">Ville</th>
-                                        <th class="headProject">Statuts</th>
-                                        <th class="headProject">Type formation</th>
-                                        <th class="headProject hideAction">Action</th>
-                                    </tr>
-                                    <tr>
+                                    {{-- <tr>
                                         <th class="headProject">
                                             <div class="btn-group btn-group-sm dropend shadow-sm" style="width: 100%">
                                                 <button id="myBtn" type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
@@ -1127,7 +1325,7 @@
                                                   <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
                                                 </button>
                                                 <ul class="dropdown-menu" style="height: 145px; width: 250px; overflow: hidden; overflow-y: auto; padding: 10px 10px; border-radius: 10px; box-shadow: 2px 2px 3px solid #000;">
-                                                    @foreach ($nomModules as $mdl)
+                                                    @foreach ($nmdls as $mdl)
                                                         <div class="form-check">
                                                             <li>
                                                                 <input class="form-check-input" type="checkbox" name="module" value="{{ $mdl->nom_module }}"><span  style="font-size: 12px">{{ $mdl->nom_module }}</span>
@@ -1242,10 +1440,10 @@
                                                   <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
                                                 </button>
                                                 <ul class="dropdown-menu" style="height: 80px; overflow: hidden; overflow-y: auto; padding: 10px 10px; border-radius: 10px; box-shadow: 2px 2px 3px solid #000;">
-                                                    @foreach ($nomTypes as $typeF)
+                                                    @foreach ($ntps as $type)
                                                         <div class="form-check">
                                                             <li>
-                                                                <input class="form-check-input" type="checkbox" name="typeFormation" value="{{ $typeF->type_formation}}"><span style="font-size: 12px;">{{ $typeF->type_formation}}</span>
+                                                                <input class="form-check-input" type="checkbox" name="TypeF" value="{{ $type->type_formation }}">{{ $type->type_formation }}
                                                             </li>
                                                         </div>
                                                     @endforeach
@@ -1253,7 +1451,7 @@
                                               </div>
                                         </th>
                                         <th class="headProject"></th>
-                                    </tr>
+                                    </tr> --}}
                                 </thead>
                                 <tbody>
                                     @foreach ($projet as $prj)
@@ -1393,9 +1591,13 @@
                                                                 <table class="table table-responsive">
                                                                     <tbody>
                                                                         <tr style="padding: 0; border-color: #ffffff">
-                                                                            <td style="width: 10%;">
+                                                                            <td style="width: 6%;">
                                                                                 <span>
-                                                                                    <a data-bs-toggle="collapse" href="#collapseProject_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class='bx bx-down-arrow-circle arrowDrop ' data-id="{{$pj->groupe_id}}"  style="font-size: 20px; vertical-align: middle; color: #1e9600"></i></a>
+                                                                                    <a data-bs-toggle="collapse" href="#collapseProject_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                                                        {{-- test --}}
+                                                                                        <i class='bx bx-down-arrow-circle arrowDrop' data-id="{{$pj->groupe_id}}" style="font-size: 20px; vertical-align: middle;"></i>
+                                                                                        {{-- <i class='bx bx-down-arrow-circle arrowDrop' data-id="{{$pj->groupe_id}}"  style="font-size: 20px; vertical-align: middle; color: #1e9600;"></i> --}}
+                                                                                    </a>
                                                                                 </span>
                                                                             </td>
                                                                             <td style="width: 10%;">
@@ -1404,7 +1606,7 @@
                                                                                     <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
                                                                                 </a>
                                                                             </td>
-                                                                            <td style="width: 10%;">
+                                                                            <td style="width: 14%;">
                                                                                 <span style="font-size: 13px">{{ $pj->nom_module }}</span>
                                                                             </td>
                                                                             <td style="width: 10%;">
@@ -3188,44 +3390,38 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('.modifTable thead tr:eq(1) th').each( function () {
-                var title = $(this).text();
-                $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px; margin-bottom: 0"/>');
+            // select all
+            $('.select_all').on('click', function(){
+                if(this.checked){
+                    $('.checkbox').each(function(){
+                        this.checked = true;
+                    });
+                }else{
+                    $('.checkbox').each(function(){
+                        this.checked = false;
+                    });
+                }
+            });
 
-                $( "th.toHide > input" ).prop( "disabled", true ).attr( "placeholder", "" );
-                $( "th.toHideAction > input" ).addClass( "hideAction");
+            $('.checkbox').on('click', function(){
+                if(('.checkbox:checked').length == $('.checkboxx').length){
+                    $('.select_all').prop('checked', true);
+                } else{
+                    $('.select_all').prop('checked', false);
+                }
+            });
+            // end select all
+
+            $('.modifTable thead').on('keyup', ".column_search",function () {
+                table.column( $(this).parent().parent().parent().parent().index() ).search( this.value ).draw();
             } );
 
-            function searchByColumn(table){
-                var defaultSearch = 0;
-
-                $(document).on('change keyup', '#select-column', function(){
-                    defaultSearch = this.value; 
-                });
-
-                $(document).on('change keyup', '#search-by-column', function(){
-                    table.search('').column().search('').draw();
-                    table.column(defaultSearch).search(this.value).draw();
-                });
-            }
-            
-            $( '.modifTable thead'  ).on( 'keyup', ".column_search",function () {
-        
-                table
-                    .column( $(this).parent().index() )
-                    .search( this.value )
-                    .draw();
-            } );
-
-            var table = $('.modifTable').removeAttr('width').DataTable({
-
-                initComplete : function() {
-                    $("#myDatatablesa_filter").detach().appendTo('#new-search-area');
-                },
-                scrollY:        "500px",
+            var table = $('.modifTable').DataTable({
+                // scrollY:        "500px",
                 // scrollX:        true,
                 // scrollCollapse: true,
-                orderCellsTop: true,
+                // orderCellsTop: true,
+                "ordering": false,
                 fixedHeader: true,
                 // paging: false,
                 "language": {
@@ -3247,47 +3443,44 @@
                     return '^' + this.value + '$';
                 }).get().join('|');
                 
-                table.column(0).search(Projet, true, false, false).draw();
+                table.column(0).search(Projet, true,true,true).draw();
 
                 var Session = $('input:checkbox[name="session"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(1).search(Session, true, false, false).draw();
-
-                var Entreprise = $('input:checkbox[name="entreprise"]:checked').map(function() {
+                table.column(1).search(Session, true,true,true).draw();
+                
+                var Module = $('input:checkbox[name="Module"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(3).search(Entreprise, true, false, false).draw();
+                table.column(2).search(Module, true,false,false).draw();
+
+                var Entreprise = $('input:checkbox[name="Enterprise"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(3).search(Entreprise, true,false,false).draw();
 
                 var Modalite = $('input:checkbox[name="modalite"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(4).search(Modalite, true, false, false).draw();
-                
-                var TypeFormation = $('input:checkbox[name="typeFormation"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(8).search(TypeFormation, true, false, false).draw();
-                
-                var Module = $('input:checkbox[name="module"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(2).search(Module, true, false, false).draw();
+                table.column(4).search(Modalite, true,true,true).draw();
                 
                 var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(7).search(Statut, true, false, false).draw();
-            
-            });
+                table.column(7).search(Statut, true,true,true).draw();
 
-            searchByColumn(table);
+                var Type = $('input:checkbox[name="TypeF"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(8).search(Type, true,false,false).draw();
+            });
         });
 
         // mivadika

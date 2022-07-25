@@ -1020,9 +1020,9 @@ class HomeController extends Controller
             $nomEntreprises = DB::select('select nom_etp,groupe_id  from v_groupe_entreprise group by nom_etp');
             $nomSessions = DB::select('select nom_groupe from v_groupe_projet_module group by nom_groupe order by groupe_id asc');
             $nomModalites = DB::select('select modalite from v_groupe_projet_module group by modalite');
-            $nomModules = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
+            $nmdls = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
             $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module group by item_status_groupe');
-            $nomTypes = DB::select('select type_formation from v_projet_session group by type_formation');
+            $ntps = DB::select('select type_formation from v_groupe_projet_module group by type_formation');
             //conditions d'aaffichage et apprendre
             $nb_modules = DB::select('select count(*) from v_module where cfp_id = ?',[$cfp_id]);
             $nb_formateur = DB::select('select count(*) from v_demmande_cfp_formateur where cfp_id = ?',[$cfp_id]);
@@ -1038,7 +1038,7 @@ class HomeController extends Controller
             ->groupBy('nom_projet')
             ->orderBy('projet_id', 'ASC')
             ->get();
-            return view('projet_session.index2', compact('nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'nomTypes', 'nomModalites', 'nomModules', 'nomStatuts','nomProjet'));
+            return view('projet_session.index2', compact('nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'ntps', 'nomModalites', 'nmdls', 'nomStatuts','nomProjet'));
             // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
 
 
