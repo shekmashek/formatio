@@ -5,8 +5,8 @@
     <div class="row mt-2">
         <div class="col-lg-4">
             <div class="form-control">
-                <p class="text-center"><b style="font-size: 17px;">Tableau de bord financier</b></p>
-                <p class="p-0 m-0 " style="font-size: 14px; font-weight: bold;">C.A actuel:
+                <p class="text-center"><b style="font-size: 17px;">@lang('translation.TableauDeBordFinancier')</b></p>
+                <p class="p-0 m-0 " style="font-size: 14px; font-weight: bold;">@lang('translation.C.AActuel')
                     @php
                         foreach ($CA_actuel as $total) {
                             $total = $total->total_ttc;
@@ -14,7 +14,7 @@
                         }
                     @endphp Ar TTC</p>
 
-                <p class="p-1 m-0" style="font-size: 13px;">C.A précedent:
+                <p class="p-1 m-0" style="font-size: 13px;">@lang('translation.C.APrécedent')
                     @php
                         foreach ($CA_precedent as $totals) {
                             $totals = $totals->total_ttc;
@@ -27,16 +27,16 @@
         </div>
         <div class="col-lg-4">
             <div class="form-control">
-                <p class="text-center"><b style="font-size: 17px;">Chiffre d'affaires par module</b></p>
-                <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 modules</p>
+                <p class="text-center"><b style="font-size: 17px;">@lang('translation.Chiffremod')</b></p>
+                <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">@lang('translation.Top10Modules')</p>
                 <hr>
                 {{-- <div id="barchart_material"></div> --}}
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-control">
-                <p class="text-center"><b style="font-size: 17px;">Chiffre d'affaires par client</b></p>
-                <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 clients</p>
+                <p class="text-center"><b style="font-size: 17px;">@lang('translation.Chiffreclient')</b></p>
+                <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">@lang('translation.Top10Clients')</p>
                 <hr>
                 {{-- <div id="barchart_material_2"></div> --}}
             </div>

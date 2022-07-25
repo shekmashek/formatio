@@ -45,25 +45,25 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="{{route('employes.liste')}}" class="nav-link">
-                    employés
+                    @lang('translation.Employés')
                 </a>
             </li>
             @canany(['isReferent','isReferentSimple'])
             <li class="nav-item">
                 <a href="{{route('employes.new')}}" class="nav-link active">
-                    nouveau employé
+                    @lang('translation.NouveauEmployés')
                 </a>
             </li>
 
             <li class="nav-item">
                 <a href="{{route('employes.export.nouveau')}}" class="nav-link">
-                    import EXCEL employé
+                    @lang('translation.importEXCELEmployé')
                 </a>
             </li>
             @endcanany
             <li class="nav-item">
                 <a href="{{route('employes.liste_referent')}}" class="nav-link">
-                Référents
+                @lang('translation.Référents')
                 </a>
             </li>
         </ul>
@@ -90,14 +90,14 @@
                     <form id="formInsert" action="{{route('employeur.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        <h4 class="text-center">Nouveau Employé</h4>
+                        <h4 class="text-center">@lang('translation.NouveauEmployé')</h4>
                         <div class="row mt-4">
                             <div class="col-md-4  text-end">
-                                <label class="mt-2">Matricule<strong style="color:#ff0000;">*</strong></label>
+                                <label class="mt-2">@lang('translation.Matricule')<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" required name="matricule" class="form-control input w-50" id="matricule" placeholder="Matricule" />
+                                    <input type="text" autocomplete="off" required name="matricule" class="form-control input w-50" id="matricule" placeholder="@lang('translation.Matricule')" />
                                     @error('matricule')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -110,11 +110,11 @@
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="nom" class="mt-2">Nom<strong style="color:#ff0000;">*</strong></label>
+                                <label for="nom" class="mt-2">@lang('translation.Nom')<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" required name="nom" class="form-control input" id="nom" required placeholder="Nom" />
+                                    <input type="text" autocomplete="off" required name="nom" class="form-control input" id="nom" required placeholder="@lang('translation.Nom')" />
                                     @error('nom')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -126,22 +126,22 @@
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="prenom" class="mt-2">Prénom</label>
+                                <label for="prenom" class="mt-2">@lang('translation.Prénom')</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" name="prenom" class="form-control input" id="prenom" required placeholder="Prénom" />
+                                    <input type="text" autocomplete="off" name="prenom" class="form-control input" id="prenom" required placeholder="@lang('translation.Prénom')" />
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="cin" class="mt-2">CIN<strong style="color:#ff0000;">*</strong></label>
+                                <label for="cin" class="mt-2">@lang('translation.CIN')<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" required autocomplete="off" name="cin" class="form-control input" id="cin" required placeholder="Carte d'Identité Nationale" />
+                                    <input type="text" required autocomplete="off" name="cin" class="form-control input" id="cin" required placeholder="@lang('translation.CIN')" />
                                     <span style="color:#ff0000;" id="cin_err"></span>
                                     @error('cin')
                                     <div class="col-sm-6">
@@ -154,11 +154,11 @@
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="phone" class="mt-2">Téléphone<strong style="color:#ff0000;">*</strong></label>
+                                <label for="phone" class="mt-2">@lang('translation.Téléphone')<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" min=6 required name="phone" class="form-control input" id="phone" required placeholder="Télephone" />
+                                    <input type="text" autocomplete="off" min=6 required name="phone" class="form-control input" id="phone" required placeholder="@lang('translation.Téléphone')" />
                                     <span style="color:#ff0000;" id="phone_err"></span>
                                     @error('phone')
                                     <div class="col-sm-6">
@@ -171,11 +171,11 @@
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="mail" class="mt-2">Email<strong style="color:#ff0000;">*</strong></label>
+                                <label for="mail" class="mt-2">@lang('translation.E-mail')<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="email" autocomplete="off" required name="mail" class="form-control input" id="mail" required placeholder="E-mail" />
+                                    <input type="email" autocomplete="off" required name="mail" class="form-control input" id="mail" required placeholder="@lang('translation.E-mail')" />
                                     <span style="color:#ff0000;" id="mail_err"></span>
                                     @error('mail')
                                     <div class="col-sm-6">
@@ -188,11 +188,11 @@
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="fonction" class="mt-2">Fonction<strong style="color:#ff0000;">*</strong></label>
+                                <label for="fonction" class="mt-2">@lang('translation.Fonction')<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" required name="fonction" class="form-control input" id="fonction" required placeholder="Fonction" />
+                                    <input type="text" autocomplete="off" required name="fonction" class="form-control input" id="fonction" required placeholder="@lang('translation.Fonction')" />
                                     @error('fonction')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -205,7 +205,7 @@
 
 
                         <div class=" text-center mt-3">
-                            <button type="submit" class="btn btn-lg btn_enregistrer" id="saver_stg"><i class="bx bx-check me-1"></i> Enregistrer</button>
+                            <button type="submit" class="btn btn-lg btn_enregistrer" id="saver_stg"><i class="bx bx-check me-1"></i> @lang('translation.Enregistrer')</button>
                         </div>
                     </form>
                 </div>

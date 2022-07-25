@@ -277,25 +277,25 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="{{route('employes.liste')}}" class="nav-link active">
-                    employés
+                    @lang('translation.Employés')
                 </a>
             </li>
             @canany(['isReferent','isReferentSimple'])
                 <li class="nav-item">
                     <a href="{{route('employes.new')}}" class="nav-link">
-                        nouveau employé
+                        @lang('translation.nouveauEmployé')
                     </a>
                 </li>
 
             <li class="nav-item">
                 <a href="{{route('employes.export.nouveau')}}" class="nav-link">
-                    import EXCEL employé
+                    @lang('translation.importEXCELEmployé')
                 </a>
             </li>
             @endcanany
                 <li class="nav-item">
                     <a href="{{route('employes.liste_referent')}}" class="nav-link">
-                    Référents
+                    @lang('translation.Réferent')
                     </a>
                 </li>
         </ul>
@@ -306,15 +306,15 @@
                     <thead>
                         <tr>
                             <th class="id">ID</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">@lang('translation.employé')</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Contacts</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">
-                                <span class="d-block">Département</span>
-                                <span>Service</span>
+                                <span class="d-block">@lang('translation.Départements') /</span>
+                                <span>@lang('translation.Services')</span>
                             </th>
                             @can('isReferent')
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Formateur interne</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">@lang('translation.FormInt')</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">@lang('translation.Réferent')</th>
                             @endcan
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
@@ -405,7 +405,7 @@
                                             <td class="align-middle text-center text-secondary">
                                                 <p class="text-muted mb-0">
                                                     @if($employers[$i]->nom_departement == null OR  $employers[$i]->nom_service == null)
-                                                    Non catégorisé
+                                                     @lang('translation.noncat')
                                                     @else
                                                        {{$employers[$i]->nom_departement}} <br>
                                                         {{$employers[$i]->nom_service}}
@@ -446,7 +446,7 @@
                                             @if ($employers[$i]->activiter == 1)
                                                 <div class="form-check form-switch">
                                                     <label class="form-check-label" for="flexSwitchCheckChecked"><span
-                                                            class="badge bg-success">actif</span></label>
+                                                            class="badge bg-success">@lang('translation.actif')</span></label>
                                                     @can('isReferent')
                                                         <input class="form-check-input desactiver_stg" type="checkbox"
                                                             data-user-id="{{ $employers[$i]->user_id }}" value="{{ $employers[$i]->id }}"
@@ -458,7 +458,7 @@
                                                     <label class="form-check-label"
                                                         for="flexSwitchCheckChecked">
                                                         <span class="badge bg-danger">
-                                                            inactif
+                                                           @lang('translation.inactif')
                                                         </span>
                                                     </label>
                                                     @can('isReferent')
@@ -489,21 +489,19 @@
                                         <div class="modal-content">
                                             <div class="modal-header d-flex justify-content-center"
                                                 style="background-color:rgb(235, 20, 45);">
-                                                <h4 class="modal-title text-white">Avertissement !</h4>
+                                                <h4 class="modal-title text-white">@lang('translation.Avertissement!')</h4>
 
                                             </div>
                                             <div class="modal-body">
-                                                <small>Vous êtes sur le point d'enlever l'employé
-                                                    {{ $employers[$i]->nom_stagiaire }} {{ $employers[$i]->prenom_stagiaire }},
-                                                    cette action est irréversible. Continuer ?</small>
+                                                <small>@lang('translation.efaceD')</small>
                                             </div>
 
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non
+                                                <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> @lang('translation.Non')
                                                 </button>
 
                                                 <a href="{{ route('employeur.destroy', $employers[$i]->user_id) }}"> <button
-                                                        type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                                        type="button" class="btn btn_creer btnP px-3">@lang('translation.Oui')</button></a>
                                             </div>
                                         </div>
                                     </div>
@@ -526,7 +524,7 @@
         </div>
 
 
-        <div class="filtrer mt-3">
+        {{-- <div class="filtrer mt-3">
             <div class="row">
                 <div class="col">
                     <p class="m-0">Filtre</p>
@@ -584,7 +582,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
         {{--AfficheInfos--}}
@@ -615,7 +613,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"><i class='bx bx-user'></i></div>
-                        <div class="col-md-3">Nom_prénoms</div>
+                        <div class="col-md-3">@lang('translation.Nom_prénoms')</div>
                         <div class="col-md">
                             <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
                             <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
@@ -625,7 +623,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
-                        <div class="col-md-3">Matricule</div>
+                        <div class="col-md-3">@lang('translation.Matricule')</div>
                         <div class="col-md">
                             <span id="matricule" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
                         </div>
@@ -634,14 +632,14 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
-                        <div class="col-md-3">E-mail</div>
+                        <div class="col-md-3">@lang('translation.E-mail')</div>
                         <div class="col-md"><span id="mail_stagiaire"></span></div>
                     </div>
                 </div>
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"><i class='bx bx-phone' ></i></div>
-                        <div class="col-md-3">Télephone</div>
+                        <div class="col-md-3">@lang('translation.Téléphone')</div>
                         <div class="col-md">
                             <span></span><span id="telephone_stagiaire"></span>
                         </div>
@@ -650,7 +648,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
-                        <div class="col-md-3">Adresse</div>
+                        <div class="col-md-3">@lang('translation.Adresse')</div>
                         <div class="col-md"><span id="adresse"></span></div>
                     </div>
 

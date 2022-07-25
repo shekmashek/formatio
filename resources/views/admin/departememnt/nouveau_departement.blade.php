@@ -130,7 +130,7 @@
 <div class="container-fluid pb-1">
 
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i
-            class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+            class='bx bx-filter icon_creer'></i>@lang('translation.Afficherlesfiltres')</a>
             @if(session()->has('erreur'))
             <div class="alert alert-danger">
                 {{ session()->get('erreur') }}
@@ -139,13 +139,13 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item ">
-                <a href="#departements" class="nav-link active" data-bs-toggle="tab">Départements</a>
+                <a href="#departements" class="nav-link active" data-bs-toggle="tab">@lang('translation.Départements')</a>
             </li>
             <li class="nav-item">
-                <a href="#services" class="nav-link" data-bs-toggle="tab">Services</a>
+                <a href="#services" class="nav-link" data-bs-toggle="tab">@lang('translation.Services')</a>
             </li>
             <li class="nav-item">
-                <a href="#branches" class="nav-link" data-bs-toggle="tab">Branches</a>
+                <a href="#branches" class="nav-link" data-bs-toggle="tab">@lang('translation.Branches')</a>
             </li>
         </ul>
 
@@ -164,9 +164,9 @@
                                 <div class="table-responsive mt-0">
                                     <table class="table  table-border table-sm ">
                                         <thead>
-                                            <th>Départements</th>
-                                            <th>Manager</th>
-                                            <th>Actions</th>
+                                            <th>@lang('translation.Départements')</th>
+                                            <th>@lang('translation.Manager')</th>
+                                            <th>@lang('translation.Actions')</th>
                                         </thead>
                                         <tbody id="data_collaboration">
                                             @if (count($rqt)>0)
@@ -183,7 +183,7 @@
                                                         @if($rqt[$i]->user_id_chef_departement != null)
                                                                     {{$rqt[$i]->nom_chef}} {{$rqt[$i]->prenom_chef}}
                                                         @else
-                                                                <button class="btn btn_nouveau" data-bs-toggle="modal" data-bs-target="#manager_{{$rqt[$i]->id}}"> <i class="bx bx-plus-medical me-1"></i>Nouveau manager</button>
+                                                                <button class="btn btn_nouveau" data-bs-toggle="modal" data-bs-target="#manager_{{$rqt[$i]->id}}"> <i class="bx bx-plus-medical me-1"></i>@lang('translation.Nouveau')&nbsp;@lang('translation.Manager')</button>
                                                         @endif
 
                                                     </p>
@@ -203,19 +203,19 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1>Modification</h1>
+                                                            <h1>@lang('translation.Modification')</h1>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form action="{{route('update_departement')}}"  method="post">
                                                                 @csrf
-                                                                <label for="" class="label"> Département</label>
+                                                                <label for="" class="label"> @lang('translation.Départements')</label>
                                                                 <input type="text" class="form-control" required name="departement" value="{{$rqt[$i]->nom_departement}}">
                                                                 <input type="hidden" class="form-control" required name="id" value="{{$rqt[$i]->id}}"> <br><br>
 
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                 <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
-                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -226,17 +226,17 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1>Manager</h1>
+                                                            <h1>@lang('translation.Manager')</h1>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form action="{{route('ajouter_manager')}}"  method="post">
                                                                 @csrf
-                                                                <label for="" class="label"> Département</label>
+                                                                <label for="" class="label"> @lang('translation.Départements')</label>
                                                                 <input type="text" class="form-control" required name="departement" value="{{$rqt[$i]->nom_departement}}" readonly>
-                                                                <label for="" class="label"> Manager</label>
+                                                                <label for="" class="label"> @lang('translation.Manager')</label>
                                                                 <input type="hidden" class="form-control" required name="dep_id" value="{{$rqt[$i]->id}}"> <br>
                                                                 <select name="manager" id="manager" class="form-control">
-                                                                    <option value="null">Choisissez un employé...</option>
+                                                                    <option value="null">@lang('translation.ChoisiEmpl')</option>
                                                                     @foreach ($employes as $emp)
                                                                         @if($emp->departement_entreprises_id == $rqt[$i]->id)
                                                                             <option value="{{$emp->id}}">{{$emp->nom_emp}} {{$emp->prenom_emp}}</option>
@@ -245,8 +245,8 @@
                                                                 </select>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
-                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>@lang('translation.Fermer')</button>
+                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -257,19 +257,19 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1>Manager</h1>
+                                                            <h1>@lang('translation.Manager')</h1>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form action="{{route('modifier_manager')}}"  method="post">
                                                                 @csrf
-                                                                <label for="" class="label"> Département</label>
+                                                                <label for="" class="label"> @lang('translation.Départements')</label>
                                                                 <input type="text" class="form-control" required name="departement" value="{{$rqt[$i]->nom_departement}}" readonly>
-                                                                <label for="" class="label"> Manager</label>
+                                                                <label for="" class="label"> @lang('translation.Manager')</label>
                                                                 <input type="hidden" class="form-control" required name="dep_id" value="{{$rqt[$i]->id}}">
                                                                 <input type="hidden" class="form-control" required name="ancien_user_chef" value="{{$rqt[$i]->user_id_chef_departement}}">
                                                                 <input type="hidden" class="form-control" required name="ancien_chef" value="{{$rqt[$i]->chef_departements_id}}"> <br>
                                                                 <select name="manager" id="manager" class="form-control">
-                                                                    <option value="null">Choisissez un employé...</option>
+                                                                    <option value="null">@lang('translation.ChoisiEmpl')</option>
                                                                     @foreach ($employes as $emp)
                                                                         @if($emp->departement_entreprises_id == $rqt[$i]->id)
                                                                             @if( $rqt[$i]->chef_departements_id == $emp->id)
@@ -282,8 +282,8 @@
                                                                 </select>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
-                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>@lang('translation.Fermer')</button>
+                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -297,18 +297,17 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header d-flex justify-content-center"
                                                             style="background-color:rgb(224,182,187);">
-                                                            <h6 class="modal-title text-white">Avertissement !</h6>
+                                                            <h6 class="modal-title text-white">@lang('translation.Avertissement')</h6>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <small>Vous êtes sur le point d'effacer une donnée, cette action
-                                                                est irréversible. Continuer ?</small>
+                                                            <small>@lang('translation.efaceD')</small>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal"> Non </button>
+                                                                data-bs-dismiss="modal"> @lang('translation.Non') </button>
                                                             <form action="{{route('delete_departement',$rqt[$i]->id)}}" method="get">
                                                                 @csrf
-                                                                <button type="submit" class="btn btn-secondary"> Oui
+                                                                <button type="submit" class="btn btn-secondary"> @lang('translation.Oui')
                                                                 </button>
                                                                 <input name="cfp_id" type="text" value="test" hidden>
                                                             </form>
@@ -321,7 +320,7 @@
 
                                             @else
                                             <tr>
-                                                <td colspan="3"> Aucun département pour l'entreprise</td>
+                                                <td colspan="3">@lang('translation.Aucundep')</td>
                                             </tr>
                                             @endif
                                         </tbody>
@@ -343,13 +342,13 @@
                                             {{-- <button type="button" class="btn btn-success mt-2" id="addRow1"><i
                                                     class='bx bxs-plus-circle'></i></button> --}}
                                                     <button type="button" class="btn btn_nouveau affiche_btn1" id="addRow1">
-                                                        <i class="bx bx-plus-medical me-1"></i>nouveau département</button>
+                                                        <i class="bx bx-plus-medical me-1"></i>@lang('translation.nouvdep')</button>
                                                         {{-- <button type="button" class="btn btn-labeled btn-danger">
                                                         <span class="btn-label"><i class="fa fa-remove"></i></span>Cancel</button> --}}
                                         </div>
                                     </div>
                                     <div id="add_column"></div>
-                                    <button type="submit" class="btn btn_enregistrer mt-2 save1" ><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                    <button type="submit" class="btn btn_enregistrer mt-2 save1" ><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
                                 </form>
                             </div>
                         </div>
@@ -364,10 +363,10 @@
                                 <div class="table-responsive mt-0">
                                     <table class="table  table-border table-sm ">
                                         <thead>
-                                            <th>Services</th>
-                                            <th>Départements</th>
-                                            <th>Chef de Service</th>
-                                            <th>Actions</th>
+                                            <th>@lang('translation.Services')</th>
+                                            <th>@lang('translation.Départements')</th>
+                                            <th>@lang('translation.chefS')</th>
+                                            <th>@lang('translation.Actions')</th>
                                         </thead>
                                         <tbody id="data_collaboration">
                                             @if ($nb_serv>0)
@@ -389,7 +388,7 @@
                                                         @if($service_departement[$i]->user_id != null)
                                                             {{$service_departement[$i]->nom_chef}} {{$service_departement[$i]->prenom_chef}}
                                                         @else
-                                                            <button class="btn btn_nouveau" data-bs-toggle="modal" data-bs-target="#service_{{$service_departement[$i]->id}}"> <i class="bx bx-plus-medical me-1"></i>Nouveau chef</button>
+                                                            <button class="btn btn_nouveau" data-bs-toggle="modal" data-bs-target="#service_{{$service_departement[$i]->id}}"> <i class="bx bx-plus-medical me-1"></i>@lang('translation.NouvChef')</button>
                                                         @endif
                                                     </p>
                                                 </td>
@@ -406,19 +405,19 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1>Chef de Service</h1>
+                                                            <h1>@lang('translation.chefS')</h1>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form action="{{route('ajouter_chef_de_service')}}"  method="post">
                                                                 @csrf
-                                                                <label for="" class="label"> Service </label>
+                                                                <label for="" class="label"> @lang('translation.Service') </label>
                                                                 <input type="text" class="form-control" required name="service" value="{{$service_departement[$i]->nom_service}}" readonly>
                                                                 <input type="hidden" class="form-control" required name="service_id" value="{{$service_departement[$i]->id}}">
-                                                                <label for="" class="label"> Département</label>
+                                                                <label for="" class="label"> @lang('translation.Départements')</label>
                                                                 <input type="text" class="form-control" required name="departement" value="{{$service_departement[$i]->nom_departement}}" readonly>
-                                                                <label for="" class="label"> Chef de Service</label>
+                                                                <label for="" class="label"> @lang('translation.chefS')</label>
                                                                 <select name="chef_de_service" id="chef_de_service" class="form-control">
-                                                                    <option value="null">Choisissez un employé...</option>
+                                                                    <option value="null">@lang('translation.ChoisiEmpl')</option>
                                                                     @foreach ($employes as $emp)
                                                                         @if($emp->departement_entreprises_id == $service_departement[$i]->departement_entreprise_id)
                                                                             <option value="{{$emp->id}}">{{$emp->nom_emp}} {{$emp->prenom_emp}}</option>
@@ -427,8 +426,8 @@
                                                                 </select>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
-                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>@lang('translation.Fermer')</button>
+                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -439,19 +438,19 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1>Chef de Service</h1>
+                                                            <h1>@lang('translation.chefS')</h1>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form action="{{route('modifier_chef_de_service')}}"  method="post">
                                                                 @csrf
-                                                                <label for="" class="label"> Service</label>
+                                                                <label for="" class="label">@lang('translation.Service')</label>
                                                                 <input type="text" class="form-control" required name="service" value="{{$service_departement[$i]->nom_service}}" readonly>
-                                                                <label for="" class="label"> Chef de Service</label>
+                                                                <label for="" class="label">@lang('translation.chefS')</label>
                                                                 <input type="hidden" class="form-control" required name="service_id" value="{{$service_departement[$i]->id}}">
                                                                 <input type="hidden" class="form-control" required name="ancien_user_chef" value="{{$service_departement[$i]->user_id}}">
                                                                 <input type="hidden" class="form-control" required name="ancien_chef" value="{{$service_departement[$i]->chef_services_id}}"> <br>
                                                                 <select name="chef_de_service" id="chef_de_service" class="form-control">
-                                                                    <option value="null">Choisissez un employé...</option>
+                                                                    <option value="null">@lang('translation.ChoisiEmpl')</option>
                                                                     @foreach ($employes as $emp)
                                                                         @if($emp->departement_entreprises_id == $service_departement[$i]->departement_entreprise_id)
                                                                             @if( $service_departement[$i]->chef_services_id == $emp->id)
@@ -464,8 +463,8 @@
                                                                 </select>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
-                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>@lang('translation.Fermer')</button>
+                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -476,17 +475,17 @@
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h1>Modification </h1>
+                                                                <h1>@lang('translation.Modification') </h1>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <form action="{{route('update_services')}}"  method="post">
                                                                     @csrf
                                                                     <input type="hidden" name="id" value="{{$service_departement[$i]->id}}">
-                                                                    <label for=""> Service</label>
+                                                                    <label for=""> @lang('translation.Service')</label>
                                                                     <input type="text" class="form-control" required name="service" value="{{$service_departement[$i]->nom_service}}">
                                                                     <div class="modal-footer">
-                                                                        <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
-                                                                        <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                                                        <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>@lang('translation.Fermer')</button>
+                                                                        <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -499,13 +498,13 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1>Suppression</h1>
+                                                            <h1>@lang('translation.Suppression')</h1>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form action="{{route('delete_service')}}"  method="POST">
                                                                 @csrf
                                                                 <input type="hidden" name="departement" value="{{$service_departement[$i]->departement_entreprise_id}}">
-                                                                <label> Selectionner les elements à supprimer</label><br>
+                                                                <label> @lang('translation.Selectionner les elements à supprimer')</label><br>
                                                                 @foreach ($service_departement as $sd)
                                                                     @if ($sd->departement_entreprise_id == $service_departement[$i]->departement_entreprise_id)
 
@@ -515,8 +514,8 @@
                                                                     @endif
                                                                 @endforeach
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
-                                                                    <button type="submit" class="btn btn_annuler" ><i class='bx bx-trash me-1'></i>supprimer</button>
+                                                                    <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>@lang('translation.Fermer')</button>
+                                                                    <button type="submit" class="btn btn_annuler" ><i class='bx bx-trash me-1'></i>@lang('translation.supprimer')</button>
 
                                                                 </div>
                                                             </form>
@@ -530,7 +529,7 @@
                                             </div>
                                             @else
                                             <tr>
-                                            <td colspan="3"> Aucun service pour l'entreprise</td>
+                                            <td colspan="3"> @lang('translation.AucunServiceEnt')</td>
                                             @endif
                                         </tbody>
                                     </table>
@@ -546,11 +545,11 @@
                                     <div class="form-row d-flex">
                                         <div class="col ms-2">
                                             <button type="button" class="btn btn_nouveau affiche_btn2" id="addRow2" >
-                                            <i class="bx bx-plus-medical me-1"></i>nouveau service</button>
+                                            <i class="bx bx-plus-medical me-1"></i>@lang('translation.nouveauService')</button>
                                         </div>
                                     </div>
                                     <div id="add_column2"></div>
-                                    <button type="submit" class="btn btn_enregistrer mt-2 save2"><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                    <button type="submit" class="btn btn_enregistrer mt-2 save2"><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
                                 </form>
                             </div>
                         </div>
@@ -565,7 +564,7 @@
                         <div class="col-md-5">
                             <div class=" p-3 mb-5 bg-body rounded ">
 
-                                <h6>Branche</h6>
+                                <h6>@lang('translation.Branche')</h6>
                                 <hr>
                                 <div class="table-responsive mt-0">
                                     <table class="table  table-borderless table-sm">
@@ -594,19 +593,19 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1>Modification</h1>
+                                                            <h1>@lang('translation.Modifier')</h1>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form action="{{route('update_branche')}}"  method="post">
                                                                 @csrf
-                                                                <label for="">Branche</label>
+                                                                <label for="">@lang('translation.Branche')</label>
                                                                 <input type="text" class="form-control" required name="branche" value="{{$branches[$i]->nom_branche}}">
                                                                 <input type="hidden" class="form-control" required name="id" value="{{$branches[$i]->id}}"> <br><br>
 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
-                                                                <button type="submit" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>@lang('translation.Fermer')</button>
+                                                                <button type="submit" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i>@lang('translation.Fermer')</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -619,18 +618,17 @@
                                                            <div class="modal-content">
                                                                <div class="modal-header d-flex justify-content-center"
                                                                    style="background-color:rgb(224,182,187);">
-                                                                   <h6 class="modal-title text-white">Avertissement !</h6>
+                                                                   <h6 class="modal-title text-white">@lang('translation.Avertissement!')</h6>
                                                                </div>
                                                                <div class="modal-body">
-                                                                   <small>Vous êtes sur le point d'effacer une donnée, cette action
-                                                                       est irréversible. Continuer ?</small>
+                                                                   <small>@lang('translation.efaceD')</small>
                                                                </div>
                                                                <div class="modal-footer">
                                                                    <button type="button" class="btn btn-secondary"
-                                                                       data-bs-dismiss="modal"> Non </button>
+                                                                       data-bs-dismiss="modal"> @lang('translation.Non') </button>
                                                                    <form action="{{route('delete_branche',$branches[$i]->id)}}" method="get">
                                                                        @csrf
-                                                                       <button type="submit" class="btn btn-secondary"> Oui
+                                                                       <button type="submit" class="btn btn-secondary"> @lang('translation.Oui')
                                                                        </button>
                                                                        <input name="cfp_id" type="text" value="test" hidden>
                                                                    </form>
@@ -642,7 +640,7 @@
                                             @endif
                                             @else
                                             <tr>
-                                                <td colspan="3"> Aucun branche pour l'entreprise</td>
+                                                <td colspan="3"> @lang("translation.AucunBranchePourL'entreprise")</td>
                                             </tr>
                                             @endif
                                         </tbody>
@@ -666,11 +664,11 @@
                                             {{-- <button type="button" class="btn btn-success mt-2" id="addRow3"><i
                                                     class='bx bxs-plus-circle'></i></button> --}}
                                                     <button type="button" class="btn  btn_nouveau affiche_btn3" id="addRow3">
-                                                    <i class="bx bx-plus-medical me-1"></i>nouveau branche</button>
+                                                    <i class="bx bx-plus-medical me-1"></i>@lang('translation.NouveauBranche')</button>
                                         </div>
                                     </div>
                                     <div id="add_column3"></div>
-                                    <button type="submit" class="btn btn_enregistrer mt-2 save3"><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                    <button type="submit" class="btn btn_enregistrer mt-2 save3"><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
                                 </form>
                             </div>
                         </div>

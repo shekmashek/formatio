@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Détails présence</h3>
+    <h3 class="text_header m-0 mt-1">@lang('transDétranslation.DétailsPrésence')</h3>
 @endsection
 @section('content')
 <div id="page-wrapper">
@@ -17,7 +17,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        SEANCE
+                        @lang('translation.SEANCE')
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -25,22 +25,22 @@
                                 <form   class="btn-submit" >
                                     @foreach ($datas as $d)
                                     <div class="form-group">
-                                      <label for="projet">Projet : {{$d->nom_projet}}</label><br>
+                                      <label for="projet">@lang('translation.Projet') : {{$d->nom_projet}}</label><br>
                                     </div>
                                     <div class="form-group">
-                                        <label for ="entreprise">Entreprise : {{$nom_etp}}</label>
+                                        <label for ="entreprise">@lang('translation.Entreprise') : {{$nom_etp}}</label>
                                      </div>
                                     <div class="form-group">
-                                      <label for="groupe">Groupe : {{$d->nom_groupe}}</label><br>
+                                      <label for="groupe">@lang('translation.Groupe') : {{$d->nom_groupe}}</label><br>
                                     </div>
                                     <div class="form-group">
-                                      <label for="session">Session : {{$d->date_debut}} / {{$d->date_fin}}</label>
+                                      <label for="session">@lang('translation.Session') : {{$d->date_debut}} / {{$d->date_fin}}</label>
                                      </div>
                                      <div class="form-group">
-                                        <label for="date">Date de formation:  {{$d->date_detail}}</label>
+                                        <label for="date">@lang('translation.DateDeFormation'):  {{$d->date_detail}}</label>
                                      </div>
                                      <div class="form-group">
-                                        <label for="session">Heure : {{$d->h_debut}}h - {{$d->h_fin}}h
+                                        <label for="session">@lang('translation.Heure:'){{$d->h_debut}}h - {{$d->h_fin}}h
                                         </label>
                                      </div>
                                     <div class="form-group">
@@ -48,7 +48,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                      <label for="module">Module : {{$d->nom_module}}</label><br>
+                                      <label for="module">@lang('translation.Module') : {{$d->nom_module}}</label><br>
                                      </div>
 
 
@@ -64,7 +64,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <ul class="nav nav-pills">
-                            <li><a><span class="glyphicon glyphicon-th-list"></span> Présence </a></li>
+                            <li><a><span class="glyphicon glyphicon-th-list"></span> @lang('translation.Présence') </a></li>
                         </ul>
                     </div>
                     <div class="panel-body">
@@ -78,10 +78,10 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>Matricule</th>
-                                        <th>Nom</th>
-                                        <th>Prénom</th>
-                                        <th colspan = "1">Présence</th>
+                                        <th>@lang('translation.Matricule')</th>
+                                        <th>@lang('translation.Nom')</th>
+                                        <th>@lang('translation.Prénom')</th>
+                                        <th colspan = "1">@lang('translation.Présence')</th>
                                     </tr>
                                 </thead>
 
@@ -105,11 +105,11 @@
                                                     <div class="radio">
                                                         <label style="color: green;">
                                                         <input type="radio" name="attendance[{{ $liste->stagiaire_id }}]" value="Présent" >
-                                                                Présent
+                                                                @lang('translation.Présent')
                                                         </label>
                                                         <label  style="color: red;">
                                                         <input type="radio" name="attendance[{{ $liste->stagiaire_id }}]" value="Absent">
-                                                                Absent
+                                                                @lang('translation.Absent')
                                                         </label>
                                                     </div>
                                                 @endif
@@ -125,9 +125,9 @@
                                 </tbody>
                             </table>
                             @if($message=="")
-                                <button class="btn btn-success form-control" form="myform"  name="add_attendance">Ajouter</button>
+                                <button class="btn btn-success form-control" form="myform"  name="add_attendance">@lang('translation.Ajouter')</button>
                             @else
-                                <a href="{{ route('modifier',[$datas[0]->detail_id]) }}"><button class="btn btn-primary form-control">Modifier</button></a>
+                                <a href="{{ route('modifier',[$datas[0]->detail_id]) }}"><button class="btn btn-primary form-control">@lang('translation.Modifier')</button></a>
                             @endif
                         </div>
                     </div>

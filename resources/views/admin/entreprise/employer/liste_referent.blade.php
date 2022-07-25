@@ -245,24 +245,24 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="{{route('employes.liste')}}" class="nav-link">
-                    employés
+                    @lang('translation.Employés')
                 </a>
             </li>
             @canany(['isReferent','isReferentSimple'])
                 <li class="nav-item">
                     <a href="{{route('employes.new')}}" class="nav-link">
-                        nouveau employé
+                        @lang('translation.NouveauEmployés')
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{route('employes.export.nouveau')}}" class="nav-link">
-                        import EXCEL employé
+                       @lang('translation.importEXCELEmployé')
                     </a>
                 </li>
             @endcanany
                 <li class="nav-item">
                     <a href="{{route('employes.export.nouveau')}}" class="nav-link active">
-                    Référents
+                        @lang('translation.Référents')
                     </a>
                 </li>
         </ul>
@@ -274,14 +274,14 @@
             <thead>
                 <tr>
                     <th class="id">ID</th>
-                    <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>
+                    <th scope="col" class="table-head font-weight-light align-middle text-center ">@lang('translation.Employés')</th>
                     <th scope="col" class="table-head font-weight-light align-middle text-center ">Contacts</th>
                     <th scope="col" class="table-head font-weight-light align-middle text-center ">
-                        <span class="d-block">Département</span>
-                        <span>Service</span>
+                        <span class="d-block">@lang('translation.Départements') / </span>
+                        <span>@lang('translation.Services')</span>
                     </th>
                     @can('isReferent')
-                        <th scope="col" class="table-head font-weight-light align-middle text-center">Référent Principal</th>
+                        <th scope="col" class="table-head font-weight-light align-middle text-center">@lang('translation.RéférentPrincipal')</th>
                     @endcan
 
 
@@ -391,7 +391,7 @@
                                     @if ($employe->activiter == 1)
                                         <div class="form-check form-switch">
                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span
-                                                    class="badge bg-success">actif</span></label>
+                                                    class="badge bg-success">@lang('translation.actif')</span></label>
 
                                             {{-- <input class="form-check-input desactiver_stg" type="checkbox"
                                                 data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
@@ -402,7 +402,7 @@
                                             <label class="form-check-label"
                                                 for="flexSwitchCheckChecked">
                                                 <span class="badge bg-danger">
-                                                    inactif
+                                                    @lang('translation.inactif')
                                                 </span>
                                             </label>
                                             {{-- <input class="form-check-input activer_stg" type="checkbox"
@@ -426,16 +426,15 @@
 
                                     </div>
                                     <div class="modal-body">
-                                        <small>Vous êtes sur le point de designer cette personne comme référent principal?
+                                        <small>@lang('translation.designationRef')
                                             </small>
                                     </div>
 
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non
-                                        </button>
-
                                         <a href="{{ route('employes.ajouter.referent_principal', $employe->id) }}"> <button
-                                                type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                            type="button" class="btn btn_creer btnP px-3">@lang('translation.Oui')</button></a>
+                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> @lang('translation.Non')</button>
+                                        
                                     </div>
                                 </div>
                             </div>

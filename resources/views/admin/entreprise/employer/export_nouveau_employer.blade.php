@@ -120,25 +120,25 @@ $nbStg=30;
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item">
                     <a href="{{route('employes.liste')}}" class="nav-link">
-                        employé
+                        @lang('translation.employé')
                     </a>
                 </li>
                 @canany(['isReferent','isReferentSimple'])
                 <li class="nav-item">
                     <a href="{{route('employes.new')}}" class="nav-link">
-                        nouveau employé
+                        @lang('translation.nouveauEmployé')
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{route('employes.export.nouveau')}}" class="nav-link active">
-                        import EXCEL employé
+                        @lang('translation.importEXCELEmployé')
                     </a>
                 </li>
                 @endcanany
                 <li class="nav-item">
                     <a href="{{route('employes.liste_referent')}}" class="nav-link">
-                    Référents
+                    @lang('translation.Référents')
                     </a>
                 </li>
             </ul>
@@ -146,11 +146,11 @@ $nbStg=30;
 
         <div class="row mt-1 justify-content-center  export_excel" align="center">
             <div class="col text-muted text-align-center">
-                <h6>Comment ajouter plusieurs stagiaires d'une seule coup?</h6>
-                <p>Tout d'abord, vous devrez avoir un fichier excel des listes des stagiaires avec des exception comportant seulement ses colonnes requis pour les informations minimum:</p>
-                <p>1°):<span> Maximum {{$nbStg}} personne(s) </span></p>
-                <p>2°):Les champs neccéssaire: <span> "Matricule" , "Nom", "Prénom", "CIN", "email"</span></p>
-                <p>3°): Faire <span>copier coller </span> les données en sélectionnants la prémière ligne "Matricule N°1" ou utiliser la racourcie CRTL+A et CRTL+C (pour copier) et CRTL+V pour coller</p>
+                <h6>@lang('translation.seulcoup')</h6>
+                <p>@lang('translation.toutdabord')</p>
+                <p>1°:<span> @lang('translation.max') {{$nbStg}} @lang('translation.personne') </span></p>
+                <p>2°: @lang('translation.ChampsNec')<span> "@lang('translation.Matricule')" , "@lang('translation.Nom')", "@lang('translation.Prénom')", "@lang('translation.CIN')", "@lang('translation.E-mail')"</span></p>
+                <p>3°: @lang('translation.Faire')</p>
             </div>
             {{-- <div class="col-md-4"></div> --}}
         </div>
@@ -173,17 +173,17 @@ $nbStg=30;
                     @endif
 
                     <div class="form-group mb-2" align="center">
-                        <button type="submit" class="btn btn_creer" id="saver_multi_stg">sauvegarder</button>
+                        <button type="submit" class="btn btn_creer" id="saver_multi_stg">@lang('translation.Enregistrer')</button>
                     </div>
 
                     <table id="example" class="table table-bordered">
                         <thead style="background-color: #6e717339">
                             <tr align="center">
-                                <th>Matricule <span style="color: red">*</span> </th>
-                                <th>Nom <span style="color: red">*</span> </th>
-                                <th>Prénom</th>
-                                <th>CIN <span style="color: red">*</span> </th>
-                                <th>E-mail <span style="color: red">*</span> </th>
+                                <th>@lang('translation.Matricule') <span style="color: red">*</span> </th>
+                                <th>@lang('translation.Nom') <span style="color: red">*</span> </th>
+                                <th>@lang('translation.Prénom')</th>
+                                <th>@lang('translation.CIN') <span style="color: red">*</span> </th>
+                                <th>@lang('translation.E-mail') <span style="color: red">*</span> </th>
                             </tr>
                         </thead>
                         <tbody id="newRowMontant">

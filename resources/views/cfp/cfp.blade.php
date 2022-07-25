@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<p class="text_header m-0 mt-1">Organisme de formation </p>
+<p class="text_header m-0 mt-1">@lang('translation.OF')</p>
 @endsection
 @section('content')
 {{--
@@ -19,9 +19,8 @@
             <div class="row">
                 <div class="col text-center">
                     <i class='bx bxs-up-arrow-circle icon_upgrade me-3'></i>
-                    <span>Votre abonnement actuel vous permet pas d'inviter des collaborateurs. Si vous voullez inviter
-                        des collaborateurs, veuillez<a href="{{route('ListeAbonnement')}}"
-                            class="text-primary lien_condition"> upgrader votre abonnement</a></span>
+                    <span>@lang('translation.abonement')<a href="{{route('ListeAbonnement')}}"
+                            class="text-primary lien_condition">@lang('translation.amelioreA')</a></span>
                 </div>
             </div>
         </div>
@@ -30,20 +29,20 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#collabore" role="tab">collaborateurs
+                <a class="nav-link" data-toggle="tab" href="#collabore" role="tab">@lang('translation.Entreprises')
                     {{count($cfp)}}</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#invit_attente" role="tab">invitation en attentes <span
+                <a class="nav-link" data-toggle="tab" href="#invit_attente" role="tab">@lang('translation.Invitationenattentes')&nbsp;<span
                         class="count_invit_etp"></span></a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#invit_refus" role="tab">invitation refusés
+                <a class="nav-link" data-toggle="tab" href="#invit_refus" role="tab">@lang('translation.InvitationRefusés')
                     {{count($refuse_demmande_cfp)}}</a>
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#invitation" class=" btn_nouveau" role="button"><i
-                        class='bx bx-plus-medical me-2'></i>Inviter collaborateur</a>
+                        class='bx bx-plus-medical me-2'></i>@lang('translation.Invitercollaborateur')</a>
             </li>
         </ul>
 
@@ -58,15 +57,15 @@
                 @if (count($cfp)<=0)
                 <div class="text-center mt-5">
                     <img src="{{asset('img/networking.webp')}}" alt="folder empty" width="300px" height="300px">
-                    <p class="mt-3">Aucun centre de formation collaborer</p>
+                    <p class="mt-3">@lang('translation.Aucuncentre')</p>
             </div>
             @else
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Organisme de Formation</th>
-                        <th>Réferent principal</th>
-                        <th>Action</th>
+                        <th>@lang('translation.OF')</th>
+                        <th>@lang('translation.RéférentPrincipal')</th>
+                        <th>@lang('translation.Actions')</th>
                     </tr>
                 </thead>
                 <tbody id="data_collaboration" style="font-size: 15.5px;">
@@ -105,24 +104,22 @@
                                 <div class="modal-content">
                                     <div class="modal-header d-flex justify-content-center"
                                         style="background-color:rgb(192, 37, 55);">
-                                        <h4 class="modal-title text-white">Avertissement !</h4>
+                                        <h4 class="modal-title text-white">@lang('translation.Avertissement!')</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le
-                                            point
-                                            d'effacer une donnée, cette action est irréversible. Continuer
-                                            ?</small>
+                                        <small>@lang('translation.efaceD')</small>
                                     </div>
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer annuler" style="color: red"
-                                            data-bs-dismiss="modal" aria-label="Close">Non</button>
+                                        
                                         <form action="{{route('mettre_fin_cfp_etp') }}" method="POST">
                                             @csrf
                                             <input name="cfp_id" type="text" value="{{$cfp->cfp_id}}" hidden>
                                             <div class="mt-4 mb-4">
-                                                <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                <button type="submit" class="btn btn_creer btnP px-3">@lang('translation.Oui')</button>
                                             </div>
                                         </form>
+                                        <button type="button" class="btn btn_creer annuler" style="color: red"
+                                            data-bs-dismiss="modal" aria-label="Close">@lang('translation.Non')</button>
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +172,7 @@
                         @if (count($invitation)<=0) <tr style="">
                             <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
                             <td>
-                                <p>Aucun invitations en attente</p>
+                                <p>@lang('translation.AucuneInvitationEnAttente')</p>
                             </td>
                             </tr>
                             @else
@@ -192,13 +189,13 @@
                                 <td>
                                     <a href="{{ route('accept_etp_cfp',$invit_cfp->id) }}" class="accept_etp">
                                         <span class="btn_nouveau"><i class="bx bx-check me-2"
-                                                title="Accepter"></i>accepter</span>
+                                                title="Accepter"></i>@lang('translation.accepter')</span>
                                     </a>
                                 </td>
                                 <td>
                                     <a href="{{ route('annulation_etp_cfp',$invit_cfp->id) }}" class="refuse_etp">
                                         <span class="btn_annuler"><i class="bx bx-x  me-2"
-                                                title="Refuser"></i>refuser</span>
+                                                title="Refuser"></i>@lang('translation.refuser')</span>
                                     </a>
                                 </td>
                             </tr>
@@ -215,7 +212,7 @@
                         @if (count($refuse_demmande_cfp)<=0) <tr>
                             <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
                             <td>
-                                <p>Aucun invitations refusées</p>
+                                <p>@lang('translation.AucuneInvitationsRefusées')</p>
                             </td>
                             </tr>
                             @else
@@ -289,7 +286,7 @@
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
-                        <div class="col-md-3">Responsable</div>
+                        <div class="col-md-3">@lang('translation.Responsable')</div>
                         <div class="col-md">
                             <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
                             <span id="prenom"
@@ -309,7 +306,7 @@
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
-                        <div class="col-md-3">Adresse</div>
+                        <div class="col-md-3">@lang('translation.Adresse')</div>
                         <div class="col-md">
                             <span id="adrlot"></span>
                             <span id="adrlot4"></span>

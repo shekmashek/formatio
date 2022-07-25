@@ -150,7 +150,7 @@
     @canany(['isCFP'])
         <a aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_nouveau_detail">
             <button class="btn btn_nouveau"><i class='bx bx-plus-medical'></i>
-                Ajouter une séance</button></a>
+                @lang('translation.AjouterUneSéance')</button></a>
     @endcanany
 </nav>
 @if (count($datas) <= 0)
@@ -167,18 +167,18 @@
     <table class="table table-bordered my-3" id="detail_panning">
         <thead>
             <tr>
-                <th><i class="fa fa-calendar-day entete"></i>&nbsp;Date </th>
-                <th><i class="fa fa-clock"></i>&nbsp;Heure début</th>
-                <th><i class="fa fa-clock"></i>&nbsp;Heure fin </th>
+                <th><i class="fa fa-calendar-day entete"></i>&nbsp;@lang('translation.Date') </th>
+                <th><i class="fa fa-clock"></i>&nbsp;@lang('translation.HeureDébut')</th>
+                <th><i class="fa fa-clock"></i>&nbsp;@lang('translation.HeureFin')</th>
                 <th>
                     @if ($type_formation_id == 1)
-                        <i class="fa fa-user"></i>&nbsp;Formateur
+                        <i class="fa fa-user"></i>&nbsp;@lang('translation.Formateur')
                     @endif
                     @if ($type_formation_id == 2)
-                        <i class="fa fa-home"></i>&nbsp;Ville
+                        <i class="fa fa-home"></i>&nbsp;@lang('translation.Ville')
                     @endif
                 </th>
-                <th><i class="fa fa-map-marker-alt"></i>&nbsp;Salle de formation</th>
+                <th><i class="fa fa-map-marker-alt"></i>&nbsp;@lang('translation.SalleDeFormation')</th>
                 @canany(['isCFP'])
                 <th>
                     @if ($type_formation_id == 1)
@@ -212,19 +212,19 @@
                         </select>
                     @elseif ($type_formation_id == 2)
                         <select name="ville[]" id="ville"  class="form-control input" required onblur="ville_Lieu();" style="color:#637381;">
-                            <option value="Tananarive">Tananarive</option>
-                            <option value="Tamatave">Tamatave</option>
-                            <option value="Antsirabé">Antsirabé</option>
+                            <option value="Tananarive">Antananarivo</option>
+                            <option value="Tamatave">Toamasina</option>
+                            <option value="Antsirabé">Antsirabe</option>
                             <option value="Fianarantsoa">Fianarantsoa</option>
-                            <option value="Majunga">Majunga</option>
-                            <option value="Tuléar">Tuléar</option>
-                            <option value="Diego-Suarez">Diego-Suarez</option>
+                            <option value="Majunga">Mahajanga</option>
+                            <option value="Tuléar">Toliara</option>
+                            <option value="Diego-Suarez">Antsiranana</option>
                             <option value="Antanifotsy">Antanifotsy</option>
                             <option value="Ambovombe">Ambovombe</option>
                             <option value="Amparafaravola">Amparafaravola</option>
-                            <option value="Tôlanaro">Tôlanaro</option>
+                            <option value="Tôlanaro">Tolagnaro</option>
                             <option value="Ambatondrazaka">Ambatondrazaka</option>
-                            <option value="Mananara Nord">Mananara Nord</option>
+                            <option value="Mananara Nord">Mananara Avaratra</option>
                             <option value="Soavinandriana">Soavinandriana</option>
                             <option value="Mahanoro">Mahanoro</option>
                             <option value="Soanierana Ivongo">Soanierana Ivongo</option>
@@ -265,22 +265,22 @@
     </table>
     @canany(['isCFP'])
     <div class="enregistrer">
-        <button type="submit" class="btn btn_enregistrer">Enregistrer</button>
+        <button type="submit" class="btn btn_enregistrer">@lang('translation.Enregistrer')</button>
     </div>
     <div class="modal" tabindex="-1" id="nouvelle_salle">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Nouvelle salle de formation</h5>
+                    <h5 class="modal-title">@lang('translation.NouvelleSalleDeFormation')</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     {{-- <form action="#" method="POST"> --}}
-                    <label for="salle_formation" class="form-label">Salle</label>
+                    <label for="salle_formation" class="form-label">@lang('translation.Salle')</label>
                     <input type="text" class="form-control" id="salle_formation">
                     <button type="button" id="enregistrer_salle" class="btn inserer_emargement p-1 mt-1"
-                        data-bs-dismiss="modal">Enregistrer</button>
+                        data-bs-dismiss="modal">@lang('translation.Enregistrer')</button>
                     {{-- </form> --}}
                 </div>
             </div>
@@ -312,7 +312,7 @@
 @canany(['isReferent', 'isFormateur','isFormateurInterne'])
     @if (count($datas) <= 0)
         <div class="d-flex mt-3 titre_projet p-1 mb-1">
-            <span class="text-center">Aucun detail de la session</span>
+            <span class="text-center">@lang('translation.AucunDetailDeLaSession')</span>
         </div>
     @endif
 @endcanany
@@ -326,10 +326,10 @@
             @if (count($datas) != 0 && $projet[0]->status_groupe == 1)
                 @can('isReferent')
                     <div class="col-md-12 m-1">
-                        Confirmer la session "<Strong style="color: #822164">{{ $projet[0]->nom_groupe }}</Strong>" du
-                        {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} et les details ci-dessous
+                        @lang('translation.ConfirmerLaSession ') "<Strong style="color: #822164">{{ $projet[0]->nom_groupe }}</Strong>" @lang('translation.du')
+                        {{ $projet[0]->date_debut }} @lang('translation.au') {{ $projet[0]->date_fin }} @lang('translation.etLesDétailsCi-dessous')
                         <a href="{{ route('acceptation_session', [$projet[0]->groupe_id]) }}"><button type="button"
-                                class="btn btn-success" data-dismiss="modal">Accepter</button></a>
+                                class="btn btn-success" data-dismiss="modal">@lang('translation.Accepter')</button></a>
                         {{-- <a href=""><button type="button" class="btn  btn-danger" data-dismiss="modal">Refuser</button></a> --}}
                     </div>
                 @endcan
@@ -341,19 +341,19 @@
                             <table class="table table-hover table-borderless" style="border: none"
                                 id="dataTables-example">
                                 <thead style="border-bottom: 1px solid black; line-height: 20px">
-                                    <td>Séance</td>
+                                    <td>@lang('translation.Séance')</td>
                                     @canany(['isReferent', 'isManager', 'isChefDeService'])
-                                        <td>CFP</td>
+                                        <td>@lang('transCFP')</td>
                                     @endcanany
-                                    <td>Module</td>
-                                    <td>Ville</td>
-                                    <td width="30%">Salle de formation</td>
-                                    <td>Date</td>
-                                    <td>Début</td>
-                                    <td>Fin</td>
-                                    <td>Formateur</td>
+                                    <td>@lang('translation.Module')</td>
+                                    <td>@lang('translation.Ville')</td>
+                                    <td width="30%">@lang('translation.SalleDeFormation')</td>
+                                    <td>@lang('translation.Date')</td>
+                                    <td>@lang('transDébut')</td>
+                                    <td>@lang('translation.Fin')</td>
+                                    <td>@lang('translation.Formateur')</td>
                                     @canany(['isCFP'])
-                                        <td>Action</td>
+                                        <td>@lang('translation.Actions')</td>
                                     @endcanany
                                 </thead>
                                 <tbody>
@@ -419,17 +419,16 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header  d-flex justify-content-center"
                                                                 style="background-color:rgb(224,182,187);">
-                                                                <h6 class="modal-title">Avertissement !</h6>
+                                                                <h6 class="modal-title">@lang('translation.Avertissement!')</h6>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <small>Vous êtes sur le point d'effacer une donnée, cette
-                                                                    action est irréversible. Continuer ?</small>
+                                                                <small>@lang('translation.efaceD')</small>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal"> Non </button>
+                                                                    data-bs-dismiss="modal"> @lang('translation.Non') </button>
                                                                 <button type="button" class="btn btn-secondary"><a
-                                                                        href="{{ route('destroy_detail', [$d->detail_id]) }}">Oui</a></button>
+                                                                        href="{{ route('destroy_detail', [$d->detail_id]) }}">@lang('translation.Oui')</a></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -440,7 +439,7 @@
                                                         <div class="modal-content p-3">
                                                             <div class="modal-title pt-3"
                                                                 style="height: 50px; align-items: center;">
-                                                                <h5 class="text-center my-auto">Modifier detail</h5>
+                                                                <h5 class="text-center my-auto">@lang('translation.ModifierDétail')</h5>
                                                             </div>
                                                             <form class="btn-submit"
                                                                 action="{{ route('update_detail', [$d->detail_id]) }}"
@@ -450,7 +449,7 @@
                                                                     value="{{ $d->detail_id }}">
                                                                 <div class="row">
                                                                     <div class="form-group mx-auto col-md-12">
-                                                                        <label for="formateur">Formateur</label><br>
+                                                                        <label for="formateur">@lang('translation.Formateur')</label><br>
                                                                         <select class="form-control" id="formateur"
                                                                             name="formateur">
                                                                             <option value="{{ $d->formateur_id }}">
@@ -469,14 +468,14 @@
                                                                         </p>
                                                                     </div>
                                                                     <div class="form-group mx-auto col-md-12">
-                                                                        <label for="lieu">Salle de formation</label>
+                                                                        <label for="lieu">@lang('translation.SalleDeFormation')</label>
                                                                         <input type="text" class="form-control" id="lieu"
                                                                             name="lieu" placeholder="Lieu"
                                                                             value="{{ $d->lieu }}">
 
                                                                     </div>
                                                                     <div class="form-group mx-auto col-md-12">
-                                                                        <label for="date">Date</label>
+                                                                        <label for="date">@lang('translation.Date')</label>
                                                                         <input type="date" class="form-control"
                                                                             id="date_detail" name="date"
                                                                             min="{{ $projet[0]->date_debut }}"
@@ -484,13 +483,13 @@
                                                                             value="{{ $d->date_detail }}">
                                                                     </div>
                                                                     <div class="form-group mx-auto col-md-12">
-                                                                        <label for="debut">Heure début</label>
+                                                                        <label for="debut">@lang('translation.HeureDébut')</label>
                                                                         <input type="time" class="form-control" id="debut"
                                                                             name="debut" min="07:00" max="17:00"
                                                                             value="{{ $d->h_debut }}">
                                                                     </div>
                                                                     <div class="form-group mx-auto col-md-12">
-                                                                        <label for="fin">Heure fin</label>
+                                                                        <label for="fin">@lang('translation.HeureFin')</label>
                                                                         <input type="time" class="form-control" id="fin"
                                                                             name="fin" min="08:00" max="18:08"
                                                                             value="{{ $d->h_fin }}">
@@ -498,7 +497,7 @@
                                                                     <div
                                                                         class="d-flex justify-content-around mt-3 col-md-12">
                                                                         <button class="btn btn-danger"
-                                                                            data-bs-dismiss="modal">Annuler</button>
+                                                                            data-bs-dismiss="modal">@lang('translation.Annuler')</button>
                                                                         <input type="submit" id="ajouter"
                                                                             style="background-color: #822164"
                                                                             class="btn btn-primary" value="Modifier">
@@ -526,16 +525,16 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content p-3">
                                         <div class="modal-title pt-3" style="height: 50px; align-items: center;">
-                                            <h5 class="text-center my-auto">Nouvelle séance</h5>
+                                            <h5 class="text-center my-auto">@lang('translation.NouvelleSéance')</h5>
                                         </div>
                                         <form class="btn-submit" action="{{ route('detail.store') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
                                             <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
                                             <div class="form-group mx-auto">
-                                                <label for="formateur">Formateur</label><br>
+                                                <label for="formateur">@lang('translation.Formateur')</label><br>
                                                 <select class="form-control" id="formateur" name="formateur[]">
-                                                    <option type="hidden">Choissisez un formateur ...</option>
+                                                    <option type="hidden">@lang('translation.ChoissisezUnFormateur ...')</option>
                                                     @foreach ($formateur as $format)
                                                         <option value="{{ $format->formateur_id }}">
                                                             {{ $format->nom_formateur }}
@@ -545,10 +544,10 @@
                                                 <p><strong style="color: red" id="err_formateur"></strong></p>
                                             </div>
                                             <div class="form-group mx-auto">
-                                                <label for="lieu">Salle de formation</label>
+                                                <label for="lieu">@lang('translation.SalleDeFormation')</label>
                                                 <select name="lieu[]" style="height: 2.361rem"
                                                     class="form-control  my-1 salle_de_formation">
-                                                    <option selected hidden>Choississez votre salle de formation&hellip;</option>
+                                                    <option selected hidden>@lang('translation.Choississezformation') &hellip;</option>
                                                     @foreach ($salle_formation as $salle)
                                                         <option
                                                             value="{{ $salle->ville . ',  ' . $salle->salle_formation }}">
@@ -558,18 +557,18 @@
 
                                             </div>
                                             <div class="form-group mx-auto">
-                                                <label for="date">Date</label>
+                                                <label for="date">@lang('translation.Date')</label>
                                                 <input type="date" class="form-control" id="date_detail" name="date[]"
                                                     min="{{ $projet[0]->date_debut }}"
                                                     max="{{ $projet[0]->date_fin }}">
                                             </div>
                                             <div class="form-group mx-auto">
-                                                <label for="debut">Heure début</label>
+                                                <label for="debut">@lang('translation.HeureDébut')</label>
                                                 <input type="time" class="form-control" id="debut" name="debut[]"
                                                     min="07:00" max="17:00">
                                             </div>
                                             <div class="form-group mx-auto">
-                                                <label for="fin">Heure fin</label>
+                                                <label for="fin">@lang('translation.HeureFin')</label>
                                                 <input type="time" class="form-control" id="fin" name="fin[]" min="08:00"
                                                     max="18:08">
                                             </div>
@@ -589,41 +588,41 @@
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal"
                                             aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title">Modification</h4>
+                                        <h4 class="modal-title">@lang('translation.Modification')</h4>
                                     </div>
                                     <div class="modal-body">
                                         <form class="btn-submit">
                                             @csrf
                                             <div class="form-group">
-                                                <label for="nom">Projet</label>
+                                                <label for="nom">@lang('translation.Projet')</label>
                                                 <input type="text" class="form-control" id="projetModif"
                                                     placeholder="Projet">
                                             </div>
                                             <div class="form-group">
-                                                <label for="groupe">Groupe</label>
+                                                <label for="groupe">@lang('translation.Groupe')</label>
                                                 <input type="text" class="form-control" id="groupeModif"
                                                     placeholder="Groupe">
                                             </div>
                                             <div class="form-group">
-                                                <label for="lieu">Salle de formation</label>
+                                                <label for="lieu">@lang('translation.SalleDeFormation')</label>
                                                 <input type="text" class="form-control" id="lieuModif"
                                                     placeholder="Lieu">
                                             </div>
                                             <div class="form-group">
-                                                <label for="debut">Date début</label>
+                                                <label for="debut">@lang('translation.DateDébut')</label>
                                                 <input type="date" class="form-control" id="debutModif" name="debut">
                                             </div>
                                             <div class="form-group">
-                                                <label for="fin">Date fin</label>
+                                                <label for="fin">@lang('translation.DateFin')</label>
                                                 <input type="date" class="form-control" id="finModif" name="fin">
                                             </div>
                                             <button class="btn btn-success modification " id="action1"><span
-                                                    class="glyphicon glyphicon-pencil"></span> Modifier</button>
+                                                    class="glyphicon glyphicon-pencil"></span> @lang('translation.Modifier')</button>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
+                                            data-dismiss="modal">@lang('translation.Fermer')</button>
                                     </div>
                                 </div>
                             </div>

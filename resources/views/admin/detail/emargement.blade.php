@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Emmargement</h3>
+    <h3 class="text_header m-0 mt-1">@lang('translation.Emmargement')</h3>
 @endsection
 @section('content')
 <div id="page-wrapper">
@@ -38,16 +38,16 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>Projet</th>
-                                        <th>Groupe</th>
-                                        <th >Date</th>
-                                        <th>Début</th>
-                                        <th>Fin</th>
-                                        <th>Formation</th>
-                                        <th>Module</th>
-                                        <th>Présence</th>
-                                        <th>Nombre des participants</th>
-                                        <th>Présent</th>
+                                        <th>@lang('translation.Projet')</th>
+                                        <th>@lang('translation.Groupe')</th>
+                                        <th >@lang('translation.Date')</th>
+                                        <th>@lang('translation.Début')</th>
+                                        <th>@lang('translation.Fin')</th>
+                                        <th>@lang('translation.Formation')</th>
+                                        <th>@lang('translation.Module')</th>
+                                        <th>@lang('translation.Présence')</th>
+                                        <th>@lang('translation.NombreDesParticipants')</th>
+                                        <th>@lang('translation.Présent')</th>
 
 
                                     </tr>
