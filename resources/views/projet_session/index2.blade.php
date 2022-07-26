@@ -2533,12 +2533,14 @@
                                                         <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">Expoter en PDF</a></li>
                                                         <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
                                                         <li class="action_projet"><a class="dropdown-item" href="{{ route('rapport_presence', [$pj->groupe_id]) }}" style="font-size: 13px">Rapport de presence</a></li>
-
                                                         @php
                                                             $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
                                                         @endphp
                                                         @if($reponse == 1)
-                                                            <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à froid</a></li>
+                                                            @can('isManager')
+                                                                <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid', [$pj->groupe_id]) }}" style="font-size: 13px">Faire une evaluation à froid</a></li>
+                                                            @endcan
+                                                            <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à froid des stagiaires</a></li>
                                                         @endif
                                                     @endif
                                                 </ul>

@@ -1,7 +1,8 @@
 <?php
 
-return [
 
+return [
+    // 'role_id' => DB::select('select role_id from role_users where  user_id = ?  and activiter=true', [Auth::id()]),
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -256,6 +257,5 @@ return [
 
         //'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
     ],
-
 
 ];

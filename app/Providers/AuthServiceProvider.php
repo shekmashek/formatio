@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Google\Service\CloudDeploy\Config;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
@@ -151,6 +152,10 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         //access principal
+        // dd(Config('role_id'));
+        // dd(DB::select('select role_id from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]));
+
+
         Gate::define('isAdminPrincipale',function($users_roles){
             $rqt =  DB::select('select role_id from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]);
             if($rqt!=null)
@@ -277,7 +282,9 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('isCFP',function($users_roles){
+            // dd(DB::select('select role_id from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]));
             // return $users_roles->role_id == 7;
+            // dd(config('role_id'));
            $rqt =  DB::select('select role_id from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
            if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
