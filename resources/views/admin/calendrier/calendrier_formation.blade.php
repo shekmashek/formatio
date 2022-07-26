@@ -15,27 +15,39 @@
         <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
         {{-- <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script> --}}
 
+
+        {{-- bootstrap Year calendar css --}}
+        <link rel="stylesheet" href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css">
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-
-
+        
+        
         {{-- <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
         <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script> --}}
-
-
+        
+        
         {{-- utilisation de fullcalendar-scheduler pour avoir accés aux planning --}}
         <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js'></script>
-
+        
         {{-- les langues pour le calendrier --}}
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
-
-
+        
+        
         {{-- Pour utiliser jquery sur fullCalendar --}}
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/fr.js"></script> --}}
 
-@endpush
+    
+        {{-- bootstrap Year calendar js --}}
+        <script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.js"></script>
+        {{-- <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
+        <script src="https://unpkg.com/tippy.js@4"></script> --}}
+        
+        
+
+    @endpush
 
 @section('content')
 
@@ -49,6 +61,19 @@
 
             <div class="col-md-9 m-50 my-2">
                 <div id='planning'></div>
+            </div>
+
+
+            <div class="modal fade " id="year_modal">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            <div id='year_calendar'></div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1" 
@@ -230,10 +255,88 @@
 @push('extra-js')
 
 <script>
+
+var currentYear = new Date().getFullYear();
+var events = {!! json_encode($events, JSON_HEX_TAG) !!};
+var year_modal = new bootstrap.Modal(document.getElementById('year_modal'));
+
+        events.forEach(element => {
+            if ((element.start != null) && (element.end != null)) {
+                element.name=element.title;
+                element.startDate = new Date(element.start);
+                element.endDate = new Date(element.end);
+                element.color = element.backgroundColor;
+            }
+        });
+
+
     // calendrier planning
         document.addEventListener('DOMContentLoaded', function() {
 
-            var events = {!! json_encode($events, JSON_HEX_TAG) !!};
+            var year_calendar = new Calendar('#year_calendar',{
+
+                dataSource: events,
+                enableContextMenu: true,
+                contextMenuItems:[
+                    {
+                        text: 'Aller à la date',
+                        click: function(event) {
+                            // console.log(event);
+                            calendar.gotoDate(event.startDate);
+                            year_modal.hide();
+                            calendar.select(event.startDate, [event.endDate]);
+                        }
+                    },
+                ],
+
+                // pour la séléction longue
+                // selectRange: function(e) {
+                //     editEvent({ startDate: e.startDate, endDate: e.endDate });
+                // },
+
+                dayContextMenu: function(e) {
+                    $(e.element).popover('hide');
+                },
+
+                clickDay: function(e) {
+                    calendar.gotoDate(e.date);
+                    year_modal.hide();
+                    calendar.select(e.date);
+                },
+
+
+                mouseOnDay: function(e) {
+                    if(e.events.length > 0) {
+                        var content = '';
+                        
+                        for(var i in e.events) {
+                            content += '<div class="event-tooltip-content">'
+                                            + '<div class="event-name fw-bold" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
+                                            + '<div class="event-location">' + e.events[i].lieu + '</div>'
+                                        + '</div>';
+                        }
+                    
+                        $(e.element).popover({ 
+                            trigger: 'manual',
+                            container: 'body',
+                            html:true,
+                            content: content
+                        });
+
+
+                        
+                        $(e.element).popover('show');
+                    }
+                },
+                mouseOutDay: function(e) {
+                    if(e.events.length > 0) {
+                        $(e.element).popover('hide');
+                    }
+                },
+
+            });
+
+
             var calendarEl = document.getElementById('planning');
             var calendar = new FullCalendar.Calendar(calendarEl, 
                 {
@@ -246,14 +349,16 @@
                     locale: '{{ app()->getLocale() }}',
                     firstDay: 0,
                     nowIndicator: true,
+                    // selectable: true,
                     headerToolbar: {
                                     right: 'prev,next today',
                                     center: 'title', 
-                                    left: 'dayGridMonth,timeGridWeek,listMonth'
+                                    left: 'dayGridMonth,timeGridWeek,listMonth year_view'
 
                                 },
 
                     views: {
+
 
                         listMonth: {
 
@@ -270,6 +375,24 @@
 
                         },
 
+                    },
+                    customButtons: {
+                        year_view: {
+                            
+                            icon: "bi bi-calendar2",
+
+                            hint: "Vue annuelle/Year view",
+
+                            click: function() {
+                                year_modal.show();
+                                // console.log('events '+ events[0].startDate);
+
+                            }
+                        }
+                    },
+
+                    dateClick: function(info){
+                        // alert('Clicked on: ' + info.dateStr);
                     },
 
                     eventDidMount: function(info) {
@@ -723,18 +846,49 @@
                             }           
 
                             // If the current view if on timeGridWeek, we want to scroll the calendar
-                            if(delta > 0 && calendar.view.type !== 'timeGridWeek'){  
-                                calendar.next();
-                                $('.tooltip').hide();    
-                            } else if (calendar.view.type === 'timeGridWeek') {
-                                enableScroll();
+                            // if(delta > 0 && calendar.view.type !== 'timeGridWeek'){  
+                            //     calendar.next();
+                            //     $('.tooltip').hide();
+                            // } else if (calendar.view.type === 'timeGridWeek') {
+                            //     enableScroll();
+                            // }
+                            
+                            // if(delta < 0 && calendar.view.type !== 'timeGridWeek'){             
+                            //     calendar.prev();
+                            //     $('.tooltip').hide();      
+                            // } else if (calendar.view.type === 'timeGridWeek') {
+                            //     enableScroll();
+                            // } 
+
+                            if (delta > 0) {
+                                if (calendar.view.type === 'timeGridWeek') {
+                                    enableScroll();
+                                } else if (calendar.view.type === 'listYear') {
+                                    enableScroll();
+                                }
+                                else {
+                                    calendar.next();
+                                    $('.tooltip').hide();                        
+                                }
+                                    
+                            
                             }
-                            if(delta < 0 && calendar.view.type !== 'timeGridWeek'){             
-                                calendar.prev();
-                                $('.tooltip').hide();      
-                            } else if (calendar.view.type === 'timeGridWeek') {
-                                enableScroll();
+
+                            if (delta < 0) {
+                                if (calendar.view.type === 'timeGridWeek') {
+                                    enableScroll();
+                                } else if (calendar.view.type === 'listYear') {
+                                    enableScroll();
+                                }
+                                else {
+                                    calendar.prev();
+                                    $('.tooltip').hide();                        
+                                }
+                                    
+                            
                             }
+
+
 
                     });                   
 

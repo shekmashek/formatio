@@ -30,6 +30,7 @@
         "@fullcalendar/vue": "^5.9.0",
         "chart.js": "^3.5.0",
         "fullcalendar-scheduler": "^5.9.0",
+        "fullcalendar-year-view": "^0.0.3",
         "jspdf": "^2.5.1"
     }
 }

@@ -221,6 +221,8 @@
 
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
 
+        {{-- bootstrap Year calendar css --}}
+        <link rel="stylesheet" href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
@@ -231,6 +233,10 @@
 
 {{-- les langues pour le calendrier --}}
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
+
+
+        {{-- bootstrap Year calendar js --}}
+        <script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.js"></script>
 
 @endpush
 
@@ -245,6 +251,18 @@
 
             <div class="col-md-9 m-50 my-2">
                 <div id='planning'></div>
+            </div>
+
+            <div class="modal fade " id="year_modal">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            <div id='year_calendar'></div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1" 
@@ -372,343 +390,422 @@
 
 <script>
 
+var currentYear = new Date().getFullYear();
+var events = {!! json_encode($events, JSON_HEX_TAG) !!};
+var year_modal = new bootstrap.Modal(document.getElementById('year_modal'));
+
+
+        events.forEach(element => {
+            if ((element.start != null) && (element.end != null)) {
+                element.name=element.title;
+                element.startDate = new Date(element.start);
+                element.endDate = new Date(element.end);
+                element.color = element.backgroundColor;
+            }
+        });
+
 
     // calendrier planning
         document.addEventListener('DOMContentLoaded', function() {
 
-            var events = {!! json_encode($events, JSON_HEX_TAG) !!};
-            var calendarEl = document.getElementById('planning');
-            var calendar = new FullCalendar.Calendar(calendarEl, 
-            {
+            var year_calendar = new Calendar('#year_calendar',{
+
+                dataSource: events,
+                enableContextMenu: true,
+                contextMenuItems:[
+                    {
+                        text: 'Aller à la date',
+                        click: function(event) {
+                            // console.log(event);
+                            calendar.gotoDate(event.startDate);
+                            year_modal.hide();
+                            calendar.select(event.startDate, [event.endDate]);
+                        }
+                    },
+                ],
+
+                // pour la séléction longue
+                // selectRange: function(e) {
+                //     editEvent({ startDate: e.startDate, endDate: e.endDate });
+                // },
+
+                dayContextMenu: function(e) {
+                    $(e.element).popover('hide');
+                },
+
+                clickDay: function(e) {
+                    calendar.gotoDate(e.date);
+                    year_modal.hide();
+                    calendar.select(e.date);
+                },
+
+
+                mouseOnDay: function(e) {
+                    if(e.events.length > 0) {
+                        var content = '';
+                        
+                        for(var i in e.events) {
+                            content += '<div class="event-tooltip-content">'
+                                            + '<div class="event-name fw-bold" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
+                                            + '<div class="event-location">' + e.events[i].lieu + '</div>'
+                                        + '</div>';
+                        }
+                    
+                        $(e.element).popover({ 
+                            trigger: 'manual',
+                            container: 'body',
+                            html:true,
+                            content: content
+                        });
+
+
+                        
+                        $(e.element).popover('show');
+                    }
+                },
+                mouseOutDay: function(e) {
+                    if(e.events.length > 0) {
+                        $(e.element).popover('hide');
+                    }
+                },
+
+            });
+
             
 
-            // views : resourceTimeline,resourceTimelineWeek,listMonth,dayGridMonth,timeGridWeek
+            
+            var calendarEl = document.getElementById('planning');
+            var calendar = new FullCalendar.Calendar(calendarEl, 
+                {
+                
 
-                schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-                initialView: 'dayGridMonth',
-                locale: '{{ app()->getLocale() }}',
-                firstDay: 0,
-                nowIndicator: true,
-                headerToolbar: {
-                                right: 'prev,next today',
-                                center: 'title', 
-                                left: 'dayGridMonth,timeGridWeek,listMonth'
+                // views : resourceTimeline,resourceTimelineWeek,listMonth,dayGridMonth,timeGridWeek
 
-                            },
+                    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+                    initialView: 'dayGridMonth',
+                    locale: '{{ app()->getLocale() }}',
+                    firstDay: 0,
+                    nowIndicator: true,
+                    headerToolbar: {
+                                    right: 'prev,next today',
+                                    center: 'title', 
+                                    left: 'dayGridMonth,timeGridWeek,listMonth,dayGridYear'
 
-                views: {
+                                },
 
-                    listMonth: {
-                        duration: { months: 3 },
+                    views: {
+
+                        listMonth: {
+                            duration: { months: 3 },
+                        },
                     },
-                },
 
-                // show the description of events when hovering over them
-                eventMouseEnter : function(info) {
-                    var tipStart = info.event.start.toLocaleTimeString();
-                    var tipEnd = info.event.end.toLocaleTimeString();
-                    
-                    $(info.el).tooltip({
-                        title: info.event.extendedProps.description + ' ' + tipStart + ' - ' + tipEnd,
-                        placement: 'top',
-                        trigger: 'hover',
-                        container: 'body',
-                    });
-
-                    $(info.el).tooltip('show');
-                },
-
-                // hide the description of events when no longer hovering over them
-                eventMouseLeave : function(info) {
-                    $(info.el).tooltip('hide');
-                },
-
-                eventClick : function(info) {
-
+                    // show the description of events when hovering over them
+                    eventMouseEnter : function(info) {
+                        var tipStart = info.event.start.toLocaleTimeString();
+                        var tipEnd = info.event.end.toLocaleTimeString();
                         
-                    var offcanvas_header = document.getElementById('event_header');
-
-
-                    // STATUS DE LA FORMATION
-                    var today = new Date();
-
-                    var groupe_start = new Date (info.event.extendedProps.groupe.date_debut);
-                    var groupe_end = new Date (info.event.extendedProps.groupe.date_fin);
-
-                    if (groupe_start > today) {
-                        var event_status = 'Prévisionnelle';
-                    } else if (groupe_start < today && groupe_end > today) {
-                        var event_status = 'En cours';
-                    } else if (groupe_end < today){
-                        var event_status = 'Terminée';
-                    }
-                    
-                    offcanvas_header.setAttribute('data-before', event_status);
-
-
-                    // COLORS
-                    document.documentElement.style.setProperty('--color-event', info.event.backgroundColor);
-
-
-                    // options for date formating
-                    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
-
-                    var duree_formation = 0;
-                    var diff = '';
-                    events.forEach(all_event => {
-
-                        if (all_event.groupe.id == info.event.extendedProps.groupe.id) {
-                                var end = new Date(all_event.end);
-                                var start = new Date(all_event.start);
-                                // console.log(end.toLocaleTimeString(), start.toLocaleTimeString());
-                                var diff = end.getTime() - start.getTime();
-                                duree_formation = duree_formation + diff;
-                            }
-                            
+                        $(info.el).tooltip({
+                            title: info.event.extendedProps.description + ' ' + tipStart + ' - ' + tipEnd,
+                            placement: 'top',
+                            trigger: 'hover',
+                            container: 'body',
                         });
 
+                        $(info.el).tooltip('show');
+                    },
 
-                        // formater le time obtenu en h:m:s
-                        houreFormat = (time) => {
-                            var msec = time;
-                            var hh = Math.floor(msec / 1000 / 60 / 60);
-                            msec -= hh * 1000 * 60 * 60;
-                            var mm = Math.floor(msec / 1000 / 60);
-                            msec -= mm * 1000 * 60;
-                            var ss = Math.floor(msec / 1000);
-                            msec -= ss * 1000;
+                    // hide the description of events when no longer hovering over them
+                    eventMouseLeave : function(info) {
+                        $(info.el).tooltip('hide');
+                    },
 
-                            var duration = hh + "h " + mm + "m ";
-                            return (duration);
+                    eventClick : function(info) {
+
+                            
+                        var offcanvas_header = document.getElementById('event_header');
+
+
+                        // STATUS DE LA FORMATION
+                        var today = new Date();
+
+                        var groupe_start = new Date (info.event.extendedProps.groupe.date_debut);
+                        var groupe_end = new Date (info.event.extendedProps.groupe.date_fin);
+
+                        if (groupe_start > today) {
+                            var event_status = 'Prévisionnelle';
+                        } else if (groupe_start < today && groupe_end > today) {
+                            var event_status = 'En cours';
+                        } else if (groupe_end < today){
+                            var event_status = 'Terminée';
+                        }
+                        
+                        offcanvas_header.setAttribute('data-before', event_status);
+
+
+                        // COLORS
+                        document.documentElement.style.setProperty('--color-event', info.event.backgroundColor);
+
+
+                        // options for date formating
+                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+
+                        var duree_formation = 0;
+                        var diff = '';
+                        events.forEach(all_event => {
+
+                            if (all_event.groupe.id == info.event.extendedProps.groupe.id) {
+                                    var end = new Date(all_event.end);
+                                    var start = new Date(all_event.start);
+                                    // console.log(end.toLocaleTimeString(), start.toLocaleTimeString());
+                                    var diff = end.getTime() - start.getTime();
+                                    duree_formation = duree_formation + diff;
+                                }
+                                
+                            });
+
+
+                            // formater le time obtenu en h:m:s
+                            houreFormat = (time) => {
+                                var msec = time;
+                                var hh = Math.floor(msec / 1000 / 60 / 60);
+                                msec -= hh * 1000 * 60 * 60;
+                                var mm = Math.floor(msec / 1000 / 60);
+                                msec -= mm * 1000 * 60;
+                                var ss = Math.floor(msec / 1000);
+                                msec -= ss * 1000;
+
+                                var duration = hh + "h " + mm + "m ";
+                                return (duration);
+                            }
+
+                        // To make popover accept html as content
+                        $(function(){
+                            $("[data-bs-toggle=popover]").popover({
+                                html : true,
+                                content: function() {
+                                var content = $(this).attr("data-popover-content");
+                                    return $(content).children(".popover-body").html();
+                                },
+                                title: function() {
+                                var title = $(this).attr("data-popover-content");
+                                    return $(title).children(".popover-heading").html();
+                                }
+                            });
+                        });
+
+                    
+
+                        var detail_offcanvas = document.getElementById('detail_offcanvas');
+                        var title_offcanvas = document.getElementById('event_title');
+                        var event_to_pdf = document.getElementById('event_to_pdf');
+                        var projet_offcanvas = document.getElementById('event_project');
+                        var type_formation_offcanvas = document.getElementById('event_type_formation');
+                        var session_offcanvas = document.getElementById('event_sessions');
+                        var nbr_session_offcanvas = document.getElementById('event_nbr_session');
+                        var entreprise_offcanvas = document.getElementById('event_entreprise');
+                        var lieu_offcanvas = document.getElementById('event_lieu');
+                        var OF_offcanvas = document.getElementById('event_OF');
+                        var formateur_offcanvas = document.getElementById('event_formateur');
+                        
+                        var test_offcanvas = document.getElementById('test_offcanvas');
+
+                        var accordion_Participants = document.getElementById('accordionExample');
+                        var container_button = document.getElementById('container_button');
+                        var materiel_button = document.getElementById('materiel_button');
+                        var materiel_collapse = document.getElementById('materiel_collapse');
+                    
+
+
+                        // Filling the values of the offcanvas with the attributes of the event
+                        var bsOffcanvas = new bootstrap.Offcanvas(detail_offcanvas);
+                        var description = info.event.extendedProps.description;
+                        var title = info.event.title;
+                        var id = info.event.extendedProps.detail_id;
+                        var projet = info.event.extendedProps.projet.nom_projet;
+                        var numero_session = info.event.extendedProps.numero_session + 1;
+                        var type_formation = info.event.extendedProps.type_formation.type_formation;
+
+
+                        var groupe = info.event.extendedProps.groupe;
+                        var sessions = info.event.extendedProps.groupe.detail;
+                        var entreprises = info.event.extendedProps.entreprises;
+                        
+                        // console.log(entreprises.length);
+                        entreprise_offcanvas.innerHTML = '';
+                        var entreprise_offcanvas_link = '';
+                        for (var i = 0; i < entreprises.length; i++) {
+                            entreprise_offcanvas_link += ('<a href = "{{url("profile_entreprise/:?")}}" class="hover_purple" target = "_blank">'+entreprises[i].nom_etp+'</a><br>').replace(":?", entreprises[i].id);
+
+                            entreprise_offcanvas.innerHTML = entreprise_offcanvas_link;
                         }
 
-                    // To make popover accept html as content
-                    $(function(){
-                        $("[data-bs-toggle=popover]").popover({
-                            html : true,
-                            content: function() {
-                            var content = $(this).attr("data-popover-content");
-                                return $(content).children(".popover-body").html();
-                            },
-                            title: function() {
-                            var title = $(this).attr("data-popover-content");
-                                return $(title).children(".popover-heading").html();
-                            }
-                        });
-                    });
+                        var event_to_pdf_link = '<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 btn"><i class="bx bxs-file-pdf text-danger fs-1"></i></a>'
+                        event_to_pdf.innerHTML = event_to_pdf_link.replace(":?", info.event.extendedProps.detail_id);
 
-                   
+                        title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
+                        var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+' '+info.event.extendedProps.groupe.nom_groupe +'<i class=\'bx bx-link-external ms-1 align-middle\'></i></a>';
+                        projet_link = projet_link.replace("groupe_id", groupe.id);
+                        projet_link = projet_link.replace("type_formation_id", info.event.extendedProps.type_formation.id);
+                        projet_offcanvas.innerHTML = projet_link;
 
-                    var detail_offcanvas = document.getElementById('detail_offcanvas');
-                    var title_offcanvas = document.getElementById('event_title');
-                    var event_to_pdf = document.getElementById('event_to_pdf');
-                    var projet_offcanvas = document.getElementById('event_project');
-                    var type_formation_offcanvas = document.getElementById('event_type_formation');
-                    var session_offcanvas = document.getElementById('event_sessions');
-                    var nbr_session_offcanvas = document.getElementById('event_nbr_session');
-                    var entreprise_offcanvas = document.getElementById('event_entreprise');
-                    var lieu_offcanvas = document.getElementById('event_lieu');
-                    var OF_offcanvas = document.getElementById('event_OF');
-                    var formateur_offcanvas = document.getElementById('event_formateur');
-                    
-                    var test_offcanvas = document.getElementById('test_offcanvas');
+                        type_formation_offcanvas.value = type_formation;
 
-                    var accordion_Participants = document.getElementById('accordionExample');
-                    var container_button = document.getElementById('container_button');
-                    var materiel_button = document.getElementById('materiel_button');
-                    var materiel_collapse = document.getElementById('materiel_collapse');
-                
-
-
-                    // Filling the values of the offcanvas with the attributes of the event
-                    var bsOffcanvas = new bootstrap.Offcanvas(detail_offcanvas);
-                    var description = info.event.extendedProps.description;
-                    var title = info.event.title;
-                    var id = info.event.extendedProps.detail_id;
-                    var projet = info.event.extendedProps.projet.nom_projet;
-                    var numero_session = info.event.extendedProps.numero_session + 1;
-                    var type_formation = info.event.extendedProps.type_formation.type_formation;
-
-
-                    var groupe = info.event.extendedProps.groupe;
-                    var sessions = info.event.extendedProps.groupe.detail;
-                    var entreprises = info.event.extendedProps.entreprises;
-                    
-                    // console.log(entreprises.length);
-                    entreprise_offcanvas.innerHTML = '';
-                    var entreprise_offcanvas_link = '';
-                    for (var i = 0; i < entreprises.length; i++) {
-                        entreprise_offcanvas_link += ('<a href = "{{url("profile_entreprise/:?")}}" class="hover_purple" target = "_blank">'+entreprises[i].nom_etp+'</a><br>').replace(":?", entreprises[i].id);
-
-                        entreprise_offcanvas.innerHTML = entreprise_offcanvas_link;
-                    }
-
-                    var event_to_pdf_link = '<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 btn"><i class="bx bxs-file-pdf text-danger fs-1"></i></a>'
-                    event_to_pdf.innerHTML = event_to_pdf_link.replace(":?", info.event.extendedProps.detail_id);
-
-                    title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
-                    var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+' '+info.event.extendedProps.groupe.nom_groupe +'<i class=\'bx bx-link-external ms-1 align-middle\'></i></a>';
-                    projet_link = projet_link.replace("groupe_id", groupe.id);
-                    projet_link = projet_link.replace("type_formation_id", info.event.extendedProps.type_formation.id);
-                    projet_offcanvas.innerHTML = projet_link;
-
-                    type_formation_offcanvas.value = type_formation;
-
-                    var nbr_session = sessions.length;
-                    var session_offcanvas_html = '';
-                    var nbr_session_offcanvas = ''
-                        
-                    sessions.forEach((session, i) => {
-                        var date = new Date(session.date_detail);                            
-                        session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30 right_-10" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon1">';
-
-                    });
-                    
-                    
-                    // add the number of session before the session list 
-                    nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
-                    nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 mb-3 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
-
-                    session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
-                    lieu_offcanvas.value = info.event.extendedProps.lieu;
-                    OF_offcanvas.value = info.event.extendedProps.nom_cfp;
-
-
-                    // Lien du profil formateur
-                    var formateur_id = info.event.extendedProps.formateur_obj.id;
-                    var formateur_link = '<a href="{{url("profile_formateur/:?")}}" class="hover_purple" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
-                    formateur_link = formateur_link.replace(":?", formateur_id);
-                    formateur_offcanvas.innerHTML = formateur_link;
-
-                    // Récupération des participants et du materile dans des tableaux
-                    var participants = info.event.extendedProps.participants;
-                    var materiel = info.event.extendedProps.materiel;
-                    
-                    accordion_Participants.innerHTML = '';
-                    
-                    container_button.innerHTML = '';
-                    var html_pop = '';
-                    var html_accordion = '';
-                    if (participants.length > 0) {
-                        
-                        container_button.removeAttribute('disabled', 'true');
-                        container_button.innerHTML += '<span class="my-0 mx-auto">Participants</span>';
-                        container_button.innerHTML += '<span class="badge background_purple rounded-pill float-end">'+participants.length+'</span>';
-                        
-                        participants.forEach((participant,i) => {      
+                        var nbr_session = sessions.length;
+                        var session_offcanvas_html = '';
+                        var nbr_session_offcanvas = ''
                             
-                            html_accordion += '<div class="accordion-item">';
-
-                            html_accordion += '<h2 class="accordion-header" id="headingOne'+i+'">';
-                            html_accordion += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-controls="collapseOne">';
-                            html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire+('<a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><i class="bx bx-link-external ms-3 fs-5 hover_purple"></i></a>').replace(":?", participant.id);
-                            html_accordion += '</button>';
-                            html_accordion += '</h2>';
-                            
-                            html_accordion += '<div id="collapseOne'+i+'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">';
-                            html_accordion += '<div class="accordion-body">';
-                            html_accordion += '<ul class="list-group list-group">';
-                            html_accordion += '<li class="list-group-item d-flex justify-content-between align-items-start">';
-                            html_accordion += '<div class="ms-2 me-auto">';
-                            html_accordion += '<div class="fw-bold">Email</div>';
-                            html_accordion += '<a href="mailto:'+participant.mail_stagiaire+'" class="hover_purple">'+participant.mail_stagiaire+'</a>';
-                            html_accordion += '</div>';
-
-
-                            html_accordion += '<span class="badge end-0 position-absolute bg-primary rounded-pill">'+participant.entreprise.nom_etp+'</span>';
-                            html_accordion += '</li>';
-                            html_accordion += '</ul>';
-        
-                            html_accordion += '</div>';
-                            html_accordion += '</div>';
-                            html_accordion += '</div>';
-
-
-                            accordion_Participants.innerHTML = html_accordion;
-                            
+                        sessions.forEach((session, i) => {
+                            var date = new Date(session.date_detail);                            
+                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30 right_-10" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon1">';
 
                         });
-
-                    } else {
-                        container_button.innerHTML = 'Aucun participant';
-                        container_button.setAttribute('disabled', 'true');
-                                                                                
-                    }
-
-
-                    materiel_collapse.innerHTML = '';
-                    
-                    materiel_button.innerHTML = '';
-                    var materiel_accordion_html = '';
-                    if (materiel.length > 0) {
-                        // add the class d-block to the button
-                        // container_button.classList.add('d-block');
-                        materiel_button.removeAttribute('disabled', 'true');
-                        materiel_button.innerHTML += '<span class="my-0 mx-auto">Matériel</span>';
-                        materiel_button.innerHTML += '<span class="badge background_purple rounded-pill float-end">'+materiel.length+'</span>';
                         
-                        materiel.forEach((materiel,i) => {      
+                        
+                        // add the number of session before the session list 
+                        nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
+                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 mb-3 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
+
+                        session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
+                        lieu_offcanvas.value = info.event.extendedProps.lieu;
+                        OF_offcanvas.value = info.event.extendedProps.nom_cfp;
+
+
+                        // Lien du profil formateur
+                        var formateur_id = info.event.extendedProps.formateur_obj.id;
+                        var formateur_link = '<a href="{{url("profile_formateur/:?")}}" class="hover_purple" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
+                        formateur_link = formateur_link.replace(":?", formateur_id);
+                        formateur_offcanvas.innerHTML = formateur_link;
+
+                        // Récupération des participants et du materile dans des tableaux
+                        var participants = info.event.extendedProps.participants;
+                        var materiel = info.event.extendedProps.materiel;
+                        
+                        accordion_Participants.innerHTML = '';
+                        
+                        container_button.innerHTML = '';
+                        var html_pop = '';
+                        var html_accordion = '';
+                        if (participants.length > 0) {
                             
-                            materiel_accordion_html += '<div class="accordion-item border-0">';
-
-                            materiel_accordion_html += '<h2 class="accordion-header" id="headingOne'+i+'">';
-
-                                // bouton d'ouverture avec le nom du materiel
-                            materiel_accordion_html += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo'+i+'" aria-controls="collapseOne">';
-                            materiel_accordion_html += materiel.description;
-                            materiel_accordion_html += '</button>';
-                            materiel_accordion_html += '</h2>';
+                            container_button.removeAttribute('disabled', 'true');
+                            container_button.innerHTML += '<span class="my-0 mx-auto">Participants</span>';
+                            container_button.innerHTML += '<span class="badge background_purple rounded-pill float-end">'+participants.length+'</span>';
                             
+                            participants.forEach((participant,i) => {      
+                                
+                                html_accordion += '<div class="accordion-item">';
 
-                            materiel_accordion_html += '<div id="collapseTwo'+i+'" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">';
-                            materiel_accordion_html += '<div class="accordion-body">';
-                            materiel_accordion_html += '<ul class="list-group list-group">';
-
-                                // demandeur du materiel
-                            materiel_accordion_html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
-                            materiel_accordion_html += '<div class="ms-2 me-auto">';
-                            materiel_accordion_html += '<div class="fw-bold">Demandeur</div>';
-                            materiel_accordion_html += '<span >'+materiel.demandeur+'</span>';
-                            materiel_accordion_html += '</div>';
-
-                                // preneur en charge du materiel
-
-                            materiel_accordion_html += '</li>';
-
-                            materiel_accordion_html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
-                            materiel_accordion_html += '<div class="ms-2 me-auto">';
-                            materiel_accordion_html += '<div class="fw-bold">A la chage de : </div>';
-                            materiel_accordion_html += '<span >'+materiel.pris_en_charge+'</span>';
-                            materiel_accordion_html += '</div>';
+                                html_accordion += '<h2 class="accordion-header" id="headingOne'+i+'">';
+                                html_accordion += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-controls="collapseOne">';
+                                html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire+('<a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><i class="bx bx-link-external ms-3 fs-5 hover_purple"></i></a>').replace(":?", participant.id);
+                                html_accordion += '</button>';
+                                html_accordion += '</h2>';
+                                
+                                html_accordion += '<div id="collapseOne'+i+'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">';
+                                html_accordion += '<div class="accordion-body">';
+                                html_accordion += '<ul class="list-group list-group">';
+                                html_accordion += '<li class="list-group-item d-flex justify-content-between align-items-start">';
+                                html_accordion += '<div class="ms-2 me-auto">';
+                                html_accordion += '<div class="fw-bold">Email</div>';
+                                html_accordion += '<a href="mailto:'+participant.mail_stagiaire+'" class="hover_purple">'+participant.mail_stagiaire+'</a>';
+                                html_accordion += '</div>';
 
 
-                            materiel_accordion_html += '</li>';
+                                html_accordion += '<span class="badge end-0 position-absolute bg-primary rounded-pill">'+participant.entreprise.nom_etp+'</span>';
+                                html_accordion += '</li>';
+                                html_accordion += '</ul>';
+            
+                                html_accordion += '</div>';
+                                html_accordion += '</div>';
+                                html_accordion += '</div>';
 
-                            materiel_accordion_html += '</ul>';
-        
-                            materiel_accordion_html += '</div>';
-                            materiel_accordion_html += '</div>';
-                            materiel_accordion_html += '</div>';
+
+                                accordion_Participants.innerHTML = html_accordion;
+                                
+
+                            });
+
+                        } else {
+                            container_button.innerHTML = 'Aucun participant';
+                            container_button.setAttribute('disabled', 'true');
+                                                                                    
+                        }
 
 
-                            materiel_collapse.innerHTML = materiel_accordion_html;
+                        materiel_collapse.innerHTML = '';
+                        
+                        materiel_button.innerHTML = '';
+                        var materiel_accordion_html = '';
+                        if (materiel.length > 0) {
+                            // add the class d-block to the button
+                            // container_button.classList.add('d-block');
+                            materiel_button.removeAttribute('disabled', 'true');
+                            materiel_button.innerHTML += '<span class="my-0 mx-auto">Matériel</span>';
+                            materiel_button.innerHTML += '<span class="badge background_purple rounded-pill float-end">'+materiel.length+'</span>';
                             
+                            materiel.forEach((materiel,i) => {      
+                                
+                                materiel_accordion_html += '<div class="accordion-item border-0">';
 
-                        });
+                                materiel_accordion_html += '<h2 class="accordion-header" id="headingOne'+i+'">';
 
-                    } else {
-                        materiel_button.innerHTML = 'Aucun matériel nécessaire';
-                        materiel_button.setAttribute('disabled', 'true');
-                    }
-                  
-                    bsOffcanvas.show();            
+                                    // bouton d'ouverture avec le nom du materiel
+                                materiel_accordion_html += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo'+i+'" aria-controls="collapseOne">';
+                                materiel_accordion_html += materiel.description;
+                                materiel_accordion_html += '</button>';
+                                materiel_accordion_html += '</h2>';
+                                
 
-                },
-                
-                events: events,
+                                materiel_accordion_html += '<div id="collapseTwo'+i+'" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">';
+                                materiel_accordion_html += '<div class="accordion-body">';
+                                materiel_accordion_html += '<ul class="list-group list-group">';
 
-            }
+                                    // demandeur du materiel
+                                materiel_accordion_html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
+                                materiel_accordion_html += '<div class="ms-2 me-auto">';
+                                materiel_accordion_html += '<div class="fw-bold">Demandeur</div>';
+                                materiel_accordion_html += '<span >'+materiel.demandeur+'</span>';
+                                materiel_accordion_html += '</div>';
+
+                                    // preneur en charge du materiel
+
+                                materiel_accordion_html += '</li>';
+
+                                materiel_accordion_html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
+                                materiel_accordion_html += '<div class="ms-2 me-auto">';
+                                materiel_accordion_html += '<div class="fw-bold">A la chage de : </div>';
+                                materiel_accordion_html += '<span >'+materiel.pris_en_charge+'</span>';
+                                materiel_accordion_html += '</div>';
+
+
+                                materiel_accordion_html += '</li>';
+
+                                materiel_accordion_html += '</ul>';
+            
+                                materiel_accordion_html += '</div>';
+                                materiel_accordion_html += '</div>';
+                                materiel_accordion_html += '</div>';
+
+
+                                materiel_collapse.innerHTML = materiel_accordion_html;
+                                
+
+                            });
+
+                        } else {
+                            materiel_button.innerHTML = 'Aucun matériel nécessaire';
+                            materiel_button.setAttribute('disabled', 'true');
+                        }
+                    
+                        bsOffcanvas.show();            
+
+                    },
+                    
+                    events: events,
+
+                }
             );
 
 

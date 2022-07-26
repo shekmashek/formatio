@@ -6,6 +6,7 @@ use PDF;
 // use Barryvdh\DomPDF\PDF;
 use App\cfp;
 use App\User;
+use DateTime;
 use Exception;
 use App\detail;
 use App\groupe;
@@ -385,6 +386,7 @@ class DetailController extends Controller
 
                         'detail_id' => $value->id,
                         'title' => $value->groupe->module->formation->nom_formation.' - '.$value->groupe->module->reference.' - '.$value->lieu,
+                        'name' => $value->groupe->module->formation->nom_formation.' - '.$value->groupe->module->reference.' - '.$value->lieu,
                         'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
                         'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
                         'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,

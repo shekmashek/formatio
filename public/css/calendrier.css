@@ -146,6 +146,15 @@ div#offcanvas_body::-webkit-scrollbar {
     opacity: 1!important;
 }
 
+.calendar-context-menu {
+    z-index: 1100!important;
+}
+
+.fc-highlight {
+    background-color: var(--purple)!important;
+    opacity: 0.2!important;
+}
+
 
 .marge_left-30 {
     margin-left: 30px!important;
