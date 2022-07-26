@@ -994,9 +994,7 @@
 
         .arrowDrop{
             color: #1e9600;
-            transition: 0.3s !important;
-            transform: rotate(360deg) !important;
-            z-index: -1;
+            
         }
         .mivadika{
             transform: rotate(180deg) !important;
@@ -1020,6 +1018,7 @@
         .hideAction{
             display: none;
         }
+        td{}
     </style>
     <div class="container-fluid mb-5">
         @if (Session::has('pdf_error'))
@@ -1061,16 +1060,17 @@
                         </div>
                     @endif
                     <div class="row">
-                        <div class="fixedTop shadow-sm p-3 mb-5 bg-body rounded">
-                            <table class="table modifTable">
+                        <div class="fixedTop shadow-sm p-3 mb-5 bg-body rounded" style="">
+                            <table class="table  modifTable">
+                                {{-- en tete --}}
                                 <thead style="position: sticky; top: 0">
                                     <tr style="background: #c7c9c939">
-                                        <th style="width: 6%">
-                                            <div class="dropdown">
+                                        <th >
+                                            <div class="dropdown" >
                                                 <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class='bx bx-library'></i> Projet
+                                                    <i class='bx bx-library align-middle'></i> Projet
                                                 </button>
-                                                <ul class="dropdown-menu main p-2">
+                                                <ul class="dropdown-menu main p-2" style="z-index:1">
                                                     <li>
                                                         <input type="text" class="column_search form-control form-control-sm">
                                                     </li>
@@ -1090,10 +1090,10 @@
                                               </ul>
                                             </div>
                                         </th>
-                                        <th style="width: 10%">
-                                            <div class="dropdown">
+                                        <th >
+                                            <div class="dropdown" >
                                                 <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class='bx bxs-book-open' style="color: #2e3950"></i> Session
+                                                    <i class="bx bxs-book-open align-middle" style="color: #2e3950"></i> Session
                                                 </button>
                                                 <ul style="background: red" class="dropdown-menu main p-2">
                                                     <li>
@@ -1116,42 +1116,60 @@
                                             </div>
                                         </th>
                                         
-                                        <th class="headProject" style="width: 14%;"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
-                                        {{-- <th>
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class='bx bx-building-house'></i> Entreprise
+                                        <th class="headProject" >
+                                            <div class="dropdown" >
+                                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bx bxs-customize align-middle" style="color: #2e3950"></i> Module
                                                 </button>
-                                                <ul class="dropdown-menu main p-2">
+                                                <ul style="background: red" class="dropdown-menu main p-2">
                                                     <li>
                                                         <input type="text" class="column_search form-control form-control-sm">
                                                     </li>
                                                     <li>
-                                                        <input class="form-check-input select_all" type="checkbox">
-                                                        <label class="form-check-label label" style="font-size: 12px">Selectionez tout</label>
+                                                        <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                                        <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
                                                     </li>
                                                     <ul>
-                                                        @foreach ($data as $pj)
-                                                            @foreach ($nomEntreprises as $etp)
-                                                                @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    <div class="form-check">
-                                                                        <li>
-                                                                            <input class="checkbox form-check-input" type="checkbox" name="entreprise" value="{{ $etp->nom_etp}}">{{ $etp->nom_etp}}
-                                                                        </li>
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach
+                                                        @foreach ($nomSessions as $sess)
+                                                            <div class="form-check">
+                                                                <li>
+                                                                    <input class="checkbox form-check-input" type="checkbox" name="session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
+                                                                </li>
+                                                            </div>
                                                         @endforeach
                                                     </ul>
                                               </ul>
                                             </div>
-                                        </th> --}}
-                                        
-                                        <th class="headProject" style="width: 10%;"><i class='bx bx-building-house'></i> Entreprise</th>
-                                        <th style="width: 10%">
-                                            <div class="dropdown">
+                                        </th>
+                                        <th class="headProject" >
+                                            <div class="dropdown" >
                                                 <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class='bx bx-calendar-check' ></i> Modalité
+                                                    <i class='bx bx-building-house align-middle'></i> Entreprise
+                                                </button>
+                                                <ul style="background: red" class="dropdown-menu main p-2">
+                                                    <li>
+                                                        <input type="text" class="column_search form-control form-control-sm">
+                                                    </li>
+                                                    <li>
+                                                        <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                                        <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                                    </li>
+                                                    <ul>
+                                                        @foreach ($nomSessions as $sess)
+                                                            <div class="form-check">
+                                                                <li>
+                                                                    <input class="checkbox form-check-input" type="checkbox" name="session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
+                                                                </li>
+                                                            </div>
+                                                        @endforeach
+                                                    </ul>
+                                              </ul>
+                                            </div>
+                                        </th>
+                                        <th >
+                                            <div class="dropdown" >
+                                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-calendar-check align-middle' ></i> Modalité
                                                 </button>
                                                 <ul class="dropdown-menu main p-2">
                                                     <li>
@@ -1173,10 +1191,10 @@
                                               </ul>
                                             </div>
                                         </th>
-                                        <th style="width: 10%">
+                                        <th  >
                                             <div class="dropdown">
-                                                <a id="example" tabindex="0" class="btn btn-sm btn-default" role="button" data-bs-toggle="popover" title="Recherche entre 2 périodes" style="width: 100%;">
-                                                    <i class='bx bx-time-five'></i> <span style="font-size: 13px">Date</span> &nbsp;&nbsp;<i class='bx bx-caret-down' style="font-size: 12px"></i>
+                                                <a id="example" tabindex="0" class="btn btn-sm btn-default" role="button" data-bs-toggle="popover" title="Recherche entre 2 périodes" >
+                                                    <i class='bx bx-time-five align-middle'></i> <span style="font-size: 12px">Date</span> &nbsp;&nbsp;<i class='bx bx-caret-down' style="font-size: 12px"></i>
                                                 </a>
                                             </div>
                                             <div hidden>
@@ -1219,17 +1237,17 @@
                                                 </div>
                                             </div>
                                         </th>
-                                        <th style="width: 10%">
-                                            <div class="dropdown">
+                                        <th  >
+                                            <div class="dropdown" >
                                                 <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class='bx bx-home' ></i> Ville
+                                                    <i class='bx bx-home align-middle' ></i> Ville
                                                 </button>
                                             </div>
                                         </th>
-                                        <th style="width: 10%">
-                                            <div class="dropdown">
+                                        <th  >
+                                            <div class="dropdown" >
                                                 <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts
+                                                    <i class='bx bx-calendar-x align-middle' style="color: #2e3950"></i> Statuts
                                                 </button>
                                                 <ul class="dropdown-menu main p-2">
                                                     <li>
@@ -1251,10 +1269,10 @@
                                               </ul>
                                             </div>
                                         </th>
-                                        <th style="width: 10%">
-                                            <div class="dropdown">
+                                        <th  >
+                                            <div class="dropdown" >
                                                 <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class='bx bx-book-content' style="vertical-align: middle"></i> Type
+                                                    <i class='bx bx-book-content align-middle' style="vertical-align: middle"></i> Type
                                                 </button>
                                                 <ul class="dropdown-menu main p-2">
                                                     <li>
@@ -1276,192 +1294,42 @@
                                               </ul>
                                             </div>
                                         </th>
-                                        <th style="width: 10%">
-                                            <div class="dropdown">
+                                       
+                                        <th >
+                                            <div class="dropdown" >
                                                 <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class='bx bx-menu' style="vertical-align: middle"></i> Action
+                                                     Eval à chaud
                                                 </button>
                                             </div>
                                         </th>
-                                        {{-- <th class="headProject" style="min-width: 10%;"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th> --}}
-                                    </tr>
-                                    {{-- <tr>
-                                        <th class="headProject">
-                                            <div class="btn-group btn-group-sm dropend shadow-sm" style="width: 100%">
-                                                <button id="myBtn" type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
-                                                  <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
+                                        <th >
+                                            <div class="dropdown" >
+                                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                     Eval à froid
                                                 </button>
-
-                                                <ul class="dropdown-menu" style="height: 145px; overflow: hidden; overflow-y: auto; padding: 10px 10px; border-radius: 10px; box-shadow: 2px 2px 3px solid #000;">
-                                                    @foreach ($nomProjet as $prj)
-                                                        <div class="form-check">
-                                                            <li>
-                                                                <input class="form-check-input" type="checkbox" name="Projet" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
-                                                            </li>
-                                                        </div>
-                                                    @endforeach
-                                                </ul>
-                                              </div>
+                                            </div>
                                         </th>
-                                        <th class="headProject">
-                                             <div class="btn-group btn-group-sm dropend shadow-sm" style="width: 100%">
-                                                <button type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
-                                                  <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
-                                                </button>
-                                                <ul class="dropdown-menu" style="height: 145px; overflow: hidden; overflow-y: auto; padding: 10px 10px; border-radius: 10px; box-shadow: 2px 2px 3px solid #000;">
-                                                    @foreach ($nomSessions as $sess)
-                                                        <div class="form-check">
-                                                            <li>
-                                                                <input class="form-check-input" type="checkbox" name="session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
-                                                            </li>
-                                                        </div>
-                                                    @endforeach
-                                                </ul>
-                                              </div>
-                                        </th>
-                                        <th class="headProject">
-                                             <div class="btn-group btn-group-sm dropend shadow-sm" style="width: 100%">
-                                                <button type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
-                                                  <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
-                                                </button>
-                                                <ul class="dropdown-menu" style="height: 145px; width: 250px; overflow: hidden; overflow-y: auto; padding: 10px 10px; border-radius: 10px; box-shadow: 2px 2px 3px solid #000;">
-                                                    @foreach ($nmdls as $mdl)
-                                                        <div class="form-check">
-                                                            <li>
-                                                                <input class="form-check-input" type="checkbox" name="module" value="{{ $mdl->nom_module }}"><span  style="font-size: 12px">{{ $mdl->nom_module }}</span>
-                                                            </li>
-                                                        </div>
-                                                    @endforeach
-                                                </ul>
-                                              </div>
-                                        </th>
-                                        <th class="headProject">
-                                             <div class="btn-group btn-group-sm dropend shadow-sm" style="width: 100%">
-                                                <button type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
-                                                  <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
-                                                </button>
-                                                <ul class="dropdown-menu" style="height: 145px; overflow: hidden; overflow-y: auto; padding: 10px 10px; border-radius: 10px; box-shadow: 2px 2px 3px solid #000;">
-                                                    @foreach ($nomEntreprises as $etp)
-                                                        <div class="form-check">
-                                                            <li>
-                                                                <input class="form-check-input" type="checkbox" name="entreprise" value="{{ $etp->nom_etp}}"><span style="font-size: 12px">{{ $etp->nom_etp}}</span>
-                                                            </li>
-                                                        </div>
-                                                    @endforeach
-                                                </ul>
-                                              </div>
-                                        </th>
-                                        <th class="headProject">
-                                             <div class="btn-group btn-group-sm dropend shadow-sm" style="width: 100%">
-                                                <button type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
-                                                  <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
-                                                </button>
-                                                <ul class="dropdown-menu" style="height: 100px; width: 200px; overflow: hidden; overflow-y: auto; padding: 10px 10px; border-radius: 10px; box-shadow: 2px 2px 3px solid #000;">
-                                                    @foreach ($nomModalites as $mdlt)
-                                                        <div class="form-check">
-                                                            <li>
-                                                                <input class="form-check-input" type="checkbox" name="modalite" value="{{ $mdlt->modalite}}"><span style="font-size: 12px">{{ $mdlt->modalite}}</span>
-                                                            </li>
-                                                        </div>
-                                                    @endforeach
-                                                </ul>
-                                              </div>
-                                        </th>
-                                        <th class="headProject">
-                                            <div hidden>
-                                                <div data-name="popover-content">
-                                                    <table>
-                                                        <thead>
-                                                            <form action="{{ route('project.filterBydate') }}" method="post">
-                                                                @csrf
-                                                                <tr>
-                                                                    <th style="font-size: 12px; font-weight: 400;">De</th>
-                                                                    <th style="font-size: 12px; font-weight: 400;">A</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>
-                                                                        <div class="input-group input-group-sm" style="width: 98%;">
-                                                                            <input type="date" name="from" id="from" value="{{ date('Y-m-d')}}" class="form-control form-control-sm @error('from') is-invalid @enderror" style="font-size: 13px">
-                                                                            <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' style="font-size: 20px"></i></span>
-                                                                            @error('from')
-                                                                                <span class="text-danger" style="font-size: 12px">{{ "Ce champs est obligatoire" }}</span>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </th>
-                                                                    <th>
-                                                                        <div class="input-group input-group-sm" style="width: 98%;">
-                                                                            <input type="date" name="to" id="to" value="{{ date('Y-m-d')}}" class="form-control form-control-sm @error('to') is-invalid @enderror" style="font-size: 13px">
-                                                                            <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' style="font-size: 20px"></i></span>
-                                                                            @error('to')
-                                                                                <span class="text-danger" style="font-size: 12px">{{ "Ce champs est obligatoire" }}</span>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </th>
-                                                                    <th>
-                                                                        <button type="submit" class="btn btn-sm btn-primary">Filtrer <i class='bx bx-search-alt-2' style="font-size: 20px; vertical-align: middle;"></i></button>
-                                                                    </th>
-                                                                </tr>
-                                                            </form>
-                                                        </thead>
-                                                    </table>
+                                        <th>
+                                            
+                                                <div class="dropdown" >
+                                                    <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class='bx bx-menu align-middle' style="vertical-align: middle"></i> PDF
+                                                    </button>
                                                 </div>
-                                            </div>
-                                            <a id="example" tabindex="0" class="btn btn-sm btn-default shadow-sm" role="button" data-bs-toggle="popover" title="Recherche entre 2 périodes" style="width: 100%">
-                                                <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
-                                            </a>
+                                            
                                         </th>
-                                        <th class="headProject">
-                                            <div class="btn-group btn-group-sm dropend shadow-sm toHideInput" style="width: 100%">
-                                                <button type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
-                                                  <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
-                                                </button>
-                                            </div>
-                                        </th>
-                                        <th class="headProject">
-                                             <div class="btn-group btn-group-sm dropend shadow-sm" style="width: 100%">
-                                                <button type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
-                                                  <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
-                                                </button>
-                                                <ul class="dropdown-menu" style="height: 145px; width: 200px; hidden; overflow-y: auto; padding: 10px 10px; border-radius: 10px; box-shadow: 2px 2px 3px solid #000;">
-                                                    @foreach ($nomStatuts as $stt)
-                                                        <div class="form-check">
-                                                            <li>
-                                                                <input class="form-check-input" type="checkbox" name="statut" value="{{ $stt->item_status_groupe }}"><span  style="font-size: 12px">{{ $stt->item_status_groupe }}</span>
-                                                            </li>
-                                                        </div>
-                                                    @endforeach
-                                                </ul>
-                                              </div>
-                                        </th>
-                                        <th class="headProject">
-                                             <div class="btn-group btn-group-sm dropend shadow-sm" style="width: 100%">
-                                                <button type="button" class="btn btn-default" data-bs-toggle="dropdown" aria-expanded="false">
-                                                  <i class='bx bx-filter-alt' style="font-size: 15px;"></i> Filtrer &nbsp;&nbsp;<i class='bx bx-caret-down' ></i>
-                                                </button>
-                                                <ul class="dropdown-menu" style="height: 80px; overflow: hidden; overflow-y: auto; padding: 10px 10px; border-radius: 10px; box-shadow: 2px 2px 3px solid #000;">
-                                                    @foreach ($ntps as $type)
-                                                        <div class="form-check">
-                                                            <li>
-                                                                <input class="form-check-input" type="checkbox" name="TypeF" value="{{ $type->type_formation }}">{{ $type->type_formation }}
-                                                            </li>
-                                                        </div>
-                                                    @endforeach
-                                                </ul>
-                                              </div>
-                                        </th>
-                                        <th class="headProject"></th>
-                                    </tr> --}}
+                                    </tr>
+                                
                                 </thead>
                                 <tbody>
                                     @foreach ($projet as $prj)
                                         @if ($prj->totale_session <= 0)
                                             <tr>
-                                                <td colspan="10">Aucun résultat</td>
+                                                <td colspan="12">Aucun résultat</td>
                                             </tr>
                                         @else
-                                            <tr style="height: 50px; background: #e7e7e7;">
-                                                <td colspan="9" style="border: none;">
+                                            <tr style="height: 50px; background: #eceaea;">
+                                                <td >
                                                     @php
                                                         if ($prj->totale_session == 1) {
                                                             echo "<span  style='font-size: 13px;'>".$prj->nom_projet."</span><br>";
@@ -1505,9 +1373,7 @@
                                                     @endforeach
                                                 </td>
                                                 <td style="display: none"></td>
-                                                <td style="display: none">
-
-                                                </td>
+                                                <td style="display: none"></td>
                                                 <td style="display: none">
                                                     @foreach ($data as $pj)
                                                         @if ($prj->projet_id == $pj->projet_id)
@@ -1526,7 +1392,7 @@
                                                         </span>
                                                     @endif
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-center" style="display: none">
                                                     @can('isCFP')
                                                         @if ($prj->type_formation_id == 1)
                                                             <span role="button" data-bs-toggle="modal" data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static' title="Nouvelle session">
@@ -1535,134 +1401,88 @@
                                                         @endif
                                                     @endcan
                                                 </td>
-                                            </tr>
+                                                <td style="display: none"></td>
+                                                <td style="display: none"></td>
+                                                
+                                             </tr>
                                             @foreach ($data as $pj)
                                                 @if ($prj->projet_id == $pj->projet_id)
                                                     <tr>
-                                                        <td style="display: none">
-                                                            @php
-                                                                if ($prj->totale_session == 1) {
-                                                                    echo "<span  style='font-size: 13px;'>".$prj->nom_projet."</span>";
-                                                                } elseif ($prj->totale_session > 1) {
-                                                                    echo "<span  style='font-size: 13px;'>".$prj->nom_projet."</span>";
-                                                                } elseif ($prj->totale_session == 0) {
-                                                                    echo "<span  style='font-size: 13px;'>".$prj->nom_projet."</span>";
-                                                                }
-                                                            @endphp
+                                                        <td class="text-center">
+                                                            <span>
+                                                                <a data-bs-toggle="collapse" href="#collapseProject_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                                    {{-- test --}}
+                                                                    <i class='bx bx-down-arrow-circle arrowDrop' data-id="{{$pj->groupe_id}}" style="font-size: 20px; vertical-align: middle;"></i>
+                                                                    {{-- <i class='bx bx-down-arrow-circle arrowDrop' data-id="{{$pj->groupe_id}}"  style="font-size: 20px; vertical-align: middle; color: #1e9600;"></i> --}}
+                                                                </a>
+                                                            </span>
                                                         </td>
-                                                        <td style="display: none">{{ $pj->nom_groupe }}</td>
-                                                        <td style="display: none">{{ $pj->nom_module}}</td>
-                                                        <td style="display: none">
+                                                        <td class="text-start">
+
+                                                            <a href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">
+                                                                <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
+                                                            </a>
+                                                        </td>
+                                                        <td class="text-start">
+                                                            <span style="font-size: 13px">{{ $pj->nom_module }}</span>
+                                                        </td>
+                                                        <td class="text-start">
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
-                                                                <span style="display: inline-block; margin-bottom: 15px;">{{ $etp->nom_etp }}</span> <br>
+                                                                <span style="font-size: 13px">{{ $etp->nom_etp }}</span>
                                                                 @endif
                                                             @endforeach
                                                         </td>
-                                                        <td style="display: none">{{ $pj->modalite }}</td>
-                                                        <td style="display: none">
+                                                        <td class="text-center" >
+                                                            <span style="font-size: 13px">{{ $pj->modalite }}</span>
+                                                        </td>
+                                                        <td >
+                                                            @php
+                                                                echo "<span style='font-size: 13px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).'<br> <span style="font-size: 12px" >au</span> <br> '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";
+                                                            @endphp
+                                                        </td>
+                                                        <td class="text-start" >
                                                             @php
                                                                 $ville = $groupe->dataVille($pj->groupe_id);
                                                                 $salle = explode(',  ', $ville);
                                                             @endphp
-                                                            <span style="font-size: 12px;">{{ $salle[0] }}</span>
+                                                            <span style="font-size: 13px;">{{ $salle[0] }}</span>
                                                         </td>
-                                                        <td style="display: none">
-                                                            @php
-                                                                echo "<span class='date_debut'  style='display: inline-block; margin-bottom: 15px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut))."</span>"; echo "<span class='date_fin'>".strftime('%d-%m-%y', strtotime($pj->date_fin))."</span><br>";
-                                                            @endphp
+                                                        <td class="text-center">
+                                                            <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1 text-center nom_status" >
+                                                                <span style="font-size: 13px">{{ $pj->item_status_groupe }}</span>
+                                                            </p>
                                                         </td>
-                                                        <td style="display: none">{{ $pj->item_status_groupe }}</td>
-                                                        <td style="display: none">
+                                                        <td class="text-center" >
                                                             @if ($prj->type_formation_id == 1)
-                                                                <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                                                <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 7px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
                                                                     {{ $prj->type_formation }}
                                                                 </span>
                                                             @elseif ($prj->type_formation_id == 2)
-                                                                <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                                                <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 7px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
                                                                     {{ $prj->type_formation }}
                                                                 </span>
                                                             @endif
                                                         </td>
-                                                        <td style="display: none"></td>
-                                                        <td style="display: none"></td>
-                                                        <td style="border: none; padding: 0" colspan="10">
-                                                            <div>
-                                                                <table class="table table-responsive">
-                                                                    <tbody>
-                                                                        <tr style="padding: 0; border-color: #ffffff">
-                                                                            <td style="width: 6%;">
-                                                                                <span>
-                                                                                    <a data-bs-toggle="collapse" href="#collapseProject_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                                                        {{-- test --}}
-                                                                                        <i class='bx bx-down-arrow-circle arrowDrop' data-id="{{$pj->groupe_id}}" style="font-size: 20px; vertical-align: middle;"></i>
-                                                                                        {{-- <i class='bx bx-down-arrow-circle arrowDrop' data-id="{{$pj->groupe_id}}"  style="font-size: 20px; vertical-align: middle; color: #1e9600;"></i> --}}
-                                                                                    </a>
-                                                                                </span>
-                                                                            </td>
-                                                                            <td style="width: 10%;">
-
-                                                                                <a href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">
-                                                                                    <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td style="width: 14%;">
-                                                                                <span style="font-size: 13px">{{ $pj->nom_module }}</span>
-                                                                            </td>
-                                                                            <td style="width: 10%;">
-                                                                                @foreach ($entreprise as $etp)
-                                                                                    @if ($etp->groupe_id == $pj->groupe_id)
-                                                                                    <span style="font-size: 13px">{{ $etp->nom_etp }}</span>
-                                                                                    @endif
-                                                                                @endforeach
-                                                                            </td>
-                                                                            <td style="width: 10%;">
-                                                                                <span style="font-size: 13px">{{ $pj->modalite }}</span>
-                                                                            </td>
-                                                                            <td style="width: 10%;">
-                                                                                @php
-                                                                                    echo "<span style='font-size: 13px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";
-                                                                                @endphp
-                                                                            </td>
-                                                                            <td style="width: 10%;">
-                                                                                @php
-                                                                                    $ville = $groupe->dataVille($pj->groupe_id);
-                                                                                    $salle = explode(',  ', $ville);
-                                                                                @endphp
-                                                                                <span style="font-size: 13px;">{{ $salle[0] }}</span>
-                                                                            </td>
-                                                                            <td style="width: 10%;">
-                                                                                <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1 text-center nom_status" style="width: 100px;">
-                                                                                    <span style="font-size: 13px">{{ $pj->item_status_groupe }}</span>
-                                                                                </p>
-                                                                            </td>
-                                                                            <td class="text-center" style="width: 10%;">
-                                                                                @if ($prj->type_formation_id == 1)
-                                                                                    <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 7px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
-                                                                                        {{ $prj->type_formation }}
-                                                                                    </span>
-                                                                                @elseif ($prj->type_formation_id == 2)
-                                                                                    <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 7px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
-                                                                                        {{ $prj->type_formation }}
-                                                                                    </span>
-                                                                                @endif
-                                                                            </td>
-                                                                            <td class="text-center" style="width: 10%;">
-                                                                                <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.4rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                                                                <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
-                                                                                    @can('isCFP')
-                                                                                        <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static" style="cursor: pointer; font-size: 13px">Modifier</span></li>
-                                                                                    @endcan
-                                                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">Expoter en PDF</a></li>
-                                                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
-                                                                                    @if ($prj->type_formation_id == 1)
-                                                                                        <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank" style="font-size: 13px">Rapport</a></li>
-                                                                                    @endif
-                                                                                </ul>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td colspan="10" style="border: none;">
+                                                        <td class="text-center" style="font-size: 13px"><i style="font-size: 22px;color:rgb(42, 222, 29)" class="bx bx-task"></i></td>
+                                                        <td class="text-center" style="font-size: 13px">gsdgsf</td>
+                                                        
+                                                        <td class="text-center" >
+                                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.4rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                                @can('isCFP')
+                                                                    <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static" style="cursor: pointer; font-size: 13px">Modifier</span></li>
+                                                                @endcan
+                                                                <li class="action_projet"><a class="dropdown-item" href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">Expoter en PDF</a></li>
+                                                                <li class="action_projet"><a class="dropdown-item" href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
+                                                                @if ($prj->type_formation_id == 1)
+                                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank" style="font-size: 13px">Rapport</a></li>
+                                                                @endif
+                                                            </ul>
+                                                        </td>
+                                                                        
+                                                                        {{-- <tr>
+                                                                            <td colspan="12" style="border: none;">
                                                                                 <div class="accordian-body collapse" id="collapseProject_{{$pj->groupe_id}}">
                                                                                     <div class="card">
                                                                                         <div class="row">
@@ -1716,9 +1536,7 @@
                                                                                                                         <span class='rounded-pill' style='padding: 2px 6px; border: 1px solid #e4e4e498; color: #011e2a; display: inline-block; margin-bottom: 1px; font-size: 13px'>{{ $dataAppr->nom_stagiaire." ".$dataAppr->prenom_stagiaire }}</span>
                                                                                                                     @endforeach
                                                                                                                 @elseif(count($dataApprs) <= 0)
-                                                                                                                    {{-- @foreach ($dataNombres as $nbr)
-                                                                                                                        <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 13px;'>{{$nbr->nombre}}</span>
-                                                                                                                    @endforeach --}}
+                                                                                                                    
                                                                                                                 @endif
                                                                                                             </a>
                                                                                                             @foreach ($dataNombres as $nbr)
@@ -1889,11 +1707,12 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
-                                                                        </tr>
-                                                                    </tbody>
+                                                                            
+                                                                        </tr> --}}
+                                                                     {{--</tbody>
                                                                 </table>
-                                                            </div>
-                                                        </td>
+                                                            </div> --}}
+                                                       
                                                     </tr>
 
                                                     <div>
@@ -2692,7 +2511,7 @@
                                                     </span>
                                                 @endif
                                             </td>
-
+                                            
                                             {{-- <td class="text-end">
                                             @if($pj->hors_taxe_net!=null)
                                             {{number_format($pj->hors_taxe_net,0,","," ")}}

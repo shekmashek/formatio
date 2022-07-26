@@ -1,3 +1,4 @@
+-- Active: 1656573946460@@127.0.0.1@3306@mahafaly
 
 
 DROP TABLE IF EXISTS tarif_categories;
