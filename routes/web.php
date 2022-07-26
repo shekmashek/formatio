@@ -975,6 +975,7 @@ Route::post('create_cfp_etp', 'CollaborationController@create_cfp_etp')->name('c
 Route::post('create_etp_cfp', 'CollaborationController@create_etp_cfp')->name('create_etp_cfp');
 Route::post('create_formateur_cfp', 'CollaborationController@create_formateur_cfp')->name('create_formateur_cfp');
 Route::post('create_cfp_formateur', 'CollaborationController@create_cfp_formateur')->name('create_cfp_formateur');
+Route::post('collaboration_entre_organisme', 'CollaborationController@collaboration_organisme')->name('collaboration_entre_organisme');
 
 
 Route::post('mettre_fin_cfp_etp', 'CollaborationController@mettre_fin_cfp_etp')->name('mettre_fin_cfp_etp');
@@ -987,19 +988,19 @@ Route::post('mettre_fin_cfp_formateur', 'CollaborationController@mettre_fin_cfp_
 // Route::get('delete_formateur_cfp','CollaborationController@delete_formateur_cfp')->name('delete_formateur_cfp');
 // Route::get('delete_cfp_formateur','CollaborationController@delete_cfp_formateur')->name('delete_cfp_formateur');
 
-Route::get('annulation_cfp_etp/{id}', 'CollaborationController@annulation_invitation_cfp_etp')->name('annulation_cfp_etp');
+Route::get('annulation_cfp_etp/{id?}', 'CollaborationController@annulation_invitation_cfp_etp')->name('annulation_cfp_etp');
 // Route::get('suppresion_invite_cfp_etp/{id}', 'CollaborationController@suppresion_invite_cfp_etp')->name('suppresion_invite_cfp_etp');
 
 Route::get('annulation_cfp_etp_notif', 'CollaborationController@refuser')->name('annulation_cfp_etp_notif');
-Route::get('annulation_etp_cfp/{id}', 'CollaborationController@annulation_invitation_etp_cfp')->name('annulation_etp_cfp');
+Route::get('annulation_etp_cfp/{id?}', 'CollaborationController@annulation_invitation_etp_cfp')->name('annulation_etp_cfp');
 Route::get('annulation_formateur_cfp/{id}', 'CollaborationController@annulation_invitation_formateur_cfp')->name('annulation_formateur_cfp');
 Route::get('annulation_cfp_formateur/{id}', 'CollaborationController@annulation_invitation_cfp_formateur')->name('annulation_cfp_formateur');
 
-Route::get('accept_cfp_etp/{id}', 'CollaborationController@accept_invitation_cfp_etp')->name('accept_cfp_etp');
+Route::get('accept_cfp_etp/{id?}', 'CollaborationController@accept_invitation_cfp_etp')->name('accept_cfp_etp');
 
 
 Route::get('accept_invitation_cfp_etp_notif', 'CollaborationController@accept_invitation_cfp_etp_notif')->name('accept_invitation_cfp_etp_notif');
-Route::get('accept_etp_cfp/{id}', 'CollaborationController@accept_invitation_etp_cfp')->name('accept_etp_cfp');
+Route::get('accept_etp_cfp/{id?}', 'CollaborationController@accept_invitation_etp_cfp')->name('accept_etp_cfp');
 Route::get('accept_formateur_cfp/{id}', 'CollaborationController@accept_invitation_formateur_cfp')->name('accept_formateur_cfp');
 Route::get('accept_cfp_formateur/{id}', 'CollaborationController@accept_invitation_cfp_formateur')->name('accept_cfp_formateur');
 

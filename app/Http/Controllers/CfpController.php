@@ -37,18 +37,16 @@ class CfpController extends Controller
 
         $fonct = new FonctionGenerique();
 
-        $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-
-        $refuse_demmande_cfp = $fonct->findWhere("v_refuse_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
-        $invitation = $fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]);
-        $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
-        $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
-        $cfp = $fonct->concatTwoList($etp1Collaborer, $etp2Collaborer);
-        $abonnement_etp = DB::select('select v_tep.nom_type,v_tep.type_abonnements_etp_id from v_type_abonnement_etp v_tep JOIN entreprises as etp on v_tep.entreprise_id = etp.id where v_tep.entreprise_id = ? and etp.statut_compte_id = ? or etp.statut_compte_id = ?',[$entreprise_id,1,3]);
+        $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+        $invitation = DB::select('select count(id_cfp) as nb_invitation,id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,1,'cfp']);
+        $refuse_demmande_cfp = DB::select('select count(id_cfp) as nb_refus,id_cfp,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,3,'cfp']);
+        $cfp = DB::select('select id_cfp,logo,nom,logo,nom_resp_cfp_inital,prenom_resp_cfp_initial from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,2,'cfp']);
+        $abonnement_etp = DB::select('select v_tep.nom_type,v_tep.type_abonnements_etp_id from v_type_abonnement_etp v_tep JOIN entreprises as etp on v_tep.entreprise_id = etp.id where v_tep.entreprise_id = ? and etp.statut_compte_id = ? or etp.statut_compte_id = ?',[$etp_id,1,3]);
         // dd($invitation);
+        // dd($refuse_demmande_cfp);
 
         //$cfp=DB::select('select logo_cfp,nom,cfp_id,photos_resp_cfp,nom_resp_cfp,prenom_resp_cfp ,SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, SUBSTRING(nom_resp_cfp, 1, 1) AS nm from v_demmande_etp_cfp where entreprise_id=?',[$entreprise_id]);
-        return view('cfp.cfp', compact('cfp', 'refuse_demmande_cfp', 'invitation','abonnement_etp'));
+        return view('cfp.cfp', compact('cfp','refuse_demmande_cfp', 'invitation','abonnement_etp'));
     }
 
 

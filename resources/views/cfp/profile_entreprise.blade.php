@@ -26,6 +26,16 @@
         </div>
     </div>
     @endif
+    @if(Session::has('message'))
+        <div class="alert alert-success close">
+            <strong><i class="bx bxs-check-circle"></i> {{Session::get('message')}}</strong>
+        </div>
+        @endif
+        @if(Session::has('error'))
+        <div class="alert alert-danger close">
+            <strong><i class="bx bxs-x-circle"></i> {{Session::get('error')}}</strong>
+        </div>
+    @endif
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
@@ -42,14 +52,12 @@
             </li>
         </ul>
 
+
         <div class="tab-content">
+
             <div class="tab-pane fade show" id="collabore">
                 {{-- Tab 1 content --}}
-                @if(Session::has('message'))
-                <div class="alert alert-danger close">
-                    <strong> {{Session::get('message')}}</strong>
-                </div>
-                @endif
+
                 @if (count($entreprise)<=0)
                     <div class="text-center mt-5">
                         <img src="{{asset('img/networking.webp')}}" alt="folder empty" width="300px" height="300px">
@@ -111,8 +119,7 @@
                                             <div class="modal-footer justify-content-center">
                                                 <form action="{{route('mettre_fin_cfp_etp') }}" method="POST">
                                                     @csrf
-                                                    <input name="etp_id" type="text" value="{{$etp->entreprise_id}}"
-                                                        hidden>
+                                                    <input name="etp_id" type="hidden" value="{{$etp->entreprise_id}}" >
                                                     <div class="mt-4 mb-4">
                                                         <button type="submit" class="btn btn_enregistrer btnP"><i class="bx bx-trash"></i> Supprimer</button>
                                                     </div>
@@ -169,7 +176,7 @@
                 <div class="table-responsive text-center">
                     <table class="table  table-borderless table-sm mt-4">
                         <tbody id="data_collaboration">
-                            @if (count($invitation_etp)<=0)
+                            @if (count($invitation_etp) <= 0)
                                 <tr style="">
                                     <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
                                     <td><p>Aucun invitations en attente</p></td>
@@ -186,12 +193,12 @@
                                         <p class="sous_text text-muted">{{$invit_etp->nom_secteur}}</p>
                                     </td>
                                     <td>
-                                        <a href="{{ route('accept_cfp_etp',$invit_etp->id) }}" class="accept_cfp">
+                                        <a href="{{ route('accept_cfp_etp',$invit_etp->id_etp) }}" class="accept_cfp">
                                             <span class="btn_nouveau"><i class="bx bx-check me-2" title="Accepter"></i>accepter</span>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('annulation_cfp_etp',$invit_etp->id) }}" class="refuse_cfp">
+                                        <a href="{{ route('annulation_cfp_etp',$invit_etp->id_etp) }}" class="refuse_cfp">
                                             <span class="btn_annuler"><i class="bx bx-x  me-2" title="Refuser"></i>refuser</span>
                                         </a>
                                     </td>
@@ -206,7 +213,7 @@
                 <div class="table-responsive text-center">
                     <table class="table  table-borderless table-sm mt-4">
                         <tbody>
-                            @if (count($refuse_demmande_etp)<=0)
+                            @if ($refuse_demmande_etp <= 0)
                                 <tr>
                                     <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
                                     <td><p>Aucun invitations refusées</p></td>

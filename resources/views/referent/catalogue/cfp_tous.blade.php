@@ -259,7 +259,6 @@
                             </div>
                             <div class="col-1">
                                 <span class="badges">
-                                    {{-- {{dd($collaboration)}} --}}
                                     @foreach ($collaboration as $collab)
                                         @if($collab->inviter_cfp_id == $cfp->id && $collab->activiter == 1)
                                             <div class="main-wrapper">

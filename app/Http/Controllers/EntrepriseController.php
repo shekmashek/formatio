@@ -50,23 +50,13 @@ class EntrepriseController extends Controller
         $fonct = new FonctionGenerique();
         $entp = new entreprise();
         if (Gate::allows('isCFP')) {
-            // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
+
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-            $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-            $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
-            $entreprise = $entp->getEntreprise($etp2, $etp1);
+            $invitation_etp = DB::select('select count(id_etp) as nb_invitation,id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
+            $refuse_demmande_etp = DB::select('select count(id_etp) as nb_refus,id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,3,'etp']);
+            $entreprise = DB::select('select id_etp,logo_etp,nom_etp,nom_resp_initial,prenom_resp_initial from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,2,'etp']);
             $abonnement_cfp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_cfp_id,v_tac.nb_projet from v_type_abonnement_cfp v_tac JOIN cfps as cfp on v_tac.cfp_id = cfp.id where cfp_id = ? and statut_compte_id = ? or statut_compte_id = ?',[$cfp_id,1,3]);
             // dd($invitation_etp);
-            // $entreprise =DB::select('select logo_etp,nom_etp,entreprise_id,photos_resp,nom_resp,prenom_resp ,SUBSTRING(prenom_resp, 1, 1) AS pr, SUBSTRING(nom_resp, 1, 1) AS nm from v_demmande_cfp_etp where cfp_id=?',[$cfp_id]);
-            // dd($entreprise);
-            //  $entreprisess=DB::select('select * from  v_demmande_cfp_etp where cfp_id= ?',[$cfp_id]);
-            //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where cfp_id= ?',[$cfp_id]);
-            // $entreprises=entreprise::query()->findOrFail($cfp_id);
-            // $entreprises=entreprise::findOrFail($entp);
-
             return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp','abonnement_cfp'));
         }
         if (Gate::allows('isSuperAdmin')) {
