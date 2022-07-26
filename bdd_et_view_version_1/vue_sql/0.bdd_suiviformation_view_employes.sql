@@ -102,8 +102,8 @@ employers
 LEFT JOIN v_departement_service_entreprise vd ON vd.service_id = employers.service_id and vd.departement_entreprise_id = employers.departement_entreprises_id
 LEFT JOIN branches bc ON bc.id = employers.branche_id
 JOIN role_users ON role_users.user_id =  employers.user_id
-JOIN genre ON genre.id = employers.genre_id
-JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
+LEFT JOIN genre ON genre.id = employers.genre_id
+LEFT JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
 WHERE role_users.role_id=2;
 
 CREATE OR REPLACE view chef_departements as
