@@ -52,9 +52,9 @@ class EntrepriseController extends Controller
         if (Gate::allows('isCFP')) {
 
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-            $invitation_etp = DB::select('select count(id_etp) as nb_invitation,id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
-            $refuse_demmande_etp = DB::select('select count(id_etp) as nb_refus,id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,3,'etp']);
-            $entreprise = DB::select('select id_etp,logo_etp,nom_etp,nom_resp_initial,prenom_resp_initial from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,2,'etp']);
+            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
+            $refuse_demmande_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,3,'etp']);
+            $entreprise = DB::select('select id_etp,logo_etp,nom_etp,nom_resp_initial,prenom_resp_initial,photos,nom_resp,prenom_resp from collab_cfp_etp where id_cfp = ? and statut = ?',[$cfp_id,2]);
             $abonnement_cfp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_cfp_id,v_tac.nb_projet from v_type_abonnement_cfp v_tac JOIN cfps as cfp on v_tac.cfp_id = cfp.id where cfp_id = ? and statut_compte_id = ? or statut_compte_id = ?',[$cfp_id,1,3]);
             // dd($invitation_etp);
             return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp','abonnement_cfp'));
@@ -73,14 +73,15 @@ class EntrepriseController extends Controller
     {
         $user_id = Auth::id();
         $id = $request->Id;
-
         $fonct = new FonctionGenerique();
-        $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+        // $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
       //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where entreprise_id= ?',[$id]);
 
-        $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$id]);
-        $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$id]);
-        $entreprises=$fonct->concatTwoList($etp1,$etp2);
+        // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$id]);
+        // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$id]);
+        // $entreprises=$fonct->concatTwoList($etp1,$etp2);
+        $entreprises = DB::select('select logo,nom_etp,nom_resp,prenom_resp,adresse_rue_etp,adresse_quartier_etp,adresse_code_postal_etp,adresse_ville_etp,adresse_region_etp,email_resp,telephone_resp,site_etp from responsables where entreprise_id = ?',[$id]);
+
 
       return response()->json($entreprises);
 

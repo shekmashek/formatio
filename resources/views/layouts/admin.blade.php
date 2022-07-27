@@ -1109,53 +1109,53 @@
                         $('.badge_invitation_etp').css('display','grid');
                         $('.badge_invitation_etp').css('place-content','center');
                         // alert("aiza");
-                        for (let i = 0; i < response['invitation'].length; i++){
-                            $(".accepte").on("click", function(e) {
-                                let id = $(e.target).closest(".accepte").attr("id");
-                                // alert(id);
-                                $.ajax({
-                                    type: "get",
-                                    url: " {{ route('accept_invitation_cfp_etp_notif') }}",
-                                    data: {
-                                        Id: id,
-                                    },
-                                    success: function(response) {
-                                        $(".invitation_" + id).remove();
-                                        $('.badge_invitation').text("");
-                                        $('.badge_invitation').append(i);
-                                        $('.badge_invitation_etp').text("");
-                                        $('.badge_invitation_etp').append(i);
-                                        toastr.success('Une invitation a été accéptée');
-                                    },
-                                    error: function(error) {
-                                    console.log(error);
-                                    },
-                                });
-                            });
+                        // for (let i = 0; i < response['invitation'].length; i++){
+                        //     $(".accepte").on("click", function(e) {
+                        //         let id = $(e.target).closest(".accepte").attr("id");
+                        //         // alert(id);
+                        //         $.ajax({
+                        //             type: "get",
+                        //             url: " {{ route('accept_invitation_cfp_etp_notif') }}",
+                        //             data: {
+                        //                 Id: id,
+                        //             },
+                        //             success: function(response) {
+                        //                 $(".invitation_" + id).remove();
+                        //                 $('.badge_invitation').text("");
+                        //                 $('.badge_invitation').append(i);
+                        //                 $('.badge_invitation_etp').text("");
+                        //                 $('.badge_invitation_etp').append(i);
+                        //                 toastr.success('Une invitation a été accéptée');
+                        //             },
+                        //             error: function(error) {
+                        //             console.log(error);
+                        //             },
+                        //         });
+                        //     });
 
 
-                            $(".refuse").on("click", function(e) {
-                                let id = $(this).data("id");
-                                $.ajax({
-                                    type: "get",
-                                    url: " {{ route('annulation_cfp_etp_notif') }}",
-                                    data: {
-                                        Id: id,
-                                    },
-                                    success: function(response) {
-                                        $(".invitation_" + id).remove();
-                                        $('.badge_invitation').text("");
-                                        $('.badge_invitation').append(i);
-                                        $('.badge_invitation_etp').text("");
-                                        $('.badge_invitation_etp').append(i);
-                                        toastr.warning('Une invitation à été réfuser');
-                                    },
-                                    error: function(error) {
-                                    console.log(error);
-                                    },
-                                });
-                            });
-                        }
+                        //     $(".refuse").on("click", function(e) {
+                        //         let id = $(this).data("id");
+                        //         $.ajax({
+                        //             type: "get",
+                        //             url: " {{ route('annulation_cfp_etp_notif') }}",
+                        //             data: {
+                        //                 Id: id,
+                        //             },
+                        //             success: function(response) {
+                        //                 $(".invitation_" + id).remove();
+                        //                 $('.badge_invitation').text("");
+                        //                 $('.badge_invitation').append(i);
+                        //                 $('.badge_invitation_etp').text("");
+                        //                 $('.badge_invitation_etp').append(i);
+                        //                 toastr.warning('Une invitation à été réfuser');
+                        //             },
+                        //             error: function(error) {
+                        //             console.log(error);
+                        //             },
+                        //         });
+                        //     });
+                        // }
                     }
                 }
                 , error: function(error) {

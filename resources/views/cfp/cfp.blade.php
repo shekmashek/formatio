@@ -87,7 +87,7 @@
                             <span class="d-flex flex-row">
                                 <div class='randomColor'
                                     style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">
-                                    {{-- {{$cfp->initial}} --}}{{$cfp->nom_resp_cfp_initial}}{{$cfp->prenom_resp_cfp_initial}} </div>
+                                    {{$cfp->nom_resp_cfp_inital.''.$cfp->prenom_resp_cfp_initial}} </div>
                                 <span class="ms-3">{{$cfp->nom_resp_cfp}} {{$cfp->prenom_resp_cfp}}</span>
                             </span>
                             @else
@@ -123,7 +123,7 @@
                                     <div class="modal-footer justify-content-center">
                                         <form action="{{route('mettre_fin_cfp_etp') }}" method="POST">
                                             @csrf
-                                            <input name="cfp_id" type="text" value="{{$cfp->id_cfp}}" hidden>
+                                            <input name="cfp_id" type="hidden" value="{{$cfp->id_cfp}}" >
                                             <div class="mt-4 mb-4">
                                                 <button type="submit" class="btn btn_enregistrer btnP"><i class="bx bx-trash"></i> Supprimer</button>
                                             </div>
@@ -188,17 +188,18 @@
             <div class="table-responsive text-center">
                 <table class="table  table-borderless table-sm mt-4">
                     <tbody id="data_collaboration">
-                        @if (count($invitation_etp ) <= 0) <tr style="">
-                            <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
-                            <td>
-                                <p>Aucun invitations en attente</p>
-                            </td>
+                        @if (count($invitation) <= 0)
+                            <tr style="">
+                                <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
+                                <td>
+                                    <p>Aucun invitations en attente</p>
+                                </td>
                             </tr>
                         @else
                             @foreach($invitation as $invit_cfp)
                             <tr align="left">
                                 <td>
-                                    {{$invit_cfp->nom_resp_cfp}} {{$invit_cfp->prenom_resp_cfp}}
+                                    {{$invit_cfp->nom_resp_cfp.' '.$invit_cfp->prenom_resp_cfp}}
                                     <p class="sous_text text-muted">{{$invit_cfp->email_resp_cfp}}</p>
                                 </td>
                                 <td>
@@ -228,17 +229,18 @@
             <div class="table-responsive text-center">
                 <table class="table  table-borderless table-sm mt-4">
                     <tbody>
-                        @if ($refuse_demmande_cfp <= 0) <tr>
-                            <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
-                            <td>
-                                <p>Aucun invitations refusées</p>
-                            </td>
+                        @if (count($refuse_demmande_cfp) <= 0)
+                            <tr>
+                                <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
+                                <td>
+                                    <p>Aucun invitations refusées</p>
+                                </td>
                             </tr>
-                            @else
+                        @else
                             @foreach($refuse_demmande_cfp as $refuse_invit)
                             <tr align="left">
                                 <td>
-                                    {{$refuse_invit->nom_resp_cfp.''.$refuse_invit->prenom_resp_cfp}}
+                                    {{$refuse_invit->nom_resp_cfp.' '.$refuse_invit->prenom_resp_cfp}}
                                     <p class="sous_text text-muted">{{$refuse_invit->email_resp_cfp}}</p>
                                 </td>
                                 <td>
@@ -256,7 +258,7 @@
                                 </td> --}}
                             </tr>
                             @endforeach
-                            @endif
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -372,23 +374,23 @@
                 //parcourir le premier tableau contenant les info sur les programmes
                 for (let $i = 0; $i < userData.length; $i++) {
                     let url_photo = '<img src="{{asset("images/CFP/:url_img")}}" style="height80px; width:80px;">';
-                    url_photo = url_photo.replace(":url_img", userData[$i].logo_cfp);
+                    url_photo = url_photo.replace(":url_img", userData[$i].logo);
                     $("#donner").html(" ");
                     $("#donner").append(url_photo);
                     $("#donnerrrr").text(': '+userData[$i].site_web);
                     $("#nom").text(userData[$i].nom_resp_cfp);
                     $("#prenom").text(userData[$i].prenom_resp_cfp);
-                    $("#tel").text(': '+userData[$i].telephone);
-                    $("#adrlot").text(': '+userData[$i].adresse_lot);
-                    $("#adrlot2").text(userData[$i].adresse_quartier);
-                    $("#adrlot3").text(userData[$i].adresse_ville);
-                    $("#adrlot4").text(userData[$i].adresse_region);
+                    $("#tel").text(': '+userData[$i].telephone_resp_cfp);
+                    $("#adrlot").text(': '+userData[$i].adresse_lot_cfp+' '+userData[$i].adresse_quartier_cfp);
+                    $("#adrlot2").text(userData[$i].adresse_code_postal_cfp+' '+userData[$i].adresse_ville_cfp);
+                    $("#adrlot3").text(userData[$i].adresse_region_cfp);
+                    // $("#adrlot4").text(userData[$i].adresse_region);
                     // $("#adrqurt").text(userData[$i].adresse_Quartier);
                     // $("#adrv").text(userData[$i].adresse_ville);
                     // $("#adrr").text(userData[$i].adresse_region);
-                    $("#mail").text(': '+userData[$i].email);
+                    $("#mail").text(': '+userData[$i].email_resp_cfp);
 
-                    $("#nomEtp").text(userData[$i].nom);
+                    $("#nomEtp").text(userData[$i].nom_cfp);
                 }
             }
         });

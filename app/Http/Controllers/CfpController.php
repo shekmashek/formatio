@@ -38,9 +38,9 @@ class CfpController extends Controller
         $fonct = new FonctionGenerique();
 
         $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-        $invitation = DB::select('select count(id_cfp) as nb_invitation,id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,1,'cfp']);
-        $refuse_demmande_cfp = DB::select('select count(id_cfp) as nb_refus,id_cfp,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,3,'cfp']);
-        $cfp = DB::select('select id_cfp,logo,nom,logo,nom_resp_cfp_inital,prenom_resp_cfp_initial from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,2,'cfp']);
+        $invitation = DB::select('select id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,1,'cfp']);
+        $refuse_demmande_cfp = DB::select('select id_cfp,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,3,'cfp']);
+        $cfp = DB::select('select id_cfp,logo,nom,logo,nom_resp_cfp_inital,prenom_resp_cfp_initial,nom_resp_cfp,prenom_resp_cfp,photos_resp_cfp from collab_cfp_etp where id_etp = ? and statut = ? ',[$etp_id,2]);
         $abonnement_etp = DB::select('select v_tep.nom_type,v_tep.type_abonnements_etp_id from v_type_abonnement_etp v_tep JOIN entreprises as etp on v_tep.entreprise_id = etp.id where v_tep.entreprise_id = ? and etp.statut_compte_id = ? or etp.statut_compte_id = ?',[$etp_id,1,3]);
         // dd($invitation);
         // dd($refuse_demmande_cfp);
@@ -53,12 +53,14 @@ class CfpController extends Controller
     public function affInfoOf(Request $request)
     {
         $id = $request->Id;
-        $fonct = new FonctionGenerique();
-        $cfp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$id]);
-        $cfp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$id]);
-        $ccfp = $fonct->concatTwoList($cfp1, $cfp2);
+        // $fonct = new FonctionGenerique();
+        // $cfp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$id]);
+        // $cfp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$id]);
+        // $ccfp = $fonct->concatTwoList($cfp1, $cfp2);
       //  $ccfp = DB::select('select * from v_demmande_cfp_etp where entreprise_id = ?', [$entreprise_id]);
-        return response()->json($ccfp);
+        $cfp = DB::select('select logo,nom_cfp,nom_resp_cfp,prenom_resp_cfp,adresse_lot_cfp,adresse_quartier_cfp,adresse_code_postal_cfp,adresse_ville_cfp,adresse_region_cfp,email_resp_cfp,telephone_resp_cfp,site_web from v_responsable_cfp where cfp_id = ?',[$id]);
+
+        return response()->json($cfp);
     }
 
     public function img_cfp($logo_cfp)

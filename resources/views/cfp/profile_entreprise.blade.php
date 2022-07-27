@@ -74,20 +74,20 @@
                         </thead>
                         <tbody id="data_collaboration" style="font-size: 15.5px;">
                             @foreach($entreprise as $etp)
-                            <tr class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
+                            <tr class="information" data-id="{{$etp->id_etp}}" id="{{$etp->id_etp}}">
                                 <td role="button" onclick="afficherInfos();">
                                 <img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width: 80px;height: 80px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                                 <td role="button" onclick="afficherInfos();">
-                                    @if($etp->photos_resp == null)
+                                    @if($etp->photos == null)
                                     <span class="d-flex flex-row">
                                         <div class='randomColor'
                                             style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">
-                                            {{$etp->initial}}</div>
+                                            {{$etp->nom_resp_initial.''.$etp->prenom_resp_initial}}</div>
                                         <span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                                     </span>
                                     @else
 
-                                    <img src="{{asset(" images/responsables/".$etp->photos_resp)}}" style="height:60px;
+                                    <img src="{{asset(" images/responsables/".$etp->photos)}}" style="height:60px;
                                     width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}}
                                         {{$etp->prenom_resp}}</span>
 
@@ -96,12 +96,12 @@
                                 </td>
                                 <td>
                                     <a href="" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i
+                                        data-bs-target="#exampleModal_{{$etp->id_etp}}"><i
                                             class='bx bx-trash bx_supprimer'></i></a>
                                 </td>
 
                                 {{-- modal delete --}}
-                                <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1"
+                                <div class="modal fade" id="exampleModal_{{$etp->id_etp}}" tabindex="-1"
                                     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
@@ -119,7 +119,7 @@
                                             <div class="modal-footer justify-content-center">
                                                 <form action="{{route('mettre_fin_cfp_etp') }}" method="POST">
                                                     @csrf
-                                                    <input name="etp_id" type="hidden" value="{{$etp->entreprise_id}}" >
+                                                    <input name="etp_id" type="hidden" value="{{$etp->id_etp}}" >
                                                     <div class="mt-4 mb-4">
                                                         <button type="submit" class="btn btn_enregistrer btnP"><i class="bx bx-trash"></i> Supprimer</button>
                                                     </div>
@@ -185,7 +185,7 @@
                                 @foreach($invitation_etp as $invit_etp)
                                 <tr align="left">
                                     <td>
-                                        {{$invit_etp->nom_resp.''.$invit_etp->prenom_resp}}
+                                        {{$invit_etp->nom_resp.' '.$invit_etp->prenom_resp}}
                                         <p class="sous_text text-muted">{{$invit_etp->email_resp}}</p>
                                     </td>
                                     <td>
@@ -213,7 +213,7 @@
                 <div class="table-responsive text-center">
                     <table class="table  table-borderless table-sm mt-4">
                         <tbody>
-                            @if ($refuse_demmande_etp <= 0)
+                            @if (count($refuse_demmande_etp) <= 0)
                                 <tr>
                                     <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
                                     <td><p>Aucun invitations refusées</p></td>
@@ -222,7 +222,7 @@
                                 @foreach($refuse_demmande_etp as $refuse_invit)
                                 <tr align="left">
                                     <td>
-                                        {{$refuse_invit->nom_resp.''.$refuse_invit->prenom_resp}}
+                                        {{$refuse_invit->nom_resp.' '.$refuse_invit->prenom_resp}}
                                         <p class="sous_text text-muted">{{$refuse_invit->email_resp}}</p>
                                     </td>
                                     <td>
@@ -452,7 +452,7 @@
     //     });
     // });
     $(".information").on('click', function(e) {
-        let id = $(this).data("id");;
+        let id = $(this).data("id");
         $.ajax({
             method: "GET"
             , url: "{{route('information_entreprise')}}"
@@ -462,22 +462,22 @@
             , dataType: "html"
             , success: function(response) {
                 let userData = JSON.parse(response);
-                // console.log(userData);
+                console.log(userData);
                 //parcourir le premier tableau contenant les info sur les programmes
                 for (let $i = 0; $i < userData.length; $i++) {
 
                     let url_photo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:120px">';
-                    url_photo = url_photo.replace(":url_img", userData[$i].logo_etp);
+                    url_photo = url_photo.replace(":url_img", userData[$i].logo);
                     $("#logo").html(" ");
                     $("#logo").append(url_photo);
                     $("#nom_entreprise").text(userData[$i].nom_etp);
                     $("#nom_reponsable").text(': '+userData[$i].nom_resp);
                     $("#prenom_responsable").text(userData[$i].prenom_resp);
-                    $("#adrlot").text(': '+userData[$i].adresse_lot);
-                    $("#adrlot3").text(': '+userData[$i].adresse_ville);
-                    $("#adrlot4").text(': '+userData[$i].adresse_region);
-                    $("#email_etp").text(': '+userData[$i].email_responsable);
-                    $("#telephone_etp").text(': '+userData[$i].telephone_etp);
+                    $("#adrlot").text(': '+userData[$i].adresse_rue_etp +' '+userData[$i].adresse_quartier_etp);
+                    $("#adrlot3").text(': '+userData[$i].adresse_code_postal_etp+' '+userData[$i].adresse_ville_etp);
+                    $("#adrlot4").text(': '+userData[$i].adresse_region_etp);
+                    $("#email_etp").text(': '+userData[$i].email_resp);
+                    $("#telephone_etp").text(': '+userData[$i].telephone_resp);
                     $("#site_etp").text(': '+userData[$i].site_etp);
                 }
             }

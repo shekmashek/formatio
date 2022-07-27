@@ -249,33 +249,6 @@ CREATE TABLE reseaux_sociaux (
 --   updated_at timestamp NULL DEFAULT current_timestamp()
 -- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE OR REPLACE view responsables_cfp as SELECT
-    (employers.id)id,
-    nom_emp as nom_resp_cfp,
-    prenom_emp as prenom_resp_cfp,
-    genre_id as sexe_resp_cfp,
-    date_naissance_emp as date_naissance_resp_cfp,
-    cin_emp as cin_resp_cfp,
-    email_emp as email_resp_cfp,
-    telephone_emp as telephone_resp_cfp,
-    fonction_emp as fonction_resp_cfp,
-    adresse_lot,
-    (employers.adresse_quartier) adresse_quartier,
-     (employers.adresse_quartier) adresse_code_postal,
-    (employers.adresse_quartier)  adresse_ville,
-     (employers.adresse_quartier) adresse_region,
-    photos as photos_resp_cfp,
-    entreprise_id as cfp_id,
-    user_id,
-    (employers.activiter) activiter,
-    prioriter,
-    url_photo,
-    (employers.created_at) created_at,
-    (employers.updated_at) updated_at
-FROM
-employers
-JOIN entreprises
-WHERE employers.entreprise_id = entreprises.id and entreprises.type_entreprise_id = 2;
 
 
 CREATE TABLE IF NOT EXISTS niveau_etude(
