@@ -86,11 +86,20 @@
                         </ul>
                     </div>
                     @endif
-                    {{-- <form action="{{route('create_compte_employeur')}}" method="POST" enctype="multipart/form-data"> --}}
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <h5>Nouveau Employé</h5>
+                        </div>
+                        <div class="col-6 text-end">
+                            <div>
+                                <a class="new_list_nouvelle " href="{{url()->previous()}}">
+                                <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
+                            </a>
+                            </div>
+                        </div>
+                    </div>
                     <form id="formInsert" action="{{route('employeur.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
-
-                        <h4 class="text-center">Nouveau Employé</h4>
                         <div class="row mt-4">
                             <div class="col-md-4  text-end">
                                 <label class="mt-2">Matricule<strong style="color:#ff0000;">*</strong></label>

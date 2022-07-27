@@ -37,13 +37,10 @@ class EvaluationChaudController extends Controller
         $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
         $stg_id = stagiaire::where('user_id',$user_id)->value('id');
-        $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
-        $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
-        $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-        $data = $fonct->findWhereMulitOne('v_stagiaire_groupe',['stagiaire_id','groupe_id'],[$stg_id,request()->groupe]);; // return les information du project avec detail et information du stagiaire
-        // $stagiaire = $data['stagiaire'];
-        // $detail = $data['detail'];
-
+        $champ_reponse = DB::select('select id,descr_champs,id_qst_fille,nb_max,point_champ from description_champ_reponse ');
+        $qst_mere = DB::select('select id,qst_mere,desc_reponse from question_mere');
+        $qst_fille = DB::select('select id,qst_fille,id_type_champs,id_qst_mere,desc_champ from v_question_fille');
+        $data = DB::select('select cfp_id,nom_cfp,groupe_id,nom_groupe,date_debut,date_fin,nom_formation,nom_module from v_stagiaire_groupe where groupe_id = ? and stagiaire_id = ?',[request()->groupe,$stg_id])[0];
         return view("admin.evaluation.evaluationChaud.evaluationChaud", compact('data', 'champ_reponse', 'qst_mere', 'qst_fille'));
     }
 
@@ -57,19 +54,15 @@ class EvaluationChaudController extends Controller
 
             $note = $request->nb_qst_fille_1;
             $commentaire = $request->txt_qst_fille_20;
-            $module = $fonct->findWhereMulitOne("v_stagiaire_groupe",["groupe_id","stagiaire_id"],[$request->groupe,$stg_id]);
+            $module = DB::select('select cfp_id,groupe_id,stagiaire_id from v_stagiaire_groupe where groupe_id = ? and stagiaire_id = ?',[request()->groupe,$stg_id])[0];
             DB::insert('insert into avis(stagiaire_id,module_id,note,commentaire,status,date_avis) value(?,?,?,?,?,?)',[$stg_id,$module->module_id,$note,$commentaire,'Fini',date('Y-m-d')]);
             $evaluation = new EvaluationChaud();
-
             $message = $evaluation->verificationEvaluation($module->stagiaire_id,$module->groupe_id,$module->cfp_id,$request);
-
             DB::commit();
-
             return redirect()->route('liste_projet',[1]);
-            // return back()->with('avis','avis pour la formation');
         }catch(Exception $e){
             DB::rollback();
-            return redirect()->back()->with('error_evaluation',$message);
+            return redirect()->back()->with('error_evaluation',$e->getMessage());
         }
     }
 
@@ -79,23 +72,6 @@ class EvaluationChaudController extends Controller
         $stagiaire_id = stagiaire::where('user_id',$id_user)->value('id');
         DB::insert('insert into avis(stagiaire_id,module_id,note,commentaire,status,date_avis) value(?,?,?,?,?)',[$stagiaire_id,$request->module_id,$request->note,$request->commentaire,'Fini',date('Y-m-d')]);
         return redirect()->route('execution');
-    }
-
-    public function show(Request $request)
-    {
-        $fonct = new FonctionGenerique();
-        $id_user = Auth::user()->id;
-        $stagiaire_id = stagiaire::where('user_id',$id_user)->value('id');
-        $stagiaire =  $fonct->findWhereMulitOne("v_stagiaire_groupe",["stagiaire_id","groupe_id"],[$stagiaire_id,$request->groupe]);
-        $evaluation = new EvaluationChaud();
-        // $data = $evaluation->findDetailProject($matricule); // return les information du project avec detail et information du stagiaire
-        $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
-        $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-        // $stagiaire = $data['stagiaire'];
-        // $detail = $data['detail'];
-        $evaluation_detail = $evaluation->getDetailResponseEvaluationChaud($stagiaire_id);
-
-        return view("admin.evaluation.evaluationChaud.detailEvaluationChaud", compact( 'stagiaire', 'qst_mere', 'qst_fille', 'evaluation_detail'));
     }
 
     public function edit($id)
@@ -174,7 +150,7 @@ class EvaluationChaudController extends Controller
 
             //le rythme de la formation
             // q7
-                $res_q7 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? and point < 4 order by point desc',[$groupe,10]);
+                $res_q7 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? order by point desc',[$groupe,10]);
                 if(count($res_q7)<=0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }

@@ -11,8 +11,8 @@
 {{-- <div class="container-fluid pb-1" id="Page1">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();">
         <i class='bx bx-filter icon_creer'></i>Afficher les filtres
-    </a>
-    <div class="m-4" role="tabpanel" >
+    </a> --}}
+    {{-- <div class="m-4" role="tabpanel" >
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
@@ -22,7 +22,7 @@
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
-            </li>
+            </li> --}}
             {{-- <a href="#" onclick="return show('Page2','Page1');" title="afficher en mode liste"><i class='bx bx-list-ul view_icon'></i></a> --}}
         {{-- </ul>
 
@@ -178,8 +178,8 @@
                                                         <p class="text-center text-muted">Continuer ?</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
                                                         <button type="button" class="btn btn_enregistrer suppression_module" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -199,8 +199,8 @@
                                                         <p class="text-center">Vous allez mettre en ligne cette module. Êtes-vous sur?</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_annuler non_en_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
                                                         <button type="submit" class="btn btn_enregistrer mettre_en_ligne" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_annuler non_en_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -367,8 +367,8 @@
                                                         <p class="text-center text-muted">Continuer ?</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
                                                         <button type="button" class="btn btn_enregistrer suppression_module" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -388,8 +388,8 @@
                                                         <p class="text-center">Vous allez mettre hors ligne cette module. Êtes-vous sur?</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_annuler non_hors_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
                                                         <button type="submit" class="btn btn_enregistrer mettre_hors_ligne" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_annuler non_hors_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -434,8 +434,8 @@
                                         <p id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</p>
                                     </div>
                                 <div class="modal-footer justify-content-center">
-                                    <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
                                     <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Créer votre module</button>
+                                    <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
                                 </div>
                             </form>
                         </div>
@@ -904,8 +904,8 @@
                                                 <p class="text-center text-muted">Continuer ?</p>
                                             </div>
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
-                                                <button type="button" class="btn btn_enregistrer suppression_module" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                <button type="button" class="btn btn_enregistrer suppression_module" id="{{$info->module_id}}"><i class='bx bx-trash me-1'></i>Supprimer</button>
+                                                <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                             </div>
                                         </div>
                                     </div>
@@ -925,8 +925,8 @@
                                                 <p class="text-center text-muted">Vous allez mettre en ligne cette module. Êtes-vous sur?</p>
                                             </div>
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn btn_annuler non_en_ligne" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
-                                                <button type="submit" class="btn btn_enregistrer mettre_en_ligne" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                <button type="submit" class="btn btn_enregistrer mettre_en_ligne" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>En ligne</button>
+                                                <button type="button" class="btn btn_annuler non_en_ligne" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1146,8 +1146,8 @@
                                                 <p class="text-center text-muted">Continuer ?</p>
                                             </div>
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
-                                                <button type="button" class="btn btn_enregistrer suppression_module" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                <button type="button" class="btn btn_enregistrer suppression_module" id="{{$info->module_id}}"><i class='bx bx-trash me-1'></i>Supprimer</button>
+                                                <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1167,8 +1167,8 @@
                                                 <p class="text-center">Vous allez mettre hors ligne cette module. Êtes-vous sur?</p>
                                             </div>
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn btn_annuler non_hors_ligne" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
-                                                <button type="submit" class="btn btn_enregistrer mettre_hors_ligne" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                <button type="submit" class="btn btn_enregistrer mettre_hors_ligne" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Hors Ligne</button>
+                                                <button type="button" class="btn btn_annuler non_hors_ligne" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1439,6 +1439,9 @@ if(ActiveTabMod){
     $('#myTab a[href="' + ActiveTabMod + '"]').tab('show');
     $('#myTab a[href="' + ActiveTabMod + '"]').addClass('active');
 }
+
+
+
 function show(shown, hidden) {
     document.getElementById(shown).style.display='block';
     document.getElementById(hidden).style.display='none';
@@ -1511,5 +1514,6 @@ $(".mettre_hors_ligne").on('click', function(e) {
         }
     });
 });
+
 </script>
 @endsection

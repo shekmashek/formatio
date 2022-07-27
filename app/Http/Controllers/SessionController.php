@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Mail;
 use phpseclib3\Crypt\RC2;
 use App\Mail\acceptation_session;
 use App\Mail\annuler_session;
+use App\Mail\invitation_ajouter_employer;
 use App\Models\getImageModel;
 use App\Presence;
 use PDF;
@@ -154,25 +155,6 @@ class SessionController extends Controller
             }
 
             $frais_annex = DB::select("select * from v_montant_frais_annexe where cfp_id=?",[$cfp_id]);
-            // if(count($frais_annex)>0){
-            //     if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id  && $frais_annex[0]->projet_id == $projet[0]->projet_id){
-            //         $frais_annex[0] = $frais_annex[0]->hors_taxe;
-            //     }
-            //     else{
-            //         $frais_annex[0] =null;
-            //     }
-            // }
-
-            // if(count($dataMontantSession)>0){
-            //     if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id){
-            //         $dataMontantSession[0]->qte = $dataMontantSession[0]->qte;
-            //         $dataMontantSession[0]->hors_taxe = $dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session;
-            //     }
-            //     else{
-            //         $dataMontantSession[0]->qte = null;
-            //         $dataMontantSession[0]->hors_taxe=null;
-            //     }
-            // }
             if(count($frais_annex)>0){
 
                 if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id && $frais_annex[0]->projet_id == $projet[0]->projet_id){
@@ -183,16 +165,9 @@ class SessionController extends Controller
                 }
             }
 
-            // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
-            // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
             $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
 
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
-            // dd($cfp_nom);
-            // $drive = new getImageModel();
-            // $drive->create_folder($cfp_nom);
-            // $drive->create_sub_folder($cfp_nom, "Mes documents");
-            // $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
         if(Gate::allows('isReferent') or Gate::allows('isReferentSimple') or Gate::allows('isManager') or Gate::allows('isChefDeService')){
@@ -709,6 +684,23 @@ class SessionController extends Controller
 
     }
 
+    public function rapport_presence(Request $request){
+        try{
+            $groupe = $request->groupe;
+                $info_groupe = DB::select('select groupe_id,type_formation_id,nom_groupe,date_debut,date_fin,nom_cfp,mail_cfp,nom_module,entreprise_id,nom_etp,email_etp from v_groupe_projet_module g join entreprises e on g.entreprise_id = e.id where groupe_id = ?', [$groupe])[0];
+                $data_detail = DB::select('select groupe_id,stagiaire_id,detail_id,statut_presence from v_emargement where groupe_id = ? order by detail_id asc',[$groupe]);
+                $data_session = DB::select('select groupe_id,stagiaire_id,nom_stagiaire,matricule,prenom_stagiaire,photos,sans_photos,statut_presence_groupe_text,statut_presence_groupe,nombre_presence from v_rapport_presence where groupe_id = ?',[$groupe]);
+                if(count($data_session)<1){
+                    throw new Exception('Fiche de présence pas encore disponible.');
+                }
+                $seances = DB::select('select id,date_detail,h_debut,h_fin from details where groupe_id = ? order by id asc',[$groupe]);
+                return view('projet_session.rapport_presence', compact('data_session','data_detail','info_groupe','seances'));
+        }catch(Exception $e){
+            return back()->with('pdf_error',$e->getMessage());
+        }
+    }
+
+
 
     //Affiche infos session
     //etp
@@ -756,5 +748,19 @@ class SessionController extends Controller
                 ->get();
 
         return response()->json($info);
+    }
+
+    public function invitation_ajouter_employer(Request $request){
+        $fonct = new FonctionGenerique();
+        $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
+        $name_session = $session->nom_groupe;
+        $employe = $request->employe;
+        $name_cfp = $session->nom_cfp;
+        $date_debut = $session->date_debut;
+        $date_fin = $session->date_fin;
+        $mail_acteur = $session->mail_cfp;
+        $mail_etp = $session->email_etp;
+        Mail::to($mail_etp)->send(new invitation_ajouter_employer($mail_acteur,$name_session,$name_cfp,$date_debut,$date_fin,$employe));
+        return back();
     }
 }

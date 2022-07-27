@@ -4,7 +4,6 @@
 @endsection
 @inject('groupe', 'App\groupe')
 @section('content')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/ConfigAll.css')}}"> --}}
 <style>
     .td_hover:hover{
         background: #f0f0f0;
@@ -44,81 +43,102 @@
     .warning{
     color: #f64f59;
     font-size: 4rem;
-}
-    #in2{
-        cursor:default;
     }
+        #in2{
+            cursor:default;
+        }
 
-    .main{
+        .main{
+            cursor: pointer;
+        }
+
+        .navigation_module .nav-link {
+        color: #637381;
+        padding: 5px;
         cursor: pointer;
+        font-size: 0.900rem;
+        transition: all 200ms;
+        margin-right: 1rem;
+        text-transform: uppercase;
+        padding-top: 10px;
+        border: none;
     }
 
-    .navigation_module .nav-link {
-    color: #637381;
-    padding: 5px;
-    cursor: pointer;
-    font-size: 0.900rem;
-    transition: all 200ms;
-    margin-right: 1rem;
-    text-transform: uppercase;
-    padding-top: 10px;
-    border: none;
-}
+    .nav-item .nav-link.active {
+        border-bottom: 3px solid #7635dc !important;
+        border: none;
+        color: #7635dc;
+    }
 
-.nav-item .nav-link.active {
-    border-bottom: 3px solid #7635dc !important;
-    border: none;
-    color: #7635dc;
-}
-
-.nav-tabs .nav-link:hover {
-    background-color: rgb(245, 243, 243);
-    transform: scale(1.1);
-    border: none;
-}
-.nav-tabs .nav-item a{
-    text-decoration: none;
-    text-decoration-line: none;
-}
+    .nav-tabs .nav-link:hover {
+        background-color: rgb(245, 243, 243);
+        transform: scale(1.1);
+        border: none;
+    }
+    .nav-tabs .nav-item a{
+        text-decoration: none;
+        text-decoration-line: none;
+    }
 
 
-#tabDynamique{
-    background-color: #70d061;
-    border-radius: 3px;
-}
+    #tabDynamique{
+        background-color: #70d061;
+        border-radius: 3px;
+    }
 
-#tabDynamique:hover{
-    background-color: #4db53e;
-    border-radius: 3px;
-}
+    #tabDynamique:hover{
+        background-color: #4db53e;
+        border-radius: 3px;
+    }
 
-#text{
-    color: white;
-}
+    #text{
+        color: white;
+    }
 
-#text:hover{
-    color: rgb(255, 255, 255);
-}
+    #text:hover{
+        color: rgb(255, 255, 255);
+    }
 
-th{
-    font-weight: 300;
-    font-size: 14px
-}
+    th{
+        font-weight: 300;
+        font-size: 14px
+    }
 
-.form-check-input:disabled{
-    opacity: 1 !important;
-}
+    .form-check-input:disabled{
+        opacity: 1 !important;
+    }
 
-.form-switch .form-check-input:not(checked){
-    border-color: #939393;
-    color: #0d6efd
-}
+    .form-switch .form-check-input:not(checked){
+        border-color: #939393;
+        color: #0d6efd
+    }
+
+    #modifTable_filter label, #modifTable_length label, #modifTable_length select, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
+        font-size: 13px;
+    }
+
+    .redClass{
+        color: #f44336 !important;
+    }
+
+    .arrowDrop{
+        color: #1e9600;
+        transition: 0.3s !important;
+        transform: rotate(360deg) !important;
+    }
+    .mivadika{
+        transform: rotate(180deg) !important;
+        color: red !important;
+        transition: 0.3s !important;
+    }
+
+    #example_length select{
+        height: 25px;
+        font-size: 13px;
+        vertical-align: middle;
+    }
+
 </style>
-
-
-
-{{--  --}}
-
 
 <div class="container-fluid pb-1">
     <div class="container mt-3 p-1 mb-1">
@@ -158,37 +178,44 @@ th{
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row">
                         <div class="col-lg-12">
-
-                            <table class="mt-4 table  table-borderless table-lg">
-                                <thead class="thead_projet" style="border-bottom: 1px solid black;">
-                                    <th></th>
-                                    <th>Nom</th>
-                                    <th>E-mail</th>
-                                    <th>Téléphone</th>
-                                    <th>Fonction</th>
-                                    {{-- @if($resp_connecte->prioriter == 1) --}}
-                                        <th class="text-center">Réferent principale</th>
-                                        <th class="text-center">Activer</th>
-                                    {{-- @endif --}}
-
+                            <table class="mt-4 table  table-borderless table-lg" id="modifTable">
+                                <thead class="thead_projet" style="border-bottom: 1px solid black; background: #c7c9c939">
+                                    <tr>
+                                        <th></th>
+                                        <th class="headEtp">Nom</th>
+                                        <th class="headEtp">E-mail</th>
+                                        <th class="headEtp">Téléphone</th>
+                                        <th class="headEtp">Fonction</th>
+                                        <th class="text-center headEtp">Réferent principale</th>
+                                        <th class="text-center headEtp">Activer</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <tbody id="data_collaboration" style="font-size: 11.5px;">
                                     @foreach($cfp as $responsables_cfp)
-                                        <tr class="information" data-id="" >
+                                        <tr class="information">
                                             @if($responsables_cfp->photos_resp_cfp == NULL or $responsables_cfp->photos_resp_cfp == '' or $responsables_cfp->photos_resp_cfp == 'XXXXXXX')
-                                                <td role="button" class="randomColor m-auto mt-2 text-uppercase" style="width:40px;height:40px; border-radius:100%; color:white; display: grid; place-content: center"><span class=""> {{$responsables_cfp->nom}} {{$responsables_cfp->pr}} </span></td>
+                                                <td role="button" class="randomColor m-auto mt-2 text-uppercase" style="width:40px;height:40px; border-radius:100%; color:white; display: grid; place-content: center">
+                                                    <span class=""> {{$responsables_cfp->nom}} {{$responsables_cfp->pr}} </span>
+                                                </td>
                                             @else
-                                                <td class="td_hover" role="button" style="display: grid; place-content: center"><img src="{{asset("images/responsables/".$responsables_cfp->photos_resp_cfp)}}" style="width:40px;height:40px; border-radius:100%"></td>
+                                                <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                                    <img src="{{asset("images/responsables/".$responsables_cfp->photos_resp_cfp)}}" style="width:40px;height:40px; border-radius:100%">
+                                                </td>
                                             @endif
-                                            <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->nom_resp_cfp}} &nbsp; {{$responsables_cfp->prenom_resp_cfp}}</td>
-                                            {{-- <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->prenom_resp_cfp}}</td> --}}
-                                            <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->email_resp_cfp}}</td>
-                                            <td class="td_hover" role="button" style="vertical-align: middle">
+                                            <td style="vertical-align: middle">
+                                                {{$responsables_cfp->nom_resp_cfp}} &nbsp; {{$responsables_cfp->prenom_resp_cfp}}
+                                            </td>
+                                            {{-- <td style="vertical-align: middle">{{$responsables_cfp->prenom_resp_cfp}}</td> --}}
+                                            <td style="vertical-align: middle">
+                                                {{$responsables_cfp->email_resp_cfp}}
+                                            </td>
+                                            <td style="vertical-align: middle">
                                                 @php
                                                   echo $groupe->formatting_phone($responsables_cfp->telephone_resp_cfp);
                                                 @endphp
                                             </td>
-                                            <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
+                                            <td style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
 
                                             <td style="vertical-align: middle" class="text-center">
                                                 @if($responsables_cfp->prioriter == 1 && $responsables_cfp->activiter == 1 && $responsables_cfp->id == $resp_connecte->id)
@@ -237,7 +264,6 @@ th{
                                                         @endif
                                                 </td>
                                             </td>
-
                                         </tr>
                                         <div class="modal fade mt-5" id="staticBackdrop_{{$responsables_cfp->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -337,85 +363,178 @@ th{
         </div>
     </div>
 </div>
-
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-<script>
-
-
-            var el = document.getElementById("in2");
-
-            function fadeIn(el, time) {
-                el.style.opacity = 0;
-
-                var last = +new Date();
-                var tick = function() {
-                    el.style.opacity = +el.style.opacity + (new Date() - last) / time;
-                    last = +new Date();
-
-                    if (+el.style.opacity < 1) {
-                        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 10);
-                    }
-                };
-
-                tick();
-            }
-
-    $(".randomColor").each(function() {
-        //On change la couleur de fond au hasard
-            $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
-        });
-
-     $(".non_active2").on('click', function(e) {
-        let id = e.target.id;
-        let id2 = $("#switch_"+id).val();
-        $("#switch_"+id).prop('checked',false);
-     });
-
-     $(".non_active").on('click', function(e) {
-        let id = e.target.id;
-        let id2 = $("#switch_"+id).val();
-        $("#switch2_"+id).prop('checked',true);
-     });
-
-    //  $('.container-fluid').click(function (event){
-    //     if(!$(event.target).closest('#openModal').length && !$(event.target).is('#openModal')){
-    //         event.preventDefault();
-    //         // window.location.reload();
-    //     }
-    // });
-
-     $('.desactiver_personne').on('click',function(e){
-        let id = e.target.id;
-        // let id = $(this).val();
-        // console.log(id);
-        $.ajax({
-            method: "GET"
-            , url: "{{route('desactiver_personne')}}"
-            , data: {Id : id}
-            , success: function(response) {
-                window.location.reload();
-            }
-            , error: function(error) {
-                console.log(error)
-            }
-        });
-     });
-
-     $('.activer_personne').on('click',function(e){
-        let id = e.target.id;
-        $.ajax({
-            method: "GET"
-            , url: "{{route('activer_personne')}}"
-            , data: {Id : id}
-            , success: function(response) {
-                window.location.reload();
-            }
-            , error: function(error) {
-                console.log(error)
-            }
-        });
-     });
-
-</script>
 @endsection
+@section('script')
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    <script>
+        $(document).ready(function () {
+            $('#modifTable thead tr:eq(1) th').each( function () {
+                var title = $(this).text();
+                $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
+                // $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
+                $( "th.hideActive > input" ).prop( "disabled", true ).attr( "placeholder", "" );
+            } );
+
+            function searchByColumn(table){
+                var defaultSearch = 0;
+
+                $(document).on('change keyup', '#select-column', function(){
+                    defaultSearch = this.value; 
+                });
+
+                $(document).on('change keyup', '#search-by-column', function(){
+                    table.search('').column().search('').draw();
+                    table.column(defaultSearch).search(this.value).draw();
+                });
+            }
+            
+            $( '#modifTable thead'  ).on( 'keyup', ".column_search",function () {
+        
+                table
+                    .column( $(this).parent().index() )
+                    .search( this.value )
+                    .draw();
+            } );
+
+            var table = $('#modifTable').removeAttr('width').DataTable({
+                initComplete : function() {
+                    $("#myDatatablesa_filter").detach().appendTo('#new-search-area');
+                },
+                scrollY:        "500px",
+                // scrollX:        true,
+                // scrollCollapse: true,
+                orderCellsTop: true,
+                fixedHeader: true,
+                "language": {
+                    "paginate": {
+                    "previous": "précédent",
+                    "next": "suivant"
+                    },
+                    "search": "Recherche :",
+                    "zeroRecords":    "Aucun résultat trouvé",
+                    "infoEmpty":      " 0 trouvés",
+                    "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                    "infoFiltered":   "(filtre sur _MAX_ entrées)",
+                    "lengthMenu":     "Affichage _MENU_ ",
+                }
+            });
+            
+            $('input:checkbox').on('change', function () {
+                var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
+                    return '^' + this.value + '$';
+                }).get().join('|');
+                
+                table.column(0).search(Projet, true, false, false).draw(false);
+
+                var Session = $('input:checkbox[name="session"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(1).search(Session, true, false, false).draw(false);
+
+                var Entreprise = $('input:checkbox[name="entreprise"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(3).search(Entreprise, true, false, false).draw(false);
+
+                var Modalite = $('input:checkbox[name="modalite"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(4).search(Modalite, true, false, false).draw(false);
+                
+                var TypeFormation = $('input:checkbox[name="typeFormation"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(8).search(TypeFormation, true, false, false).draw(false);
+                
+                var Module = $('input:checkbox[name="module"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(2).search(Module, true, false, false).draw(false);
+                
+                var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(7).search(Statut, true, false, false).draw(false);
+            
+            });
+
+            searchByColumn(table);
+        });
+
+
+        var el = document.getElementById("in2");
+
+        function fadeIn(el, time) {
+            el.style.opacity = 0;
+
+            var last = +new Date();
+            var tick = function() {
+                el.style.opacity = +el.style.opacity + (new Date() - last) / time;
+                last = +new Date();
+
+                if (+el.style.opacity < 1) {
+                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 10);
+                }
+            };
+
+            tick();
+        }
+
+        $(".randomColor").each(function() {
+                $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
+            });
+
+        $(".non_active2").on('click', function(e) {
+            let id = e.target.id;
+            let id2 = $("#switch_"+id).val();
+            $("#switch_"+id).prop('checked',false);
+        });
+
+        $(".non_active").on('click', function(e) {
+            let id = e.target.id;
+            let id2 = $("#switch_"+id).val();
+            $("#switch2_"+id).prop('checked',true);
+        });
+
+        $('.desactiver_personne').on('click',function(e){
+            let id = e.target.id;
+            $.ajax({
+                method: "GET"
+                , url: "{{route('desactiver_personne')}}"
+                , data: {Id : id}
+                , success: function(response) {
+                    window.location.reload();
+                }
+                , error: function(error) {
+                    console.log(error)
+                }
+            });
+        });
+
+        $('.activer_personne').on('click',function(e){
+            let id = e.target.id;
+            $.ajax({
+                method: "GET"
+                , url: "{{route('activer_personne')}}"
+                , data: {Id : id}
+                , success: function(response) {
+                    window.location.reload();
+                }
+                , error: function(error) {
+                    console.log(error)
+                }
+            });
+        });
+    </script>
+@endsection
+

@@ -1,13 +1,13 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text_header m-0 mt-1">Modification CIN</h3>
+<h3 class="text_header m-0 mt-1">@lang('translation.Modification') @lang('translation.CIN')</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('profil_manager')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bx-chevron-left me-1"></i> Retour</button></a>
+  <a href="{{route('profil_manager')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bx-chevron-left me-1"></i>@lang('translation.Précedent')</button></a>
 </div>
 <center>
 <div class="col-lg-4">
@@ -20,16 +20,13 @@
                             <div class="form-group mt-1 mb-1">
                           <input type="text" value="{{ $chef->cin_chef}}" class="form-control input test"  name="cin" >
 
-                        <label class="ml-3 form-control-placeholder">CIN</label>
+                        <label class="ml-3 form-control-placeholder">@lang('translation.CIN')</label>
                         </div>
                     </div>
                     <select hidden  name="genre" class="form-select test" id="genre">
                       <option value="{{$chef->genre_id}}">{{$chef->genre_id}}</option>
                     </select>
                       <input type="hidden" class="form-control  input test"  name="phone" value="{{ $chef->telephone_chef }}">
-
-
-
                     <input type="hidden" value="   {{ $chef->nom_chef }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
 
@@ -67,7 +64,7 @@
 
 
 
-<button  class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
+<button  class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i>@lang('translation.Enregistrer')</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

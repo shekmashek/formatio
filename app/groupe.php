@@ -233,29 +233,6 @@ class Groupe extends Model
     }
 
     public function dataApprenant($cfp_id, $groupe_id){
-        $type_formation_id = request()->type_formation;
-
-
-        if ($type_formation_id == 1){
-            $projet = DB::table('v_groupe_projet_entreprise')
-                ->select('*')
-                ->where('cfp_id', $cfp_id)
-                ->where('groupe_id', $groupe_id)
-                ->limit(2)
-                ->get();
-
-            $entreprise_id = $projet[0]->entreprise_id;
-
-        }elseif ($type_formation_id == 2){
-            $projet = DB::table('v_projet_session_inter')
-                ->select('*')
-                ->where('cfp_id', $cfp_id)
-                ->where('groupe_id', $groupe_id)
-                ->limit(2)
-                ->get();
-
-        }
-
         $stagiaire = DB::table('v_stagiaire_groupe')
             ->select('*')
             ->where('groupe_id', $groupe_id)

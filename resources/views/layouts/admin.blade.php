@@ -10,15 +10,18 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Formation</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @yield('script')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
@@ -28,8 +31,6 @@
     <link rel="shortcut icon" href="{{asset('img/logos_all/iconFormation.webp') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
     {{-- <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}"> --}}
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
     <style>
         .modal-backdrop{
             z-index: 1 !important;
@@ -148,35 +149,35 @@
             <li>
                 <a href="{{route('categorie')}}" class="d-flex categorie nav_linke">
                     <i class='bx bxs-doughnut-chart'></i>
-                    <span class="links_name">Categories</span>
+                    <span class="links_name">@lang('translation.Categories')</span>
                 </a>
 
             </li>
             <li>
                 <a href="{{route('module')}}" class="d-flex formation nav_linke">
                     <i class='bx bx-book'></i>
-                    <span class="links_name">Formations</span>
+                    <span class="links_name">@lang('translation.Formations')</span>
                 </a>
 
             </li>
             <li>
                 <a href="{{route('crud_formation')}}" class="d-flex crud nav_linke">
                     <i class='bx bx-grid'></i>
-                    <span class="links_name" style="font-size: 10px">Domaine & Formation</span>
+                    <span class="links_name" style="font-size: 10px">@lang('translation.Domaine & Formation')</span>
                 </a>
 
             </li>
             <li>
                 <a href="{{ route('taxes') }}" class="d-flex taxe nav_linke">
                     <i class='bx bx-spreadsheet'></i>
-                    <span class="links_name">Taxe</span>
+                    <span class="links_name">@lang('translation.Taxe')</span>
                 </a>
 
             </li>
             <li>
                 <a href="{{ route('devise') }}" class="d-flex devise nav_linke">
                     <i class='bx bx-receipt'></i>
-                    <span class="links_name">Devise</span>
+                    <span class="links_name">@lang('translation.Devise')</span>
                 </a>
 
             </li>
@@ -187,7 +188,7 @@
                 <a href="{{route('liste_entreprise')}}" class="d-flex entreprise nav_linke">
                     <i class='bx bxs-building-house'></i>
 
-                    <span class="links_name">Entreprises</span>
+                    <span class="links_name">@lang('translation.Entreprises')</span>
                 </a>
                 <span class="badge_invitation"></span>
 
@@ -197,7 +198,7 @@
             <li>
                 <a href="{{route('list_cfp')}}" class="d-flex organisme nav_linke">
                     <i class='bx bxs-business'></i>
-                    <span class="links_name">Organisme</span>
+                    <span class="links_name">@lang('translation.Organisme')</span>
                 </a>
                 <span class="badge_invitation_etp"></span>
 
@@ -239,7 +240,7 @@
             <li>
                 <a href="{{route('formations')}}" class="d-flex nav_linke">
                     <i class='bx bxl-netlify'></i>
-                    <span class="links_name">Formations</span>
+                    <span class="links_name">@lang('translation.Formations')</span>
                 </a>
 
             </li>
@@ -287,7 +288,7 @@
             <li>
                 <a href="{{route('liste_formateur')}}" class="d-flex formateurs nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Formateurs</span>
+                    <span class="links_name">@lang('translation.Formateurs')</span>
                 </a>
 
             </li>
@@ -430,7 +431,7 @@
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex facture nav_linke">
                     <i class='bx bxs-bank'></i>
-                    <span class="links_name">Factures</span>
+                    <span class="links_name">@lang('translation.Factures')</span>
                 </a>
 
             </li>
@@ -474,7 +475,7 @@
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-bar-chart-square'></i>
-                    <span class="links_name">Plan</span>
+                    <span class="links_name">@lang('translation.Plan')</span>
                 </a>
             </li>
             @endcanany
@@ -491,7 +492,7 @@
             <li>
                 <a href="{{route('listeAbonne')}}" class="d-flex abonnees nav_linke">
                     <i class='bx bxl-sketch'></i>
-                    <span class="links_name">Abonnées</span>
+                    <span class="links_name">@lang('translation.Abonnées')</span>
                 </a>
 
             </li>
@@ -526,7 +527,7 @@
             <li>
                 <a href="{{route('profilProf',Auth::user()->id)}}" class="d-flex moncv nav_linke">
                     <i class='bx bxs-notepad'></i>
-                    <span class="links_name">Mon CV</span>
+                    <span class="links_name">@lang('translation.MonCV')</span>
                 </a>
             </li>
 
@@ -589,19 +590,19 @@
                                 <a href="{{route('liste_formation')}}" class="text-center catalogue" role="button"
                                     onclick="afficher_catalogue()"><span class="d-flex flex-column"><i
                                             class='bx bxs-category-alt mb-2 mt-1'></i><span
-                                            class="text_racourcis">Catalogue</span></span></a>
+                                            class="text_racourcis">@lang('translation.Catalogue')</span></span></a>
                             </div>
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('liste_projet')}}" class="text-center annuaire" role="button"
                                     onclick="afficher_annuaire()"><span class="d-flex flex-column"><i
                                             class='bx bx-library mb-2 mt-1'></i><span
-                                            class="text_racourcis">Projets</span></span></a>
+                                            class="text_racourcis">@lang('translation.Projets')</span></span></a>
                             </div>
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('annuaire')}}" class="text-center annuaire" role="button"
                                     onclick="afficher_annuaire()"><span class="d-flex flex-column"><i
                                             class='bx bx-analyse mb-2 mt-1'></i><span
-                                            class="text_racourcis">Annuaire</span></span></a>
+                                            class="text_racourcis">@lang('translation.Annuaire')</span></span></a>
                             </div>
 
                         </div>
@@ -615,14 +616,14 @@
                                 <a href="{{route('calendrier_formation')}}" class="text-center agenda" role="button"><span
                                         class="d-flex flex-column text-center"><i
                                             class='bx bxs-calendar-edit mb-2 mt-1'></i><span
-                                            class="text_racourcis">Agenda</span></span></a>
+                                            class="text_racourcis">@lang('translation.Agenda')</span></span></a>
                             </div>
                             @endcanany
                             @canany(['isReferent','isManager','isChefDeService','isReferentSimple'])
                                 <div class="btn_racourcis me-4">
                                     <a href="{{route('employes.liste')}}" class="employe text-center" role="button"><span
                                             class="d-flex flex-column"><i class='bx bxs-user-detail mb-2 mt-1'></i><span
-                                                class="text_racourcis">employés</span></span></a>
+                                                class="text_racourcis">@lang('translation.Employés')</span></span></a>
                                 </div class="btn_racourcis">
                             @endcanany
                         </div>
@@ -634,24 +635,24 @@
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('liste_module')}}" class="text-center module" role="button"><span
                                         class="d-flex flex-column"><i class='bx bxs-customize mb-2 mt-1'></i><span
-                                            class="text_racourcis">Modules</span></span></a>
+                                            class="text_racourcis">@lang('translation.Modules')</span></span></a>
                             </div>
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('liste_projet')}}" class="text-center projet" role="button"><span
                                         class="d-flex flex-column"><i class='bx bx-library mb-2 mt-1'></i><span
-                                            class="text_racourcis">Projets</span></span></a>
+                                            class="text_racourcis">@lang('translation.Projets')</span></span></a>
                             </div>
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('calendrier')}}" class="text-center agenda" role="button"><span
                                         class="d-flex flex-column"><i class='bx bxs-calendar-week mb-2 mt-1'></i><span
-                                            class="text_racourcis">Agenda</span></span></a>
+                                            class="text_racourcis">@lang('translation.Agenda')</span></span></a>
                             </div>
                             @can('isPremium')
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('liste_equipe_admin')}}" class="text-center equipe" role="button">
                                     <span class="d-flex flex-column">
                                         <i class='bx bxs-user-account mb-2 mt-1'></i>
-                                        <span class="text_racourcis">equipes</span>
+                                        <span class="text_racourcis">@lang('translation.Equipe')</span>
                                     </span>
                                 </a>
                             </div>
@@ -667,48 +668,51 @@
                                 <div class="btn_racourcis me-4">
                                     <a href="{{route('liste_projet')}}" class="text-center projet" role="button"><span
                                             class="d-flex flex-column"><i class='bx bx-library mb-2 mt-1'></i><span
-                                                class="text_racourcis">Projets</span></span></a>
+                                                class="text_racourcis">@lang('translation.Projets')</span></span></a>
                                 </div>
                                 <div class="btn_racourcis me-4">
                                     <a href="{{route('calendrier')}}" class="text-center agenda" role="button"><span
                                             class="d-flex flex-column"><i
                                                 class='bx bxs-calendar-week  mb-2 mt-1'></i><span
-                                                class="text_racourcis">Agenda</span></span></a>
+                                                class="text_racourcis">@lang('translation.Agenda')</span></span></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     @endcanany
                 </div>
-                <div class="col-3 header-right align-items-center">
-                    {{-- <div class="col-12"> --}}
+                <div class="col-3 header-right align-items-center d-flex flex-row">
+                    <div class="col-4"></div>
+                    <div class="col-8">
                         <div class="row justify-content-end">
                             <div class="col-12 text-end icones_header">
+                                <a class="dropdown-toggle p-1" id="dropdownMenuLang" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">@if(Session::get("locale") == "fr") <img src="{{asset('flags/fr.svg')}}" class="me-2" alt="drapeau pays" width="22px" height="22px">@else <img src="{{asset('flags/gb.svg')}}" class="me-2" alt="drapeau pays" width="22px" height="22px">@endif</a>
+                                <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLang">
+                                    <form action="" method="post"></form>
+                                    <li><a class="dropdown-item" href="{{route('locale','en')}}"> <img src="{{asset('flags/gb.svg')}}" class="me-2" alt="drapeau pays" width="16px" height="18px">&nbsp;@lang('translation.Anglais')</a></li>
+                                    <li><a class="dropdown-item" href="{{route('locale','fr')}}"> <img src="{{asset('flags/fr.svg')}}" class="me-2" alt="drapeau pays" width="16px" height="18px">&nbsp;@lang('translation.Français')</a></li>
+                                </ul>
                                 @can('isSuperAdmin')
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
                                         <li><a class="dropdown-item" href="{{route('nouveau_type')}}"> <i
-                                                    class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouveau type
+                                                    class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;@lang('translation.NouveauType')
                                             </a></li>
                                             <li id="abo"><a class="dropdown-item" href="{{route('nouveau_coupon')}}"> <i
-                                                class='bx bx-money '></i>&nbsp;Nouveau coupon
+                                                class='bx bx-money '></i>&nbsp;@lang('translation.NouveauCoupon')
                                         </a></li>
                                         <li id="formation"><a class="dropdown-item" href="{{route('nouveau_formation')}}"> <i
-                                            class='bx bx-cross '></i>&nbsp;Nouvelle formation
+                                            class='bx bx-cross '></i>&nbsp;@lang('translation.NouvelleFormation')
                                         </a></li>
                                     </ul>
                                 @endcan
                                 @canany(['isManager','isChefDeService'])
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
-                                        <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
-                                                    class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
-                                                stagiaire</a></li>
-                                        <li id="formation"><a class="dropdown-item" href="{{route('ajout_plan')}}"> <i
-                                                    class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de
-                                                formation</a></li>
+                                        <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;@lang('translation.NouvelleDemmandeStagiaire')</a></li>
+                                        <li id="formation"><a class="dropdown-item" href="{{route('ajout_plan')}}"> <i class='bx bx-scatter-chart icon_plus'></i>&nbsp;@lang('translation.NouvellePlanDeFormation')</a></li>
                                         <li id="BI"><a class="dropdown-item" href="{{route('budget')}}"><i
-                                                    class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
+                                                    class="fas fa-money-check icon_plus"></i>&nbsp;@lang('translation.Budgetisation')</a></li>
                                     </ul>
                                 @endcanany
                                 @canany(['isReferent','isReferentSimple'])
@@ -716,12 +720,12 @@
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
                                         <li id="employe">
                                             <a class="dropdown-item" href="{{route('employes.new')}}">
-                                                <i class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés
+                                                <i class="fas fa-user icon_plus  "></i>&nbsp; @lang('translation.NouveauEmployés')
                                             </a>
                                         </li>
                                         <li id="employe">
                                             <a class="dropdown-item" href="{{route('projet_interne/creation')}}">
-                                                <i class="bx bx-library icon_plus  "></i>&nbsp; Projet Interne
+                                                <i class="bx bx-library icon_plus  "></i>&nbsp; @lang('translation.ProjetInterne')
                                             </a>
                                         </li>
                                     </ul>
@@ -729,27 +733,27 @@
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuParametre">
                                         <li id="parametre">
                                             <a class="dropdown-item" href="{{route('aff_parametre_referent')}}">
-                                                <i class="bx bx-info-circle icon_plus  "></i>&nbsp; Information légales
+                                                <i class="bx bx-info-circle icon_plus  "></i>&nbsp; @lang('translation.InformationLégales')
                                             </a>
                                         </li>
                                         <li id="abo">
                                             <a class="dropdown-item" href="{{route('ListeAbonnement')}}">
-                                                <i class="bx bxl-sketch icon_plus  "></i>&nbsp; Abonnement
+                                                <i class="bx bxl-sketch icon_plus  "></i>&nbsp; @lang('translation.Abonnement')
                                             </a>
                                         </li>
                                         <li id="equipe">
                                             <a class="dropdown-item" href="{{route('liste_departement')}}">
-                                                <i class="fas fa-user icon_plus  "></i>&nbsp; Structure de l'entreprise
+                                                <i class="fas fa-user icon_plus  "></i>&nbsp; @lang('translation.StructureEntreprise')
                                             </a>
                                         </li>
 
                                         <li id="parametre">
                                             <a class="dropdown-item" href="{{route('parametrage_frais_annexe')}}">
-                                                <i class="bx bx-money-withdraw icon_plus  "></i>&nbsp; Frais annexes
+                                                <i class="bx bx-money-withdraw icon_plus  "></i>&nbsp; @lang('translation.FraisAnnexes')
                                             </a>
                                         </li>
                                         <li id="parametre"><a class="dropdown-item" href="{{route('parametrage_salle_etp')}}">
-                                            <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
+                                            <i class='bx bxs-door-open icon_plus'></i>&nbsp;@lang('translation.SalleDeFormation')
                                         </a></li>
                                     </ul>
                                 @endcanany
@@ -760,14 +764,14 @@
                                             @can('isPremium')
                                                 <li id="equipe">
                                                     <a class="dropdown-item" href="{{route('liste+responsable+cfp')}}">
-                                                        <i class="bx bx-user icon_plus"></i>&nbsp; Nouveau réferent
+                                                        <i class="bx bx-user icon_plus"></i>&nbsp; @lang('translation.NouveauRéferent')
                                                     </a>
                                                 </li>
                                             @endcan
                                         @endcan
                                         <li>
                                             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button">
-                                                <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
+                                                <i class="bx bx-customize icon_plus"></i>&nbsp; @lang('translation.NouveauModule')
                                             </a>
                                         </li>
                                         {{-- <li id="formateurs">
@@ -779,19 +783,19 @@
                                             <li id="projet">
                                                 <a class="dropdown-item"
                                                     href="{{route('nouveau_groupe_inter',['type_formation'=>2])}}">
-                                                    <i class='bx bx-library icon_plus'></i>&nbsp;Projet Inter
+                                                    <i class='bx bx-library icon_plus'></i>&nbsp;@lang('translation.ProjetInter')
                                                 </a>
                                             </li>
                                         @endcan
                                         <li id="projet">
                                             <a class="dropdown-item"
                                                 href="{{route('nouveau_groupe',['type_formation'=>1])}}">
-                                                <i class="bx bx-library icon_plus"></i>&nbsp; Projet Intra
+                                                <i class="bx bx-library icon_plus"></i>&nbsp; @lang('translation.ProjetIntra')
                                             </a>
                                         </li>
                                         <li id="facture">
                                             <a class="dropdown-item" href="{{route('facture')}}">
-                                                <i class='bx bxs-bank icon_plus'></i>&nbsp;Nouvelle Facture
+                                                <i class='bx bxs-bank icon_plus'></i>&nbsp;@lang('translation.NouvelleFacture')
                                             </a>
                                         </li>
                                     </ul>
@@ -800,17 +804,17 @@
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuParametre">
                                             <li id="parametre">
                                                 <a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}">
-                                                    <i class="bx bx-info-circle icon_plus  "></i>&nbsp; Information légales
+                                                    <i class="bx bx-info-circle icon_plus  "></i>&nbsp; @lang('translation.InformationLégales')
                                                 </a>
                                             </li>
                                             <li id="abo">
                                                 <a class="dropdown-item" href="{{route('ListeAbonnement')}}">
-                                                    <i class="bx bxl-sketch icon_plus"></i>&nbsp;Abonnement
+                                                    <i class="bx bxl-sketch icon_plus"></i>&nbsp;@lang('translation.Abonnement')
                                                 </a>
                                             </li>
                                             <li id="parametre">
                                                 <a class="dropdown-item" href="{{route('parametrage_salle')}}">
-                                                    <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
+                                                    <i class='bx bxs-door-open icon_plus'></i>&nbsp;@lang('translation.SalleDeFormation')
                                                 </a>
                                             </li>
                                         </ul>
@@ -823,26 +827,26 @@
                                             <div class="row">
                                                 <div class="col-4 px-0 logo_suite">
                                                     @can('isManagerPrincipale')
-                                                        <a href="{{route('profil_manager')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
+                                                        <a href="{{route('profil_manager')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">@lang('translation.compte')</span></a>
                                                     @endcan
                                                     @can('isFormateurPrincipale')
-                                                        <a href="{{route('profile_formateur')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
+                                                        <a href="{{route('profile_formateur')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">@lang('translation.compte')</span></a>
                                                     @endcan
                                                     @can('isStagiairePrincipale')
-                                                        <a href="{{route('profile_stagiaire')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
+                                                        <a href="{{route('profile_stagiaire')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">@lang('translation.compte')</span></a>
                                                     @endcan
                                                     @canany(['isReferent','isReferentSimple'])
-                                                        <a href="{{route('profil_referent')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
+                                                        <a href="{{route('profil_referent')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">@lang('translation.compte')</span></a>
                                                     @endcanany
                                                     @can('isCFPPrincipale')
-                                                        <a href="{{route('profil_du_responsable')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
+                                                        <a href="{{route('profil_du_responsable')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">@lang('translation.compte')</span></a>
                                                     @endcan
                                                 </div>
                                                 <div class="col-4 px-0 logo_suite">
                                                     <a href="#" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconFormation.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span>formation</span></a>
                                                 </div>
                                                 <div class="col-4 px-0 logo_suite">
-                                                    <a href="#" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconPaie.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span>paie</span></a>
+                                                    <a href="http://127.0.0.1:8002/fiche" target="_blank" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconPaie.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span>paie</span></a>
                                                 </div>
                                             </div>
                                             <div class="row mt-4">
@@ -856,6 +860,19 @@
                                                     <a href="http://127.0.0.1:8000/home" target="_blank" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconRecrutement.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span>recrutement</span></a>
                                                 </div>
                                             </div>
+                                            @canany(['isReferent','isCFP'])
+                                            <div class="row mt-4">
+                                                <div class="col-4 px-0 logo_suite">
+                                                    <a href="http://127.0.0.1:8001/" target="_blank" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconRh.webp')}}" alt="logo formation" width="50px" height="45px" class="img-responsive mb-1"><span class="mt-1">RH.mg</span></a>
+                                                </div>
+                                                <div class="col-4 px-0 logo_suite">
+                                                    <a href="#" target="_blank" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconRecrutement.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span class="mt-2">recrutement</span></a>
+                                                </div>
+                                                <div class="col-4 px-0 ">
+                                                    {{-- <a href="#" class="text-center justify-content-center d-flex flex-column"><img src="{{asset('img/logos_all/iconConge.webp')}}" alt="logo formation" width="35px" height="35px" class="img-responsive mb-2"><span>congé</span></a> --}}
+                                                </div>
+                                            </div>
+                                            @endcanany
                                         </div>
                                     </div>
                                 </div>
@@ -870,7 +887,7 @@
                                                 <div class="col-5 text-center">
                                                     <div class="logout">
                                                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"></a>
-                                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class=" text-center">Se déconnecter</a>
+                                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class=" text-center">@lang('translation.SeDéconnecter')</a>
                                                         <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
                                                             @csrf
                                                         </form>
@@ -899,7 +916,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                                            <span class="text-muted p-0 test_font">Connécté en tant que :</span>
+                                                            <span class="text-muted p-0 test_font">@lang('translation.ConnéctéEnTantQue') :</span>
                                                         </div>
                                                         <div class="col p-0">
                                                             <ul id="liste_role" class="d-flex flex-column"></ul>
@@ -908,20 +925,20 @@
                                                     <div class="row mt-5">
                                                         <div class="d-flex flex-row py-0 justify-content-center">
                                                             <a href="{{url('politique_confidentialite')}}" target="_blank">
-                                                                <p class="m-0 test_font2">Politique de confidentialité</p>
+                                                                <p class="m-0 test_font2">@lang('translation.PolitiqueDeConfidentialité')</p>
                                                             </a>
                                                             &nbsp;-&nbsp;
                                                             <a href="{{route('condition_generale_de_vente')}}" target="_blank">
-                                                                <p class="m-0 test_font2">Conditions d'utilisation</p>
+                                                                <p class="m-0 test_font2">@lang('translation.ConditionsDUtilisation')</p>
                                                             </a>
                                                         </div>
                                                         <div class="d-flex flex-row py-0 justify-content-center">
                                                             <a href="{{url('contacts')}}" target="_blank">
-                                                                <p class="m-0 test_font2">Contactez-nous</p>
+                                                                <p class="m-0 test_font2">@lang('translation.Contactez-nous')</p>
                                                             </a>
                                                             &nbsp;-&nbsp;
                                                             <a href="{{url('info_legale')}}" target="_blank">
-                                                                <p class="m-0 test_font2">Informations légales</p>
+                                                                <p class="m-0 test_font2">@lang('translation.InformationLégales')</p>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -932,7 +949,7 @@
                                 </div>
                             </div>
                         </div>
-                    {{-- </div> --}}
+                    </div>
                 </div>
                 @can('isCFP')
                     <div>
@@ -944,13 +961,23 @@
                                         @csrf
                                         <div class="modal-header .avertissement  d-flex justify-content-center"
                                             style="color: white">
-                                            <h6 class="modal-title">Domaine de Formation</h6>
+<<<<<<< HEAD
+                                            <h6 class="modal-title">@lang('translation.DomaineDeFormation')</h6>
                                         </div>
                                         <div class="modal-body mb-3">
                                             <div class="form-group" >
                                                 <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 40px;" required>
+                                                    <option value="null" disable selected hidden>@lang('translation.ChoisissezLaDomaineDeFormation') ...</option>
+=======
+                                            <h6 class="modal-title">Créer un Nouveau module</h6>
+                                        </div>
+                                        <div class="modal-body mb-3">
+                                            <div class="form-group" >
+                                                {{-- <p class="text-center">Pour créer un nouveau module choisissez d'abord votre domaine de formation et la thématique</p> --}}
+                                                <select class="form-control select_formulaire input mt-2" id="acf-domaine" name="domaine" style="height: 40px;" required>
                                                     <option value="null" disable selected hidden>Choisissez la
                                                         domaine de formation ...</option>
+>>>>>>> origin/apresLangue
                                                     @php
                                                         $data = $domaine->domaine();
                                                     @endphp
@@ -959,17 +986,22 @@
                                                         {{$do->nom_domaine}}</option>
                                                     @endforeach
                                                 </select>
-                                                <label for="acf-domaine" class="form-control-placeholder mb-2">Domaine de Formation</label>
+                                                <label for="acf-domaine" class="form-control-placeholder mb-2">@lang('translation.DomaineDeFormation')</label>
                                             </div>
                                             <div class="form-group mt-3" >
                                                 <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 40px;" required>
                                                 </select>
-                                                <label for="acf-categorie" class="form-control-placeholder mb-2">Thématique par Domaine</label>
-                                                <p id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</p>
+                                                <label for="acf-categorie" class="form-control-placeholder mb-2">@lang('translation.ThématiqueParDomaine')</label>
+                                                <p id="domaine_id_err" class="text-danger">@lang('translation.ChoisirLeDomaineDeFormationValide')</p>
                                             </div>
                                         <div class="modal-footer justify-content-center">
-                                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+<<<<<<< HEAD
+                                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>@lang('translation.Non')</button>
+                                            <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>@lang('translation.CréerVotreModule')</button>
+=======
                                             <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Créer votre module</button>
+                                            <button type="button" class="btn btn_annuler redirect_annule" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
+>>>>>>> origin/apresLangue
                                         </div>
                                     </form>
                                 </div>
@@ -1003,10 +1035,8 @@
     <script src="{{asset('js/admin.js')}}"></script>
     {{-- <script src="{{asset('js/apprendre.js')}}"></script> --}}
 
-    @if (Route::currentRouteName() != 'calendrier_formation' && Route::currentRouteName() != 'calendrier')
-    {{-- ce script bloque le jquery.min et jquery-ui --}}
-    <script src="{{ asset('assets/js/jquery.js') }}"></script>
-    @endif
+
+
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -1039,7 +1069,7 @@
                         }
                     } else {
                         document.getElementById("domaine_id_err").innerHTML =
-                            "choisir le type de domaine valide pour avoir ses formations";
+                            "@lang('translation.ChoisirLeDomaineDeFormationValide')";
                     }
                 },
                 error: function(error) {
@@ -1108,53 +1138,53 @@
                         $('.badge_invitation_etp').css('display','grid');
                         $('.badge_invitation_etp').css('place-content','center');
                         // alert("aiza");
-                        for (let i = 0; i < response['invitation'].length; i++){
-                            $(".accepte").on("click", function(e) {
-                                let id = $(e.target).closest(".accepte").attr("id");
-                                // alert(id);
-                                $.ajax({
-                                    type: "get",
-                                    url: " {{ route('accept_invitation_cfp_etp_notif') }}",
-                                    data: {
-                                        Id: id,
-                                    },
-                                    success: function(response) {
-                                        $(".invitation_" + id).remove();
-                                        $('.badge_invitation').text("");
-                                        $('.badge_invitation').append(i);
-                                        $('.badge_invitation_etp').text("");
-                                        $('.badge_invitation_etp').append(i);
-                                        toastr.success('Une invitation a été accéptée');
-                                    },
-                                    error: function(error) {
-                                    console.log(error);
-                                    },
-                                });
-                            });
+                        // for (let i = 0; i < response['invitation'].length; i++){
+                        //     $(".accepte").on("click", function(e) {
+                        //         let id = $(e.target).closest(".accepte").attr("id");
+                        //         // alert(id);
+                        //         $.ajax({
+                        //             type: "get",
+                        //             url: " {{ route('accept_invitation_cfp_etp_notif') }}",
+                        //             data: {
+                        //                 Id: id,
+                        //             },
+                        //             success: function(response) {
+                        //                 $(".invitation_" + id).remove();
+                        //                 $('.badge_invitation').text("");
+                        //                 $('.badge_invitation').append(i);
+                        //                 $('.badge_invitation_etp').text("");
+                        //                 $('.badge_invitation_etp').append(i);
+                        //                 toastr.success('Une invitation a été accéptée');
+                        //             },
+                        //             error: function(error) {
+                        //             console.log(error);
+                        //             },
+                        //         });
+                        //     });
 
 
-                            $(".refuse").on("click", function(e) {
-                                let id = $(this).data("id");
-                                $.ajax({
-                                    type: "get",
-                                    url: " {{ route('annulation_cfp_etp_notif') }}",
-                                    data: {
-                                        Id: id,
-                                    },
-                                    success: function(response) {
-                                        $(".invitation_" + id).remove();
-                                        $('.badge_invitation').text("");
-                                        $('.badge_invitation').append(i);
-                                        $('.badge_invitation_etp').text("");
-                                        $('.badge_invitation_etp').append(i);
-                                        toastr.warning('Une invitation à été réfuser');
-                                    },
-                                    error: function(error) {
-                                    console.log(error);
-                                    },
-                                });
-                            });
-                        }
+                        //     $(".refuse").on("click", function(e) {
+                        //         let id = $(this).data("id");
+                        //         $.ajax({
+                        //             type: "get",
+                        //             url: " {{ route('annulation_cfp_etp_notif') }}",
+                        //             data: {
+                        //                 Id: id,
+                        //             },
+                        //             success: function(response) {
+                        //                 $(".invitation_" + id).remove();
+                        //                 $('.badge_invitation').text("");
+                        //                 $('.badge_invitation').append(i);
+                        //                 $('.badge_invitation_etp').text("");
+                        //                 $('.badge_invitation_etp').append(i);
+                        //                 toastr.warning('Une invitation à été réfuser');
+                        //             },
+                        //             error: function(error) {
+                        //             console.log(error);
+                        //             },
+                        //         });
+                        //     });
+                        // }
                     }
                 }
                 , error: function(error) {
@@ -1211,10 +1241,11 @@
         ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
         ($('.btn_racourcis a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     }
+
+
 </script>
 
 @stack('extra-js')
-
 </body>
 
 </html>

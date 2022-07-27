@@ -441,14 +441,6 @@
             font-size: 14px;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
-        integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <div class="p-3 bg-body rounded ">
         <nav class="body_nav m-0">
             <div class="row">
@@ -686,7 +678,7 @@
                     @endcanany
 
                 </div>
-            </div>
+            </div><i class='bx bx-check-circle'></i>
         </section> --}}
     <section>
         <div class="row p-0 d-flex flex-row" role="tabpanel">
@@ -701,10 +693,10 @@
                                 onclick="openCity(event, 'detail')" style="width: 100%">
                                 <p class="m-0 pt-2 pb-2">PLANNING</p>
                                 @if ($test == 0)
-                                    <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                    <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                 @endif
                                 @if ($test != 0)
-                                    <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                    <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                 @endif
                             </button>
                         </a>
@@ -753,15 +745,30 @@
                                         onclick="openCity(event, 'apprenant')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">APPRENANTS</p>
                                         @if (count($stagiaire) == 0)
-                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                            <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                         @endif
                                         @if (count($stagiaire) != 0)
-                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                            <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                                 </a>
                             </div>
                         @endcanany
+
+                        <div class="nav-item" role="presentation">
+                            <a href="#ressource" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
+                                role="tab" aria-controls="home" aria-selected="true">
+                                <button class="planning d-flex justify-content-between action_animation ressource-tab"
+                                    onclick="openCity(event, 'ressource')" style="width: 100%">
+                                    <p class="m-0 pt-2 pb-2">RESSOURCES</p>
+                                    @if (count($ressource) == 0)
+                                        <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
+                                    @else
+                                        <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                    @endif
+                                </button>
+                            </a>
+                        </div>
 
                         @canany(['isReferent', 'isReferentSimple'])
                             <div class="nav-item" role="presentation">
@@ -771,9 +778,9 @@
                                         onclick="openCity(event, 'frais')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">FRAIS ANNEXES</p>
                                         @if (count($all_frais_annexe) <= 0)
-                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                            <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                         @else
-                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                            <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                             </div>
@@ -799,12 +806,13 @@
                                     <button class="planning d-flex justify-content-between chaud-tab"
                                         onclick="openCity(event, 'chaud')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">EVALUATION</p>
-                                        <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                        <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                     </button>
                                 </a>
                             </div>
                         @endcanany
-                        @can('isFormateur') <div class="nav-item" role="presentation">
+                        @can('isFormateur')
+                            <div class="nav-item" role="presentation">
                                 <a href="#emargement" class="nav-link p-0" id="emargement-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
                                     <button class="planning d-flex justify-content-between action_animation emargement-tab"
@@ -813,9 +821,9 @@
                                         @php
                                             $pres = $groupe->statut_presences($projet[0]->groupe_id);
                                             if ($pres == '#00ff00') {
-                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                                echo '<i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>';
                                             } elseif ($pres == '#bdbebd') {
-                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                                echo '<i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>';
                                             }
                                         @endphp
                                     </button>
@@ -828,9 +836,9 @@
                                         onclick="openCity(event, 'evaluation')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">PRE EVALUATION</p>
                                         @if ($evaluation_avant <= 0)
-                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                            <i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>
                                         @else
-                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                            <i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                                 </a>
@@ -845,9 +853,9 @@
                                         @php
                                             $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
                                             if ($statut_eval == 0) {
-                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                                echo '<i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>';
                                             } elseif ($statut_eval == 1) {
-                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                                echo '<i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>';
                                             }
                                         @endphp
                                     </button>
@@ -864,28 +872,9 @@
                                         @php
                                             $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
                                             if ($statut_eval == 0) {
-                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                                echo '<i class="bx bx-check-circle me-2 mt-2" style="color: grey"></i>';
                                             } elseif ($statut_eval == 1) {
-                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
-                                            }
-                                        @endphp
-                                    </button>
-                                </a>
-                            </div>
-                        @endcanany
-                        @canany(['isCFP', 'isReferent', 'isReferentSimple', 'isManager'])
-                            <div class="nav-item" role="presentation">
-                                <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
-                                    data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between evaluation_pre_formation-tab"
-                                        onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
-                                        <p class="m-0 pt-2 pb-2">EVALUATION</p>
-                                        @php
-                                            $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
-                                            if ($statut_eval == 0) {
-                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
-                                            } elseif ($statut_eval == 1) {
-                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                                echo '<i class="bx bxs-check-circle me-2 mt-2" style="color: chartreuse"></i>';
                                             }
                                         @endphp
                                     </button>
@@ -896,13 +885,11 @@
                 </div>
 
                 <div class="tab-content col-md-10">
-
-
                     <div class="tab-pane fade show active tabcontent" id="detail" role="tabpanel"
                         aria-labelledby="detail-tab" style="display: block">
                         @include('admin.detail.detail')
                     </div>
-                    @canany(['isCFP', 'isReferent', 'isReferentSimple', 'isFormateur', 'isFormateurInterne', 'isManager',
+                    @canany(['isCFP', 'isReferent', 'isReferentSimple', 'isFormateur', 'isManager',
                         'isChefDeService'])
                         <div class="tab-pane fade show tabcontent" id="apprenant" role="tabpanel"
                             aria-labelledby="apprenant-tab" style="display: none">
@@ -987,7 +974,6 @@
                     $('.' + activeTab + '-tab').addClass("active");
                 }
                 $('.' + activeTab + '-tab').addClass("active");
-                }
             </script>
             {{-- keep nav in refresh --}}
 

@@ -1,140 +1,144 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Calendrier</p>
+<p class="text_header m-0 mt-1">@lang('translation.Calendrier')</p>
 @endsection
 
 
 @push('extra-links')
-        <link rel="stylesheet" href="{{ asset('css/calendrier.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('css/calendrier.css') }}">
+<link rel="stylesheet" href="{{ asset('css/datepicker.css') }}">
 
-        {{-- bootstrap.min.css est importé dans admin.blade.php --}}
-        {{-- fullCalendar utilise les icons bootstraps --}}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+{{-- bootstrap.min.css est importé dans admin.blade.php --}}
+{{-- fullCalendar utilise les icons bootstraps --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
-        <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
-        {{-- <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script> --}}
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
+{{-- <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script> --}}
 
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
-        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-
-
-        {{-- <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
-        <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script> --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
 
-        {{-- utilisation de fullcalendar-scheduler pour avoir accés aux planning --}}
-        <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js'></script>
-
-        {{-- les langues pour le calendrier --}}
-        <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
+{{-- <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+<script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script> --}}
 
 
-        {{-- Pour utiliser jquery sur fullCalendar --}}
-        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/fr.js"></script> --}}
+{{-- utilisation de fullcalendar-scheduler pour avoir accés aux planning --}}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js'></script>
+
+{{-- les langues pour le calendrier --}}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
+
+
+{{-- Pour utiliser jquery sur fullCalendar --}}
+{{--
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/fr.js"></script> --}}
 
 @endpush
 
 @section('content')
 
-    <div class="container-fluid">
-        {{-- <a href="#" class="btn_creer text-center filter mt-4" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a> --}}
-        <div class="row w-100 mt-3 justify-content-between">
+<div class="container-fluid">
+    {{-- <a href="#" class="btn_creer text-center filter mt-4" role="button" onclick="afficherFiltre();"><i
+            class='bx bx-filter icon_creer'></i>Afficher les filtres</a> --}}
+    <div class="row w-100 mt-3 justify-content-between">
 
-            <div class="col-md-3 my-auto mt-5" id="event_datepicker">
+        <div class="col-md-3 my-auto mt-5" id="event_datepicker">
 
-            </div>
+        </div>
 
-            <div class="col-md-9 m-50 my-2">
-                <div id='planning'></div>
-            </div>
+        <div class="col-md-9 m-50 my-2">
+            <div id='planning'></div>
+        </div>
 
-            <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1"
-             data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
-              <div class="offcanvas-header" id="event_header">
+        <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1" data-bs-scroll="true"
+            data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header" id="event_header">
                 <h5 id="event_title"></h5>
-                <span class="input-group-text border-0 bg-light fs-2" id="event_to_pdf"
-                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Télécharger en pdf">
+                <span class="input-group-text border-0 bg-light fs-2" id="event_to_pdf" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" title="Télécharger en pdf">
 
                 </span>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
 
 
-              <div class="mb-1 rounded-3 divider"></div>
+            <div class="mb-1 rounded-3 divider"></div>
 
-              <div class="offcanvas-body" id="offcanvas_body">
+            <div class="offcanvas-body" id="offcanvas_body">
 
                 <div class="input-group flex-nowrap mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_projet"><i class='bx bxs-briefcase text-secondary'></i></span>
-                    <span type="text" id="event_project"
-                    class="form-control mt-1 border-0 bg-light"
-                    aria-label="projet" aria-describedby="basic-addon_projet"></span>
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_projet"><i
+                            class='bx bxs-briefcase text-secondary'></i></span>
+                    <span type="text" id="event_project" class="form-control mt-1 border-0 bg-light" aria-label="projet"
+                        aria-describedby="basic-addon_projet"></span>
 
 
                     <input type="text" id="event_type_formation"
-                    class="form-control border-0 background_purple fw-bolder rounded"
-                    placeholder="Type de formation"
-                    aria-label="type_formation" aria-describedby="basic-addon_projet" readonly>
+                        class="form-control border-0 background_purple fw-bolder rounded"
+                        placeholder="Type de formation" aria-label="type_formation"
+                        aria-describedby="basic-addon_projet" readonly>
                 </div>
 
                 <div class="input-group mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="addon-wrapping"><i class='bx bxs-buildings text-secondary'></i></span>
+                    <span class="input-group-text border-0 bg-light fs-2" id="addon-wrapping"><i
+                            class='bx bxs-buildings text-secondary'></i></span>
                     {{-- <input type="text" id="event_entreprise" class="form-control border-0 border-bottom"
-                    placeholder="Entreprise" aria-label="Entreprise"
-                    aria-describedby="addon-wrapping"> --}}
-                    <span id="event_entreprise" class="form-control border-0 border-bottom mt-1" ></span>
-                  </div>
+                        placeholder="Entreprise" aria-label="Entreprise" aria-describedby="addon-wrapping"> --}}
+                    <span id="event_entreprise" class="form-control border-0 border-bottom mt-1"></span>
+                </div>
                 <div class="input-group mb-4" id="event_sessions">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_sessions"><i class='bx bxs-calendar-event text-secondary' ></i></span>
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_sessions"><i
+                            class='bx bxs-calendar-event text-secondary'></i></span>
                     <input type="text" id="event_nbr_session"
-                    class="form-control border-0 border-bottom d-block w-auto marge_left-30"
-                    placeholder="Nombre session" aria-label="nbr_session"
-                    aria-describedby="basic-addon_sessions">
+                        class="form-control border-0 border-bottom d-block w-auto marge_left-30"
+                        placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon_sessions">
 
                 </div>
                 <div class="input-group mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_lieu"><i class='bx bxs-map text-secondary' ></i></span>
-                    <input type="text" id="event_lieu" class="form-control border-0 border-bottom"
-                    placeholder="lieu" aria-label="Place"
-                    aria-describedby="basic-addon_lieu">
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_lieu"><i
+                            class='bx bxs-map text-secondary'></i></span>
+                    <input type="text" id="event_lieu" class="form-control border-0 border-bottom" placeholder="lieu"
+                        aria-label="Place" aria-describedby="basic-addon_lieu">
                 </div>
                 <div class="input-group mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_of_formateur"><i class='bx bxs-chalkboard text-secondary' ></i></span>
-                    <input type="text" id="event_OF" class="form-control border-0 border-bottom"
-                    placeholder="OF" aria-label="OF"
-                    aria-describedby="basic-addon_of_formateur">
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_of_formateur"><i
+                            class='bx bxs-chalkboard text-secondary'></i></span>
+                    <input type="text" id="event_OF" class="form-control border-0 border-bottom" placeholder="OF"
+                        aria-label="OF" aria-describedby="basic-addon_of_formateur">
 
                     <span type="text" id="event_formateur" class="form-control border-0 border-bottom mt-1 hover_purple"
-                        aria-label="Formateur"
-                        aria-describedby="basic-addon_of_formateur">
+                        aria-label="Formateur" aria-describedby="basic-addon_of_formateur">
                     </span>
                 </div>
 
 
                 <div class="accordion mt-5 input-group" id="materiel_accordion_container">
                     <label for="materiel_button">
-                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_materiel"><i class='bx bxs-wrench text-secondary'></i></span>
+                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_materiel"><i
+                                class='bx bxs-wrench text-secondary'></i></span>
                     </label>
                     <div class="accordion-item width_80 border-0">
 
                         <h2 class="form-control accordion-header border-0 border-bottom" id="materiel_heading">
-                            <button class="accordion-button p-2 collapsed" id="materiel_button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#materiel_collapse" aria-expanded="false" aria-controls="materiel_collapse">
-                              Materiel nécessaire
+                            <button class="accordion-button p-2 collapsed" id="materiel_button" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#materiel_collapse" aria-expanded="false"
+                                aria-controls="materiel_collapse">
+                                @lang('translation.MaterielNécessaire')
                             </button>
                         </h2>
 
-                          <div id="materiel_collapse" class="accordion-collapse collapse border-bottom mb-2" aria-labelledby="headingThree"
-                                data-bs-parent="#materiel_accordion_container">
+                        <div id="materiel_collapse" class="accordion-collapse collapse border-bottom mb-2"
+                            aria-labelledby="headingThree" data-bs-parent="#materiel_accordion_container">
                             <div class="accordion-body padding_0">
                                 <div class="accordion accordion-flush px-2" id="materiel_accordion">
 
                                 </div>
                             </div>
-                          </div>
+                        </div>
 
                     </div>
                 </div>
@@ -142,86 +146,88 @@
 
                 <div class="accordion mt-5 input-group" id="accordion_container">
                     <label for="container_button">
-                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_participants"><i class='bx bxs-group text-secondary' ></i></span>
+                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_participants"><i
+                                class='bx bxs-group text-secondary'></i></span>
                     </label>
                     <div class="accordion-item border-0 width_80">
                         <h2 class="accordion-header border-0 border-bottom" id="headingTwo">
-                            <button class="accordion-button p-2 collapsed" id="container_button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                              Participants
+                            <button class="accordion-button p-2 collapsed" id="container_button" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                aria-controls="collapseTwo">
+                                @lang('translation.Participants')
                             </button>
                         </h2>
 
-                          <div id="collapseTwo" class="accordion-collapse collapse border-bottom" aria-labelledby="headingTwp" data-bs-parent="#accordion_container">
+                        <div id="collapseTwo" class="accordion-collapse collapse border-bottom"
+                            aria-labelledby="headingTwp" data-bs-parent="#accordion_container">
                             <div class="accordion-body padding_0">
                                 <div class="accordion accordion-flush px-2" id="accordionExample">
 
                                 </div>
                             </div>
-                          </div>
+                        </div>
 
                     </div>
                 </div>
 
-              </div>
             </div>
-
         </div>
 
-        {{-- filtres --}}
-        {{-- <div class="filtrer mt-3">
-            <div class="row">
-                <div class="col">
-                    <p class="m-0">Filter votre Agenda</p>
-                </div>
-                <div class="col text-end">
-                    <i class="bx bx-x" role="button" onclick="afficherFiltre();"></i>
-                </div>
-                <hr class="mt-2">
-                <div class="col-12">
-                    <div class="">
-                        <div class="card-body">
-                            <button id="tout" class="btn btn-primary">Tout</button><br><br>
-                            <h5 >Filtre par module</h5><br>
-                            <div class="searchBoxMod">
-                                <input class="searchInputMod" type="text" id="nom_module"
-                                    placeholder="Nom du module...">
-                                <button class="searchButtonMod" id="recherche_module">
-                                    <i class="bx bx-search">
-                                    </i>
-                                </button>
-                            </div><br>
-                            <h5>Type de formation</h5>
-                            <select name="" id="type_formation" class="form-control">
-                                <option value="Intra entreprise">Intra entreprise</option>
-                                <option value="Inter entreprise">Inter entreprise</option>
-                            </select><br>
-                            <h5>Statut</h5>
-                            <select name="" id="liste_statut" class="form-control">
-                                @for ($i = 0;$i<count($statut);$i++)
-                                    <option value = "{{$statut[$i]->id}}">{{$statut[$i]->status}}</option>
+    </div>
+
+    {{-- filtres --}}
+    {{-- <div class="filtrer mt-3">
+        <div class="row">
+            <div class="col">
+                <p class="m-0">Filter votre Agenda</p>
+            </div>
+            <div class="col text-end">
+                <i class="bx bx-x" role="button" onclick="afficherFiltre();"></i>
+            </div>
+            <hr class="mt-2">
+            <div class="col-12">
+                <div class="">
+                    <div class="card-body">
+                        <button id="tout" class="btn btn-primary">Tout</button><br><br>
+                        <h5>Filtre par module</h5><br>
+                        <div class="searchBoxMod">
+                            <input class="searchInputMod" type="text" id="nom_module" placeholder="Nom du module...">
+                            <button class="searchButtonMod" id="recherche_module">
+                                <i class="bx bx-search">
+                                </i>
+                            </button>
+                        </div><br>
+                        <h5>Type de formation</h5>
+                        <select name="" id="type_formation" class="form-control">
+                            <option value="Intra entreprise">Intra entreprise</option>
+                            <option value="Inter entreprise">Inter entreprise</option>
+                        </select><br>
+                        <h5>Statut</h5>
+                        <select name="" id="liste_statut" class="form-control">
+                            @for ($i = 0;$i<count($statut);$i++) <option value="{{$statut[$i]->id}}">
+                                {{$statut[$i]->status}}</option>
                                 @endfor
-                            </select><br>
-                            <h5>Domaine</h5>
-                            <select name="" id="domaines" class="form-control">
-                                @for ($i = 0;$i<count($domaines);$i++)
-                                    <option value = "{{$domaines[$i]->id}}">{{$domaines[$i]->nom_domaine}}</option>
+                        </select><br>
+                        <h5>Domaine</h5>
+                        <select name="" id="domaines" class="form-control">
+                            @for ($i = 0;$i<count($domaines);$i++) <option value="{{$domaines[$i]->id}}">
+                                {{$domaines[$i]->nom_domaine}}</option>
                                 @endfor
-                            </select><br>
-                            <h5>Thématique</h5>
-                            <select name="" id="formations" class="form-control">
-                                @for ($i = 0;$i<count($formations);$i++)
-                                    <option value = "{{$formations[$i]->id}}">{{$formations[$i]->nom_formation}}</option>
+                        </select><br>
+                        <h5>Thématique</h5>
+                        <select name="" id="formations" class="form-control">
+                            @for ($i = 0;$i<count($formations);$i++) <option value="{{$formations[$i]->id}}">
+                                {{$formations[$i]->nom_formation}}</option>
                                 @endfor
-                            </select><br>
-                        </div>
+                        </select><br>
                     </div>
                 </div>
             </div>
-        </div> --}}
-        {{-- end-filtres --}}
+        </div>
+    </div> --}}
+    {{-- end-filtres --}}
 
-    </div>
+</div>
 
 @endsection
 
@@ -451,7 +457,7 @@
 
                         // add the number of session before the session list
                         nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon_nbr_session"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
-                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon_nbr_session">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
+                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 width_80" placeholder="@lang("translation.NombreSession")" aria-label="nbr_session" aria-describedby="basic-addon_nbr_session">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
 
                         session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
                         lieu_offcanvas.value = info.event.extendedProps.lieu;

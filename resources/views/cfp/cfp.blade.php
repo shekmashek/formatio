@@ -27,10 +27,20 @@
         </div>
     </div>
     @endif
+    @if(Session::has('message'))
+        <div class="alert alert-success close">
+            <strong><i class="bx bxs-check-circle"></i> {{Session::get('message')}}</strong>
+        </div>
+        @endif
+        @if(Session::has('error'))
+        <div class="alert alert-danger close">
+            <strong><i class="bx bxs-x-circle"></i> {{Session::get('error')}}</strong>
+        </div>
+    @endif
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#collabore" role="tab">collaborateurs
+                <a class="nav-link" data-toggle="tab" href="#collabore" role="tab">Organisme de formation
                     {{count($cfp)}}</a>
             </li>
             <li class="nav-item" role="presentation">
@@ -43,22 +53,18 @@
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#invitation" class=" btn_nouveau" role="button"><i
-                        class='bx bx-plus-medical me-2'></i>Inviter collaborateur</a>
+                        class='bx bx-plus-medical me-2'></i>Inviter une Organisme de Formation</a>
             </li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane fade show" id="collabore">
                 {{-- Tab 1 content --}}
-                @if(Session::has('message'))
-                <div class="alert alert-danger close">
-                    <strong> {{Session::get('message')}}</strong>
-                </div>
-                @endif
+
                 @if (count($cfp)<=0)
                 <div class="text-center mt-5">
                     <img src="{{asset('img/networking.webp')}}" alt="folder empty" width="300px" height="300px">
-                    <p class="mt-3">Aucun centre de formation collaborer</p>
+                    <p class="mt-3">Aucun Organisme de Formation collaborer</p>
             </div>
             @else
             <table class="table table-hover">
@@ -71,9 +77,9 @@
                 </thead>
                 <tbody id="data_collaboration" style="font-size: 15.5px;">
                     @foreach($cfp as $cfp)
-                    <tr class="information" data-id="{{$cfp->cfp_id}}" id="{{$cfp->cfp_id}}">
+                    <tr class="information" data-id="{{$cfp->id_cfp}}" id="{{$cfp->id_cfp}}">
                         <td role="button" onclick="afficherInfos();">
-                            <img src="{{asset("images/CFP/".$cfp->logo_cfp)}}" style="width: 80px;height:
+                            <img src="{{asset("images/CFP/".$cfp->logo)}}" style="width: 80px;height:
                             80px;text-align:center;"><span class="ms-3">{{$cfp->nom}}</span>
                         </td>
                         <td role="button" onclick="afficherInfos();">
@@ -81,7 +87,7 @@
                             <span class="d-flex flex-row">
                                 <div class='randomColor'
                                     style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">
-                                    {{$cfp->initial}}</div>
+                                    {{$cfp->nom_resp_cfp_inital.''.$cfp->prenom_resp_cfp_initial}} </div>
                                 <span class="ms-3">{{$cfp->nom_resp_cfp}} {{$cfp->prenom_resp_cfp}}</span>
                             </span>
                             @else
@@ -94,35 +100,35 @@
 
                         </td>
                         <td>
-                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$cfp->cfp_id}}"><i
+                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$cfp->id_cfp}}"><i
                                     class='bx bx-trash bx_supprimer'></i></a>
                         </td>
 
                         {{-- modal delete --}}
-                        <div class="modal fade" id="exampleModal_{{$cfp->cfp_id}}" tabindex="-1" role="dialog"
+                        <div class="modal fade" id="exampleModal_{{$cfp->id_cfp}}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header d-flex justify-content-center"
-                                        style="background-color:rgb(192, 37, 55);">
+                                    style="background-color:#ee0707; color: white">
                                         <h4 class="modal-title text-white">Avertissement !</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le
-                                            point
-                                            d'effacer une donnée, cette action est irréversible. Continuer
-                                            ?</small>
+                                        <p class="text-center text-muted">Vous êtes sur le point d'effacer une donnée,
+                                            cette
+                                            action
+                                            est irréversible. </p>
+                                        <p class="text-center text-muted">Continuer ?</p>
                                     </div>
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer annuler" style="color: red"
-                                            data-bs-dismiss="modal" aria-label="Close">Non</button>
                                         <form action="{{route('mettre_fin_cfp_etp') }}" method="POST">
                                             @csrf
-                                            <input name="cfp_id" type="text" value="{{$cfp->cfp_id}}" hidden>
+                                            <input name="cfp_id" type="hidden" value="{{$cfp->id_cfp}}" >
                                             <div class="mt-4 mb-4">
-                                                <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                <button type="submit" class="btn btn_enregistrer btnP"><i class="bx bx-trash"></i> Supprimer</button>
                                             </div>
                                         </form>
+                                        <button type="button" class="btn btn_annuler annuler" data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x"></i> Annuler</button>
                                     </div>
                                 </div>
                             </div>
@@ -138,17 +144,27 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-center">
-                        <h4 class="modal-title text-white">Inviter une entreprise</h4>
+                        <h4 class="modal-title text-white">Inviter une Organisme de Formation</h4>
                     </div>
                     <div class="modal-body">
+                        {{-- <form class="form form_colab mt-3" action="{{ route('create_etp_cfp') }}" method="POST"> --}}
                         <form class="form form_colab mt-3" action="{{ route('create_etp_cfp') }}" method="POST">
                             @csrf
                             <div>
-
                                 <div class="form-group">
                                     <input type="text" class="form-control input" name="nom_cfp" required
                                         placeholder="nom de l'organisme">
                                     <label for="" class="form-control-placeholder">nom de l'organisme</label>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" class="form-control input" name="nom_du_responsable" required
+                                        placeholder="nom du responsable">
+                                    <label for="" class="form-control-placeholder">nom du responsable</label>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="text" class="form-control input" name="prenom_du_responsable" required
+                                        placeholder="prenom du responsable">
+                                    <label for="" class="form-control-placeholder">prenom du responsable</label>
                                 </div>
                                 <div class="form-group mt-2">
                                     <input type="email" class="form-control input" name="email_cfp" required
@@ -158,10 +174,10 @@
 
                             </div>
                             <div class="mt-3 text-center">
-                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i
-                                        class='bx bx-block me-1'></i>fermer</button>
                                 <button type="submit" class="btn btn_enregistrer"><i
                                         class='bx bx-check me-1'></i>Envoyer l'invitation</button>
+                                <button type="button" class="btn btn_annuler redirect_annuler" data-bs-dismiss="modal"><i
+                                        class='bx bx-x me-1'></i>annuler</button>
                             </div>
                         </form>
                     </div>
@@ -172,38 +188,39 @@
             <div class="table-responsive text-center">
                 <table class="table  table-borderless table-sm mt-4">
                     <tbody id="data_collaboration">
-                        @if (count($invitation)<=0) <tr style="">
-                            <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
-                            <td>
-                                <p>Aucun invitations en attente</p>
-                            </td>
+                        @if (count($invitation) <= 0)
+                            <tr style="">
+                                <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
+                                <td>
+                                    <p>Aucun invitations en attente</p>
+                                </td>
                             </tr>
-                            @else
+                        @else
                             @foreach($invitation as $invit_cfp)
                             <tr align="left">
                                 <td>
-                                    {{$invit_cfp->nom_cfp}}
-                                    <p class="sous_text text-muted">{{$invit_cfp->mail_cfp}}</p>
+                                    {{$invit_cfp->nom_resp_cfp.' '.$invit_cfp->prenom_resp_cfp}}
+                                    <p class="sous_text text-muted">{{$invit_cfp->email_resp_cfp}}</p>
                                 </td>
                                 <td>
-                                    {{$invit_cfp->nom_etp}}
-                                    <p class="sous_text text-muted">{{$invit_cfp->nom_secteur}}</p>
+                                    {{$invit_cfp->nom}}
+                                    {{-- <p class="sous_text text-muted">{{$invit_cfp->nom_secteur}}</p> --}}
                                 </td>
                                 <td>
-                                    <a href="{{ route('accept_etp_cfp',$invit_cfp->id) }}" class="accept_etp">
+                                    <a href="{{ route('accept_etp_cfp',$invit_cfp->id_cfp) }}" class="accept_etp">
                                         <span class="btn_nouveau"><i class="bx bx-check me-2"
                                                 title="Accepter"></i>accepter</span>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('annulation_etp_cfp',$invit_cfp->id) }}" class="refuse_etp">
+                                    <a href="{{ route('annulation_etp_cfp',$invit_cfp->id_cfp) }}" class="refuse_etp">
                                         <span class="btn_annuler"><i class="bx bx-x  me-2"
                                                 title="Refuser"></i>refuser</span>
                                     </a>
                                 </td>
                             </tr>
                             @endforeach
-                            @endif
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -212,18 +229,19 @@
             <div class="table-responsive text-center">
                 <table class="table  table-borderless table-sm mt-4">
                     <tbody>
-                        @if (count($refuse_demmande_cfp)<=0) <tr>
-                            <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
-                            <td>
-                                <p>Aucun invitations refusées</p>
-                            </td>
+                        @if (count($refuse_demmande_cfp) <= 0)
+                            <tr>
+                                <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
+                                <td>
+                                    <p>Aucun invitations refusées</p>
+                                </td>
                             </tr>
-                            @else
+                        @else
                             @foreach($refuse_demmande_cfp as $refuse_invit)
                             <tr align="left">
                                 <td>
-                                    {{$refuse_invit->nom_resp.''.$refuse_invit->prenom_resp}}
-                                    <p class="sous_text text-muted">{{$refuse_invit->email_resp}}</p>
+                                    {{$refuse_invit->nom_resp_cfp.' '.$refuse_invit->prenom_resp_cfp}}
+                                    <p class="sous_text text-muted">{{$refuse_invit->email_resp_cfp}}</p>
                                 </td>
                                 <td>
                                     {{$refuse_invit->nom_etp}}
@@ -240,7 +258,7 @@
                                 </td> --}}
                             </tr>
                             @endforeach
-                            @endif
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -356,23 +374,23 @@
                 //parcourir le premier tableau contenant les info sur les programmes
                 for (let $i = 0; $i < userData.length; $i++) {
                     let url_photo = '<img src="{{asset("images/CFP/:url_img")}}" style="height80px; width:80px;">';
-                    url_photo = url_photo.replace(":url_img", userData[$i].logo_cfp);
+                    url_photo = url_photo.replace(":url_img", userData[$i].logo);
                     $("#donner").html(" ");
                     $("#donner").append(url_photo);
                     $("#donnerrrr").text(': '+userData[$i].site_web);
                     $("#nom").text(userData[$i].nom_resp_cfp);
                     $("#prenom").text(userData[$i].prenom_resp_cfp);
-                    $("#tel").text(': '+userData[$i].telephone);
-                    $("#adrlot").text(': '+userData[$i].adresse_lot);
-                    $("#adrlot2").text(userData[$i].adresse_quartier);
-                    $("#adrlot3").text(userData[$i].adresse_ville);
-                    $("#adrlot4").text(userData[$i].adresse_region);
+                    $("#tel").text(': '+userData[$i].telephone_resp_cfp);
+                    $("#adrlot").text(': '+userData[$i].adresse_lot_cfp+' '+userData[$i].adresse_quartier_cfp);
+                    $("#adrlot2").text(userData[$i].adresse_code_postal_cfp+' '+userData[$i].adresse_ville_cfp);
+                    $("#adrlot3").text(userData[$i].adresse_region_cfp);
+                    // $("#adrlot4").text(userData[$i].adresse_region);
                     // $("#adrqurt").text(userData[$i].adresse_Quartier);
                     // $("#adrv").text(userData[$i].adresse_ville);
                     // $("#adrr").text(userData[$i].adresse_region);
-                    $("#mail").text(': '+userData[$i].email);
+                    $("#mail").text(': '+userData[$i].email_resp_cfp);
 
-                    $("#nomEtp").text(userData[$i].nom);
+                    $("#nomEtp").text(userData[$i].nom_cfp);
                 }
             }
         });
@@ -386,8 +404,14 @@
     if(tabActive){
         $('#myTab a[href="' + tabActive + '"]').tab('show');
         $('#myTab a[href="' + tabActive + '"]').addClass('active');
-
     }
+    $('.redirect_annuler').on('click', function (e) {
+        let tabActive = localStorage.getItem('indicecfp');
+        if(tabActive){
+            $('#myTab a[href="' + tabActive + '"]').tab('show');
+            $('#myTab a[href="' + tabActive + '"]').addClass('active');
+        }
+    });
 
     $('.accept_etp').on('click', function (e) {
         localStorage.setItem('indicecfp', '#collabore');

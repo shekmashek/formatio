@@ -62,8 +62,10 @@ class Collaboration extends Model
 
     public function suprime_collaboration_etp_cfp($etp_id, $cfp_id)
     {
-        DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ? and inviter_cfp_id=?', [$etp_id, $cfp_id]);
-        DB::delete('delete from demmande_cfp_etp where demmandeur_cfp_id = ? and inviter_etp_id=?', [$cfp_id, $etp_id]);
+        // dd($etp_id, $cfp_id);
+        DB::delete('delete from collaboration_etp_cfp where etp_id = ? and cfp_id = ?', [$etp_id, $cfp_id]);
+        // DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ? and inviter_cfp_id=?', [$etp_id, $cfp_id]);
+        // DB::delete('delete from demmande_cfp_etp where demmandeur_cfp_id = ? and inviter_etp_id=?', [$cfp_id, $etp_id]);
         DB::commit();
     }
 
@@ -92,7 +94,7 @@ class Collaboration extends Model
     }
     public function suprime_invitation_collaboration_etp_cfp($id)
     {
-        DB::delete('delete from demmande_cfp_etp where id = ?', [$id]);
+        DB::update('update collaboration_etp_cfp set statut = ? where cfp_id = ?', [3,$id]);
         DB::commit();
 
         return back();
@@ -106,9 +108,8 @@ class Collaboration extends Model
     }
     public function suprime_invitation_collaboration_cfp_etp($id)
     {
-        DB::delete('delete from demmande_etp_cfp where id = ?', [$id]);
+        DB::update('update collaboration_etp_cfp set statut = ? where etp_id = ?', [3,$id]);
         DB::commit();
-
         return back();
     }
 
@@ -133,39 +134,37 @@ class Collaboration extends Model
     //=================   accepter invitation==========================
     public function accept_invitation_collaboration_etp_cfp($id,$resp_etp_id)
     {
-        $demande = $this->fonct->findWhereMulitOne("demmande_cfp_etp", ["id"], [$id]);
-        $verify_exist = $this->fonct->findWhere("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$demande->inviter_etp_id, $demande->demmandeur_cfp_id]);
-        DB::beginTransaction();
-        try {
-            if (count($verify_exist) > 0) {
-                DB::delete("delete from demmande_etp_cfp where demmandeur_etp_id=? AND inviter_cfp_id=?", [$demande->inviter_etp_id, $demande->demmandeur_cfp_id]);
+        $demande = $this->fonct->findWhereMulitOne("collaboration_etp_cfp", ["cfp_id","demmandeur"], [$id,'cfp']);
+        $verify_exist = $this->fonct->findWhere("collaboration_etp_cfp", ["etp_id", "cfp_id","demmandeur"], [$demande->etp_id, $demande->cfp_id,'cfp']);
+        if ($verify_exist != null) {
+            DB::beginTransaction();
+            try {
+                $query = DB::update("update collaboration_etp_cfp set statut = ? where cfp_id = ? and demmandeur = ?", [2,$id,'cfp']);
+                DB::commit();
+
+            } catch (\Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
             }
-            DB::update("update demmande_cfp_etp set activiter=1,resp_etp_id=? where id=?", [$resp_etp_id,$id]);
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
         }
         return back();
     }
 
     public function accept_invitation_collaboration_cfp_etp($id,$resp_cfp_id)
     {
-        $demande = $this->fonct->findWhereMulitOne("demmande_etp_cfp", ["id"], [$id]);
-        $verify_exist = $this->fonct->findWhere("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$demande->inviter_cfp_id, $demande->demmandeur_etp_id]);
-        DB::beginTransaction();
-        try {
-            if (count($verify_exist) > 0) {
-                DB::delete("delete from demmande_cfp_etp where demmandeur_cfp_id=? AND inviter_etp_id=?", [$demande->inviter_cfp_id, $demande->demmandeur_etp_id]);
+        $demande = $this->fonct->findWhereMulitOne("collaboration_etp_cfp", ["etp_id","demmandeur"], [$id,'etp']);
+        $verify_exist = $this->fonct->findWhere("collaboration_etp_cfp", ["cfp_id", "etp_id","demmandeur"], [$demande->cfp_id, $demande->etp_id,'etp']);
+        if ($verify_exist != null) {
+            DB::beginTransaction();
+            try {
+                DB::update("update collaboration_etp_cfp set statut = ? where etp_id = ? and demmandeur = ?", [2,$id,'etp']);
+                DB::commit();
+
+            } catch (\Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
             }
-            DB::update("update demmande_etp_cfp set activiter=1,resp_cfp_id=? where id=?", [$resp_cfp_id,$id]);
-            DB::commit();
-
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
         }
-
         return back();
     }
 

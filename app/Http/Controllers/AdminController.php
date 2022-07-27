@@ -152,10 +152,12 @@ class AdminController extends Controller
         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple') ) {
             // $user = responsable::where('user_id', $id_user)->value('photos');
             $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
-            $refuse_demmande_cfp = $fonct->findWhere("v_refuse_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
-            $invitation = $fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]);
-            $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
-            $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
+            $invitation = DB::select('select id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$entreprise_id,1,'cfp']);
+
+            // $invitation = $fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]);
+            // $refuse_demmande_cfp = $fonct->findWhere("v_refuse_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
+            // $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
+            // $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
             $user = $fonct->findWhereMulitOne(("responsables"),["user_id"],[$id_user])->photos;
             $photo ='';
             if($user == null){
@@ -167,7 +169,7 @@ class AdminController extends Controller
                 $photo = 'oui';
             }
             // $user = 'responsables/' . $user;
-            return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$invitation,'refuse_invitation'=>$refuse_demmande_cfp]);
+            return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$invitation]);
         }
 
         if (Gate::allows('isFormateur')) {
@@ -221,12 +223,13 @@ class AdminController extends Controller
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
             $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-            $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
+            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
 
-            $entreprise = $entp->getEntreprise($etp2, $etp1);
+            // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
+            // $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            // $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
+            // $entreprise = $entp->getEntreprise($etp2, $etp1);
 
 
             $user = $fonct->findWhereMulitOne(("v_responsable_cfp"),["user_id"],[$id_user])->photos_resp_cfp;
@@ -241,7 +244,7 @@ class AdminController extends Controller
             }
         //    return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$etp1]);
         // return response()->json([$invitation_etp]);
-            return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$invitation_etp,'refuse_invitation'=>$refuse_demmande_etp]);
+            return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$invitation_etp]);
         }
         if (Gate::allows('isStagiaire')) {
 

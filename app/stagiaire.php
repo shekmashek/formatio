@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
+Use App\DepartementEntreprise;
 
 class Stagiaire extends Model
 {
@@ -19,7 +20,7 @@ class Stagiaire extends Model
 
     public function departement()
     {
-        return $this->belongsTo('App\Departement');
+        return $this->belongsTo('App\DepartementEntreprise','departement_entreprises_id');
     }
     public function besoins(){
         return $this->hasMany('App\besoins');

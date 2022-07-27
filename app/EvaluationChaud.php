@@ -76,7 +76,7 @@ class EvaluationChaud extends Model
         DB::beginTransaction();
 
         try {
-            DB::insert("insert into reponse_evaluationchaud(points,reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,statut,created_at,updated_at) values (?,?,?,?,?,?,?,NOW(),NOW())",
+            DB::insert("insert into reponse_evaluationchaud(points,reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,statut,created_at,updated_at) values (?,?,?,?,?,?,NOW(),NOW())",
             [$point,$reponse,$id_desc_champ,$id_stag,$groupe_id,$cfp_id,$anonyme]);
             DB::commit();
             $message['success']="Votre évaluation à chaud est terminée avec succès.";

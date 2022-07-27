@@ -283,7 +283,9 @@
                         $("#fonction").val('');
                         $(".span_ajout").hide();
                         $("#image_stg").html('');
-                        $('#ajout_stg_mat').append('<span style="color:red">Matricule ou Nom introuvable</span>');
+                        var text = "<span style='color:black'>Matricule ou nom introuvable<span style='color:black'>,&nbsp;voulez vous <a href = '{{ route('employes.liste') }}'><span style='color:blue'>ajouter</a></span> '"+id+"' dans vos employers</span></span>";
+                        
+                        $('#ajout_stg_mat').append(text);
                     }
                },
                error:function(error){
