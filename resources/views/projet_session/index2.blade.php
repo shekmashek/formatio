@@ -7,13 +7,11 @@
 @inject('carbon', 'Carbon\Carbon')
 @inject('froidEval', 'App\FroidEvaluation')
 
-<!-- Latest compiled and minified JavaScript -->
-
 @section('content')
-{{-- <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css"> --}}
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.3/css/fixedColumns.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="http://infra.clarin.eu/content/libs/DataTables-1.10.6/extensions/ColVis/css/dataTables.colVis.css">
 <style>
     th, td { 
         white-space: nowrap; 
@@ -32,6 +30,12 @@
         margin-top:-12px;
         padding-top: 0px;
         background: #ffff;
+    }
+
+    /* colvis */
+    ul.colvis_collection{
+        background: #ffffff !important;
+        box-shadow: none !important;
     }
 </style>
 <div class="container-fluid mt-5" style="height: 700px">
@@ -320,6 +324,24 @@
                             </button>
                     </div>
                  </th>
+            </tr>
+            <tr style="display: none;">
+                <th>Projet</th>
+                <th>Session</th>
+                <th>Module</th>
+                <th>Entreprise</th>
+                <th>Modalité</th>
+                <th>Date</th>
+                <th>Ville</th>
+                <th>Statuts</th>
+                <th>Type</th>
+                <th>Eval à chaud</th>
+                <th>Eval à froid</th>
+                <th>Rapport</th>
+                <th>Présence</th>
+                <th>Competence</th>
+                <th>PDF</th>
+                <th>Action</th>
             </tr>
         
         </thead>
@@ -1532,25 +1554,25 @@
 </div>
 @endsection
 @section('script')
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="http://infra.clarin.eu/content/libs/DataTables-1.10.6/extensions/ColVis/js/dataTables.colVis.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
 
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-        var table = $('#example').DataTable( {
-            dom:            "Bfrtip",
-            scrollY:        "900px",
-            scrollX:        true,
-            scrollCollapse: true,
-            paging:         true,
-            buttons:        [ 'colvis','colonne' ],
-            select: true,
-            
-            ordering:false,
-            "language": {
+    <script>
+        $(document).ready(function() {
+            var table = $('#example').DataTable( {
+                // dom:            "Bfrtip",
+                "dom": 'C<"clear">lfrtip',
+                scrollY:        "900px",
+                scrollX:        true,
+                scrollCollapse: true,
+                paging:         true,
+                buttons:        [ 'colvis','colonne' ],
+                select: true,
+                ordering:false,
+                "language": {
                     "paginate": {
                     "previous": "précédent",
                     "next": "suivant"
@@ -1562,13 +1584,18 @@
                     "infoFiltered":   "(filtre sur _MAX_ entrées)",
                     "lengthMenu":     "Affichage _MENU_ ",
                     "buttonText": "Change colonne"
+                },
+                "colVis": {
+                "label": function ( index, title, th ) {
+                    return (index+1) +'. '+ title;
                 }
-        } );
-        new $.fn.dataTable.FixedColumns( table, {
-            leftColumns: 3,
-        } );
+                }
+            } );
+            new $.fn.dataTable.FixedColumns( table, {
+                leftColumns: 3,
+            } );
 
-        $('input:checkbox').on('change', function () {
+            $('input:checkbox').on('change', function () {
                 var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
                     return '^' + this.value + '$';
                 }).get().join('|');
@@ -1611,8 +1638,6 @@
                 
                 table.column(8).search(Type, true,false,false).draw();
             });
-    } );
-
-
-</script>
+        } );
+    </script>
 @endsection
