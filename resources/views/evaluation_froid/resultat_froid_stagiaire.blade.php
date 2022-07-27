@@ -99,10 +99,9 @@
             padding-bottom: 10px;
         } */
 
-        .downlad_pdf {
-            position: fixed;
-            float: right;
-        }
+        /* .downlad_pdf {
+            position: sticky;
+        } */
 
         .get_pdf {
             background-color: red;
@@ -113,75 +112,175 @@
             background-color: rgb(136, 2, 2);
             color: white;
         }
-    </style>
-    <div class="downlad_pdf">
-        <button class="btn get_pdf me-5"><i class='bx bxs-file-pdf'></i>PDF</button>
-    </div>
-    <div id="statistique" class="row mb-5">
-        <div class="container_code col-lg-12">
-            {{-- <div class="form-control"> --}}
-            <div class="text_center">
-                <span style="text-transform: uppercase">RESULTATS EVALUATIONS À FROID, FORMATION
-                    {{ $session->nom_formation }}&nbsp;
-                    {{-- @php
-                        setlocale(LC_TIME, 'fr_FR');
-                        echo strftime('%e %B %Y', strtotime($session->date_debut));
-                    @endphp --}}
-                </span>
-            </div><br>
-            <div class="">
-                @foreach ($questions as $qst)
-                    <div class="marge_top">
-                        <div class="row_flex">
-                            <div class="text_11">
-                                <span>{{ $qst->question }}</span>
-                            </div>
-                        </div>
-                        <div class="row ms-5">
-                            <div class="table-rating-bar justify-content-center" style="margin-bottom: 10px; margin-top: 10px">
-                                @if($qst->desc_champ == 'TEXT')
-                                    @foreach ($commentaires as $comm)
-                                        @if($comm->question_id == $qst->question_id)
-                                            <span style="color: rgb(100, 100, 100)">{{ $comm->reponse_text }}</span><br>
-                                        @endif
-                                    @endforeach
-                                @else
-                                    <table class="text-left mx-auto">
-                                        @foreach ($resultats as $res)
-                                            @if($res->question_id == $qst->question_id)
-                                                <tr>
-                                                    <td class="col-lg-8" style="color: rgb(100, 100, 100)">{{ $res->reponse }}</td>
-                                                    <td class="rating-bar ms-2 col-lg-2">
-                                                        <div class="bar-container">
-                                                            <div class="bar-5" style="--progress_bar: {{ $res->pourcentage_reponse }}%;"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-right col-lg-2"><span class="ms-2" style="color: rgb(100, 100, 100)">{{ $res->nombre_reponse }}</span>&nbsp;<span
-                                                            class="text-muted ms-1">{{ $res->pourcentage_reponse }}%</span>
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                    </table>
-                                @endif
-                                
-                            </div>
-                        </div>
 
-                    </div>
-                @endforeach
-                
+        .nav-pills .btn.active{
+            color: white;
+            background: rgb(226, 192, 178);
+        }
+        .nav-pills .btn{
+            background: rgba(237, 237, 237, 0.943);
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-11 downlad_pdf">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item me-2" role="presentation">
+                        <button class="btn btn_stagiaire active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Stagiaire(s)</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="btn btn_manager" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Manager(s)</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-1 downlad_pdf">
+                <button class="btn get_pdf"><i class='bx bxs-file-pdf'></i>PDF</button>
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css"
-        integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous">
+    
+    
+    
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div id="statistique_stagiaire" class="row mb-5">
+                    <div class="container_code col-lg-12">
+                        <div class="text_center row">
+                            <div class="col-11">
+                                <span style="text-transform: uppercase">RESULTATS EVALUATIONS À FROID PAR LE(S) STAGIAIRE(S), FORMATION
+                                    {{ $session->nom_formation }}&nbsp;
+                                    {{-- @php
+                                        setlocale(LC_TIME, 'fr_FR');
+                                        echo strftime('%e %B %Y', strtotime($session->date_debut));
+                                    @endphp --}}
+                                </span>
+                            </div>
+                        </div><br>
+                        <div class="">
+                            @foreach ($questions as $qst)
+                                <div class="marge_top">
+                                    <div class="row_flex">
+                                        <div class="text_11">
+                                            <span>{{ $qst->question }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row ms-5">
+                                        <div class="table-rating-bar justify-content-center" style="margin-bottom: 10px; margin-top: 10px">
+                                            @if($qst->desc_champ == 'TEXT')
+                                                @foreach ($commentaires as $comm)
+                                                    @if($comm->question_id == $qst->question_id)
+                                                        <span style="color: rgb(100, 100, 100)">{{ $comm->reponse_text }}</span><br>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <table class="text-left mx-auto">
+                                                    @foreach ($resultats as $res)
+                                                        @if($res->question_id == $qst->question_id)
+                                                            <tr>
+                                                                <td class="col-lg-8" style="color: rgb(100, 100, 100)">{{ $res->reponse }}</td>
+                                                                <td class="rating-bar ms-2 col-lg-2">
+                                                                    <div class="bar-container">
+                                                                        <div class="bar-5" style="--progress_bar: {{ $res->pourcentage_reponse }}%;"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-right col-lg-2"><span class="ms-2" style="color: rgb(100, 100, 100)">{{ $res->nombre_reponse }}</span>&nbsp;<span
+                                                                        class="text-muted ms-1">{{ $res->pourcentage_reponse }}%</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </table>
+                                            @endif
+                                            
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div id="statistique_manager" class="row mb-5">
+                    <div class="container_code col-lg-12">
+                        <div class="text_center row">
+                            <div class="col-11">
+                                <span style="text-transform: uppercase">RESULTATS EVALUATIONS À FROID PAR LE(S) MANAGER(S), FORMATION
+                                    {{ $session->nom_formation }}&nbsp;
+                                    {{-- @php
+                                        setlocale(LC_TIME, 'fr_FR');
+                                        echo strftime('%e %B %Y', strtotime($session->date_debut));
+                                    @endphp --}}
+                                </span>
+                            </div>
+                        </div><br>
+                        <div class="">
+                            @foreach ($questions as $qst)
+                                <div class="marge_top">
+                                    <div class="row_flex">
+                                        <div class="text_11">
+                                            <span>{{ $qst->question }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row ms-5">
+                                        <div class="table-rating-bar justify-content-center" style="margin-bottom: 10px; margin-top: 10px">
+                                            @if($qst->desc_champ == 'TEXT')
+                                                @foreach ($commentaires_manager as $comm)
+                                                    @if($comm->question_id == $qst->question_id)
+                                                        <span style="color: rgb(100, 100, 100)">{{ $comm->reponse_text }}</span><br>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <table class="text-left mx-auto">
+                                                    @foreach ($resultats_manager as $res)
+                                                        @if($res->question_id == $qst->question_id)
+                                                            <tr>
+                                                                <td class="col-lg-8" style="color: rgb(100, 100, 100)">{{ $res->reponse }}</td>
+                                                                <td class="rating-bar ms-2 col-lg-2">
+                                                                    <div class="bar-container">
+                                                                        <div class="bar-5" style="--progress_bar: {{ $res->pourcentage_reponse }}%;"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-right col-lg-2"><span class="ms-2" style="color: rgb(100, 100, 100)">{{ $res->nombre_reponse }}</span>&nbsp;<span
+                                                                        class="text-muted ms-1">{{ $res->pourcentage_reponse }}%</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </table>
+                                            @endif
+                                            
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+
+
+
+    
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css"
+        integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous"> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
+        var pdf_id = 'statistique_stagiaire';
+        $(document).on('click','.btn_stagiaire',function(){
+            pdf_id = 'statistique_stagiaire';
+        });
+        $(document).on('click','.btn_manager',function(){
+            pdf_id = 'statistique_manager';
+        });
+        
         $(document).on('click', '.get_pdf', function() {
-            const rapport = document.getElementById('statistique');
+            const rapport = document.getElementById(pdf_id);
             var opt = {
                 margin: 0.3,
                 width: 400,

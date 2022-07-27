@@ -114,3 +114,39 @@ create or replace view v_resultat_froid_evaluation_stagiaire as
         rep.reponse,
         q.desc_champ;
 
+
+create or replace view v_nombre_manager_groupe as
+    select 
+        d.groupe_id,
+        count(d.departement_id) as total_manager
+    from(
+        select 
+            groupe_id,
+            departement_id
+        from v_stagiaire_groupe 
+        group by groupe_id,departement_id
+    ) as d group by d.groupe_id;
+    
+
+create or replace view v_resultat_froid_evaluation_manager as
+    select
+        r.question_id,
+        r.groupe_id,
+        count(r.manager_id) as nombre_reponse,
+        nm.total_manager,
+        r.reponse_id,
+        rep.reponse,
+        q.desc_champ,
+        ROUND((count(r.manager_id)*100)/nm.total_manager,1) as pourcentage_reponse
+    from resultat_eval_froid_manager r
+    join v_nombre_manager_groupe nm on r.groupe_id = nm.groupe_id
+    join v_question_champ_froid q on r.question_id = q.question_id
+    join reponse_question_eval_froid rep on rep.id = r.reponse_id
+    where q.desc_champ != 'TEXT'
+    group by
+        r.question_id,
+        r.groupe_id,
+        r.reponse_id,
+        nm.total_manager,
+        rep.reponse,
+        q.desc_champ;

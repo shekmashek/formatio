@@ -121,9 +121,11 @@ class EvaluationFroidController extends Controller
         $session = DB::select('select nom_module,nom_formation,date_debut,date_fin from v_groupe_projet_module where groupe_id = ?',[$groupe])[0];
         $questions = DB::select('select * from v_question_champ_froid order by question_id asc');
         $resultats = DB::select('select * from v_resultat_froid_evaluation_stagiaire where groupe_id = ?', [$groupe]);
+        $resultats_manager = DB::select('select * from v_resultat_froid_evaluation_manager where groupe_id = ?', [$groupe]);
         $commentaires = DB::select('select * from resultat_eval_froid_stagiaire where groupe_id = ?',[$groupe]);
+        $commentaires_manager = DB::select('select * from resultat_eval_froid_manager where groupe_id = ?',[$groupe]);
         // dd($questions,$commentaires);
-        return view('evaluation_froid.resultat_froid_stagiaire',compact('session','questions','resultats','commentaires'));
+        return view('evaluation_froid.resultat_froid_stagiaire',compact('session','questions','resultats','commentaires','resultats_manager','commentaires_manager'));
     }
 
     public function edit($id)
