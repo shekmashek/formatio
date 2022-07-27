@@ -14,6 +14,8 @@ CREATE OR REPLACE VIEW v_type_abonnement_etp AS SELECT
     a.date_fin,
     a.status,
     a.entreprise_id,
+    month(a.date_demande) as mois_actuel,
+    year(a.date_demande) as annee_actuel,
     e.nom_etp as nom_entreprise,
     a.activite,
     a.created_at,

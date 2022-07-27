@@ -261,103 +261,13 @@
                         import EXCEL employé
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link">
-                    grig view
-                    </a>
-                </li>
-        </ul>
-
-        <div class="row">
-            <div class="col-12">
-                <table id="example" class="table " style="width:100%">
-                    <thead>
-                        <tr>
-                            <th class="id">ID</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Contacts</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">
-                                <span class="d-block">Département</span>
-                                <span>Service</span>
-                            </th>
-                            @can('isReferent')
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Formateur interne</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th>
-                            @endcan
-
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
-                            @can('isReferent')
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
-                            @endcan
-
-                        </tr>
-
-
-                    </thead>
-
-                    <tbody>
-                        @for ($i = 0;$i < count($employers);$i++ )
-
-
-
-
-                            <tr >
-                                <td class="align-middle id empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">
-
-                                    @if ($employers[$i]->activiter == 1)
-                                        <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
-                                    @else
-                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span>
-                                    @endif
-                                    {{ $employers[$i]->matricule }}
-                                </td>
-
-
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        @if ($employers[$i]->photos == null)
-                                            {{-- image placeholder --}}
-                                            {{-- <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Image non chargée"
-                                                style="width: 45px; height: 45px" class="rounded-circle" /> --}}
-
-                                            {{-- grey color --}}
-                                            {{-- <i class='bx bx-user-circle profile-holder'
-                                                style="width: 45px; height: 45px"></i> --}}
-
-                                            {{-- actif/inactif color --}}
-                                                    {{-- <i class='bx bx-user-circle  h1' style='
-                                                        @if ($employers[$i]->activiter == 1) color:#25b900c9;'
-                                                            @else
-                                                            color:#e21717;'
-                                                            @endif
-                                                            ></i> --}}
-
-                                            {{-- initials --}}
-                                                            <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
-                                                                <span class="align-middle text-center profile-initial" style="position:relative;">
-                                                                    <b data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" class="empNew" style="cursor: pointer">{{substr($employers[$i]->nom_stagiaire, 0, 1)}} {{substr($employers[$i]->prenom_stagiaire, 0, 1)}}</b>
-                                                                </span>
-                                                            </div>
-                                                        @else
-
-
-                                                                <img data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" src="{{ asset('images/employes/' . $employers[$i]->photos) }}"
-                                                                alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
-                                                                class="rounded-circle empNew" />
-
-
-
-                                                        @endif
-                                                    <div class="ms-3">
-                                                        <p class="fw-normal mb-1 text-purple empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">
-                                                        {{-- <p class="fw-bold mb-1 text-purple "> --}}
-                                                            {{ $employers[$i]->nom_stagiaire }} {{ $employers[$i]->prenom_stagiaire }}</p>
-                                                        <p class="text-muted mb-0 empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">{{ $employers[$i]->fonction_stagiaire }}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td class="align-middle text-start empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">
+                @endcanany
+                    <li class="nav-item">
+                        <a href="{{route('employes.liste_referent')}}" class="nav-link">
+                        Référents
+                        </a>
+                    </li>
+            </ul>
 
             <div class="row">
                 <div class="fixedTop mt-2">
