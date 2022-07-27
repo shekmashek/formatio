@@ -5,7 +5,7 @@
     --first-color: white;
     --first-color-light: rgba(238, 238, 238, 0.863);
     --second-color: #b4b4b4dc;
-    --body-font-color: #6c757d;
+    --body-font-color: #1d2424;
     --body-font: 'Roboto', sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100;
@@ -28,7 +28,7 @@ body {
     width: 100%;
     color: var(--body-font-color);
     overflow: auto;
-    font-size: .8.30rem;
+    font-size: .830rem;
 }
 .content_body {
     background: white;
@@ -1019,7 +1019,6 @@ a{
     display: none;
 }
 
-
 .index{
     padding: 6px ;
     color: white;
@@ -1102,4 +1101,7 @@ a{
 
 .sous_text{
     font-size: .8rem;
+}
+.liste__formation:hover{
+    background: #d3d5d646;
 }

@@ -6,9 +6,22 @@
     transition: all 0.5s ease;
 }
 .btn_submit:hover {
-    transform: scale(1.1);
+    color: #2811f3 !important;
+    background-color: transparent;
+    border: 1px solid #2811f3;
+}
+
+.btn_submit_annuler {
+    padding: 10px 40px !important;
     color: white !important;
-    text-decoration-line: underline;
+    border-radius: 30px;
+    background-color: red;
+    transition: all 0.5s ease;
+}
+.btn_submit_annuler:hover {
+    color: red !important;
+    background-color: transparent;
+    border: 1px solid red;
 }
 
 .section1{

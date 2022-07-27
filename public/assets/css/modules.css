@@ -698,15 +698,10 @@ background: linear-gradient(60deg, #02AAB0,#00CDAC);
 
 .liste__formation {
     background: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: 1rem;
     transition: all 0.5s ease;
     border-radius: 5px;
-}
-.liste__formation:hover  {
-    /* background: linear-gradient(60deg, rgba(255, 68, 0, 0.500),#4222c382);
-    color: white; */
-    transform: scale(1.5s) ;
 }
 .liste__formation .liste__formation__item .acf-nom-module{
     color: #7635dc;
@@ -729,7 +724,7 @@ background: linear-gradient(60deg, #02AAB0,#00CDAC);
 }
 
 .liste__formation__item3 .bx {
-    color: #7635dc;
+    color: #8F8A06;
 }
 .detail_inter .date {
     color: #7635dc;
