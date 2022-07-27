@@ -420,7 +420,7 @@ class FormationController extends Controller
 
             $collab_etp_envoi = DB::select('select decs.activiter, decs.inviter_cfp_id from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1,$entreprise_id->entreprise_id]);
             $collab_cfp_envoi = DB::select('select decs.activiter, decs.inviter_etp_id from demmande_cfp_etp as decs join entreprises as etp on decs.inviter_etp_id = etp.id where decs.activiter = ? and decs.inviter_etp_id = ?',[1,$entreprise_id->entreprise_id]);
-            dd($collab_etp_envoi, $collab_cfp_envoi);
+
             if ($collab_etp_envoi == null ) {
                 # code...
             }
