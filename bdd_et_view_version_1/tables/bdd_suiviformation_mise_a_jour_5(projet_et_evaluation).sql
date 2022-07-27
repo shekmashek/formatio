@@ -102,6 +102,7 @@ CREATE TABLE `froid_evaluations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+Drop table if exists type_champs;
 CREATE TABLE `type_champs` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom_champ` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -115,16 +116,16 @@ INSERT INTO `type_champs` (`id`, `nom_champ`, `desc_champ`, `created_at`, `updat
 (2, 'Champs type Case a Cocher', 'CASE', NULL, NULL),
 (3, 'Champs type Text ou commentaire', 'TEXT', NULL, NULL);
 
+Drop table if exists question_mere;
 CREATE TABLE `question_mere` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `qst_mere` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `desc_reponse` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cfp_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+Drop table if exists question_fille;
 CREATE TABLE `question_fille` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `qst_fille` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -138,12 +139,11 @@ alter table question_fille add column point_max int(10) default 0;
 
 
 
-
+Drop table if exists description_champ_reponse;
 CREATE TABLE `description_champ_reponse` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `descr_champs` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_qst_fille` bigint(20) UNSIGNED NOT NULL REFERENCES question_fille(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `nb_max` int(11),
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
@@ -152,61 +152,65 @@ CREATE TABLE `description_champ_reponse` (
 ALTER TABLE description_champ_reponse
 add column point_champ int(5) default 0;
 
+Drop table if exists reponse_evaluationchaud;
 CREATE TABLE `reponse_evaluationchaud` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `reponse_desc_champ` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_desc_champ` bigint(20) UNSIGNED NOT NULL REFERENCES description_champ_reponse(id) ON DELETE CASCADE,
   `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
   `groupe_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 ALTER TABLE reponse_evaluationchaud add column points int(11) default 0;
-ALTER TABLE reponse_evaluationchaud add column status int(2) NULL;
+ALTER TABLE reponse_evaluationchaud add column statut int(2) NULL;
 
 
-insert into question_mere values(1,'Qualité global de la formation','Donnez une note sur 10 pour votre évaluation globale de la formation:',1,null,null);
-insert into question_mere values(2,'Qualité pédagoqique du formation','Donnez une note sur 10 pour votre évaluation globale de la qualité pédagogique de la formation:',1,null,null);
-insert into question_mere values(3,'Préparation de la formation','Cochez une case par ligne',1,null,null);
-insert into question_mere values(4,'Organisation de la formation','Cochez une case par ligne',1,null,null);
-insert into question_mere values(5,'Déroulement de la formation','Cochez une case par ligne',1,null,null);
-insert into question_mere values(6,'Le rythme de la formation était-il?','',1,null,null);
-insert into question_mere values(7,'Contenu de la formation','Cochez une case par ligne',1,null,null);
-insert into question_mere values(8,'Les objectifs du programme vont-ils atteints','Cochez une case par ligne',1,null,null);
-insert into question_mere values(9,'Efficacité de la formation','Cochez une case par ligne',1,null,null);
-insert into question_mere values(10,'Recommanderiez-vous cette formation?','',1,null,null);
-insert into question_mere values(11,'Quels sont vos attentes pour cette formation?','Repondre au question',1,null,null);
-insert into question_mere values(12,'Quels sont les points forts de cette formation','Repondre au question',1,null,null);
-insert into question_mere values(13,'Quels sont les points faibles de cette formation','Repondre au question',1,null,null);
-insert into question_mere values(14,'Autres remarques','Repondre au question',1,null,null);
+insert into question_mere values(1,'Qualité global de la formation','Donnez une note sur 10 pour votre évaluation globale de la formation:',null,null);
+insert into question_mere values(2,'Qualité pédagoqique du formation','Donnez une note sur 10 pour votre évaluation globale de la qualité pédagogique de la formation:',null,null);
+insert into question_mere values(3,'Préparation de la formation','Cochez une case par ligne',null,null);
+insert into question_mere values(4,'Organisation de la formation','Cochez une case par ligne',null,null);
+insert into question_mere values(5,'Déroulement de la formation','Cochez une case par ligne',null,null);
+insert into question_mere values(6,'Le rythme de la formation était-il?','',null,null);
+insert into question_mere values(7,'Contenu de la formation','Cochez une case par ligne',null,null);
+insert into question_mere values(8,'Les objectifs du programme vont-ils atteints','Cochez une case par ligne',null,null);
+insert into question_mere values(9,'Efficacité de la formation','Cochez une case par ligne',null,null);
+insert into question_mere values(10,'Recommanderiez-vous cette formation?','',null,null);
+insert into question_mere values(11,'Quels sont vos attentes pour cette formation?','Repondre au question',null,null);
+insert into question_mere values(12,'Quels sont les points forts de cette formation','Repondre au question',null,null);
+insert into question_mere values(13,'Quels sont les points faibles de cette formation','Repondre au question',null,null);
+insert into question_mere values(14,'Autres remarques','Repondre au question',null,null);
 
 
 insert into question_fille values (1,"Qualité Globale de la formation",1,1,null,null,0);
 
 insert into question_fille values (2,'Qualité Globale de la formation',1,2,null,null,0);
 
-insert into question_fille values (3,'Les objectifs de la formation ont-ils été clairement annoncés ?',2,3,null,null,4);
-insert into question_fille values (4,'Avez-vous eu une discussion avec notre hiérarchie concernant cette formation ?',2,3,null,null,4);
+insert into question_fille values (3,'Les objectifs de la formation ont-ils été clairement annoncés ?',2,3,null,null,5);
+insert into question_fille values (4,'Avez-vous eu une discussion avec notre hiérarchie concernant cette formation ?',2,3,null,null,5);
 
-insert into question_fille values (5,"Etes-vous satisfait de l'organisation du logistique et matériels utilisé (salle,ordinateur,vidéoprojecteur) ?",2,4,null,null,0);
-insert into question_fille values (6,"La durée du stage de 12 heures vous a-telle semblé adaptée ?",2,4,null,null,4);
+insert into question_fille values (5,"Etes-vous satisfait de l'organisation du logistique et matériels utilisé (salle,ordinateur,vidéoprojecteur) ?",2,4,null,null,5);
+insert into question_fille values (6,"La durée du stage vous a-telle semblé adaptée ?",2,4,null,null,5);
 
-insert into question_fille values (7,"Le formateur étail-il clair et dynamique ?",2,5,null,null,4);
-insert into question_fille values (8,"les exercices et activités étaient-ils pertinents ?",2,5,null,null,4);
-insert into question_fille values (9,"Le formateur a-t-il adapté la formation aux stagiaires ?",2,5,null,null,4);
+insert into question_fille values (7,"Le formateur étail-il clair et dynamique ?",2,5,null,null,5);
+insert into question_fille values (8,"les exercices et activités étaient-ils pertinents ?",2,5,null,null,5);
+insert into question_fille values (9,"Le formateur a-t-il adapté la formation aux stagiaires ?",2,5,null,null,5);
+insert into question_fille values (23,"Est-ce-que le formateur maitrise le sujet ?",2,5,null,null,5);
+insert into question_fille values (24,"Est-ce-que le formateur se montre disponible à les demandes d'explications ?",2,5,null,null,5);
 
-insert into question_fille values (10,"Le rythme de la formation était-il?",2,6,null,null,3);
+insert into question_fille values (10,"Le rythme de la formation était-il?",2,6,null,null,5);
 
-insert into question_fille values (11,"Le programme étail-il clair et précis ?",2,7,null,null,4);
-insert into question_fille values (12,"Le programme étail-il adapté à vos besoins ?",2,7,null,null,4);
-insert into question_fille values (13,"Les supports de la formation étaient-ils clairs et utiles ?",2,7,null,null,4);
+insert into question_fille values (11,"Le programme étail-il clair et précis ?",2,7,null,null,5);
+insert into question_fille values (12,"Le programme étail-il adapté à vos besoins ?",2,7,null,null,5);
+insert into question_fille values (13,"Les supports de la formation étaient-ils clairs et utiles ?",2,7,null,null,5);
+insert into question_fille values (25,"Le support pédagogique était-il conforme à vos attentes ?",2,7,null,null,5);
 
-insert into question_fille values (14,"Les objectifs du programme de formation sont-ils atteints ?",2,8,null,null,4);
 
-insert into question_fille values (15,"Cette formation améliore-t-elle compétences ?",2,9,null,null,4);
-insert into question_fille values (16,"Ces nouvelles compétences vont-elles etre applicables dans votre travail ?",2,9,null,null,4);
+insert into question_fille values (14,"Les objectifs du programme de formation sont-ils atteints ?",2,8,null,null,5);
+
+insert into question_fille values (15,"Cette formation améliore-t-elle compétences ?",2,9,null,null,5);
+insert into question_fille values (16,"Ces nouvelles compétences vont-elles etre applicables dans votre travail ?",2,9,null,null,5);
 
 insert into question_fille values (17,"",2,10,null,null,2);
 insert into question_fille values (18,"Vos commentaires: ",3,10,null,null,0);
@@ -220,101 +224,124 @@ insert into question_fille values (21,"",3,13,null,null,0);
 insert into question_fille values (22,"",3,14,null,null,0);
 
 
-insert into description_champ_reponse values (1,'Note sur 10',1,1,10,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Note sur 10',1,10,null,null,0);
 
-insert into description_champ_reponse values (2,'Note sur 10',2,1,10,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Note sur 10',2,10,null,null,0);
 
-insert into description_champ_reponse values (3,'Pas du tout',3,1,null,null,null,0);
-insert into description_champ_reponse values (4,'Insuffisamment',3,3,null,null,null,0);
-insert into description_champ_reponse values (5,'En partie',3,1,null,null,null,0);
-insert into description_champ_reponse values (6,'Totalement',3,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',3,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',3,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',3,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',3,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',3,null,null,null,5);
 
-insert into description_champ_reponse values (7,'Pas du tout',4,1,null,null,null,0);
-insert into description_champ_reponse values (8,'Insuffisamment',4,1,null,null,null,0);
-insert into description_champ_reponse values (9,'En partie',4,1,null,null,null,0);
-insert into description_champ_reponse values (10,'Totalement',4,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',4,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',4,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',4,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',4,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',4,null,null,null,5);
 
-insert into description_champ_reponse values (11,'Pas du tout',5,1,null,null,null,0);
-insert into description_champ_reponse values (12,'Insuffisamment',5,1,null,null,null,0);
-insert into description_champ_reponse values (13,'En partie',5,1,null,null,null,0);
-insert into description_champ_reponse values (14,'Totalement',5,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',5,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',5,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',5,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',5,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',5,null,null,null,5);
 
-insert into description_champ_reponse values (15,'Pas du tout',6,1,null,null,null,0);
-insert into description_champ_reponse values (16,'Insuffisamment',6,1,null,null,null,0);
-insert into description_champ_reponse values (17,'En partie',6,1,null,null,null,0);
-insert into description_champ_reponse values (18,'Totalement',6,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',6,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',6,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',6,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',6,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',6,null,null,null,5);
 
-insert into description_champ_reponse values (19,'Pas du tout',7,1,null,null,null,0);
-insert into description_champ_reponse values (20,'Insuffisamment',7,1,null,null,null,0);
-insert into description_champ_reponse values (21,'En partie',7,1,null,null,null,0);
-insert into description_champ_reponse values (22,'Totalement',7,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',7,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',7,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',7,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',7,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',7,null,null,null,4);
 
-insert into description_champ_reponse values (23,'Pas du tout',8,1,null,null,null,0);
-insert into description_champ_reponse values (24,'Insuffisamment',8,1,null,null,null,0);
-insert into description_champ_reponse values (25,'En partie',8,1,null,null,null,0);
-insert into description_champ_reponse values (26,'Totalement',8,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',8,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',8,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',8,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',8,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',8,null,null,null,5);
 
-insert into description_champ_reponse values (27,'Pas du tout',9,1,null,null,null,0);
-insert into description_champ_reponse values (28,'Insuffisamment',9,1,null,null,null,0);
-insert into description_champ_reponse values (29,'En partie',9,1,null,null,null,0);
-insert into description_champ_reponse values (30,'Totalement',9,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',9,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',9,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',9,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',9,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',9,null,null,null,5);
 
-insert into description_champ_reponse values (31,'Adapté',10,1,null,null,null,0);
-insert into description_champ_reponse values (32,'Trop rapide',10,1,null,null,null,0);
-insert into description_champ_reponse values (33,'Trop lent',10,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',23,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',23,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',23,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',23,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',23,null,null,null,5);
 
-insert into description_champ_reponse values (34,'Pas du tout',11,1,null,null,null,0);
-insert into description_champ_reponse values (35,'Insuffisamment',11,1,null,null,null,0);
-insert into description_champ_reponse values (36,'En partie',11,1,null,null,null,0);
-insert into description_champ_reponse values (37,'Totalement',11,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',24,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',24,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',24,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',24,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',24,null,null,null,5);
 
-insert into description_champ_reponse values (38,'Pas du tout',12,1,null,null,null,0);
-insert into description_champ_reponse values (39,'Insuffisamment',12,1,null,null,null,0);
-insert into description_champ_reponse values (40,'En partie',12,1,null,null,null,0);
-insert into description_champ_reponse values (41,'Totalement',12,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',10,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',10,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',10,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',10,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',10,null,null,null,5);
 
-insert into description_champ_reponse values (42,'Pas du tout',13,1,null,null,null,0);
-insert into description_champ_reponse values (43,'Insuffisamment',13,1,null,null,null,0);
-insert into description_champ_reponse values (44,'En partie',13,1,null,null,null,0);
-insert into description_champ_reponse values (45,'Totalement',13,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',11,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',11,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',11,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',11,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',11,null,null,null,5);
 
-insert into description_champ_reponse values (46,'Pas du tout',14,1,null,null,null,0);
-insert into description_champ_reponse values (47,'Insuffisamment',14,1,null,null,null,0);
-insert into description_champ_reponse values (48,'En partie',14,1,null,null,null,0);
-insert into description_champ_reponse values (49,'Totalement',14,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',12,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',12,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',12,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',12,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',12,null,null,null,5);
 
-insert into description_champ_reponse values (50,'Non',15,1,null,null,null,0);
-insert into description_champ_reponse values (51,'Un peu',15,1,null,null,null,0);
-insert into description_champ_reponse values (52,'Beaucoup',15,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',13,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',13,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',13,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',13,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',13,null,null,null,5);
 
-insert into description_champ_reponse values (53,'Non',16,1,null,null,null,0);
-insert into description_champ_reponse values (54,'Un peu',16,1,null,null,null,0);
-insert into description_champ_reponse values (55,'Beaucoup',16,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',25,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',25,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',25,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',25,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',25,null,null,null,5);
 
-insert into description_champ_reponse values (56,'Oui',17,1,null,null,null,0);
-insert into description_champ_reponse values (57,'Non',17,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',14,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',14,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',14,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',14,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',14,null,null,null,5);
 
-insert into description_champ_reponse values (58,'rédigez votre commentaire',18,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',15,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',15,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',15,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',15,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',15,null,null,null,5);
 
-insert into description_champ_reponse values (59,'',19,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Insatisfaisant',16,null,null,null,1);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Faible',16,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Moyen',16,null,null,null,3);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Bien',16,null,null,null,4);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Excellent',16,null,null,null,5);
 
-insert into description_champ_reponse values (60,'',20,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Oui',17,null,null,null,2);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('Non',17,null,null,null,1);
 
-insert into description_champ_reponse values (61,'',21,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('rédigez votre commentaire',18,null,null,null,0);
 
-insert into description_champ_reponse values (62,'',22,1,null,null,null,0);
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('',19,null,null,null,0);
 
-update description_champ_reponse set point_champ = 1 where descr_champs = 'Pas du tout';
-update description_champ_reponse set point_champ = 2 where descr_champs = 'Insuffisamment';
-update description_champ_reponse set point_champ = 3 where descr_champs = 'En partie';
-update description_champ_reponse set point_champ = 4 where descr_champs = 'Totalement';
-update description_champ_reponse set point_champ = 1 where descr_champs = 'Trop rapide';
-update description_champ_reponse set point_champ = 1 where descr_champs = 'Trop lent';
-update description_champ_reponse set point_champ = 3 where descr_champs = 'Adapté';
-update description_champ_reponse set point_champ = 1 where descr_champs = 'Non';
-update description_champ_reponse set point_champ = 2 where descr_champs = 'Oui';
-update description_champ_reponse set point_champ = 2 where descr_champs = 'Un peu';
-update description_champ_reponse set point_champ = 3 where descr_champs = 'Beaucoup';
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('',20,null,null,null,0);
+
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('',21,null,null,null,0);
+
+insert into description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at,point_champ) values ('',22,null,null,null,0);
 
 
 

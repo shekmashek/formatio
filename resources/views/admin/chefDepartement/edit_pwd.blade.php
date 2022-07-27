@@ -1,13 +1,13 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text_header m-0 mt-1">Modification mot de passe</h3>
+<h3 class="text_header m-0 mt-1">@lang('translation.Modification') @lang('translation.motDePasse')</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('profil_manager')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
+  <a href="{{route('profil_manager')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i> @lang('translation.Précedent')</button></a>
 </div>
 <center>
 <div class="col-lg-4">
@@ -20,8 +20,8 @@
                             <div class="form-group mt-1 mb-1">
 
                                 <input type="password" class="form-control test input" value=""  name="ancien_password" placeholder="" required>
-                                <label class="ml-3 form-control-placeholder" style="">Ancien mot de passe</label>
-                                {{-- si l'ancien mot de passe est incorrect --}}
+                                <label class="ml-3 form-control-placeholder" style="">@lang('translation.Ancien') @lang('translation.motDePasse')</label>
+                                {{-- si l'ancien @lang('translation.motDePasse') est incorrect --}}
                                 @if (\Session::has('error'))
                                   <div class="alert alert-danger">
                                       <ul>
@@ -29,19 +29,19 @@
                                       </ul>
                                   </div>
                                 @endif
-                                    {{-- nouveau mot de passe --}}
+                                    {{-- nouveau @lang('translation.motDePasse') --}}
                                   <div class="row px-3 mt-4">
                                       <div class="form-group mt-1 mb-1">
 
                                   <input type="password" class="form-control test input" value=""  name="new_password" placeholder="" required>
-                                  <label class="ml-3 form-control-placeholder" ">Nouveau mot de passe</label>
+                                  <label class="ml-3 form-control-placeholder" ">@lang('translation.Nouveau') @lang('translation.motDePasse')</label>
 
 
                               </div>
                           </div>
                     <select  hidden  value="{{$genre}}" name="genre" class="form-select test input" id="genre"  >
-                        <option value="Homme"  >Homme</option>
-                        <option value="Femme">Femme</option>
+                        <option value="Homme"  >@lang('translation.Homme')</option>
+                        <option value="Femme">@lang('translation.Femme')</option>
 
                       </select>
                       <input type="hidden" value="{{ $chef->fonction_chef}}" class="form-control input test"  name="fonction_chef" >
@@ -77,7 +77,7 @@
 
 
 
-<button  class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
+<button  class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> @lang('translation.Enregistrer')</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

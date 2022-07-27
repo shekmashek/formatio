@@ -546,23 +546,36 @@ tbody tr{
     border: none;
     border-radius: 15px;
 }
+
+.position_button{
+    position: relative !important;
+    top: 0px !important;
+}
 .liste__formation {
     background: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: 1rem;
     transition: all 0.5s ease;
     border-radius: 5px;
 }
-.liste__formation:hover  {
-    background: linear-gradient(60deg, rgba(255, 68, 0, 0.500),#4222c382);
-    color: white;
-    transform: scale(1.5s) ;
+.liste__formation:hover{
+    background: #d3d5d646;
 }
 .liste__formation .liste__formation__item .acf-nom-module{
     color: #7635dc;
 }
 .liste__formation .liste__formation__item .acf-description{
     font-size: 0.85rem;
+}
+
+.instruction{
+    background: rgba(128, 128, 128, 0.193);
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: .8rem 1rem;
+    font-size: 0.850rem;
+    margin-left: 2px;
 }
 
 .lien_clique{

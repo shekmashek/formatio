@@ -221,9 +221,7 @@
 </style>
 
 <div class="container-fluid">
-    <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
-
-    @if(isset($invoice_dte) && isset($due_dte))
+    {{-- @if(isset($invoice_dte) && isset($due_dte))
     <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
         filtre activé <i class="fas fa-times"></i> </a>
     @elseif(isset($solde_debut) && isset($solde_fin))
@@ -240,7 +238,7 @@
     <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
         filtre activé <i class="fas fa-times"></i> </a>
 
-    @endif
+    @endif --}}
 
     <div class="m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
@@ -332,7 +330,7 @@
 
                                     <table class="table table-hover facture_table">
                                         <thead>
-                                            <tr>
+                                            <tr style="background: #c7c9c939">
                                                 <th>#</th>
                                                 <th style="max-width: 12%">Type</th>
                                                 <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
@@ -735,7 +733,7 @@
 
                                         <table class="table table-hover facture_table">
                                             <thead>
-                                                <tr>
+                                                <tr style="background: #c7c9c939">
                                                     <th>#</th>
                                                     <th style="max-width: 12%">Type</th>
                                                     <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
@@ -915,7 +913,7 @@
 
                                                 <table class="table table-hover facture_table">
                                                     <thead>
-                                                        <tr>
+                                                        <tr style="background: #c7c9c939">
                                                             <th>#</th>
                                                             <th style="max-width: 12%">Type</th>
                                                             <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
@@ -1077,7 +1075,7 @@
                                                                 <div class="alert alert-light" role="alert">Vos Encaissements:</div>
                                                                     <table  class="table table-hover table-sm">
                                                                         <thead>
-                                                                            <tr>
+                                                                            <tr style="background: #c7c9c939">
                                                                                 <th scope="col">N° F#</th>
                                                                                 <th scope="col">Montant facturer</th>
                                                                                 <th scope="col">Paiement</th>
@@ -1205,7 +1203,7 @@
                                                         {{------------------------------------------------------------------------------- pagination facture payer--}}
                                                         @include("admin.facture.pagination_cfp.pagination_facture_payer")
                                                         <table class="table table-hover facture_table">
-                                                            <tr>
+                                                            <tr style="background: #c7c9c939">
                                                                 <th>#</th>
                                                                 <th scope="col">Type</th>
                                                                 <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
@@ -1405,7 +1403,7 @@
 
 
 
-                                            <div class="filtrer mt-3">
+                                            {{-- <div class="filtrer mt-3">
                                                 <div class="row">
                                                     <div class="col">
                                                         <p class="m-0">Filtre par</p>
@@ -1563,7 +1561,7 @@
                                                     </div>
 
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>

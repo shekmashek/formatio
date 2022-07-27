@@ -228,7 +228,7 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     (factures.projet_id) as projet_id,
     nom_projet,
     groupes.entreprise_id,
-    factures.type_payement_id,
+    
     (type_payement.type) description_type_payement,
     bon_de_commande,
     (factures.devise) facture,

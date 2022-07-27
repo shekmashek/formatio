@@ -1,3 +1,4 @@
+-- Active: 1657548149937@@127.0.0.1@3306@mydb2
 CREATE TABLE genre (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   genre varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -104,7 +105,7 @@ CREATE TABLE users (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO users (id, name, email, email_verified_at, password, remember_token, created_at, updated_at,cin,telephone) VALUES
-(1, 'Levy', 'contact@formation.mg', NULL, '$2y$10$9i0uUmJpIwVtYX1dlEdM5.bNcYXU8CrD8QXDS5loPVAurII6BmbFm', NULL, '2021-08-04 05:53:44', '2021-08-04 05:53:44','301051027178','0321122233');
+(4, 'Levy', 'contact@formation.mg', NULL, '$2y$10$9i0uUmJpIwVtYX1dlEdM5.bNcYXU8CrD8QXDS5loPVAurII6BmbFm', NULL, '2021-08-04 05:53:44', '2021-08-04 05:53:44','301051027178','0321122233');
 
 CREATE TABLE role_users(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -114,7 +115,7 @@ CREATE TABLE role_users(
    activiter boolean not null default false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO role_users(user_id,role_id,activiter) VALUES (1,6,1);
+INSERT INTO role_users(user_id,role_id,activiter) VALUES (4,6,1);
 
 CREATE TABLE `type_abonnes` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -249,33 +250,6 @@ CREATE TABLE reseaux_sociaux (
 --   updated_at timestamp NULL DEFAULT current_timestamp()
 -- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE OR REPLACE view responsables_cfp as SELECT
-    (employers.id)id,
-    nom_emp as nom_resp_cfp,
-    prenom_emp as prenom_resp_cfp,
-    genre_id as sexe_resp_cfp,
-    date_naissance_emp as date_naissance_resp_cfp,
-    cin_emp as cin_resp_cfp,
-    email_emp as email_resp_cfp,
-    telephone_emp as telephone_resp_cfp,
-    fonction_emp as fonction_resp_cfp,
-    adresse_lot,
-    (employers.adresse_quartier) adresse_quartier,
-     (employers.adresse_quartier) adresse_code_postal,
-    (employers.adresse_quartier)  adresse_ville,
-     (employers.adresse_quartier) adresse_region,
-    photos as photos_resp_cfp,
-    entreprise_id as cfp_id,
-    user_id,
-    (employers.activiter) activiter,
-    prioriter,
-    url_photo,
-    (employers.created_at) created_at,
-    (employers.updated_at) updated_at
-FROM
-employers
-JOIN entreprises
-WHERE employers.entreprise_id = entreprises.id and entreprises.type_entreprise_id = 2;
 
 
 CREATE TABLE IF NOT EXISTS niveau_etude(

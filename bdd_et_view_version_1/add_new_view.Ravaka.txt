@@ -1,0 +1,6 @@
+
+
+
+En modifiant la table besoin_stagiaire,ajoutez une autre colonne reponse_stagiaire
+ALTER TABLE besoin_stagiaire ADD reponse_stagiaire VARCHAR(3) NOT NULL ;
+ALTER TABLE besoin_stagiaire ADD arbitrage VARCHAR(3) NOT NULL DEFAULT 0;

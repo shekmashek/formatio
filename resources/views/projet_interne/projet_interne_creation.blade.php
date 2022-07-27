@@ -6,12 +6,21 @@
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container pt-1">
         <div class="row">
-            {{-- <h5 class="my-3 text-center">Le Projet de Formation intra entreprise</h5> --}}
-
+            <div class="row mb-4">
+                <div class="col-6">
+                    <h5>Nouvelle session de projet interne</h5>
+                </div>
+                <div class="col-6 text-end">
+                    <div>
+                        <a class="new_list_nouvelle " href="{{url()->previous()}}">
+                        <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
+                    </a>
+                    </div>
+                </div>
+            </div>
             <form action="{{ route('projet_interne/enregistrement') }}" id="formPayement" method="POST" class="form_session pt-2">
                 @csrf
                 <div class="row">
-                    <h5 class="mb-2 text-center">Création d'une nouvelle session de projet interne</h5>
                     @if (Session::has('groupe_error'))
                         <div class="alert alert-danger ms-2 me-2">
                             <ul>
@@ -65,12 +74,13 @@
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-lg-6 text-end">
-                                <a href="{{ route('liste_projet') }}"><button type="button" class="btn  btn_annuler py-1"
-                                        data-dismiss="modal"><i class='bx bxs-chevron-left me-1'></i>Annuler</button></a>
+                            <div class="col-lg-6 text-end"><button type="submit" form="formPayement"
+                                class="btn btn_enregistrer py-1"><i class='bx bx-check me-1'></i>Créer</button>
                             </div>
-                            <div class="col-lg-6"><button type="submit" form="formPayement"
-                                    class="btn btn_nouveau py-1"><i class='bx bx-check me-1'></i>Créer</button></div>
+                            <div class="col-lg-6 text-start">
+                                <a href="{{ route('liste_projet') }}"><button type="button" class="btn  btn_annuler py-1"
+                                        data-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button></a>
+                            </div>
                         </div>
                     </div>
             </form>

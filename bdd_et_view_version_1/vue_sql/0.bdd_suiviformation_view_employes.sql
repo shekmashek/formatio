@@ -93,10 +93,18 @@ SELECT
     bc.nom_branche,
     role_users.role_id,
     role_users.prioriter,
-employers.created_at,
-employers.updated_at,
-niveau_etude_id,
-niveau_etude.niveau_etude
+    employers.created_at,
+    employers.updated_at,
+    niveau_etude_id,
+    niveau_etude.niveau_etude,
+    etp.logo,
+    etp.nom_etp,
+    etp.adresse_rue as adresse_rue_etp,
+    etp.adresse_quartier as adresse_quartier_etp,
+    etp.adresse_code_postal as adresse_code_postal_etp,
+    etp.adresse_ville as adresse_ville_etp,
+    etp.adresse_region as adresse_region_etp,
+    etp.site_etp
 FROM
 employers
 LEFT JOIN v_departement_service_entreprise vd ON vd.service_id = employers.service_id and vd.departement_entreprise_id = employers.departement_entreprises_id
@@ -104,6 +112,7 @@ LEFT JOIN branches bc ON bc.id = employers.branche_id
 JOIN role_users ON role_users.user_id =  employers.user_id
 JOIN genre ON genre.id = employers.genre_id
 JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
+JOIN entreprises as etp ON etp.id = employers.entreprise_id
 WHERE role_users.role_id=2;
 
 CREATE OR REPLACE view chef_departements as
@@ -152,6 +161,34 @@ JOIN genre ON genre.id = employers.genre_id
 JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
 JOIN entreprises e ON e.id = employers.entreprise_id
 WHERE role_users.role_id=5;
+
+CREATE OR REPLACE view responsables_cfp as SELECT
+    (employers.id)id,
+    nom_emp as nom_resp_cfp,
+    prenom_emp as prenom_resp_cfp,
+    genre_id as sexe_resp_cfp,
+    date_naissance_emp as date_naissance_resp_cfp,
+    cin_emp as cin_resp_cfp,
+    email_emp as email_resp_cfp,
+    telephone_emp as telephone_resp_cfp,
+    fonction_emp as fonction_resp_cfp,
+    adresse_lot,
+    (employers.adresse_quartier) adresse_quartier,
+    (employers.adresse_quartier) adresse_code_postal,
+    (employers.adresse_quartier)  adresse_ville,
+    (employers.adresse_quartier) adresse_region,
+    photos as photos_resp_cfp,
+    entreprise_id as cfp_id,
+    user_id,
+    (employers.activiter) activiter,
+    prioriter,
+    url_photo,
+    (employers.created_at) created_at,
+    (employers.updated_at) updated_at,
+FROM
+employers
+JOIN entreprises
+WHERE employers.entreprise_id = entreprises.id and entreprises.type_entreprise_id = 2;
 
 create or replace view  v_responsable_entreprise as
     select r.id as responsable_id,

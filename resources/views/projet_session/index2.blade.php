@@ -29,7 +29,7 @@
                                 <div class="row">
                                     <div class="col text-center">
                                         <i class='bx bxs-plus-circle icon_upgrade me-3'></i>
-                                        @if($abonnement_etp == null)
+                                        @if($abonnement_cfp == null)
                                             <span>Vous n'êtes pas encore abonnée. Veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition"> vous abonner</a> pour plus de fonctionnalité </span>
                                         @else
                                             @if($abonnement_cfp[0]->illimite != 1)
@@ -45,8 +45,14 @@
                                 <img src="{{asset('img/folder(1).webp')}}" alt="folder empty" width="300px" height="300px">
                                 <p>Aucun projet en cours</p>
                             </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <a href="{{route('nouveau_groupe',['type_formation'=>1])}}" role="button" class="btn_nouveau me-5"><i class="bx bx-plus-medical me-1"></i>Projet Intra</a>
+                                    @can('isPremium')<a href="{{route('nouveau_groupe_inter',['type_formation'=>2])}}" role="button" class="btn_nouveau ms-5"><i class="bx bx-plus-medical me-1"></i>Projet Inter</a>@endcan
+                                </div>
+                            </div>
                         </div>
-                    @endif
+                    @else
                     @if (Session::has('groupe_error'))
                         <div class="alert alert-danger ms-2 me-2">
                             <ul>
@@ -692,6 +698,7 @@
                             </table>
                         </div>
                     </div>
+                    @endif
                 @endcanany
             </div>
         </div>

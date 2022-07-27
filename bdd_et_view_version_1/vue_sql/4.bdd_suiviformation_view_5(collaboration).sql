@@ -836,3 +836,35 @@ JOIN secteurs se ON
     e.secteur_id = se.id
 JOIN responsables r ON d.resp_etp_id = r.id
 JOIN responsables_cfp rc ON d.resp_cfp_id = rc.id;
+
+CREATE OR REPLACE VIEW collab_cfp_etp AS SELECT
+    collab.statut,
+    collab.demmandeur,
+    etp.id as id_etp,
+    etp.nom_etp,
+    etp.logo as logo_etp,
+    sect.nom_secteur,
+    resp.nom_resp,
+    resp.prenom_resp,
+    SUBSTRING(resp.nom_resp, 1, 1) AS nom_resp_initial,
+    SUBSTRING(resp.prenom_resp, 1, 1) AS prenom_resp_initial,
+    resp.photos,
+    resp.email_resp,
+    cfp.id as id_cfp,
+    cfp.nom,
+    cfp.logo,
+    resp_cfp.nom_resp_cfp,
+    resp_cfp.prenom_resp_cfp,
+    SUBSTRING(resp_cfp.nom_resp_cfp, 1, 1) AS nom_resp_cfp_inital,
+    SUBSTRING(resp_cfp.prenom_resp_cfp, 1, 1) AS prenom_resp_cfp_initial,
+    resp_cfp.photos_resp_cfp,
+    resp_cfp.email_resp_cfp,
+    collab.updated_at as date_refuse
+
+FROM collaboration_etp_cfp as collab
+JOIN entreprises as etp ON collab.etp_id = etp.id
+JOIN cfps as cfp ON collab.cfp_id = cfp.id
+JOIN secteurs as sect ON etp.secteur_id = sect.id
+JOIN responsables as resp ON collab.etp_id = resp.entreprise_id
+JOIN responsables_cfp as resp_cfp ON collab.cfp_id = resp_cfp.cfp_id
+WHERE resp.prioriter = 1 and resp_cfp.prioriter = 1;
