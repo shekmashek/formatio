@@ -5,7 +5,7 @@ namespace Illuminate\Foundation\Testing\Concerns;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Cookie\CookieValuePrefix;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Testing\LoggedExceptionCollection;
 use Illuminate\Testing\TestResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -100,6 +100,18 @@ trait MakesHttpRequests
     public function withToken(string $token, string $type = 'Bearer')
     {
         return $this->withHeader('Authorization', $type.' '.$token);
+    }
+
+    /**
+     * Remove the authorization token from the request.
+     *
+     * @return $this
+     */
+    public function withoutToken()
+    {
+        unset($this->defaultHeaders['Authorization']);
+
+        return $this;
     }
 
     /**
@@ -432,6 +444,7 @@ trait MakesHttpRequests
     public function options($uri, array $data = [], array $headers = [])
     {
         $server = $this->transformHeadersToServerVars($headers);
+
         $cookies = $this->prepareCookiesForRequest();
 
         return $this->call('OPTIONS', $uri, $data, $cookies, [], $server);
@@ -448,6 +461,22 @@ trait MakesHttpRequests
     public function optionsJson($uri, array $data = [], array $headers = [])
     {
         return $this->json('OPTIONS', $uri, $data, $headers);
+    }
+
+    /**
+     * Visit the given URI with a HEAD request.
+     *
+     * @param  string  $uri
+     * @param  array  $headers
+     * @return \Illuminate\Testing\TestResponse
+     */
+    public function head($uri, array $headers = [])
+    {
+        $server = $this->transformHeadersToServerVars($headers);
+
+        $cookies = $this->prepareCookiesForRequest();
+
+        return $this->call('HEAD', $uri, [], $cookies, [], $server);
     }
 
     /**
@@ -509,11 +538,11 @@ trait MakesHttpRequests
             $request = Request::createFromBase($symfonyRequest)
         );
 
+        $kernel->terminate($request, $response);
+
         if ($this->followRedirects) {
             $response = $this->followRedirects($response);
         }
-
-        $kernel->terminate($request, $response);
 
         return $this->createTestResponse($response);
     }
@@ -526,7 +555,7 @@ trait MakesHttpRequests
      */
     protected function prepareUrlForRequest($uri)
     {
-        if (Str::startsWith($uri, '/')) {
+        if (str_starts_with($uri, '/')) {
             $uri = substr($uri, 1);
         }
 
@@ -556,7 +585,7 @@ trait MakesHttpRequests
      */
     protected function formatServerHeaderKey($name)
     {
-        if (! Str::startsWith($name, 'HTTP_') && $name !== 'CONTENT_TYPE' && $name !== 'REMOTE_ADDR') {
+        if (! str_starts_with($name, 'HTTP_') && $name !== 'CONTENT_TYPE' && $name !== 'REMOTE_ADDR') {
             return 'HTTP_'.$name;
         }
 
@@ -624,11 +653,11 @@ trait MakesHttpRequests
      */
     protected function followRedirects($response)
     {
+        $this->followRedirects = false;
+
         while ($response->isRedirect()) {
             $response = $this->get($response->headers->get('Location'));
         }
-
-        $this->followRedirects = false;
 
         return $response;
     }
@@ -641,6 +670,12 @@ trait MakesHttpRequests
      */
     protected function createTestResponse($response)
     {
-        return TestResponse::fromBaseResponse($response);
+        return tap(TestResponse::fromBaseResponse($response), function ($response) {
+            $response->withExceptions(
+                $this->app->bound(LoggedExceptionCollection::class)
+                    ? $this->app->make(LoggedExceptionCollection::class)
+                    : new LoggedExceptionCollection
+            );
+        });
     }
 }
