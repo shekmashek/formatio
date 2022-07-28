@@ -985,24 +985,23 @@ class HomeController extends Controller
 
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
-            // dd($data);
 
             // affiche chiffre d'affaire
-            for($i=0;$i<count($data);$i+=1){
-                $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where cfp_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
-                [$cfp_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
-                if(count($dataMontantSession)>0){
-                    $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,1);
-                    $data[$i]->qte = $dataMontantSession[0]->qte;
-                    $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
+            // for($i=0;$i<count($data);$i+=1){
+            //     $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where cfp_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
+            //     [$cfp_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
+            //     if(count($dataMontantSession)>0){
+            //         $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,1);
+            //         $data[$i]->qte = $dataMontantSession[0]->qte;
+            //         $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
 
-                } else {
-                    $data[$i]->hors_taxe_net = null;
-                    $data[$i]->qte =null;
-                    $data[$i]->num_facture = null;
-                }
+            //     } else {
+            //         $data[$i]->hors_taxe_net = null;
+            //         $data[$i]->qte =null;
+            //         $data[$i]->num_facture = null;
+            //     }
 
-            }
+            // }
 
             $type_formation = DB::select('select * from type_formations');
 
@@ -1018,7 +1017,7 @@ class HomeController extends Controller
 
             // filter multi select
             $nomEntreprises = DB::select('select nom_etp,groupe_id  from v_groupe_entreprise group by nom_etp');
-            $nomSessions = DB::select('select nom_groupe from v_groupe_projet_module group by nom_groupe order by groupe_id asc');
+            $nomSessions = DB::select('select nom_groupe from v_groupe_projet_module where cfp_id  = ? group by nom_groupe', [$cfp_id]);
             $nomModalites = DB::select('select modalite from v_groupe_projet_module group by modalite');
             $nmdls = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
             $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module group by item_status_groupe');
@@ -1228,6 +1227,12 @@ class HomeController extends Controller
         if (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             $fullProjects = $fonct->projetSessionFull($cfp_id);
+
+            // test date
+            $date = DB::table('v_groupe_projet_module')
+              ->whereDate('date_debut', '=', Carbon::today()->toDateString())
+              ->get();
+            dd($date);
 
             return view('projet_session.index2', compact('fullProjects'));
         }

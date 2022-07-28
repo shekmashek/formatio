@@ -1076,14 +1076,13 @@
     <table class="table order-column  modifTable "  id="example">
         {{-- en tete --}}
         <thead  style="position: sticky; top: 0">
-            
             <tr style="background: #d4d1d139;margin-top:-10px">
                 <th >
-                    <div class="dropdown" >
+                    <div class="dropend">
                         <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class='bx bx-library align-middle'></i> Projet
                         </button>
-                        <ul class="dropdown-menu main p-2" >
+                        <ul class="dropdown-menu main p-2" style="overflow-y: auto">
                             <li>
                                 <input type="text" class="column_search form-control form-control-sm">
                             </li>
@@ -1104,7 +1103,7 @@
                     </div>
                 </th>
                 <th >
-                    <div class="dropdown" >
+                    <div class="dropend" >
                         <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bx bxs-book-open align-middle" style="color: #2e3950"></i> Session
                         </button>
@@ -1376,55 +1375,83 @@
                 <th >PDF</th>
                 <th >Action</th>
             </tr>
-            
-        
         </thead>
         <tbody class="myTbody">
             @foreach ($fullProjects as $projet)
                 <tr>
                     <td>
-                        <span>
-                            <span class="myData">{{ $projet->nom_projet }}</span>
-                            &nbsp;&nbsp;
-                            <a role="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$projet->groupe_id}}">
-                                <i class='bx bx-window-open' data-id="{{$projet->groupe_id}}" style="font-size: 18px; vertical-align: middle; color: #1c7f2e"></i>
-                            </a>
-                        </span>
+                        <a role="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$projet->groupe_id}}">
+                            <i class='bx bx-window-open' data-id="{{$projet->groupe_id}}" style="font-size: 18px; vertical-align: middle; color: #1c7f2e;"></i>
+                        </a>
+                        &nbsp;&nbsp;
+                        <span class="myData">{{ $projet->nom_projet }}</span>
                     </td>
                     <td>
                         <span class="myData">
                             <a href="{{ route('detail_session', [$projet->groupe_id, $projet->id]) }}">
-                                <span style="font-size: 13px"  class="spanClass">{{ $projet->session }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
+                                <span style="font-size: 13px"  class="spanClass">{{ $projet->session }}<i class='bx bx-show' style="font-size: 20px; vertical-align: middle; float: right;"></i></span>
                             </a>
                         </span>
                     </td>
                     <td>
                         <span class="myData">{{ $projet->nom_module }}</span>
                     </td>
-                    <td>
-                        <span class="myData">{{ $projet->nom_etp }}</span>
-                    </td>
+                    @if ($projet->nom_etp == null)
+                        <td>
+                            <span>{{ '-' }}</span>
+                        </td>
+                    @else
+                        <td>
+                            <span class="myData">{{ $projet->nom_etp }}</span>
+                        </td>
+                    @endif
                     <td>
                         <span class="myData">{{ $projet->modalite }}</span>
                     </td>
                     <td>
-                        <span class="myData">{{ \Carbon\Carbon::parse($projet->date_projet)->translatedFormat('d-m-y') }}</span> <span style="font-size: 11px">au</span> 
-                        <span class="myData">{{ \Carbon\Carbon::parse($projet->date_projet)->translatedFormat('d-m-y') }}</span>
+                        <span class="myData">{{ \Carbon\Carbon::parse($projet->date_debut)->translatedFormat('d-m-y') }}</span> <span style="font-size: 11px">au</span> 
+                        <span class="myData">{{ \Carbon\Carbon::parse($projet->date_fin)->translatedFormat('d-m-y') }}</span>
                     </td>
+                    @if ($projet->lieu == null)
+                    <td class="text-center">
+                        <span>{{ '-' }}</span>
+                    </td>
+                    @else
                     <td>
                         <span class="myData">{{ $projet->lieu }}</span>
                     </td>
+                    @endif
                     <td class="text-center">
                         <span class="myData">{{ $projet->type_formation }}</span>
                     </td>
                     <td class="text-center">
-                        <span class="myData badge bg-secondary" style="width: 80px; font-size: 12px; font-weight: 400; text-align: center">{{ $projet->item_status_groupe }}</span>
+                        @if($projet->item_status_groupe === 'Cloturé')
+                            <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#111111"">Cloturé</span>
+                        @elseif($projet->item_status_groupe === 'Reporté')
+                            <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#af10e9"">Reporté</span>
+                        @elseif($projet->item_status_groupe === 'Prévisionnel')
+                            <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#2792e4"">Prévisionnel</span>
+                        @elseif($projet->item_status_groupe === 'Annulée')
+                            <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#b33939"">Annulée</span>
+                        @elseif($projet->item_status_groupe === 'Reprogrammer')    
+                            <span class="myData badge" style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#00CDAC">Reprogrammer</span>
+                        @endif 
                     </td>
-
                     <td class="text-center" style="font-size: 13px">
-                        <a href="{{ route('resultat_evaluation', [$projet->groupe_id]) }}" style="font-size: 13px">
-                            <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
-                        </a>
+                        @if ($projet->date_debut < \Carbon\Carbon::today()->toDateString())
+                            <a href="{{ route('resultat_evaluation', [$projet->groupe_id]) }}" style="font-size: 13px">
+                                <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #868686"></i>
+                            </a>
+                        @elseif($projet->date_debut == \Carbon\Carbon::today()->toDateString())
+                            <a href="{{ route('resultat_evaluation', [$projet->groupe_id]) }}" style="font-size: 13px">
+                                <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
+                            </a>
+                        @else
+                            <a href="{{ route('resultat_evaluation', [$projet->groupe_id]) }}" style="font-size: 13px">
+                                <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #b31217"></i>
+                            </a>
+                        @endif
+                        
                     </td>
                     <td class="text-center" style="font-size: 13px">
                         <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
@@ -1455,12 +1482,12 @@
                     </td>
                     <td class="text-center">
                         @can('isCFP')
-                            <i style="color: rgb(25, 193, 225); cursor: pointer" class='bx bx-edit'data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $projet->groupe_id }}" data-backdrop="static"></i>
+                            <i style="color: rgb(25, 193, 225); cursor: pointer; font-size: 20px" class='bx bx-edit'data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $projet->groupe_id }}" data-backdrop="static"></i>
                         @endcan
                     </td>
                 </tr>
 
-                <div class="modal fade  "  id="exampleModal_{{$projet->groupe_id}}" data-bs-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade"  id="exampleModal_{{$projet->groupe_id}}" data-bs-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-xl " >
                       <div class="modal-content" style="width: 1800px">
                         <div class="modal-header text-dark" style="background: whitesmoke;color:gray !important">
@@ -1553,29 +1580,7 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-md-4">
-                                                        <i class="bi bi-currency-dollar"></i>
-                                                            <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
-                                                                Frais annexes
-                                                            </span>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                            @php
-                                                                $dataFrais = $groupe->dataFraisAnnexe($projet->groupe_id, $projet->entreprise_id);
-
-                                                                $somme = 0;
-                                                                if (count($dataFrais) > 0) {
-                                                                    foreach ($dataFrais as $dataFrai) {
-                                                                        $somme += $dataFrai->montantTotal;
-                                                                    }
-                                                                }
-                                                            @endphp
-
-                                                        <span style="color: #011e2a; font-size: 13px">{{ number_format($somme, 2, ',', ' ') }} <span style="font-size: 12px">{{ $devise }}</span></span>
-
-                                                    </div>
-                                                </div>
+                                                
                                                 <div class="row mb-2">
                                                     <div class="col-md-4">
                                                         <i class="bi bi-cash-coin"></i>
@@ -1703,9 +1708,8 @@
                       </div>
                     </div>
                 </div>
-
-                
             @endforeach
+
             @foreach ($data as $pj)
             <div>
                 <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
@@ -2245,7 +2249,7 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
 
-    <script type='text/javascript'>
+    <script>
         $(document).ready(function() {
             var options = {
                 html: true,
@@ -2254,16 +2258,39 @@
             }
             var example = document.getElementById('exampleE1')
             var popover = new bootstrap.Popover(example, options)
-        })
-    </script>
+            
+            // select all
+            $('.select_all').on('click', function(){
+                if(this.checked){
+                    $('.checkbox').each(function(){
+                        this.checked = true;
+                    });
+                }else{
+                    $('.checkbox').each(function(){
+                        this.checked = false;
+                    });
+                }
+            });
 
-    <script>
-        $(document).ready(function() {
+            $('.checkbox').on('click', function(){
+                if(('.checkbox:checked').length == $('.checkboxx').length){
+                    $('.select_all').prop('checked', true);
+                } else{
+                    $('.select_all').prop('checked', false);
+                }
+            });
+            // end select all
+
+            $('#example thead').on('keyup', ".column_search",function () {
+                table.column( $(this).parent().parent().parent().parent().index() ).search( this.value ).draw();
+            } );
+
+
             var table = $('#example').DataTable( {
                 // dom:            "Bfrtip",
                 "dom": 'C<"clear">lfrtip',
-                scrollY:        "500px",
-                scrollX:        true,
+                // scrollY:        "500px",
+                // scrollX:        true,
                 scrollCollapse: true,
                 paging:         true,
                 buttons:        [ 'colvis','colonne' ],
@@ -2298,13 +2325,13 @@
                     return '^' + this.value + '$';
                 }).get().join('|');
                 
-                table.column(0).search(Projet, true,true,true).draw();
+                table.column(0).search(Projet, true,false,false).draw();
 
                 var Session = $('input:checkbox[name="session"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(1).search(Session, true,true,true).draw();
+                table.column(1).search(Session, true,false,true).draw();
                 
                 var Module = $('input:checkbox[name="Module"]:checked').map(function() {
                     return this.value;
@@ -2322,13 +2349,13 @@
                     return this.value;
                 }).get().join('|');
                 
-                table.column(4).search(Modalite, true,true,true).draw();
+                table.column(4).search(Modalite, true,false,false).draw();
                 
                 var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(7).search(Statut, true,true,true).draw();
+                table.column(7).search(Statut, true,false,false).draw();
 
                 var Type = $('input:checkbox[name="TypeF"]:checked').map(function() {
                     return this.value;
