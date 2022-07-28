@@ -128,9 +128,12 @@
                     <li class="nav-item me-2" role="presentation">
                         <button class="btn btn_stagiaire active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Stagiaire(s)</button>
                     </li>
+                    @canany(['isReferent','isReferentSimple','isCFP'])
                     <li class="nav-item" role="presentation">
                         <button class="btn btn_manager" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Manager(s)</button>
                     </li>
+                    @endcan
+
                 </ul>
             </div>
             <div class="col-1 downlad_pdf">
@@ -138,9 +141,9 @@
             </div>
         </div>
     </div>
-    
-    
-    
+
+
+
       <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
             <div id="statistique_stagiaire" class="row mb-5">
@@ -191,7 +194,7 @@
                                                     @endforeach
                                                 </table>
                                             @endif
-                                            
+
                                         </div>
                                     </div>
 
@@ -250,7 +253,7 @@
                                                     @endforeach
                                                 </table>
                                             @endif
-                                            
+
                                         </div>
                                     </div>
 
@@ -264,7 +267,7 @@
 
 
 
-    
+
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css"
         integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous"> --}}
@@ -278,7 +281,7 @@
         $(document).on('click','.btn_manager',function(){
             pdf_id = 'statistique_manager';
         });
-        
+
         $(document).on('click', '.get_pdf', function() {
             const rapport = document.getElementById(pdf_id);
             var opt = {

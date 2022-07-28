@@ -141,3 +141,7 @@ create table test_json(
 insert into test_json(id, personne, adresse) values(1,'Vonjy','{"lot":"LOT III 3 D","Ville":"Imeritsiatosika","Province":"Analamanga"}');
 
 select personne,JSON_VALUE(adresse,'$.lot') as lot,JSON_VALUE(adresse,'$.Ville') as ville from test_json;
+
+
+
+

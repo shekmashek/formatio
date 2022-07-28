@@ -272,6 +272,7 @@ class DepartementController extends Controller
 
     public function affProfilChefDepart()
     {
+
         $fonct = new FonctionGenerique();
         // $idChef = chefDepartement::where('user_id', Auth::user()->id)->value('id');
 
