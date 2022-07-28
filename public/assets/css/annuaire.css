@@ -70,7 +70,7 @@
 }
 
 .btn_actions:hover {
-    transform: scale(1.1);
+    transform: scale(1.02);
 }
 
 .btn_actions .bx {
@@ -238,17 +238,18 @@ color: #7635dc;
     margin: .5rem 0;
     margin-bottom: 4rem;
     transition: all .5s ease;
-    color: white !important;
-    background-color: #637381;
+    color: #637381 ;
+    border: 1px solid #637381;
+    border-radius: 10px;
     cursor: default !important;
 }
 
-.formations:hover{
-    color: white !important;
+/* .formations:hover{
+    color: white;
     background: #7635dc;
     border: none;
     transform: scale(1.1);
-}
+} */
 
 .fix_top{
     position: sticky;
@@ -423,3 +424,6 @@ color: #7635dc;
     visibility: hidden;
 }
 
+.titre_cfp{
+    color: #5433FF !important;
+}

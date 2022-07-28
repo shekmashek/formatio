@@ -555,15 +555,17 @@ a:focus {
     background: #e0e1e134;
     padding: .5rem 1rem;
     border-radius: 5px;
-    transition: all .5s ease-in-out;
+    transition: all .2s ease;
 }
 
 .module_lien:hover{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     transform: scale(1.01);
     background: white;
-    color: #4222c3;
+    /* color: #4222c3; */
 }
+
+.module_lien:hover
 
 .accordion-button.collapsed {
     color: #5433FF;

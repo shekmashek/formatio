@@ -2,7 +2,7 @@
 
 namespace Fruitcake\Cors;
 
-use Fruitcake\Cors\CorsService;
+use Asm89\Stack\CorsService;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
