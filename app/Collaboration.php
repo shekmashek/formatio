@@ -353,11 +353,11 @@ class Collaboration extends Model
             $totale_invitation += count($fonct->findWhere("v_invitation_formateur_pour_cfp", ["inviter_formateur_id"], [$formateur_id]));
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = CFP::where('user_id', $id)->value('id');
-            $totale_invitation += count($fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]));
+            $totale_invitation += count($fonct->findWhere("collaboration_etp_cfp", ["cfp_id","statut"], [$cfp_id,2]));
             $totale_invitation += count($fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]));
         } elseif (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $id)->value('entreprise_id');
-            $totale_invitation += count($fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]));
+            $totale_invitation += count($fonct->findWhere("collaboration_etp_cfp", ["etp_id","statut"], [$entreprise_id,2]));
         } else {
             $totale_invitation = 0;
         }

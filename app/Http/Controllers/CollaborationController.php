@@ -317,9 +317,9 @@ class CollaborationController extends Controller
         $fonct = new FonctionGenerique();
         $id = Auth::id();
         $entreprise_id = responsable::where('user_id', $id)->value('entreprise_id');
-
-        $demmande = $fonct->findWhere("v_demmande_etp_pour_cfp", ["demmandeur_etp_id"], [$entreprise_id]);
-        $invitation = $fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]);
+        $demmande = $this->fonct->findWhereMulitOne("collaboration_etp_cfp", ["etp_id","demmandeur"], [$entreprise_id,'cfp']);
+        // $demmande = $fonct->findWhere("v_demmande_etp_pour_cfp", ["demmandeur_etp_id"], [$entreprise_id]);
+        $invitation = $fonct->findWhere("collaboration_etp_cfp", ["etp_id","statut","demmandeur"], [$entreprise_id,2,'cfp']);
 
         $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
         $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);

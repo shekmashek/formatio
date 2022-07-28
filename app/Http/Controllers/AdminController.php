@@ -135,7 +135,7 @@ class AdminController extends Controller
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             // $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $refuse_demmande_etp = DB::select('select * from v_refuse_demmande_etp_cfp where cfp_id = ? order by date_refuse desc limit 10',[$cfp_id]);
-            $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
+            $invitation_etp = $fonct->findWhere("collaboration_etp_cfp", ["cfp_id","statut","demmandeur"], [$cfp_id,2,'etp']);
 
             $entreprise = $entp->getEntreprise($etp2, $etp1);
 
