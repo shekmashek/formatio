@@ -414,7 +414,7 @@
                             html +=     '</div>';
                             html +=     '<div class="col-3 detail_cfp">';
                             html +=         '<div class="row">';
-                            html +=             '<h4><a href="' + url_detail_cfp + '">' + userData['cfp'][i]['nom'] + '</a>';
+                            html +=             '<h4><a href="' + url_detail_cfp + '" class="titre_cfp">' + userData['cfp'][i]['nom'] + '</a>';
                                                 for (let l = 0; l < userData['type'].length; l++) {
                                                     if (userData['cfp'][i]['id'] == userData['type'][l]['cfp_id']) {
                                                         if (userData['type'][l]['type_abonnement_id'] == 1) {
@@ -534,7 +534,7 @@
                             html +=     '<div class="col-1">';
                             html +=         '<span class="badges">';
                                                 for (let j = 0; j < userData['collab'].length; j++) {
-                                                    if(userData['collab'][j]['inviter_cfp_id'] == userData['cfp'][i]['id'] && userData['collab'][j]['activiter'] == 1){
+                                                    if(userData['collab'][j]['statut'] == 2){
                             html +=                     '<div class="main-wrapper">';
                             html +=                         '<div class="badge green">';
                             html +=                             '<div class="circle">';
