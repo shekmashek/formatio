@@ -463,8 +463,8 @@ class HomeController extends Controller
                 $etp_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$etp_id]);
                 if ($etp_ab != null && $etp_ab[0]->status != "Désactivé" &&  $etp_ab[0]->status != "En attente" ) {
                     if($etp_ab[0]->date_fin == $dtNow){
-                        DB::update('update abonnement_cfps set status = ?,type_arret = ?,activite = ? where cfp_id = ?', ['Désactivé','fin abonnement',0,$cfp_id]);
-                        DB::update('update cfps set statut_compte_id = ? where id = ?',[3,$cfp_id]);
+                        DB::update('update abonnements set status = ?,type_arret = ?,activite = ? where entreprise_id = ?', ['Désactivé','fin abonnement',0,$etp_id]);
+                        DB::update('update entreprises set statut_compte_id = ? where id = ?',[3,$etp_id]);
                         $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
                         $message = "Vous êtes en mode ".$statut_compte->nom_statut;
                         $test = 0;
