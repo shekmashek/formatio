@@ -73,6 +73,7 @@ CREATE TABLE `services` (
   `nom_service` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   foreign key(departement_entreprise_id) references departement_entreprises (id) on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 alter TABLE services add COLUMN `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE;
 
 CREATE TABLE `branches` (

@@ -857,14 +857,16 @@ class HomeController extends Controller
             }else{
                 $lieuFormation = null;
             }
+            $abonnement_etp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_etp_id,v_tac.illimite from v_type_abonnement_etp v_tac JOIN entreprises as etp on v_tac.entreprise_id = etp.id where v_tac.entreprise_id = ? and etp.statut_compte_id = ? and v_tac.status = ?',[$entreprise_id,2,"Activé"]);
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
-            return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page','abonnement_etp'));
         }
         if (Gate::allows('isChefDeService')) {
             $employe = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
             $id_service = DB::select('select * from chef_de_service_entreprises  where chef_de_service_id = ? ', [$employe->id])[0]->service_id;
             // dd($id_service);
             // pagination
+            $abonnement_etp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_etp_id,v_tac.illimite from v_type_abonnement_etp v_tac JOIN entreprises as etp on v_tac.entreprise_id = etp.id where v_tac.entreprise_id = ? and etp.statut_compte_id = ? and v_tac.status = ?',[$employe->entreprise_id,2,"Activé"]);
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where service_id = ?) and entreprise_id = ?', [$id_service,$employe->entreprise_id])[0]->nb_projet;
         }
         if(Gate::allows('isFormateurInterne')){
@@ -890,7 +892,6 @@ class HomeController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-
             $data = DB::select('select * from v_projet_formateur_interne where formateur_id = ?', [$formateur_id]);
             return view('projet_session.index2', compact('data', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }

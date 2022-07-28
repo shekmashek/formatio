@@ -55,10 +55,11 @@ class GroupeController extends Controller
         // $modules = $fonct->findAll("modules");
         $modules = $fonct->findWhere("modules", ["cfp_id",'status'], [$cfp_id,2]);
 
-        $etp1 = $fonct->findWhere("v_demmande_cfp_etp", ['cfp_id'], [$cfp_id]);
-        $etp2 = $fonct->findWhere("v_demmande_etp_cfp", ['cfp_id'], [$cfp_id]);
-        $entreprise = $fonct->concatTwoList($etp1, $etp2);
+        // $etp1 = $fonct->findWhere("v_demmande_cfp_etp", ['cfp_id'], [$cfp_id]);
+        // $etp2 = $fonct->findWhere("v_demmande_etp_cfp", ['cfp_id'], [$cfp_id]);
+        // $entreprise = $fonct->concatTwoList($etp1, $etp2);
 
+        $entreprise = DB::select('select etp.id,etp.nom_etp from entreprises as etp join collaboration_etp_cfp as cec on etp.id = cec.etp_id where cec.cfp_id = ? and cec.statut = ?',[$cfp_id,2]);
 
         $payement = $fonct->findAll("type_payement");
 
