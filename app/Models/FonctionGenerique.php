@@ -541,6 +541,22 @@ class FonctionGenerique extends Model
         return $projet;
     }
 
+    public function projetSessionFull($cfp_id){
+        $req = DB::select('select v_groupe_projet_module.nom_projet, entreprises.nom_etp, entreprises.id as entreprise_id,
+            groupes.nom_groupe as session, groupes.modalite, modules.nom_module, v_groupe_projet_module.modalite, 
+            v_groupe_projet_module.date_projet, v_groupe_projet_module.groupe_id,
+            v_groupe_projet_module.item_status_groupe, details.lieu, type_formations.id,v_groupe_projet_module.date_debut,v_groupe_projet_module.date_fin,
+            type_formations.type_formation, cfps.nom as nomCfp from v_groupe_projet_module
+            left join modules on v_groupe_projet_module.module_id = modules.id
+            left join details on details.groupe_id = v_groupe_projet_module.groupe_id
+            left join entreprises on v_groupe_projet_module.entreprise_id = entreprises.id 
+            left join groupes on v_groupe_projet_module.groupe_id = groupes.id 
+            left join type_formations on v_groupe_projet_module.type_formation_id = type_formations.id 
+            left join cfps on v_groupe_projet_module.cfp_id = cfps.id WHERE v_groupe_projet_module.cfp_id = ?', [$cfp_id]);
+
+        return $req;
+    }
+
     public function dataSession($cfp_id, $from, $to){
         $data = DB::table('v_projet_session')
             ->leftJoin('v_groupe_projet_module', 'v_groupe_projet_module.projet_id', 'v_projet_session.projet_id')

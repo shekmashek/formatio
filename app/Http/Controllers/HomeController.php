@@ -988,21 +988,21 @@ class HomeController extends Controller
             // dd($data);
 
             // affiche chiffre d'affaire
-            for($i=0;$i<count($data);$i+=1){
-                $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where cfp_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
-                [$cfp_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
-                if(count($dataMontantSession)>0){
-                    $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,1);
-                    $data[$i]->qte = $dataMontantSession[0]->qte;
-                    $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
+            // for($i=0;$i<count($data);$i+=1){
+            //     $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where cfp_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
+            //     [$cfp_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
+            //     if(count($dataMontantSession)>0){
+            //         $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,1);
+            //         $data[$i]->qte = $dataMontantSession[0]->qte;
+            //         $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
 
-                } else {
-                    $data[$i]->hors_taxe_net = null;
-                    $data[$i]->qte =null;
-                    $data[$i]->num_facture = null;
-                }
+            //     } else {
+            //         $data[$i]->hors_taxe_net = null;
+            //         $data[$i]->qte =null;
+            //         $data[$i]->num_facture = null;
+            //     }
 
-            }
+            // }
 
             $type_formation = DB::select('select * from type_formations');
 
@@ -1038,7 +1038,10 @@ class HomeController extends Controller
             ->groupBy('nom_projet')
             ->orderBy('projet_id', 'ASC')
             ->get();
-            return view('projet_session.index2', compact('nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'ntps', 'nomModalites', 'nmdls', 'nomStatuts','nomProjet'));
+
+            $fullProjects = $fonct->projetSessionFull($cfp_id);
+
+            return view('projet_session.index2', compact( 'fullProjects', 'nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'ntps', 'nomModalites', 'nmdls', 'nomStatuts','nomProjet'));
             // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
 
 
@@ -1215,6 +1218,18 @@ class HomeController extends Controller
             $nomEntreprises = $fonct->dataDrop('nom_etp', "v_groupe_entreprise", "nom_etp");
 
             return view('projet_session.index2Filter', compact('nomStatuts','nomModules', 'nomModalites' ,'nomTypes','nomSessions', 'nomEntreprises', 'projet','ref', 'data','lieu_formation' ,'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise'));
+        }
+    }
+
+    public function fullProject(){
+        $fonct = new FonctionGenerique();
+        $user_id = Auth::user()->id;
+
+        if (Gate::allows('isCFP')) {
+            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+            $fullProjects = $fonct->projetSessionFull($cfp_id);
+
+            return view('projet_session.index2', compact('fullProjects'));
         }
     }
 
