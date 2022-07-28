@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbonnementController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\TestController;
 use App\PlanFormation;
@@ -1638,6 +1639,7 @@ Route::get('supprimer_salle_etp/{id?}','SalleFormationEtpController@destroy')->n
 Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->name('modifier_salle_etp');
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
 
-
-
 Route::get('invitation_ajouter_employer/{groupe?}/{employe?}','SessionController@invitation_ajouter_employer')->name('invitation_ajouter_employer');
+
+// TestController
+Route::get('/fullProjects', [HomeController::class, 'fullProject']);

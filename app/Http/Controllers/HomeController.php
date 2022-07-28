@@ -1038,7 +1038,10 @@ class HomeController extends Controller
             ->groupBy('nom_projet')
             ->orderBy('projet_id', 'ASC')
             ->get();
-            return view('projet_session.index2', compact('nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'ntps', 'nomModalites', 'nmdls', 'nomStatuts','nomProjet'));
+
+            $fullProjects = $fonct->projetSessionFull($cfp_id);
+
+            return view('projet_session.index2', compact( 'fullProjects', 'nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'ntps', 'nomModalites', 'nmdls', 'nomStatuts','nomProjet'));
             // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
 
 
@@ -1215,6 +1218,18 @@ class HomeController extends Controller
             $nomEntreprises = $fonct->dataDrop('nom_etp', "v_groupe_entreprise", "nom_etp");
 
             return view('projet_session.index2Filter', compact('nomStatuts','nomModules', 'nomModalites' ,'nomTypes','nomSessions', 'nomEntreprises', 'projet','ref', 'data','lieu_formation' ,'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise'));
+        }
+    }
+
+    public function fullProject(){
+        $fonct = new FonctionGenerique();
+        $user_id = Auth::user()->id;
+
+        if (Gate::allows('isCFP')) {
+            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+            $fullProjects = $fonct->projetSessionFull($cfp_id);
+
+            return view('projet_session.index2', compact('fullProjects'));
         }
     }
 
