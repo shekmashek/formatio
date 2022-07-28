@@ -41,6 +41,8 @@ use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
 use Exception;
+use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 use function Ramsey\Uuid\v1;
 
@@ -54,6 +56,7 @@ class HomeController extends Controller
         $this->fonct = new FonctionGenerique();
         $this->middleware(function ($request, $next) {
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
+            config(['role_id' =>  DB::select("select role_id from role_users where  user_id = ?  and activiter=true", [Auth::id()])]);
             return $next($request);
         });
     }
@@ -756,6 +759,7 @@ class HomeController extends Controller
 
     public function liste_projet(Request $request, $id = null, $page = null)
     {
+        // dd(config('role_id'));
         $projet_model = new projet();
         $drive = new getImageModel();
         $fonct = new FonctionGenerique();
@@ -837,19 +841,6 @@ class HomeController extends Controller
             // fin pagination
             $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where departement_id = ".$id_departement." )", $request, $nb_par_page, $offset);
             $data = DB::select($sql);
-            // for($i=0;$i<count($data);$i+=1){
-            //     $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
-            //     [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
-            //     if(count($dataMontantSession)>0){
-            //             $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
-            //             $data[$i]->qte = $dataMontantSession[0]->qte;
-            //             $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
-            //     } else {
-            //         $data[$i]->hors_taxe_net = null;
-            //         $data[$i]->qte =null;
-            //         $data[$i]->num_facture = null;
-            //     }
-            // }
 
             $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$entreprise_id]);
             if(count($lieu_formations)>0){
@@ -1671,15 +1662,27 @@ class HomeController extends Controller
     //liste par entreprise
     public function iframe_etp()
     {
-        $fonct = new FonctionGenerique();
-        $id_etp = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-        $iframe_etp = $fonct->findWhereMulitOne("v_entreprise_iframe", ["entreprise_id"], [$id_etp[0]->entreprise_id]);
-
-        return view('layouts.bi', compact('iframe_etp'));
+        try {
+            // dd(config('role_id'));
+            $fonct = new FonctionGenerique();
+            $id_etp = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+            $iframe_etp = $fonct->findWhereMulitOne("v_entreprise_iframe", ["entreprise_id"], [$id_etp[0]->entreprise_id]);
+            
+            // $response = Http::get('http://rh.mg/api/test');
+            // $data = $response->json();
+            // dd($data);
+            return view('layouts.bi', compact('iframe_etp'));
+        } catch(\Illuminate\Http\Client\ConnectionException $e) {
+            dd('erreur');
+        }
+        
+        
     }
     //liste par of
     public function iframe_cfp()
     {
+        
+        // dd(config('role_id'));
         $fonct = new FonctionGenerique();
 
         $id_cfp = DB::select('select * from responsables_cfp where user_id = ?', [Auth::user()->id]);

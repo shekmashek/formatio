@@ -1,4 +1,4 @@
-
+drop TABLE if exists question_evaluation_froid;
 create table question_evaluation_froid(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     type_champ_id bigint(20) NOT NULL REFERENCES type_champs(id) ON DELETE CASCADE,
@@ -6,13 +6,14 @@ create table question_evaluation_froid(
     point_max int(2) default 0
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(2,'Je mets en pratique régulièrement à mon poste de travail les connaissances acquises au cours de la formation',5);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(4,'À quelle fréquence ?',2);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(4,'À quoi cela est-il dû ? (plusieurs réponses sont possibles, cochez la (ou les) case(s) correspondante(s))',7);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(4,'Si vous ne les avez pas encore mises en pratique, quelles en sont les raisons ? (plusieurs réponses possibles)',10);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(3,'Quels ont été les impacts de cette formation sur votre situation professionnelle ? (ex : évolution de poste / promotion, évaluation positive, meilleure intégration, reconnaissance, rétribution...)',2);
-insert into question_evaluation_froid (type_champ_id,question,point_max) values(4,'Pour aller plus loin dans le développement de mes compétences, je pense avoir besoin... (merci de préciser votre besoin en commentaire)',2);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(1,2,'À quelle fréquence ?',2);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(2,4,'Je mets en pratique régulièrement à mon poste de travail les connaissances acquises au cours de la formation',5);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(3,4,'À quoi cela est-il dû ? (plusieurs réponses sont possibles, cochez la (ou les) case(s) correspondante(s))',7);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(4,4,'Si vous ne les avez pas encore mises en pratique, quelles en sont les raisons ? (plusieurs réponses possibles)',10);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(5,3,'Quels ont été les impacts de cette formation sur votre situation professionnelle ? (ex : évolution de poste / promotion, évaluation positive, meilleure intégration, reconnaissance, rétribution...)',2);
+insert into question_evaluation_froid (id,type_champ_id,question,point_max) values(6,4,'Pour aller plus loin dans le développement de mes compétences, je pense avoir besoin... (merci de préciser votre besoin en commentaire)',2);
 
+drop TABLE if exists reponse_question_eval_froid;
 create table reponse_question_eval_froid(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     question_id bigint(20) NOT NULL REFERENCES question_evaluation_froid(id) ON DELETE CASCADE,
@@ -56,7 +57,7 @@ insert into reponse_question_eval_froid(question_id,reponse,point_reponse) value
 insert into reponse_question_eval_froid(question_id,reponse,point_reponse) values(6,"D'une formation",0);
 insert into reponse_question_eval_froid(question_id,reponse,point_reponse) values(6,"De plus de pratique",0);
 
-
+drop TABLE if exists resultat_eval_froid_stagiaire;
 create table resultat_eval_froid_stagiaire(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     question_id bigint(20) NOT NULL REFERENCES question_evaluation_froid(id) ON DELETE CASCADE,
@@ -67,14 +68,17 @@ create table resultat_eval_froid_stagiaire(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 alter table resultat_eval_froid_stagiaire add reponse_text text;
 
+
+drop table  if exists resultat_eval_froid_manager;
 create table resultat_eval_froid_manager(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     question_id bigint(20) NOT NULL REFERENCES question_evaluation_froid(id) ON DELETE CASCADE,
     groupe_id bigint(20) NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
     manager_id bigint(20) NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
-    reponse_eval text,
+    reponse_id bigint(20) NOT NULL REFERENCES reponse_question_eval_froid(id) ON DELETE CASCADE,
     date_eval timestamp default now()
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+alter table resultat_eval_froid_manager add reponse_text text;
 
 
 create or replace view v_question_champ_froid as
@@ -111,3 +115,39 @@ create or replace view v_resultat_froid_evaluation_stagiaire as
         rep.reponse,
         q.desc_champ;
 
+
+create or replace view v_nombre_manager_groupe as
+    select
+        d.groupe_id,
+        count(d.departement_id) as total_manager
+    from(
+        select
+            groupe_id,
+            departement_id
+        from v_stagiaire_groupe
+        group by groupe_id,departement_id
+    ) as d group by d.groupe_id;
+
+
+create or replace view v_resultat_froid_evaluation_manager as
+    select
+        r.question_id,
+        r.groupe_id,
+        count(r.manager_id) as nombre_reponse,
+        nm.total_manager,
+        r.reponse_id,
+        rep.reponse,
+        q.desc_champ,
+        ROUND((count(r.manager_id)*100)/nm.total_manager,1) as pourcentage_reponse
+    from resultat_eval_froid_manager r
+    join v_nombre_manager_groupe nm on r.groupe_id = nm.groupe_id
+    join v_question_champ_froid q on r.question_id = q.question_id
+    join reponse_question_eval_froid rep on rep.id = r.reponse_id
+    where q.desc_champ != 'TEXT'
+    group by
+        r.question_id,
+        r.groupe_id,
+        r.reponse_id,
+        nm.total_manager,
+        rep.reponse,
+        q.desc_champ;

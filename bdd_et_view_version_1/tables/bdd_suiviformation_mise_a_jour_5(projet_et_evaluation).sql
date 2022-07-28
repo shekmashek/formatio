@@ -114,7 +114,8 @@ CREATE TABLE `type_champs` (
 INSERT INTO `type_champs` (`id`, `nom_champ`, `desc_champ`, `created_at`, `updated_at`) VALUES
 (1, 'Champs type Nombre', 'NOMBRE', NULL, NULL),
 (2, 'Champs type Case a Cocher', 'CASE', NULL, NULL),
-(3, 'Champs type Text ou commentaire', 'TEXT', NULL, NULL);
+(3, 'Champs type Text ou commentaire', 'TEXT', NULL, NULL),
+(4, 'Champs type checkbox', 'CHECKBOX', NULL, NULL);
 
 Drop table if exists question_mere;
 CREATE TABLE `question_mere` (

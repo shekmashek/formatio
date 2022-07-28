@@ -31,6 +31,7 @@ CREATE TABLE groupes_interne (
 
 alter table groupes_interne add column modalite varchar(100);
 
+drop table if exists participant_groupe_interne;
 CREATE TABLE participant_groupe_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
@@ -59,6 +60,7 @@ create table ressources_interne (
 
 alter table ressources_interne add column groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES ressources_interne(id) ON DELETE CASCADE;
 
+drop table if exists presences_interne;
 CREATE TABLE presences_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   status varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

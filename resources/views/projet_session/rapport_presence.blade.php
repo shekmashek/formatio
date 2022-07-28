@@ -2,6 +2,7 @@
 @section('title')
     <p class="text_header m-0 mt-1">Rapport des présences</p>
 @endsection
+@section('content')
 <style>
     .info_session{
         background: rgb(232,203,192);
@@ -14,10 +15,30 @@
     .card-body{
         color: white !important;
     }
+    .get_pdf{
+        background-color: red;
+        color: white;
+        position: relative;
+        top: 40px
+    }
+    .downlad_pdf{
+        position: sticky;
+        top: 4rem
+    }
+    .get_pdf:hover{
+        background-color: rgb(136, 2, 2);
+        color: white;
+    }
 </style>
-@section('content')
- <div class="container">
-    <div class="row">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<div class="container ">
+    <div class="row downlad_pdf mb-1">
+        <div class="col-12 text-end">
+            <button class="btn get_pdf"><i class='bx bxs-file-pdf'></i>PDF</button>
+        </div>
+    </div>
+    <div class="row" id='presence_rapport'>
         <div class="col-12 info_session">
             <div class="" style="width: 40rem;">
                 <div class="card-body">
@@ -108,4 +129,20 @@
         </div>
     </div>
 </div>
+
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script> --}}
+<script>
+   $(document).on('click','.get_pdf',function(){
+        const rapport = document.getElementById('presence_rapport');
+        var opt = {
+            margin: 0.3,
+            width : 400,
+            filename:'rapport_de_presence.pdf',
+            pagebreak : { mode: ['avoid-all','css', 'legacy']},
+            image:        { type: 'jpeg', quality: 0.98 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+        };
+            html2pdf().set(opt).from(rapport).save();
+    });
+</script>
 @endsection

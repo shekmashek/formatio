@@ -3,10 +3,29 @@
     <p class="text_header m-0 mt-1">Nouveau Projet Inter</p>
 @endsection
 @section('content')
+<style>
+    .instruction{
+    background: rgba(128, 128, 128, 0.193);
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: .8rem 1rem;
+    font-size: 0.850rem;
+    margin-left: 2px;
+}
+</style>
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 {{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 <div class="container-fluid">
     {{-- <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5> --}}
+    <div class="row instruction mb-3">
+        <div class="col-11">
+            <p class="mb-0 ">Pour créer un projet inter, vous devez choisir le module de formation et cliquer sur ' + Session inter' pour compléter les informations requises pour le projet.</p>
+        </div>
+        <div class="col-1 text-end">
+            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();" style="cursor: pointer;"></i>
+        </div>
+    </div>
     <div class="m-4">
         <div class="row mb-4">
             <div class="col-6">
@@ -355,6 +374,10 @@
 </div>
 <script src="{{asset('js/projet_inter_intra.js')}}"></script>
 <script>
+    function cacher_instruction() {
+        $(".instruction").hide();
+    }
+
     $(document).on('click', '#removeRow', function() {
         $(this).closest('#inputFormRow').remove();
     });
