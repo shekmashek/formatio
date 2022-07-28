@@ -333,7 +333,7 @@ class HomeController extends Controller
             // $drive->create_sub_folder($cfp, "Mes documents");
 
             $formateur = DB::select('select * from demmande_cfp_formateur where demmandeur_cfp_id = ' . $centre_fp . ' ');
-            $dmd_cfp_etp = DB::select('select * from demmande_cfp_etp where demmandeur_cfp_id = ' . $centre_fp . ' ');
+            $dmd_cfp_etp = $this->fonct->findWhereMulitOne("collaboration_etp_cfp", ["cfp_id","demmandeur"], [$id,'cfp']);
             $resp_cfp = DB::select('select * from responsables_cfp where user_id = ' . $user_id . ' ');
 
             $module_publié = DB::select('select * from modules where status = 2 and cfp_id = ' . $cfp_id . ' ');
@@ -497,9 +497,8 @@ class HomeController extends Controller
                 // $formateur_referent = $formateurs[0];
 
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-                $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
-                $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
-                $cfps = $fonct->concatTwoList($etp1Collaborer, $etp2Collaborer);
+                $cfp = DB::select('select cfp_id as id_cfp,logo_cfp,nom,initial_resp_cfp,nom_resp_cfp,prenom_resp_cfp,photos_resp_cfp from v_collab_cfp_etp where id_etp = ? and statut = ? ',[$entreprise_id,2]);
+
 
                 $facture_paye = DB::select('select * from v_facture_actif where facture_encour = "terminer" and entreprise_id = ' . $ref . ' ');
                 $facture_non_echu = DB::select('select * from v_facture_actif where facture_encour = "en_cours" and entreprise_id = ' . $ref . ' ');
@@ -550,30 +549,7 @@ class HomeController extends Controller
         if (Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
         }
-        // else {
-        //      //get the column with null value
-        //      $databaseName = DB::connection()->getDatabaseName();
-        //      $testNull = DB::select('select * from chef_departements where user_id  = ? ',[Auth::user()->id]);
-        //      $entreprise = DB::select('select * from entreprises where id  = ? ',[$testNull[0]->entreprise_id]);
 
-        //      $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'chef_departements']);
-        //      $nb = 0;
-        //      for ($i=0; $i < count($colonnes); $i++) {
-        //          $tempo =  $colonnes[$i]->COLUMN_NAME;
-        //          if ($colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "photos"){
-        //             if ($testNull[0]-> $tempo== null) {
-        //                 $nb+=1;
-        //             }
-        //         }
-
-        //      }
-        //      //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
-        //      if ($nb>0) {
-        //          return view('formulaire_manager',compact('testNull','entreprise'));
-        //      }
-        //     $totale_invitation = $this->collaboration->count_invitation();
-        //     return view('layouts.accueil_admin', compact('totale_invitation'));
-        // }
     }
     //Recherche cfp filtre
     public function recherche_cfp(Request $request, $page = null)
@@ -611,65 +587,6 @@ class HomeController extends Controller
         $data =  DB::select("select * from v_groupe_projet_entreprise  where (nom_cfp) LIKE UPPER('%" . $cfp . "%') ");
         return view('projet_session.index2', compact('data', 'stagiaires', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
     }
-    // public function recherche_etp(Request $request,$page = null)
-    // {
-    //     $nb_par_page = 5;
-    //     if($page == null){
-    //         $page = 1;
-    //     }
-    //     $projet_model = new projet();
-
-    //     $fonct = new FonctionGenerique();
-
-    //     $user_id = Auth::user()->id;
-    //     $totale_invitation = 0;
-    //     $entp = new entreprise();
-    //     $status = DB::select('select * from status');
-    //     $type_formation_id = $request->type_formation;
-    //     $etp= $request->entreprise;
-    //     $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-
-    //     // pagination
-    // // $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ? and cfp_id=?',[$entreprise_id,$cfp_id])[0]->nb_projet;
-    // $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?',[$cfp_id])[0]->nb_projet;
-
-    //     $fin_page = ceil($nb_projet/$nb_par_page);
-    //     if($page == 1){
-    //         $offset = 0;
-    //         $debut = 1;
-    //         if($nb_par_page > $nb_projet){
-    //             $fin = $nb_projet;
-    //         }else{
-    //             $fin = $nb_par_page;
-    //         }
-    //     }
-    //     elseif($page == $fin_page){
-    //         $offset = ($page - 1) * $nb_par_page;
-    //         $debut = ($page - 1) * $nb_par_page;
-    //         $fin =  $nb_projet;
-    //     }
-    //     else{
-    //         $offset = ($page - 1) * $nb_par_page;
-    //         $debut = ($page - 1) * $nb_par_page;
-    //         $fin =  $page * $nb_par_page;
-    //     }
-    //     // fin pagination
-    //     $projet=DB::select('select * from v_projet_session where (nom_etp) LIKE UPPER('%" . $etp . "%') ');
-    //     $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
-    //     $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
-    //     $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-    //     $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-
-    //     $entreprise = $entp->getEntreprise($etp2, $etp1);
-    //     $type_formation = DB::select('select * from type_formations');
-
-    //     $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
-    //     $module = $fonct->findWhere("v_module",['cfp_id','status'],[$cfp_id,2]);
-    //     $payement = $fonct->findAll("type_payement");
-    //     $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
-    //     return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation','payement','entreprise','page','fin_page','nb_projet','debut','fin','nb_par_page'));
-
-    // }
 
     public function tous_projets(Request $request, $id = null, $page = null)
     {
@@ -741,10 +658,7 @@ class HomeController extends Controller
             $projet = DB::select('select * from v_projet_session where cfp_id=?', [$cfp_id]);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-
-            $entreprise = $entp->getEntreprise($etp2, $etp1);
+            $entreprise = DB::select('select id_etp,logo_etp,nom_etp,initial_resp_etp,photos_resp,nom_resp,prenom_resp from v_collab_cfp_etp where cfp_id = ? and statut = ?',[$cfp_id,2]);
             $type_formation = DB::select('select * from type_formations');
 
             $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
@@ -1667,7 +1581,7 @@ class HomeController extends Controller
             $fonct = new FonctionGenerique();
             $id_etp = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
             $iframe_etp = $fonct->findWhereMulitOne("v_entreprise_iframe", ["entreprise_id"], [$id_etp[0]->entreprise_id]);
-            
+
             // $response = Http::get('http://rh.mg/api/test');
             // $data = $response->json();
             // dd($data);
@@ -1675,13 +1589,13 @@ class HomeController extends Controller
         } catch(\Illuminate\Http\Client\ConnectionException $e) {
             dd('erreur');
         }
-        
-        
+
+
     }
     //liste par of
     public function iframe_cfp()
     {
-        
+
         // dd(config('role_id'));
         $fonct = new FonctionGenerique();
 

@@ -1004,7 +1004,8 @@ Route::post('mettre_fin_cfp_formateur', 'CollaborationController@mettre_fin_cfp_
 // Route::get('delete_cfp_formateur','CollaborationController@delete_cfp_formateur')->name('delete_cfp_formateur');
 
 Route::get('annulation_cfp_etp/{id?}', 'CollaborationController@annulation_invitation_cfp_etp')->name('annulation_cfp_etp');
-// Route::get('suppresion_invite_cfp_etp/{id}', 'CollaborationController@suppresion_invite_cfp_etp')->name('suppresion_invite_cfp_etp');
+Route::get('suppresion_invite_cfp_etp/{id?}', 'CollaborationController@suppresion_invite_cfp_etp')->name('suppresion_invite_cfp_etp');
+Route::get('suppresion_invite_etp_cfp/{id?}', 'CollaborationController@suppresion_invite_etp_cfp')->name('suppresion_invite_etp_cfp');
 
 Route::get('annulation_cfp_etp_notif', 'CollaborationController@refuser')->name('annulation_cfp_etp_notif');
 Route::get('annulation_etp_cfp/{id?}', 'CollaborationController@annulation_invitation_etp_cfp')->name('annulation_etp_cfp');

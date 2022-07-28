@@ -11,7 +11,6 @@ use App\entreprise;
 use App\DepartementEntreprise;
 use App\User;
 use App\cfp;
-use App\v_demmande_cfp_etp;
 use App\Secteur;
 use App\Mail\entrepriseMail;
 use App\Models\getImageModel;
@@ -31,15 +30,7 @@ class EntrepriseController extends Controller
     }
     public function index()
     {
-        // $fonct = new FonctionGenerique();
-        // $referent_id = Auth::id();
-        // $entreprise_id = Responsable::where('user_id',$referent_id)->value('entreprise_id');
 
-        // $demmande = $fonct->findWhere("v_demmande_etp_pour_cfp",["demmandeur_etp_id"],[$entreprise_id]) ;
-        // $invitation = $fonct->findWhere("v_invitation_etp_pour_cfp",["inviter_etp_id"],[$entreprise_id]) ;
-        // $cfps= Cfp::all();
-
-        // return view('collaboration.entreprises',compact('cfps','demmande','invitation','entreprise_id'));
     }
 
 
@@ -52,9 +43,9 @@ class EntrepriseController extends Controller
         if (Gate::allows('isCFP')) {
 
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
-            $refuse_demmande_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,3,'etp']);
-            $entreprise = DB::select('select id_etp,logo_etp,nom_etp,nom_resp_initial,prenom_resp_initial,photos,nom_resp,prenom_resp from collab_cfp_etp where id_cfp = ? and statut = ?',[$cfp_id,2]);
+            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_responsable,nom_etp,nom_secteur from v_collab_cfp_etp where cfp_id = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
+            $refuse_demmande_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_responsable,nom_etp,nom_secteur,date_refuse from v_collab_cfp_etp where cfp_id = ? and statut = ? and demmandeur = ?',[$cfp_id,3,'etp']);
+            $entreprise = DB::select('select id_etp,logo_etp,nom_etp,initial_resp_etp,photos_resp as photos,nom_resp,prenom_resp from v_collab_cfp_etp where cfp_id = ? and statut = ?',[$cfp_id,2]);
             $abonnement_cfp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_cfp_id,v_tac.nb_projet from v_type_abonnement_cfp v_tac JOIN cfps as cfp on v_tac.cfp_id = cfp.id where cfp_id = ? and statut_compte_id = ? or statut_compte_id = ?',[$cfp_id,1,3]);
             // dd($invitation_etp);
             return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp','abonnement_cfp'));
@@ -71,63 +62,14 @@ class EntrepriseController extends Controller
 
     public function information_entreprise(Request $request)
     {
-        $user_id = Auth::id();
         $id = $request->Id;
-        $fonct = new FonctionGenerique();
-        // $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-      //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where entreprise_id= ?',[$id]);
-
-        // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$id]);
-        // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$id]);
-        // $entreprises=$fonct->concatTwoList($etp1,$etp2);
         $entreprises = DB::select('select logo,nom_etp,nom_resp,prenom_resp,adresse_rue_etp,adresse_quartier_etp,adresse_code_postal_etp,adresse_ville_etp,adresse_region_etp,email_resp,telephone_resp,site_etp from responsables where entreprise_id = ?',[$id]);
 
 
-      return response()->json($entreprises);
-
+        return response()->json($entreprises);
 
     }
 
-
-    /*  public function create($id = null)
-    {
-        if (Gate::allows('isCFP')) {
-            $user_id = Auth::id();
-            $fonct = new FonctionGenerique();
-            $cfp_id =  cfp::where('user_id', $user_id)->value('id');
-            $entp = new entreprise();
-
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
-            $entreprise = $entp->getEntreprise($etp2,$etp1);
-
-            // dd($entreprise);
-
-            if ($id){
-                $datas1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id","entreprise_id"],[$cfp_id,$id]);
-                $datas2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id","entreprise_id"],[$cfp_id,$id]);
-                $datas = $entp->getEntreprise($datas2,$datas1);
-            } else {
-                $datas = $entp->getEntreprise($etp2,$etp1);
-            }
-            // return view('admin.entreprise.entreprise',compact('datas','entreprise'));
-            if(count($entreprise  )<=0){
-                return view('cfp.guide');
-              }
-            else{
-            return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
-
-            }
-        }
-        if (Gate::allows('isSuperAdmin')) {
-            $entreprise =entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');
-            if ($id) $datas = entreprise::orderBy('nom_etp')->take($id)->get();
-            else  $datas = entreprise::orderBy("nom_etp")->get();
-            // return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
-            return view('admin.entreprise.entreprise',compact('datas','entreprise'));
-        }
-    }
-*/
     public function listeProjet(Request $request)
     {
         $id_etp = $request->entreprise_id;
@@ -139,8 +81,6 @@ class EntrepriseController extends Controller
         $secteur = Secteur::all();
         return view('admin.entreprise.nouvelleEntreprise', compact('secteur'));
     }
-
-
 
     public function store(Request $request)
     {
@@ -327,22 +267,22 @@ class EntrepriseController extends Controller
     public function enregistrer_telephone_entreprise(Request $request,$id){
         if($request->telephone == null){
             return redirect()->back()->with('erreur_telephone', 'Entrez le numéro téléphone de votre entreprise avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set telephone_etp = ? where id = ?', [$request->telephone,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set telephone_etp = ? where id = ?', [$request->telephone,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
 
     public function enregistrer_secteur_entreprise(Request $request,$id){
         // dd($request->secteur);
         if($request->secteur == null){
             return redirect()->back()->with('erreur_secteur', 'choisissez votre secteur avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set secteur_id = ? where id = ?', [$request->secteur,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set secteur_id = ? where id = ?', [$request->secteur,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
 
     public function modification_stat_entreprise($id){
@@ -353,11 +293,11 @@ class EntrepriseController extends Controller
     public function enregistrer_stat_entreprise(Request $request,$id){
         if($request->stat == null){
             return redirect()->back()->with('erreur_stat', 'Entrez le stat de votre entreprise avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set stat = ? where id = ?', [$request->stat,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set stat = ? where id = ?', [$request->stat,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
     public function modification_rcs_entreprise($id){
         $fonct = new FonctionGenerique();
@@ -367,11 +307,11 @@ class EntrepriseController extends Controller
     public function enregistrer_rcs_entreprise(Request $request,$id){
         if($request->rcs == null){
             return redirect()->back()->with('erreur_rcs', 'Entrez le rcs de votre entreprise avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set rcs = ? where id = ?', [$request->rcs,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set rcs = ? where id = ?', [$request->rcs,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
 
 
@@ -386,12 +326,12 @@ class EntrepriseController extends Controller
         $id_assujeti = $request->assujetti;
         if($id_assujeti == null){
             return back()->withErrors("erreur_assujetti", "Choississez vos type d\'impôt de votre entreprise avant de cliquer sur enregistrer");
-           }
-           else{
-            DB::update('update entreprises set assujetti_id = ? where id = ?', [$request->assujetti,$id]);
-            // ('insert into values (?, ?)' entreprises set assujeti_id = ? where id = ?', [$request->assujetti,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set assujetti_id = ? where id = ?', [$request->assujetti,$id]);
+        // ('insert into values (?, ?)' entreprises set assujeti_id = ? where id = ?', [$request->assujetti,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
 
 
@@ -403,11 +343,11 @@ class EntrepriseController extends Controller
     public function enregistrer_cif_entreprise(Request $request,$id){
         if($request->cif == null){
             return redirect()->back()->with('erreur_cif', 'Entrez le cif de votre entreprise avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set cif = ? where id = ?', [$request->cif,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set cif = ? where id = ?', [$request->cif,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
     public function modification_adresse_entreprise($id){
         $fonct = new FonctionGenerique();
@@ -420,7 +360,7 @@ class EntrepriseController extends Controller
         }
         else{
             DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ?
-               where id = ?', [$request->rue,$request->quartier,$request->code_postal,$request->ville,$request->region,$id]);
+            where id = ?', [$request->rue,$request->quartier,$request->code_postal,$request->ville,$request->region,$id]);
             return redirect()->route('aff_parametre_referent',[$id]);
         }
     }
@@ -432,11 +372,11 @@ class EntrepriseController extends Controller
     public function enregistrer_site_etp_entreprise(Request $request,$id){
         if($request->site_etp == null){
             return redirect()->back()->with('erreur_site_etp', 'Entrez le site web de votre entreprise avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set site_etp = ? where id = ?', [$request->site_etp,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set site_etp = ? where id = ?', [$request->site_etp,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
     public function modification_nom_etp($id){
         $fonct = new FonctionGenerique();
@@ -446,11 +386,11 @@ class EntrepriseController extends Controller
     public function enregistrer_nom_etp(Request $request,$id){
         if($request->nom_etp == null){
             return redirect()->back()->with('erreur_nom entreprise', 'Entrez le site web de votre entreprise avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set nom_etp = ? where id = ?', [$request->nom_etp,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set nom_etp = ? where id = ?', [$request->nom_etp,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
     public function modification_logo($id){
         $fonct = new FonctionGenerique();
@@ -467,22 +407,22 @@ class EntrepriseController extends Controller
             $destinationPath = 'images/entreprises';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
                      //imager  resize
-                     $image_name = $profileImage ;
-                     $destinationPath = public_path('images/entreprises');
-                     $resize_image = Image::make($image->getRealPath());
-                     $resize_image->resize(256, 128, function($constraint){
-                         $constraint->aspectRatio();
-                     })->save($destinationPath . '/' .  $image_name);
+            $image_name = $profileImage ;
+            $destinationPath = public_path('images/entreprises');
+            $resize_image = Image::make($image->getRealPath());
+            $resize_image->resize(256, 128, function($constraint){
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' .  $image_name);
             // $image->move($destinationPath, $profileImage);
             $input = "$profileImage";
             }
         }
         if($input== null){
             return redirect()->back()->with('erreur_logo', 'Entrez le logo de votre entreprise avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set logo  = ? where id = ?', [$input,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set logo  = ? where id = ?', [$input,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
 }

@@ -68,34 +68,6 @@ class CollaborationController extends Controller
                 return back()->with('error', "Cette entreprise n'est pas encore inscrit dans le plateforme 😥!");
             }
         }
-
-        // $user_id = Auth::user()->id;
-        // if (Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
-        // else {
-        //     $fonct = new FonctionGenerique();
-        //     $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-        //     $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["cfp_id", "user_id"], [$cfp_id, $user_id]);
-
-        //     $responsable = $this->fonct->findWhereMulitOne("responsables", ["email_resp"], [$req->email_resp]);
-
-        //     if ($responsable != null) {
-        //         $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$responsable_cfp->cfp_id, $responsable->entreprise_id]);
-        //         //     $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$responsable->id, $cfp_id]);
-        //         //      $verify = $verify1->id + $verify2->id;
-        //         $verify = $verify1->id;
-        //         if ($verify <= 0) {
-        //             $msg = $this->collaboration->verify_collaboration_cfp_etp($responsable_cfp->cfp_id, $responsable->entreprise_id, $responsable_cfp->id);
-        //             //              Mail::to($req->email_resp)->send(new invitation_cfp_etp_mail($cfp->nom, $responsable_cfp, $responsable->nom_resp . " " . $responsable->prenom_resp, $req->email_resp));
-
-        //             return $msg;
-        //         } else {
-        //             return back()->with('error', "une invitation a été déjà envoyé à ce responsable!");
-        //         }
-        //     } else { // demande de creer un compte
-        //         //     Mail::to($req->email_resp)->send(new inscription_cfp_etp_mail($cfp->nom, $responsable_cfp->nom_resp_cfp, $responsable_cfp->prenom_resp_cfp, $responsable_cfp->email_resp_cfp, $req->email_resp));
-        //         return back()->with('success', "une invitation a été envoyé sur l'adresse mail en démandant!");
-        //     }
-        // }
     }
 
     public function create_etp_cfp(Request $req)
@@ -129,36 +101,6 @@ class CollaborationController extends Controller
                 return back()->with('error', "Cette entreprise n'est pas encore inscrit dans le plateforme 😥!");
             }
         }
-        // $user_id = Auth::user()->id;
-        // if (Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
-        // else {
-        //     $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-        //     $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
-        //     $responsable_etp = $this->fonct->findWhereMulitOne("responsables", ["entreprise_id", "user_id"], [$entreprise_id, $user_id]);
-
-        //     $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["email_resp_cfp"], [$req->email_cfp]);
-
-        //     if ($responsable_cfp != null) {
-        //         //    $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$responsable_cfp->cfp_id, $entreprise_id]);
-        //         $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$entreprise_id, $responsable_cfp->cfp_id]);
-        //         // $verify = $verify1->id + $verify2->id;
-        //         $verify = $verify2->id;
-
-        //         if ($verify <= 0) {
-
-        //             $msg = $this->collaboration->verify_collaboration_etp_cfp($responsable_cfp->cfp_id, $entreprise_id, $req->nom_cfp, $responsable_etp->id);
-        //             Mail::to($responsable_cfp->email_resp_cfp)->send(new invitation_etp_cfp_mail($entreprise->nom_etp, $responsable_etp, $responsable_cfp->nom_resp_cfp . " " . $responsable_cfp->prenom_resp_cfp, $req->email_cfp));
-
-        //             return $msg;
-        //         } else {
-        //             return back()->with('error', "une invitation a été déjà envoyé à ce Organisme de Formation Professionel!");
-        //         }
-        //     } else { // send mail inscription
-
-        //         //       Mail::to($responsable_cfp->email_resp_cfp)->send(new inscription_etp_cfp_mail($entreprise->nom_etp, $responsable_etp->nom_resp, $responsable_etp->prenom_resp, $responsable_etp->email_resp, $req->email_cfp));
-        //         return back()->with('success', "une invitation a été envoyeé sur l'adresse mail en démandant!");
-        //     }
-        // }
     }
 
 
@@ -174,17 +116,6 @@ class CollaborationController extends Controller
             return back()->with('error', "une invitation a été déjà envoyée à ce centre de formation !");
         }
     }
-
-    /*  public function create_cfp_formateur(Request $req)
-    {
-        $verify = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$req["cfp_id"], $req["formateur_id"]]);
-        if ($verify->id == 0) {
-            return $this->collaboration->verify_collaboration_cfp_formateur($req);
-        } else {
-            return back()->with('error', "une invitation a été déjà envoyer sur formateur!");
-        }
-    }
-*/
 
     public function create_cfp_formateur(Request $req)
     {
@@ -222,7 +153,7 @@ class CollaborationController extends Controller
                     try {
                         $fonct->insert_role_user($user_formateur_id, "4",false,true); // formateur
                         DB::commit();
-                    } catch (Exception $e) {
+                    } catch (\Exception $e) {
                         DB::rollback();
                         echo $e->getMessage();
                     }
@@ -258,9 +189,23 @@ class CollaborationController extends Controller
 
     // =========================  annule cfp à etp et etp à cfp
 
-    public function delete_cfp_etp($id)
-    {
-        return $this->collaboration->verify_annulation_collaboration_cfp_etp($id);
+    // public function delete_cfp_etp($id)
+    // {
+    //     return $this->collaboration->verify_annulation_collaboration_etp_cfp($id);
+    // }
+
+    public function suppresion_invite_cfp_etp($id){
+        DB::delete('delete from collaboration_etp_cfp where statut = ? and cfp_id = ?',[3,$id]);
+        DB::commit();
+
+        return back();
+    }
+
+    public function suppresion_invite_etp_cfp($id){
+        DB::delete('delete from collaboration_etp_cfp where statut = ? and etp_id = ?',[3,$id]);
+        DB::commit();
+
+        return back();
     }
 
     public function mettre_fin_cfp_etp(Request $req)
@@ -300,17 +245,7 @@ class CollaborationController extends Controller
             return $this->collaboration->verify_annulation_collaboration_cfp_formateur($cfp_id, $req->formateur_id);
         }
     }
-    /*
-       public function delete_formateur_cfp($id)
-    {
-        return $this->collaboration->verify_annulation_collaboration_formateur_cfp($id);
-    }
 
-    public function delete_cfp_formateur($id)
-    {
-        return $this->collaboration->verify_annulation_collaboration_cfp_formateur($id);
-    }
-    */
     // ======================== affichage cfp etp =========================================
     public function collaboration_etp_cfp()
     {
@@ -318,19 +253,10 @@ class CollaborationController extends Controller
         $id = Auth::id();
         $entreprise_id = responsable::where('user_id', $id)->value('entreprise_id');
         $demmande = $this->fonct->findWhereMulitOne("collaboration_etp_cfp", ["etp_id","demmandeur"], [$entreprise_id,'cfp']);
-        // $demmande = $fonct->findWhere("v_demmande_etp_pour_cfp", ["demmandeur_etp_id"], [$entreprise_id]);
         $invitation = $fonct->findWhere("collaboration_etp_cfp", ["etp_id","statut","demmandeur"], [$entreprise_id,2,'cfp']);
 
-        $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
-        $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
-        $cfp_tmp = $fonct->concatTwoList($etp1Collaborer, $etp2Collaborer);
-        $cfp = new cfp();
-        $cfp1 = $cfp->getCfpCollaborer($cfp_tmp);
-        $cfp2 = $cfp->getCfpNotCollaborer($cfp1);
+        $cfps = DB::select('select * from collaboration_etp_cfp where etp_id = ? and statut = ?',[$entreprise_id,2]);
 
-        $cfps = $fonct->concatTwoList($cfp1, $cfp2);
-
-        // $cfps = $fonct->findAll("cfps");
         return view('collaboration.collaboration_etp', compact('cfps', 'demmande', 'invitation', 'entreprise_id'));
     }
 
@@ -376,77 +302,7 @@ class CollaborationController extends Controller
             return view('collaboration.collaboration_cfp', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
         }
     }
-    /* public function collaboration_cfp_etp_et_formateur()
-    {
-        $fonct = new FonctionGenerique();
 
-        $id = Auth::id();
-        $cfp_id =cfp::where('user_id', $id)->value('id');
-        $demmande_etp = $fonct->findWhere("v_demmande_cfp_pour_etp", ["demmandeur_cfp_id"], [$cfp_id]);
-        $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
-        $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
-        $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
-
-        $entreprise = $fonct->findAll("entreprises");
-        $formateur = $fonct->findAll("formateurs");
-
-         // ======== formateur collaborer
-        $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
-        $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-        $formateur_tmp = $fonct->concatTwoList($formateur1,$formateur2);
-        $listeFormateur = $formateur_tmp;
-
-        $format = new formateur();
-        $forma_colab1 = $format->getCollaborer("formateurs",$formateur_tmp);
-        $forma_colab2 = $format->getNotCollaborer("formateurs",$forma_colab1);
-
-        $formateur = $fonct->concatTwoList($forma_colab1,$forma_colab2);
-
-
-        // ======== entreprise collaborer
-        $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
-        $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
-        $entreprise_tmp = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
-
-        $listeEntreprise = $entreprise_tmp;
-
-        $etp = new entreprise();
-        $entreprise1 = $etp->getCollaborer("entreprises",$entreprise_tmp);
-        $entreprise2 = $etp->getNotCollaborer("entreprises",$entreprise1);
-
-        $entreprise = $fonct->concatTwoList($entreprise1,$entreprise2);
-
-        return view('collaboration.collaboration_cfp', compact('listeFormateur','listeEntreprise','entreprise', 'formateur', 'demmande_etp', 'invitation_etp', 'demmande_formateur', 'invitation_formateur', 'cfp_id'));
-    }
-*/
-    /*
- public function collaboration_cfp_etp_et_formateur()
-    {
-        $fonct = new FonctionGenerique();
-
-        $id = Auth::id();
-        $cfp_id =cfp::where('user_id', $id)->value('id');
-        $demmande_etp = $fonct->findWhere("v_demmande_cfp_pour_etp", ["demmandeur_cfp_id"], [$cfp_id]);
-        $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
-        $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
-        $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
-
-        $entreprise = $fonct->findAll("entreprises");
-        $formateur = $fonct->findAll("formateurs");
-
-         // ======== formateur collaborer
-        $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
-        $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-        $formateurCollaborer = $fonct->concatTwoList($formateur1,$formateur2);
-
-        // ======== entreprise collaborer
-        $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
-        $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
-        $entrepriseCollaborer = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
-
-        return view('collaboration.collaboration_cfp', compact('entreprise', 'formateur', 'demmande_etp', 'invitation_etp', 'demmande_formateur', 'invitation_formateur', 'cfp_id','formateurCollaborer','entrepriseCollaborer'));
-    }
-*/
     public function collaboration()
     {
         // $role_id = User::where('email', Auth::user()->email)->value('role_id');
@@ -465,47 +321,13 @@ class CollaborationController extends Controller
 
     public function annulation_invitation_etp_cfp($id)
     {
-        // $user_id = Auth::user()->id;
-        // $resp_etp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id]);
-        // $data = $this->fonct->findWhereMulitOne("demmande_cfp_etp", ["id"], [$id]);
-        // $this->collaboration->insert_invitation_refuser_cfp_etp($data->demmandeur_cfp_id, $data->inviter_etp_id,$data->resp_cfp_id,$resp_etp->id);
         return $this->collaboration->suprime_invitation_collaboration_etp_cfp($id);
     }
 
     public function annulation_invitation_cfp_etp($id)
     {
-        // $user_id = Auth::user()->id;
-        // $resp_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id]);
-        // $data = $this->fonct->findWhereMulitOne("demmande_etp_cfp", ["id"], [$id]);
-        // $this->collaboration->insert_invitation_refuser_etp_cfp($data->inviter_cfp_id, $data->demmandeur_etp_id,$resp_cfp->id,$data->resp_etp_id);
         return $this->collaboration->suprime_invitation_collaboration_cfp_etp($id);
     }
-
-    // public function suppresion_invite_cfp_etp($id)
-    // {
-    //     $user_id = Auth::user()->id;
-    //     $resp_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id]);
-    //     DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ?', [$id]);
-
-    // }
-
-    // public function refuser(Request $request)
-    // {
-    //     $id = $request->Id;
-    //     $data = $this->fonct->findWhereMulitOne("demmande_etp_cfp", ["demmandeur_etp_id"], [$id]);
-    //     // $id_cfp = DB::select('select * from demmande_etp_cfp where demmandeur_etp_id = ?',[$id]);
-    //     DB::insert('insert into refuse_demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,activiter,created_at) values (?,?,?, NOW())',[$id,$data->inviter_cfp_id,0]);
-    //     DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ?', [$id]);
-
-    //     // $this->collaboration->insert_invitation_refuser_etp_cfp($data->inviter_cfp_id, $data->demmandeur_etp_id);
-    //     // $this->collaboration->suprime_invitation_collaboration_cfp_etp($id);
-    //     return response()->json(
-    //         [
-    //             'success' => true,
-    //             'message' => 'Data deleted successfully',
-    //         ]
-    //     );
-    // }
 
     public function annulation_invitation_formateur_cfp($id)
     {
@@ -516,7 +338,6 @@ class CollaborationController extends Controller
     {
         return $this->collaboration->suprime_invitation_collaboration_cfp_formateur($id);
     }
-
 
     // ========================== accepter inviation ============
 
@@ -534,28 +355,6 @@ class CollaborationController extends Controller
         $resp_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id]);
         return $this->collaboration->accept_invitation_collaboration_cfp_etp($id,$resp_cfp->id);
     }
-
-    // public function accept_invitation_cfp_etp_notif(Request $request)
-    // {
-    //     $id = $request->Id;
-    //     $demande = $this->fonct->findWhereMulitOne("demmande_etp_cfp", ["demmandeur_etp_id"], [$id]);
-    //     $verify_exist = $this->fonct->findWhere("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$id, $demande->inviter_cfp_id]);
-    //     DB::beginTransaction();
-    //     try {
-    //         if (count($verify_exist) > 0) {
-    //             // DB::delete("delete from demmande_etp_cfp where demmandeur_etp_id = ? and inviter_cfp_id = ?", [$id, $demande->inviter_cfp_id]);
-    //             DB::update("update demmande_etp_cfp set activiter = 1 where demmandeur_etp_id = ?", [$id]);
-    //             DB::commit();
-    //         }
-
-    //     } catch (\Exception $e) {
-    //         DB::rollback();
-    //         echo $e->getMessage();
-    //     }
-
-    //     return back();
-    //     // return $this->collaboration->accept_invitation_collaboration_cfp_etp($id);
-    // }
 
     public function accept_invitation_formateur_cfp($id)
     {
