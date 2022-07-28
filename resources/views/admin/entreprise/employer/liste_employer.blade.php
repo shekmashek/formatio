@@ -291,6 +291,7 @@
                                 @endcan
                             </tr>
                         </thead>
+                        {{-- ok --}}
                         <tbody>
                             @for ($i = 0;$i < count($employers);$i++ )
                                 <tr>
