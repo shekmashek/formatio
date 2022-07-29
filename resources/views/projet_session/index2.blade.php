@@ -2127,12 +2127,12 @@
                                                                                                         class="text-danger">*</strong>
                                                                                                 </span>
                                                                                             </div>
-                                                                                            <div class="col-lg-6 text-end">
+                                                                                            <div class="col-lg-5 text-end">
                                                                                                 <select
                                                                                                     class="form-select input_select"
                                                                                                     name="modalite"
                                                                                                     aria-label="Default select example"
-                                                                                                    style="width: 15rem;"
+                                                                                                    style="width: 13rem;"
                                                                                                     required>
                                                                                                     <option value="null">
                                                                                                         Sélectionnez</option>
@@ -2144,6 +2144,29 @@
                                                                                                         value="Présentiel/En ligne">
                                                                                                         Présentiel/En ligne
                                                                                                     </option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row mt-2">
+                                                                                            <div
+                                                                                                class="col-lg-6 text-end mt-2">
+                                                                                                <span>Module<strong
+                                                                                                        class="text-danger">*</strong>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                            <div class="col-lg-5 text-end">
+                                                                                                <select
+                                                                                                    class="form-select input_select"
+                                                                                                    name="module"
+                                                                                                    aria-label="Default select example"
+                                                                                                    style="width: 13rem;"
+                                                                                                    required>
+                                                                                                    <option value="null" hidden>
+                                                                                                        Sélectionnez</option>
+                                                                                                    @foreach ($module as $mod)
+                                                                                                        <option value="{{ $mod->id }}">
+                                                                                                        {{ $mod->nom_module }}</option>
+                                                                                                    @endforeach
                                                                                                 </select>
                                                                                             </div>
                                                                                         </div>

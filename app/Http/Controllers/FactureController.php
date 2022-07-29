@@ -883,7 +883,7 @@ class FactureController extends Controller
 
     public function create(Request $request)
     {
-
+        // dd($request->all());
         $remise = $this->fonct->findWhereMulitOne("type_remise", ["id"], [$request->type_remise_id]);
         $type_facture = $this->fonct->findWhereMulitOne("type_facture", ["id"], [$request->type_facture]);
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
@@ -916,7 +916,8 @@ class FactureController extends Controller
                         try {
 
                             for ($i = 0; $i < count($request["session_id"]); $i++) {
-                                $val = [$request["session_id"][$i], $request->entreprise_id];
+                                $split_session = explode('/',$request["session_id"][$i]);
+                                $val = [$split_session[0], $request->entreprise_id];
 
                                 $tabData['facture'] = $request["facture"][$i];
                                 $tabData['qte'] = $request["qte"][$i];
@@ -934,7 +935,7 @@ class FactureController extends Controller
                                     $cfp_id,
                                     $request->projet_id,
                                     $request->entreprise_id,
-                                    $request["session_id"][$i],
+                                    $split_session[0],
                                     $tabData,
                                     $tabDataDate,
                                     $tabDataTypeFinance,
@@ -955,7 +956,7 @@ class FactureController extends Controller
 
                                     $montant_session =  $prix_sess - $montant_remise;
                                     $gp_facture = new GroupeFacture();
-                                    $gp_facture->groupe_id = $request["session_id"][$i];
+                                    $gp_facture->groupe_id = $split_session[1];
                                     $gp_facture->qte= $request["qte"][$i];
                                     $gp_facture->montant= $montant_session;
                                     $gp_facture->save();

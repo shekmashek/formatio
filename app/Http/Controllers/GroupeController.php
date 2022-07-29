@@ -327,9 +327,9 @@ class GroupeController extends Controller
             if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
             }
-            // if($request->min_part >= $request->max_part ){
-            //     throw new Exception("Participant minimal doit être inférieur au participant maximal.");
-            // }
+            if($request->module == null){
+                throw new Exception("Choisissez le module pour la session.");
+            }
             if($request->modalite == null){
                 throw new Exception("Vous devez choisir la modalité de formation.");
             }
