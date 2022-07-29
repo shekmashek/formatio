@@ -50,6 +50,15 @@ CREATE TABLE entreprises (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 ALTER TABLE `entreprises` CHANGE `secteur_id` `secteur_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '8';
+ALTER TABLE `entreprises` CHANGE `adresse_rue` `adresse_rue` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_quartier` `adresse_quartier` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_code_postal` `adresse_code_postal` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_ville` `adresse_ville` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_region` `adresse_region` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `stat` `stat` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `rcs` `rcs` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `cif` `cif` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `site_etp` `site_etp` archar(191) COLLATE utf8mb4_unicode_ci  default null;
 
 
 

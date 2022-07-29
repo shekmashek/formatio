@@ -237,6 +237,7 @@ class Groupe extends Model
     }
 
     public function dataFraisSession($groupe_id){
+        // dd($groupe_id);
         $frais_session = DB::select('select montant,qte from groupe_factures where groupe_id = ?',[$groupe_id]);
         if(count($frais_session)< 1){
             return 0;

@@ -980,7 +980,7 @@
                                                                 <br>
                                                                 <select class="form-select" autocomplete="on" name="entiter_id" id="entiter_id">
                                                                     @foreach ($cfp as $cf)
-                                                                    <option value="{{$cf->cfp_id}}">{{$cf->nom}}</option>
+                                                                    <option value="{{$cf->id_cfp}}">{{$cf->nom}}</option>
                                                                     @endforeach
                                                                 </select>
                                                                 <br>
@@ -1057,7 +1057,7 @@
                 var defaultSearch = 0;
 
                 $(document).on('change keyup', '#select-column', function(){
-                    defaultSearch = this.value; 
+                    defaultSearch = this.value;
                 });
 
                 $(document).on('change keyup', '#search-by-column', function(){
@@ -1065,9 +1065,9 @@
                     table.column(defaultSearch).search(this.value).draw();
                 });
             }
-            
+
             $( '.modifTable thead'  ).on( 'keyup', ".column_search",function () {
-        
+
                 table
                     .column( $(this).parent().index() )
                     .search( this.value )
@@ -1096,50 +1096,50 @@
                     "lengthMenu":     "Affichage _MENU_ ",
                 }
             });
-            
+
             $('input:checkbox').on('change', function () {
                 var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
                     return '^' + this.value + '$';
                 }).get().join('|');
-                
+
                 table.column(0).search(Projet, true, false, false).draw(false);
 
                 var Session = $('input:checkbox[name="session"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(1).search(Session, true, false, false).draw(false);
 
                 var Entreprise = $('input:checkbox[name="entreprise"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(3).search(Entreprise, true, false, false).draw(false);
 
                 var Modalite = $('input:checkbox[name="modalite"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(4).search(Modalite, true, false, false).draw(false);
-                
+
                 var TypeFormation = $('input:checkbox[name="typeFormation"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(8).search(TypeFormation, true, false, false).draw(false);
-                
+
                 var Module = $('input:checkbox[name="module"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(2).search(Module, true, false, false).draw(false);
-                
+
                 var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(7).search(Statut, true, false, false).draw(false);
-            
+
             });
 
             searchByColumn(table);

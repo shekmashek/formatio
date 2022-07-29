@@ -20,7 +20,25 @@
     padding: .4rem 1rem;
 }
 
+.action_name_modif{
+    background-color: #7635dc;
+    border: none;
+    border-radius: 15px;
+    color: white !important;
+    padding: .4rem 1rem;
+    margin-top: 10px !important;
+    position: relative;
+    top: 10px;
+}
+
 .action_name:hover{
+    color: #7635dc !important;
+    background-color: white;
+    border:1px solid #7635dc;
+    border-radius: 15px;
+}
+
+.action_name_modif:hover{
     color: #7635dc !important;
     background-color: white;
     border:1px solid #7635dc;

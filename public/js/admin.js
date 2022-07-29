@@ -46,26 +46,26 @@ $(document).ready(function() {
         }
     });
 });
-$(document).ready(function() {
-    $.ajax({
-        url: "/admin_count_etp",
-        type: "get",
-        success: function(response) {
-            var nombre = response;
-            $("#cfp").append(nombre[0]);
-            $("#projet_en_cours_etp").append(nombre[1]);
-            $("#projet_terminer_etp").append(nombre[2]);
-            $("#projet_a_venir_etp").append(nombre[3]);
-            $("#projets_etp").append(nombre[4]);
-            $("#stagiaire").append(nombre[5]);
-            $("#manager").append(nombre[6]);
-            // alert(nombre);
-        },
-        error: function(error) {
-            console.log(error);
-        },
-    });
-});
+// $(document).ready(function() {
+//     $.ajax({
+//         url: "/admin_count_etp",
+//         type: "get",
+//         success: function(response) {
+//             var nombre = response;
+//             $("#cfp").append(nombre[0]);
+//             $("#projet_en_cours_etp").append(nombre[1]);
+//             $("#projet_terminer_etp").append(nombre[2]);
+//             $("#projet_a_venir_etp").append(nombre[3]);
+//             $("#projets_etp").append(nombre[4]);
+//             $("#stagiaire").append(nombre[5]);
+//             $("#manager").append(nombre[6]);
+//             // alert(nombre);
+//         },
+//         error: function(error) {
+//             console.log(error);
+//         },
+//     });
+// });
 
 
 let sidebar = document.querySelector(".sidebar");

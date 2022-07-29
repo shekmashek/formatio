@@ -113,7 +113,7 @@
 </style>
 <div class="container-fluid justify-content-center pb-3">
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<div class="container-fluid mt-5">
+<div class="container-fluid ">
     @if(Session::has('success'))
     <div class="alert alert-success">
         <strong> {{Session::get('success')}}</strong>
@@ -131,8 +131,12 @@
                     <i class='bx bxs-up-arrow-circle icon_upgrade me-3'></i>
                     <span>
                         @if($abonnement_cfp != null)
-                            @if(count($formateur) <= $abonnement_cfp[0]->nb_formateur)
-                                <span>Votre abonnement actuel vous permet d'inviter @if($abonnement_cfp[0]->illimite == 1) un nombre illimités de @else{{$abonnement_cfp[0]->nb_formateur}}@endif formateurs. @if($abonnement_cfp[0]->illimite == 1) @else vous voullez plus de formateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a>@endif</span>
+                            @if($abonnement_cfp[0]->illimite == 1)
+                            <span>Votre abonnement actuel vous permet d'inviter un nombre illimités de formateurs.</span>
+                            @else
+                                @if(count($formateur) <= $abonnement_cfp[0]->nb_formateur)
+                                    <span>Votre abonnement actuel vous permet d'inviter @if($abonnement_cfp[0]->illimite == 1) un nombre illimités de @else{{$abonnement_cfp[0]->nb_formateur}}@endif formateurs. @if($abonnement_cfp[0]->illimite == 1) @else vous voullez plus de formateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a>@endif</span>
+                                @endif
                             @endif
                         @else
                             <span>Actuellement vous n'avez aucun abonnement. Si vous voullez plus de formateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a></span>
@@ -153,8 +157,7 @@
             role="tab"
             aria-controls="deja"
             aria-selected="false"
-            ><i class='bx bxs-envelope' style="font-size: 18px ; vertical-align: middle"></i>&nbsp;&nbsp;EN COLABORATION</a
-          >
+            ><i class='bx bxs-envelope' style="font-size: 18px ; vertical-align: middle"></i>&nbsp;&nbsp;EN COLABORATION</a>
         </li>
         <li class="nav-item" role="presentation">
           <a
@@ -166,8 +169,7 @@
             role="tab"
             aria-controls="invite"
             aria-selected="true"
-            ><i class='bx bxs-user-plus' style="font-size: 20px ; vertical-align: middle"></i>&nbsp;&nbsp;INVITATION</a
-          >
+            ><i class='bx bxs-user-plus' style="font-size: 20px ; vertical-align: middle"></i>&nbsp;&nbsp;INVITATION</a>
         </li>
     </ul>
     <div class="row w-100 bg-none mt-3 font_text">
@@ -207,14 +209,14 @@
                                         @foreach($formateur as $frm)
                                             <tr>
                                                 @if($frm->photos == NULL or $frm->photos == '' or $frm->photos == 'XXXXXXX')
-                                                    <td >
-                                                        <span  class="randomColor text-uppercase" style="padding: 15px; border-radius:100%; color:white;"> {{$frm->n}} {{$frm->p}} </span>
+                                                    <td role="button" class="information" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}" onclick="afficherInfos();">
+                                                        <span  class="randomColor text-uppercase" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}" style="padding: 15px; border-radius:100%; color:white;"> {{$frm->n}} {{$frm->p}} </span>
                                                     </td>
                                                     <td>
                                                         <span>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}
                                                     </td>
                                                 @else
-                                                    <td role="button" class="informm" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}" onclick="afficherInfos();">
+                                                    <td role="button" class="information" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}" onclick="afficherInfos();">
                                                         <img src="{{asset("images/formateurs/".$frm->photos)}}" style="height:50px; width:50px;border-radius:100%">
                                                         <span class="ms-3"></span>
                                                     </td>
@@ -227,7 +229,7 @@
                                                             echo $groupe->formatting_phone($frm->numero_formateur);
                                                         @endphp
                                                     </td>
-                                                <td style="vertical-align: middle">{{$frm->mail_formateur}}</td>
+                                                <td style="vertical-align: middle" >{{$frm->mail_formateur}}</td>
                                                     @canany(['isCFP'])
                                                         <td style="vertical-align: middle">
                                                             <div style="vertical-align: middle" class="form-check form-switch mt-3">
@@ -378,7 +380,6 @@
             <div class="tab-pane fade show " id="invite" role="tabpanel" aria-labelledby="invite">
                 <div class="col-md-4">
                     <span style="font-size:16px">Inviter un formateur</span>
-
                     <form class="form form_colab mt-4" action="{{route('create_cfp_formateur') }}" method="POST">
                         @csrf
                         <div class="mb-3 row " style="font-size: 13px">
@@ -442,9 +443,7 @@
             </div>
         </div>
     </div>
-@endsection
 
-@section('script')
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -595,40 +594,45 @@
             });
         });
 
-        $(".informm").on('click', function(e) {
-        let id = $(this).data("id");
-        alert(id);
-        $.ajax({
-            method: "GET"
-            , url: "/information_formateur"
-            , data: {
-                Id: id
-            }
-            , dataType: "html"
-            , success: function(response) {
-                let userData= JSON.parse(response);
-                console.log(userData);
-                    for (let $i = 0; $i< userData.length; $i++ ) {
-                        let url_photo = '<img src="{{asset("images/formateurs/:url_img")}}" style="width:80px;height:80px;border-radius:100%">';
-                        url_photo = url_photo.replace(":url_img", userData[$i].photos);
-                        $("#logo").html(" ");
-                        $("#logo").append(url_photo);
-                        $("#nom").text(': '+userData[$i].nom_formateur);
-                        $("#prenom").text(userData[$i].prenom_formateur);
-                        $("#genre").text(': '+userData[$i].genre);
-                        $("#email").text(': '+userData[$i].mail_formateur);
-                        $("#telephone").text(': '+userData[$i].numero_formateur);
-                        $("#specialite").text(': '+userData[$i].specialite);
-                        $("#adresse_formateur").text(': '+userData[$i].adresse);
-                    }
+        $(".information").on('click', function(e) {
+            let id = $(e.target).closest('.information').attr("id");
+            $.ajax({
+                method: "GET"
+                , url: "/information_formateur"
+                , data: {
+                    Id: id
                 }
+                , dataType: "html"
+                , success: function(response) {
+                    let userData= JSON.parse(response);
+                        for (let $i = 0; $i< userData.length; $i++ ) {
+                            let url_photo = '<img src="{{asset("images/formateurs/:url_img")}}" style="width:80px;height:80px;border-radius:100%">';
+                            url_photo = url_photo.replace(":url_img", userData[$i].photos);
+                            var nom = (userData[$i].nom_formateur).substr(0, 1);
+                            var prenom = (userData[$i].prenom_formateur).substr(0, 1);
+
+                            if(userData[$i].photos == null){
+                                $('#logo').html(" ");
+                                $('#logo').append('<p style="background-color: #5c6bc0; width: 80px; height: 80px; border-radius: 50%; padding: 30px; color: white; font-weight: 700; font-size: 14px; marging-bottom: 20px; position: relative; left: 40%"><span>'+nom+prenom+'</span></p>');
+                            }else{
+                                $("#logo").html(" ");
+                                $("#logo").append(url_photo);
+                            }
+                            $("#nom").text(': '+userData[$i].nom_formateur);
+                            $("#prenom").text(userData[$i].prenom_formateur);
+                            $("#genre").text(': '+userData[$i].genre);
+                            $("#email").text(': '+userData[$i].mail_formateur);
+                            $("#telephone").text(': '+userData[$i].numero_formateur);
+                            $("#specialite").text(': '+userData[$i].specialite);
+                            $("#adresse_formateur").text(': '+userData[$i].adresse);
+                        }
+                    }
             });
         });
 
         $('body').on('keyup','#nameFormateur',function(){
 
         var nameFormateur = $(this).val();
-        console.log(nameFormateur)
 
         $.ajax({
             method: 'GET',

@@ -20,33 +20,6 @@ class Collaboration extends Model
         $this->fonct = new FonctionGenerique();
     }
 
-    /*   public function insert_collaboration_cfp_etp($cfp_id,$imput){
-        $data = [$cfp_id,$imput["etp_id"]];
-        DB::insert('insert into demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at,updated_at) values (?,?, NOW(), NOW())', $data);
-        DB::commit();
-    }
-*/
-    public function insert_collaboration_cfp_etp($cfp_id, $etp_id,$id_resp_cfp)
-    {
-        $data = [$cfp_id, $etp_id,$id_resp_cfp];
-        DB::insert('insert into demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at,updated_at,resp_cfp_id) values (?,?, NOW(), NOW(),?)', $data);
-        DB::commit();
-    }
-
-    public function insert_collaboration_etp_cfp($cfp_id, $etp_id,$id_resp_etp)
-    {
-        $data = [$etp_id, $cfp_id,$id_resp_etp];
-        DB::insert('insert into demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,created_at,updated_at,resp_etp_id) values (?,?, NOW(), NOW(),?)', $data);
-        DB::commit();
-    }
-
-    public function insert_collaboration_formateur_cfp($imput)
-    {
-        $data = [$imput["formateur_id"], $imput["cfp_id"]];
-        DB::insert('insert into demmande_formateur_cfp (demmandeur_formateur_id,inviter_cfp_id,created_at,updated_at) values (?,?, NOW(), NOW())', $data);
-        DB::commit();
-    }
-
     public function insert_collaboration_cfp_formateur($cfp_id, $formateur_id)
     {
         $data = [$cfp_id, $formateur_id];
@@ -54,18 +27,9 @@ class Collaboration extends Model
         DB::commit();
     }
 
-    public function suprime_collaboration_cfp_etp($id)
-    {
-        DB::delete('delete from demmande_cfp_etp where id = ?', [$id]);
-        DB::commit();
-    }
-
     public function suprime_collaboration_etp_cfp($etp_id, $cfp_id)
     {
-        // dd($etp_id, $cfp_id);
         DB::delete('delete from collaboration_etp_cfp where etp_id = ? and cfp_id = ?', [$etp_id, $cfp_id]);
-        // DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ? and inviter_cfp_id=?', [$etp_id, $cfp_id]);
-        // DB::delete('delete from demmande_cfp_etp where demmandeur_cfp_id = ? and inviter_etp_id=?', [$cfp_id, $etp_id]);
         DB::commit();
     }
 
@@ -84,31 +48,19 @@ class Collaboration extends Model
     }
 
     // ========================= invitation refuse
-
-    // ----------------------------------------------------------------------
-    public function insert_invitation_refuser_etp_cfp($cfp_id, $etp_id,$resp_cfp_id,$resp_etp_id)
-    {
-        $data = [$etp_id, $cfp_id,$resp_cfp_id,$resp_etp_id];
-        DB::insert('insert into refuse_demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,created_at,resp_cfp_id,resp_etp_id) values (?,?, NOW(),?,?)', $data);
-        DB::commit();
-    }
     public function suprime_invitation_collaboration_etp_cfp($id)
     {
-        DB::update('update collaboration_etp_cfp set statut = ? where cfp_id = ?', [3,$id]);
+        DB::update('update collaboration_etp_cfp set statut = ? where cfp_id = ? ', [3,$id]);
         DB::commit();
 
         return back();
     }
+
+
     // -----------------------------------------
-    public function insert_invitation_refuser_cfp_etp($cfp_id, $etp_id,$resp_cfp_id,$resp_etp_id)
-    {
-        $data = [$cfp_id, $etp_id,$resp_cfp_id,$resp_etp_id];
-        DB::insert('insert into refuse_demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at,resp_cfp_id,resp_etp_id) values (?,?, NOW(),?,?)', $data);
-        DB::commit();
-    }
     public function suprime_invitation_collaboration_cfp_etp($id)
     {
-        DB::update('update collaboration_etp_cfp set statut = ? where etp_id = ?', [3,$id]);
+        DB::update('update collaboration_etp_cfp set statut = ? where etp_id = ? ', [3,$id]);
         DB::commit();
         return back();
     }
@@ -131,6 +83,8 @@ class Collaboration extends Model
         return back();
     }
 
+
+
     //=================   accepter invitation==========================
     public function accept_invitation_collaboration_etp_cfp($id,$resp_etp_id)
     {
@@ -139,7 +93,7 @@ class Collaboration extends Model
         if ($verify_exist != null) {
             DB::beginTransaction();
             try {
-                $query = DB::update("update collaboration_etp_cfp set statut = ? where cfp_id = ? and demmandeur = ?", [2,$id,'cfp']);
+                $query = DB::update("update collaboration_etp_cfp set statut = ? where cfp_id = ? and demmandeur = ? ", [2,$id,'cfp']);
                 DB::commit();
 
             } catch (\Exception $e) {
@@ -157,7 +111,7 @@ class Collaboration extends Model
         if ($verify_exist != null) {
             DB::beginTransaction();
             try {
-                DB::update("update collaboration_etp_cfp set statut = ? where etp_id = ? and demmandeur = ?", [2,$id,'etp']);
+                DB::update("update collaboration_etp_cfp set statut = ? where etp_id = ? and demmandeur = ? ", [2,$id,'etp']);
                 DB::commit();
 
             } catch (\Exception $e) {
@@ -228,41 +182,13 @@ class Collaboration extends Model
         $imput->validate($critereForm, $rules);
     }
 
-
-    public function verify_collaboration_cfp_etp($cfp_id, $etp_id,$id_resp)
-    {
-        DB::beginTransaction();
-        try {
-            $this->insert_collaboration_cfp_etp($cfp_id, $etp_id,$id_resp);
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
-            return back()->with("error", "une erreur s'est présenter,veuillez réssailler!");
-        }
-        return back()->with("success", "une invitation de collaboration a été envoyée ");
-    }
-
-    public function verify_collaboration_etp_cfp($cfp_id, $etp_id, $nom_cfp,$id_resp)
-    {
-        //  $this->validation_form($imput);
-        DB::beginTransaction();
-        try {
-            $this->insert_collaboration_etp_cfp($cfp_id, $etp_id,$id_resp);
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
-            return back()->with("error", "une erreur s'est présenter,veuillez réssailler!");
-        }
-        return back()->with("success", "une invitation de collaboration a été envoyé à " . $nom_cfp);
-    }
-
     public function verify_collaboration_formateur_cfp($imput)
     {
         // $this->validation_form_cfp_etp($imput);
         DB::beginTransaction();
         try {
             $this->insert_collaboration_formateur_cfp($imput->input());
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             echo $e->getMessage();
             return back()->with("error", "une erreur s'est présenter,veuillez réssailler!");
@@ -276,7 +202,7 @@ class Collaboration extends Model
         DB::beginTransaction();
         try {
             $this->insert_collaboration_cfp_formateur($cfp_id, $formateur_id);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             echo $e->getMessage();
             return back()->with("error", "une erreur s'est présenter,veuillez réssailler!");
@@ -292,42 +218,12 @@ class Collaboration extends Model
         return back();
     }
 
-
-    /*
-    public function verify_annulation_collaboration_cfp_etp($id){
-        DB::beginTransaction();
-        try
-        {
-            $this->suprime_collaboration_cfp_etp($id);
-        } catch(Exception $e){
-            DB::rollback();
-            echo $e->getMessage();
-            return back()->with("error","une erreur s'est présenter,veuillez réssailler!");
-        }
-        return back();
-    }
-
-    public function verify_annulation_collaboration_etp_cfp($input){
-        DB::beginTransaction();
-        try
-        {
-            $this->suprime_collaboration_etp_cfp($input->etp_id,$input->cfp_id);
-        } catch(Exception $e){
-            DB::rollback();
-            echo $e->getMessage();
-            return back()->with("error","une erreur s'est présenter,veuillez réssailler!");
-        }
-        return back();
-    }
-
-    */
-
     public function verify_annulation_collaboration_formateur_cfp($id)
     {
         DB::beginTransaction();
         try {
             $this->suprime_collaboration_formateur_cfp($id);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             echo $e->getMessage();
             return back()->with("error", "une erreur s'est présenter,veuillez réssailler!");
@@ -353,11 +249,11 @@ class Collaboration extends Model
             $totale_invitation += count($fonct->findWhere("v_invitation_formateur_pour_cfp", ["inviter_formateur_id"], [$formateur_id]));
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = CFP::where('user_id', $id)->value('id');
-            $totale_invitation += count($fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]));
+            $totale_invitation += count($fonct->findWhere("collaboration_etp_cfp", ["cfp_id","statut"], [$cfp_id,2]));
             $totale_invitation += count($fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]));
         } elseif (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $id)->value('entreprise_id');
-            $totale_invitation += count($fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]));
+            $totale_invitation += count($fonct->findWhere("collaboration_etp_cfp", ["etp_id","statut"], [$entreprise_id,2]));
         } else {
             $totale_invitation = 0;
         }

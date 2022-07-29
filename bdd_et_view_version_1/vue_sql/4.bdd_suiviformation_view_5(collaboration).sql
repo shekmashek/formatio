@@ -310,66 +310,66 @@ Where
     d.activiter = 1;
 
 
-CREATE OR REPLACE VIEW v_demmande_etp_cfp AS SELECT
-    d.activiter AS activiter_demande,
-    c.id AS cfp_id,
-    c.nom,
-    c.adresse_lot,
-    c.adresse_ville,
-    c.adresse_region,
-    c.email,
-    c.telephone,
-    c.slogan,
-    c.nif AS nif_cfp,
-    c.stat AS stat_cfp,
-    c.rcs AS rcs_cfp,
-    c.cif AS cif_cfp,
-    c.logo AS logo_cfp,
-    c.specialisation AS specialisation,
-    c.presentation AS presentation,
-    c.activiter AS activiter_cfp,
-    c.site_web,
-    e.id AS entreprise_id,
-    e.nom_etp,
-    (e.adresse_rue) adresse,
-    e.logo AS logo_etp,
-    e.nif AS nif_etp,
-    e.stat AS stat_etp,
-    e.cif AS cif_etp,
-    e.rcs AS rcs_etp,
-    e.secteur_id,
-    se.nom_secteur,
-    e.email_etp,
-    e.site_etp,
-    e.activiter AS activer_etp,
-    e.telephone_etp,
-    r.id AS responsable_id,
-    r.nom_resp AS nom_resp,
-    r.prenom_resp AS prenom_resp,
-    r.email_resp AS email_responsable,
-    r.photos AS photos_resp,
-    rc.id AS responsable_cfp_id,
-    rc.email_resp_cfp,
-    rc.nom_resp_cfp,
-    rc.prenom_resp_cfp,
-    rc.photos_resp_cfp,
-    d.resp_cfp_id,
-    d.resp_etp_id,
-    concat(SUBSTRING(rc.nom_resp_cfp, 1, 1),SUBSTRING(rc.prenom_resp_cfp, 1, 1)) as initial
-FROM
-    demmande_etp_cfp d
-JOIN cfps c ON
-    d.inviter_cfp_id = c.id
-JOIN entreprises e ON
-    d.demmandeur_etp_id = e.id
-JOIN secteurs se ON
-    e.secteur_id = se.id
-JOIN responsables r ON
-    r.id = d.resp_etp_id
-JOIN responsables_cfp rc ON
-    rc.id = d.resp_cfp_id
-WHERE
-    d.activiter = 1;
+-- CREATE OR REPLACE VIEW v_demmande_etp_cfp AS SELECT
+--     d.activiter AS activiter_demande,
+--     c.id AS cfp_id,
+--     c.nom,
+--     c.adresse_lot,
+--     c.adresse_ville,
+--     c.adresse_region,
+--     c.email,
+--     c.telephone,
+--     c.slogan,
+--     c.nif AS nif_cfp,
+--     c.stat AS stat_cfp,
+--     c.rcs AS rcs_cfp,
+--     c.cif AS cif_cfp,
+--     c.logo AS logo_cfp,
+--     c.specialisation AS specialisation,
+--     c.presentation AS presentation,
+--     c.activiter AS activiter_cfp,
+--     c.site_web,
+--     e.id AS entreprise_id,
+--     e.nom_etp,
+--     (e.adresse_rue) adresse,
+--     e.logo AS logo_etp,
+--     e.nif AS nif_etp,
+--     e.stat AS stat_etp,
+--     e.cif AS cif_etp,
+--     e.rcs AS rcs_etp,
+--     e.secteur_id,
+--     se.nom_secteur,
+--     e.email_etp,
+--     e.site_etp,
+--     e.activiter AS activer_etp,
+--     e.telephone_etp,
+--     r.id AS responsable_id,
+--     r.nom_resp AS nom_resp,
+--     r.prenom_resp AS prenom_resp,
+--     r.email_resp AS email_responsable,
+--     r.photos AS photos_resp,
+--     rc.id AS responsable_cfp_id,
+--     rc.email_resp_cfp,
+--     rc.nom_resp_cfp,
+--     rc.prenom_resp_cfp,
+--     rc.photos_resp_cfp,
+--     d.resp_cfp_id,
+--     d.resp_etp_id,
+--     concat(SUBSTRING(rc.nom_resp_cfp, 1, 1),SUBSTRING(rc.prenom_resp_cfp, 1, 1)) as initial
+-- FROM
+--     collaboration_etp_cfp d
+-- JOIN cfps c ON
+--     d.inviter_cfp_id = c.id
+-- JOIN entreprises e ON
+--     d.demmandeur_etp_id = e.id
+-- JOIN secteurs se ON
+--     e.secteur_id = se.id
+-- JOIN responsables r ON
+--     r.id = d.resp_etp_id
+-- JOIN responsables_cfp rc ON
+--     rc.id = d.resp_cfp_id
+-- WHERE
+--     d.statut = 2;
 
 
 
@@ -837,34 +837,57 @@ JOIN secteurs se ON
 JOIN responsables r ON d.resp_etp_id = r.id
 JOIN responsables_cfp rc ON d.resp_cfp_id = rc.id;
 
-CREATE OR REPLACE VIEW collab_cfp_etp AS SELECT
+CREATE OR REPLACE VIEW v_collab_cfp_etp AS SELECT
+    collab.id,
     collab.statut,
     collab.demmandeur,
-    etp.id as id_etp,
-    etp.nom_etp,
-    etp.logo as logo_etp,
+    e.id AS id_etp,
+    e.nom_etp,
+    e.adresse_rue,
+    e.logo AS logo_etp,
+    e.nif AS nif_etp,
+    e.stat AS stat_etp,
+    e.cif AS cif_etp,
+    e.rcs AS rcs_etp,
+    e.secteur_id,
+    e.email_etp,
+    e.site_etp,
+    e.telephone_etp,
     sect.nom_secteur,
-    resp.nom_resp,
-    resp.prenom_resp,
-    SUBSTRING(resp.nom_resp, 1, 1) AS nom_resp_initial,
-    SUBSTRING(resp.prenom_resp, 1, 1) AS prenom_resp_initial,
-    resp.photos,
-    resp.email_resp,
-    cfp.id as id_cfp,
-    cfp.nom,
-    cfp.logo,
-    resp_cfp.nom_resp_cfp,
-    resp_cfp.prenom_resp_cfp,
-    SUBSTRING(resp_cfp.nom_resp_cfp, 1, 1) AS nom_resp_cfp_inital,
-    SUBSTRING(resp_cfp.prenom_resp_cfp, 1, 1) AS prenom_resp_cfp_initial,
-    resp_cfp.photos_resp_cfp,
-    resp_cfp.email_resp_cfp,
+    r.id AS responsable_id,
+    r.nom_resp AS nom_resp,
+    r.prenom_resp AS prenom_resp,
+    r.email_resp AS email_responsable,
+    r.photos AS photos_resp,
+    concat(SUBSTRING(r.nom_resp, 1, 1),SUBSTRING(r.prenom_resp, 1, 1)) as initial_resp_etp,
+    c.id AS cfp_id,
+    c.nom,
+    c.adresse_lot,
+    c.adresse_ville,
+    c.adresse_region,
+    c.email,
+    c.telephone,
+    c.slogan,
+    c.nif AS nif_cfp,
+    c.stat AS stat_cfp,
+    c.rcs AS rcs_cfp,
+    c.cif AS cif_cfp,
+    c.logo AS logo_cfp,
+    c.specialisation AS specialisation,
+    c.presentation AS presentation,
+    c.site_web,
+    rc.id AS responsable_cfp_id,
+    rc.email_resp_cfp,
+    rc.nom_resp_cfp,
+    rc.prenom_resp_cfp,
+    rc.photos_resp_cfp,
+    concat(SUBSTRING(rc.nom_resp_cfp, 1, 1),SUBSTRING(rc.prenom_resp_cfp, 1, 1)) as initial_resp_cfp,
     collab.updated_at as date_refuse
 
 FROM collaboration_etp_cfp as collab
-JOIN entreprises as etp ON collab.etp_id = etp.id
-JOIN cfps as cfp ON collab.cfp_id = cfp.id
-JOIN secteurs as sect ON etp.secteur_id = sect.id
-JOIN responsables as resp ON collab.etp_id = resp.entreprise_id
-JOIN responsables_cfp as resp_cfp ON collab.cfp_id = resp_cfp.cfp_id
-WHERE resp.prioriter = 1 and resp_cfp.prioriter = 1;
+JOIN entreprises as e ON collab.etp_id = e.id
+JOIN cfps as c ON collab.cfp_id = c.id
+JOIN secteurs as sect ON e.secteur_id = sect.id
+JOIN responsables as r ON collab.etp_id = r.entreprise_id
+JOIN responsables_cfp as rc ON collab.cfp_id = rc.cfp_id
+WHERE r.prioriter = 1 and rc.prioriter = 1;

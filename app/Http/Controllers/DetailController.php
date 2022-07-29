@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use PDF;
-// use Barryvdh\DomPDF\PDF;
+//use Barryvdh\DomPDF\PDF;
 use App\cfp;
 use App\User;
 use Exception;
@@ -25,6 +25,7 @@ use RecursiveArrayIterator;
 use Illuminate\Http\Request;
 use RecursiveIteratorIterator;
 use App\Models\FonctionGenerique;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -826,8 +827,8 @@ class DetailController extends Controller
              $nb_seance = $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
          }
          $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('nb_seance','lieu_formation','nb_stg','status','detail', 'stg', 'date_groupe','ressource'));
-        //return view('admin.calendrier.detail_pdf' ,compact('nb_seance','status','detail', 'stg','date_groupe','nb_stg','lieu_formation','ressource'));
-       return $pdf->download('Detail du projet.pdf');
+       // return view('admin.calendrier.detail_pdf' ,compact('nb_seance','status','detail', 'stg','date_groupe','nb_stg','lieu_formation','ressource'));
+         return $pdf->download('Detail du projet.pdf');
     }
     //filtre calendrier
     public function rechercheModuleCalendar(Request $request){

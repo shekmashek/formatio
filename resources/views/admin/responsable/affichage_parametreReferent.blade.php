@@ -40,7 +40,7 @@
                     <i class='bx bxs-component icon_infos p-0'></i>
                 </div>
                 <div class="row ps-2 ">
-                    <p class="nb_modules m-0 p-0">{{count($projets_counts)}}</p>
+                    <p class="nb_modules m-0 p-0">{{$total_projet}}</p>
                     <p class="text-muted borderBotom_color p-0 pb-2 text-uppercase">Projets</p>
                 </div>
             </a>
@@ -71,12 +71,14 @@
             <div class="col third_col py-2">
                 <a href="{{route('liste_projet')}}">
                     <p class="text-muted text-center m-1 txt_row_bas">Sessions</p>
-                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projets_counts)}}</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{$total_projet}}</p>
                 </a>
             </div>
             <div class="col third_col py-2">
-                <p class="text-muted text-center m-1 txt_row_bas">Modules Internes</p>
-                <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($modulesInternes_counts)}}</p>
+                <a href="{{route('formations')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Modules Internes</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($modulesInternes_counts)}}</p>
+                </a>
             </div>
             <div class="col third_col py-2">
                 <a href="{{route('liste_projet')}}">
@@ -88,6 +90,12 @@
                 <a href="{{route('liste_projet')}}">
                     <p class="text-muted text-center m-1 txt_row_bas">Projet Intra</p>
                     <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projetIntra_counts)}}</p>
+                </a>
+            </div>
+            <div class="col third_col py-2">
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Projet Interne</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projet_interne)}}</p>
                 </a>
             </div>
             <div class="col third_col py-2">
