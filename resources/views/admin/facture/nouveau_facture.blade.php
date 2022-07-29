@@ -28,14 +28,6 @@
     @endif
 
     <div class="m-4">
-        <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            {{-- <li></li> --}}
-            <li class="nav-item">
-                <a href="{{route('liste_facture')}}" class="nav-link">
-                    Retour à la liste des factures
-                </a>
-            </li>
-        </ul>
 
         <form action="{{route('create_facture')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
             @csrf
@@ -44,10 +36,11 @@
                 <div class="section1 mb-4">
                     <div class="row">
                         <div class="col-6">
-                            <h2>Nouvelle facture</h2>
+                            <h5>Nouvelle facture</h5>
                         </div>
                         <div class="col-6 text-end">
                             <input type="submit" class="btn btn_submit " id="enregristrer_facture" value="Enregistrer et continuer">
+                            <a class="new_list_nouvelle btn_submit_annuler" href="{{route('liste_facture')}}"> <span class=" text-center">Annuler la facture</span></a>
                         </div>
                     </div>
                 </div>
@@ -65,7 +58,7 @@
                                 </div>
                                 <div class="col-8 d-flex flex-column" align="right">
                                     <div>
-                                        <select class="text-end titre_facture form-select  mb-2 m-0 " id="type_facture" name="type_facture" aria-label="Default select example" required>
+                                        <select class=" titre_facture form-select  mb-2 m-0 " id="type_facture" name="type_facture" aria-label="Default select example" required>
                                             <option onselected hidden value="0"> Type de Facture...</option>
                                             @foreach ($type_facture as $tp_fact)
                                             <option value="{{$tp_fact->id}}">{{$tp_fact->reference}}</option>
@@ -73,7 +66,7 @@
                                         </select>
                                     </div>
                                     <div>
-                                        <select class="text-end titre_facture form-select  mb-2 m-0 " id="id_mode_financement" name="id_mode_financement" aria-label="Default select example">
+                                        <select class=" titre_facture form-select  mb-2 m-0 " id="id_mode_financement" name="id_mode_financement" aria-label="Default select example">
                                             <option onselected hidden value="0"> Mode de paiement...</option>
                                             @foreach ($mode_payement as $mod)
                                             <option value="{{$mod->id}}">{{$mod->description}}</option>

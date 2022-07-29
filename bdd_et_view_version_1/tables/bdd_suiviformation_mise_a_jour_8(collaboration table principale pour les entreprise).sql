@@ -75,3 +75,13 @@ create table refuse_demmande_etp_cfp(
     foreign key(demmandeur_etp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS collaboration_etp_cfp;
+CREATE table collaboration_etp_cfp (
+    `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `etp_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
+    `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+    `statut` int(11) NOT NULL DEFAULT 0,
+    `demmandeur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `created_at` timestamp default current_timestamp(),
+    `updated_at` timestamp default current_timestamp()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

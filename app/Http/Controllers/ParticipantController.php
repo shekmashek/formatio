@@ -153,18 +153,18 @@ class ParticipantController extends Controller
 
             if ($paginations != null) {
 
-                if ($paginations <= 0) {
-                    $paginations = 1;
-                }
+                // if ($paginations <= 0) {
+                //     $paginations = 1;
+                // }
                 $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
                 $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
                 $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
 
-                $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
+                // $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
             } else {
-                if ($paginations <= 0) {
-                    $paginations = 1;
-                }
+                // if ($paginations <= 0) {
+                //     $paginations = 1;
+                // }
                 if(Gate::allows('isManager')) {
                     $dep =  $this->fonct->findWhereMulitOne("employers", ["user_id"], [$user_id])->departement_entreprises_id;
                     $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id","departement_entreprises_id"], ["=","="], [$entreprise_id,$dep], "AND");
@@ -176,7 +176,7 @@ class ParticipantController extends Controller
                 $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
                 $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
 
-                $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
+                // $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
             }
             for ($i = 0; $i < count($piasa); $i += 1) {
                 if (count($service) > 0) {
@@ -248,7 +248,7 @@ class ParticipantController extends Controller
         }
 
 // dd($pagination);
-        return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'pagination','form_int'));
+        return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'form_int'));
     }
 
     public function index()
@@ -1315,7 +1315,7 @@ class ParticipantController extends Controller
         $user_id = $this->fonct->findWhereMulitOne("employers",["id"],[$emp_id]);
         $test = $this->fonct->findWhere("role_users",["user_id","role_id"],[$user_id->user_id,8]);
         if($test== null){
-            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?, ?, ?, ?)', [$user_id->user_id, 8,0,0]);
+            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?, ?, ?, ?)', [$user_id->user_id, 8,0,1]);
             DB::update('update role_users set activiter = 0 where user_id = ? and role_id = 3', [$user_id->user_id]);
         }
     }

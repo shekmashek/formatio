@@ -379,9 +379,10 @@
                             <div class="row ms-1 mb-3">
                                 <p>{{ $avis->commentaire }}</p>
                             </div>
+                            <hr>
                             @endforeach
-                            @if(count($liste_avis_count) >= 10)
-                                <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$infos[0]->module_id}}">voir tous les avis</a></div>
+                            @if($liste_avis_count >= 10)
+                                <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$res->module_id}}">voir tous les avis</a></div>
                             @endif
                             <div class="newRowAvis"></div>
                             <div class="text-end"><a class="btn btn_fermer moins_avis" role="button" role="button" ><i class='bx bxs-chevron-up me-2' ></i>afficher moins d'avis</a></div>
@@ -639,7 +640,7 @@
 
         $.ajax({
             type: "get"
-            ,url: "{{route('plus_avis_module')}}"
+            ,url: "{{route('plus_avis_module_etp')}}"
             ,data:{
                 Id: id,
             }
@@ -647,8 +648,9 @@
                 let moduleData = response;
                 if (moduleData['liste_avis'] != null || undefined){
                     let html = '';
-
+                        html += '<hr>';
                     for (let i = 0; i < moduleData['liste_avis'].length; i++) {
+                        // html += '<hr>';
                         html += '<div class="row" id="avis">';
                         html +=     '<div class="d-flex flex-row">';
                         html +=         '<div class="col">';
@@ -667,6 +669,7 @@
                         html += '<div class="row ms-1">';
                         html +=     '<p>'+moduleData['liste_avis'][i]['commentaire']+'</p>';
                         html += '</div>';
+                        html += '<hr>';
                     }
                     $('.newRowAvis').empty();
                     $('.newRowAvis').append(html);

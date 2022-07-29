@@ -67,6 +67,8 @@ class GroupeController extends Controller
 
     public function createInter(Request $request)
     {
+        $fonct = new FonctionGenerique();
+        $devise = $fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $last_url = url()->previous();
         try{
             $fonct = new FonctionGenerique();
@@ -76,11 +78,11 @@ class GroupeController extends Controller
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             $type_formation = request()->type_formation;
             $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
-            $modules = $fonct->findWhere("moduleformation", ["cfp_id", "status", "etat_id"], [$cfp_id, 2, 1]);
+            $modules = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.cfp_id = ?',[$cfp_id]);
             if(count($formations)==0 or count($modules)==0){
                 throw new Exception("Vous n'avez pas encore des modules.");
             }
-            return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
+            return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules','devise'));
         }catch(Exception $e){
             return redirect('liste_module');
         }
@@ -346,7 +348,7 @@ class GroupeController extends Controller
             $nom_groupe = $groupe->generateNomSession($projet);
             DB::insert(
                 'insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter,modalite) values(?,?,?,?,?,?,?,?,1,TRUE,?)',
-                [$request->max_part, $request->min_part, $nom_groupe, $projet, $session->module_id, $session->type_payement_id, $request->date_debut, $request->date_fin,$request->modalite]
+                [$request->max_part, $request->min_part, $nom_groupe, $projet, $request->module, $session->type_payement_id, $request->date_debut, $request->date_fin,$request->modalite]
             );
             $last_insert_groupe = DB::table('groupes')->latest('id')->first();
 

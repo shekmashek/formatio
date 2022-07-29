@@ -29,7 +29,7 @@
     }
 </style>
 <div id="page-wrapper">
-    <div class="container  mt-5 p-4">
+    <div class="container-fluid  mt-5 p-4">
         <div class="row">
             <h1>Recueil besoin en formation</h1>
         </div>
@@ -38,11 +38,11 @@
                 <thead>
                     @foreach ($plan as $p)
                     <tr style="background: rgb(250, 248, 248)">
-                        <td class="p"  colspan="1"><span style="padding-top: 30px">Années :{{$p->AnneePlan}}</span>  &nbsp;  Debut du recueil : {{ \Carbon\Carbon::parse($p->debut_rec)->format('d/m/Y')}} &nbsp; fin du recueil : {{ \Carbon\Carbon::parse($p->fin_rec)->format('d/m/Y')}} 
-                            @if(strtotime($p->fin_rec) > strtotime('now') )
+                        <td class="p"  colspan="1"><span style="padding-top: 30px">Années :{{$p->AnneePlan}}</span>  &nbsp;  Debut du recueil : {{ \Carbon\Carbon::parse($p->debut_rec)->format('d/m/Y')}} &nbsp; fin du recueil : {{ \Carbon\Carbon::parse($p->fin_rec)->format('d/m/Y')}}
+                            @if(strtotime($p->fin_rec) > strtotime('now'."-1 days") )
                                 <a href="{{route('plan.demande',$p->id)}} " class="btn btn-info text-light" style="float: right">Demander un formation</a>
                             @else
-                                <a class="btn btn-danger text-light" style="float: right">Términer</a>
+                                <a class="btn btn-danger text-light" style="float: right">Recueil de besoin cloturé</a>
                             @endif
                         </th>
                         <th class="" colspan="0">
@@ -54,7 +54,7 @@
                     <tbody>
                         <tr>
                             <td>
-                               
+
                                     <div  id="collapseExample_{{$p->AnneePlan}}">
                                         <div class="card card-body" style="width: 100%">
                                             <p>Vos demandes:</p>
@@ -70,21 +70,24 @@
                                             @endif
                                             <table class="table table-hover">
                                                 <thead>
-                                                    
+
                                                     <th>Domaine de formation</th>
                                                     <th>Thematique</th>
                                                     <th>Date</th>
                                                     <th>Organisme sugére</th>
                                                     <th>Statut</th>
+                                                    <th>Urgence</th>
                                                     <th>Priorité</th>
+                                                    <th>Demandé par :</th>
+                                                    <th>Type du demande</th>
                                                     @if(strtotime($p->fin_rec) > strtotime('now') )
-                                                        <th>Action</th>    
-                                                   
+                                                        <th>Action</th>
+
                                                     @endif
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($besoin as $be)
-                                                       
+
                                                         @if ($be->anneePlan_id === $p->id)
                                                         <form action="{{route('besoin.modif',$be->id)}}" method="POST">
                                                             @csrf
@@ -95,9 +98,9 @@
                                                                 <td><input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->organisme}}</span></td>
                                                                 <td>
                                                                 @if ($be->statut == 0)
-                                                                    <span class="bg-warning p-1 text-sm rounded text-white"><small>En attente</small> </span>
+                                                                <span style="padding: 1px" class=" mt-2 text-sm rounded text-white"><i class='bx bx-loader-circle bx-spin' style="color: rgba(255, 170, 0, 0.922);font-size:20px"></i></span>
                                                                 @elseif ($be->statut == 1)
-                                                                    <span class="p-1 rounded text-white" style="background:#41D053;"><small>Validé</small></span>
+                                                                <span  class=" mt-3 rounded text-white" style=";padding: 1px"><i class='bx bx-user-check' style="color: rgba(54, 230, 15, 0.922);font-size:20px" ></i></span>
                                                                 @elseif ($be->statut == 2)
                                                                     <span class="p-1 rounded text-white" style="background:#f54c49;"><small>Refusé</small></span>
                                                                 @endif
@@ -108,7 +111,24 @@
                                                                         <option value="non-urgent">non-urgent</option>
                                                                     </select>
                                                                     <span class="spa{{$be->id}}">{{$be->type}}</span></td>
-                                                                @if(strtotime($p->fin_rec) > strtotime('now') )
+                                                                <td>
+                                                                    {{$be->priorite}}
+                                                                </td>
+                                                                <td>
+
+                                                                @if($be->reponse_stagiaire == '1')
+                                                                        Collaborateur
+                                                                @elseif($be->reponse_stagiaire == '0')
+                                                                        Manager <br>
+
+                                                                @else
+                                                                        RH
+                                                                @endif
+                                                                </td>
+                                                                <td>
+                                                                    {{$be->type_demande}}
+                                                                </td>
+                                                                @if(strtotime($p->fin_rec) > strtotime('now'."-1 days") )
                                                                 @if($be->statut == '0')
                                                                 <td>
                                                                     <a id="but{{$be->id}}" onclick='modifier({{$be->id}},"{{$be->domaine->nom_domaine}}","{{$be->formation->nom_formation}}","{{$be->date_previsionnelle}}","{{$be->organisme}}","{{$be->type}}");'  class="btn btn-info text-light">
@@ -121,13 +141,13 @@
 
                                                             </tr>
                                                         </form>
-                                                        @endif 
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                       </div>
-                                
+
                             </td>
                         </tr>
                     </tbody>
@@ -145,7 +165,7 @@
                         <th style="float: right"><i class="fa-solid fa-angle-down"></i></th>
                     </tr> --}}
                 </thead>
-                
+
             </table>
         </div>
     </div>
@@ -179,7 +199,7 @@
         document.getElementById(f).value = date;
         document.getElementById(j).value = organisme;
         document.getElementById(o).value = type;
-       
+
         var g =document.getElementById(h);
         g.style.display = "none";
         var k =document.getElementById(m);
@@ -189,9 +209,9 @@
         let se = document.getElementById("type"+id);
         se.removeAttribute("hidden");
         se.value=type;
-        
-    
+
+
     };
-    
+
 </script>
 @endsection

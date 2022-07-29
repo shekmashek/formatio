@@ -59,7 +59,7 @@ create or replace view v_groupe_entreprise as
         g.date_fin,
         g.modalite,
         g.status as status_groupe,
-       
+
         case
             when g.status = 8 then 'Reprogrammer'
             when g.status = 7 then 'Annulée'
@@ -484,6 +484,7 @@ select
         when g.status = 1 then 'status_grise'
         when g.status = 0 then 'Créer'end class_status_groupe,
         g.activiter as activiter_groupe,
+        g.modalite,
         s.id as stagiaire_id,
         s.matricule,
         s.nom_stagiaire,
@@ -526,6 +527,46 @@ select
     join niveau_etude niveau
         on niveau.id = s.niveau_etude_id order by groupe_id desc;
 
+create or replace view v_projet_manager as
+select
+    projet_id,
+    nom_projet,
+    groupe_id,
+    nom_groupe,
+    sg.cfp_id,
+    nom_cfp,
+    modalite,
+    date_debut,
+    date_fin,
+    item_status_groupe,
+    class_status_groupe,
+    module_id,
+    nom_module,
+    p.type_formation_id,
+    type_formation,
+    departement_id,
+    entreprise_id
+from v_stagiaire_groupe sg
+join type_formations tf on tf.id = sg.type_formation_id
+join projets p on p.id = sg.projet_id
+group by
+    projet_id,
+    nom_projet,
+    groupe_id,
+    nom_groupe,
+    sg.cfp_id,
+    nom_cfp,
+    modalite,
+    date_debut,
+    date_fin,
+    item_status_groupe,
+    class_status_groupe,
+    module_id,
+    nom_module,
+    p.type_formation_id,
+    type_formation,
+    departement_id,
+    entreprise_id;
 
 create or replace view v_detail_presence as
     select d.id as detail_id,
@@ -648,6 +689,7 @@ create or replace view v_participant_groupe_detail as
 create or replace view v_emargement as
     select
         pgd.*,
+        dps.status as statut_presence,
         ifnull(dps.text_status,"non") as text_status,
         ifnull(dps.color_status,"non") as color_status
     from v_participant_groupe_detail pgd

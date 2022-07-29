@@ -8,11 +8,11 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 
-<div class="container-fluid pb-1" id="Page1">
+{{-- <div class="container-fluid pb-1" id="Page1">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();">
         <i class='bx bx-filter icon_creer'></i>Afficher les filtres
-    </a>
-    <div class="m-4" role="tabpanel" >
+    </a> --}}
+    {{-- <div class="m-4" role="tabpanel" >
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
@@ -22,9 +22,9 @@
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
-            </li>
-            <a href="#" onclick="return show('Page2','Page1');" title="afficher en mode liste"><i class='bx bx-list-ul view_icon'></i></a>
-        </ul>
+            </li> --}}
+            {{-- <a href="#" onclick="return show('Page2','Page1');" title="afficher en mode liste"><i class='bx bx-list-ul view_icon'></i></a> --}}
+        {{-- </ul>
 
         <div class="tab-content">
             <div class="tab-pane show fade" id="hors_ligne">
@@ -64,7 +64,7 @@
                                                             <span class="acf-nom_module">{{$mod->nom_module}}</span>
                                                         </div>
                                                         <div class="col-2">
-                                                            <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
+                                                            <span class="ribbon1"><span>Nouveau<br></span></span>
                                                         </div>
                                                         @else
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
@@ -108,7 +108,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row g-0 row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
+                                        <div class="row g-0 row-cols-auto liste__formation__result__item3 justify-content-space-between pb-2 text-center">
                                             <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
                                                     class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
@@ -178,8 +178,8 @@
                                                         <p class="text-center text-muted">Continuer ?</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
                                                         <button type="button" class="btn btn_enregistrer suppression_module" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -199,8 +199,8 @@
                                                         <p class="text-center">Vous allez mettre en ligne cette module. Êtes-vous sur?</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_annuler non_en_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
                                                         <button type="submit" class="btn btn_enregistrer mettre_en_ligne" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_annuler non_en_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -252,7 +252,7 @@
                                                             <span class="acf-nom_module">{{$mod->nom_module}}</span>
                                                         </div>
                                                         <div class="col-2">
-                                                            <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
+                                                            <span class="ribbon1"><span>Nouveau<br></span></span>
                                                         </div>
                                                         @else
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
@@ -367,8 +367,8 @@
                                                         <p class="text-center text-muted">Continuer ?</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
                                                         <button type="button" class="btn btn_enregistrer suppression_module" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -388,8 +388,8 @@
                                                         <p class="text-center">Vous allez mettre hors ligne cette module. Êtes-vous sur?</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_annuler non_hors_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
                                                         <button type="submit" class="btn btn_enregistrer mettre_hors_ligne" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_annuler non_hors_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -434,8 +434,8 @@
                                         <p id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</p>
                                     </div>
                                 <div class="modal-footer justify-content-center">
-                                    <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
                                     <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Créer votre module</button>
+                                    <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
                                 </div>
                             </form>
                         </div>
@@ -685,11 +685,11 @@
         </div>
     </div>
 </div>
-</div>
-<div class="container-fluid pb-1" id="Page2" style="display: none">
-    <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();">
+</div> --}}
+<div class="container-fluid pb-1" id="Page2" >
+    {{-- <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();">
         <i class='bx bx-filter icon_creer'></i>Afficher les filtres
-    </a>
+    </a> --}}
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="mytab">
             <li class="nav-item">
@@ -701,7 +701,7 @@
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
             </li>
-            <a href="#" onclick="return show('Page1','Page2');" title="afficher en mode card"><i class='bx bxs-card view_icon'></i></a>
+            {{-- <a href="#" onclick="return show('Page1','Page2');" title="afficher en mode card"><i class='bx bxs-card view_icon'></i></a> --}}
 
         </ul>
         <div class="tab-content">
@@ -722,9 +722,7 @@
                         <div class="col-lg-12">
 
                             @if (count($mod_hors_ligne)>0)
-                            {{-- {{dd($mod_hors_ligne)}} --}}
                             @foreach ($mod_hors_ligne as $info)
-                            {{-- {{dd($info)}} --}}
                             <div class="row liste__formation justify-content-space-between mb-4 ribbons list_module">
                                 <div class="col-1 d-flex flex-column">
                                     <a href="{{route('detail_cfp',$info->cfp_id)}}" class="justify-content-center text-center">
@@ -733,23 +731,21 @@
                                 </div>
                                 @if($info->jours_restant > 0)
                                 <div class="col-2 liste__formation__content">
-                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                    <a href="{{route('modif_programmes',$info->module_id)}}">
                                         <div class="liste__formation__item">
                                             <span class="acf-nom-module">{{$info->nom_module}}</span>
 
                                             <p><span class="acf-description">{{$info->nom_formation}}</span></p>
-                                            {{-- <p>Réference : <span>{{$info->reference}}</span></p> --}}
 
                                         </div>
                                     </a>
                                 </div>
                                 @else
                                 <div class="col-3 liste__formation__content">
-                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                    <a href="{{route('modif_programmes',$info->module_id)}}">
                                         <div class="liste__formation__item">
                                             <span class="acf-nom-module">{{$info->nom_module}}</span>
                                             <p><span class="acf-description">{{$info->nom_formation}}</span></p>
-                                            {{-- <p>Réference : <span>{{$info->reference}}</span></p> --}}
 
                                         </div>
                                     </a>
@@ -793,9 +789,9 @@
                                         </div>
                                         <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                                         </div>
-                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                        @if($info->min_pers != 0 && $info->max_pers != 0)
                                             <div>
-                                                <span class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</span>
+                                                <span class="">&nbsp;{{$info->min_pers}}&nbsp;à&nbsp;{{$info->max_pers}}&nbsp;pax</span>
                                             </div>
                                         @endif
                                     </div>
@@ -838,9 +834,9 @@
                                         </div>
                                         <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                                         </div>
-                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                        @if($info->min_pers != 0 && $info->max_pers != 0)
                                             <div>
-                                                <span class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</span>
+                                                <span class="">&nbsp;{{$info->min_pers}}&nbsp;à&nbsp;{{$info->max_pers}}&nbsp;pax</span>
                                             </div>
                                         @endif
                                     </div>
@@ -849,7 +845,7 @@
                                 <div class="col-2 text-end">
                                     <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                     @if($info->prix_groupe != null)
-                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($info->max_pers != 0)/ {{$info->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                     @endif
                                 </div>
                                 <div class="col-2 actions_button_mod">
@@ -876,7 +872,7 @@
                                                     @if ($info->status == 1)
                                                     <div class="form-check form-switch d-flex flex-row">
                                                         <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix_hors_ligne">Hors&nbsp;Ligne</span></label>
-                                                        <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch_{{$info->module_id}}" data-bs-target="#liste_en_ligne_{{$info->module_id}}" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne">
+                                                        <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch_{{$info->module_id}}" data-bs-target="#liste_en_ligne_{{$info->module_id}}" type="checkbox" value="{{$info->module_id}}" title="activer pour mettre en ligne">
                                                     </div>
                                                     @endif
                                                 </div>
@@ -886,7 +882,7 @@
                                 </div>
                                 @if($info->jours_restant > 0)
                                 <div class="col-1">
-                                    <span class="ribbon2"><span>Nouveau<br>J - {{$info->jours_restant}}</span></span>
+                                    <span class="ribbon2"><span>Nouveau<br></span></span>
                                 </div>
                                 @endif
                                 <div class="modal fade" id="listModal_{{$info->module_id}}" tabindex="-1"
@@ -908,8 +904,8 @@
                                                 <p class="text-center text-muted">Continuer ?</p>
                                             </div>
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
-                                                <button type="button" class="btn btn_enregistrer suppression_module" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                <button type="button" class="btn btn_enregistrer suppression_module" id="{{$info->module_id}}"><i class='bx bx-trash me-1'></i>Supprimer</button>
+                                                <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                             </div>
                                         </div>
                                     </div>
@@ -929,8 +925,8 @@
                                                 <p class="text-center text-muted">Vous allez mettre en ligne cette module. Êtes-vous sur?</p>
                                             </div>
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn btn_annuler non_en_ligne" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
-                                                <button type="submit" class="btn btn_enregistrer mettre_en_ligne" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                <button type="submit" class="btn btn_enregistrer mettre_en_ligne" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>En ligne</button>
+                                                <button type="button" class="btn btn_annuler non_en_ligne" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                             </div>
                                         </div>
                                     </div>
@@ -977,22 +973,20 @@
                                 </div>
                                 @if($info->jours_restant > 0)
                                 <div class="col-2 liste__formation__content">
-                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                    <a href="{{route('modif_programmes',$info->module_id)}}">
                                         <div class="liste__formation__item">
                                             <span class="acf-nom-module">{{$info->nom_module}}</span>
                                             <p><span class="acf-description">{{$info->nom_formation}}</span></p>
-                                            {{-- <p>Réference : <span>{{$info->reference}}</span></p> --}}
 
                                         </div>
                                     </a>
                                 </div>
                                 @else
                                 <div class="col-3 liste__formation__content">
-                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                    <a href="{{route('modif_programmes',$info->module_id)}}">
                                         <div class="liste__formation__item">
                                             <span class="acf-nom-module">{{$info->nom_module}}</span>
                                             <p><span class="acf-description">{{$info->nom_formation}}</span></p>
-                                            {{-- <p>Réference : <span>{{$info->reference}}</span></p> --}}
 
                                         </div>
                                     </a>
@@ -1036,9 +1030,9 @@
                                         </div>
                                         <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                                         </div>
-                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                        @if($info->min_pers != 0 && $info->max_pers != 0)
                                             <div>
-                                                <span class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</span>
+                                                <span class="">&nbsp;{{$info->min_pers}}&nbsp;à&nbsp;{{$info->max_pers}}&nbsp;pax</span>
                                             </div>
                                         @endif
                                     </div>
@@ -1081,9 +1075,9 @@
                                         </div>
                                         <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                                         </div>
-                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                        @if($info->min_pers != 0 && $info->max_pers != 0)
                                             <div>
-                                                <span class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</span>
+                                                <span class="">&nbsp;{{$info->min_pers}}&nbsp;à&nbsp;{{$info->max_pers}}&nbsp;pax</span>
                                             </div>
                                         @endif
                                     </div>
@@ -1092,7 +1086,7 @@
                                 <div class="col-2 text-end">
                                     <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                     @if($info->prix_groupe != null)
-                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($info->max_pers != 0)/ {{$info->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                     @endif
                                 </div>
                                 <div class="col-2 actions_button_mod">
@@ -1129,7 +1123,7 @@
                                 </div>
                                 @if($info->jours_restant > 0)
                                 <div class="col-1">
-                                    <span class="ribbon2"><span>Nouveau<br>J - {{$info->jours_restant}}</span></span>
+                                    <span class="ribbon2"><span>Nouveau<br></span></span>
                                 </div>
                                 @endif
 
@@ -1152,8 +1146,8 @@
                                                 <p class="text-center text-muted">Continuer ?</p>
                                             </div>
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
-                                                <button type="button" class="btn btn_enregistrer suppression_module" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                <button type="button" class="btn btn_enregistrer suppression_module" id="{{$info->module_id}}"><i class='bx bx-trash me-1'></i>Supprimer</button>
+                                                <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1173,8 +1167,8 @@
                                                 <p class="text-center">Vous allez mettre hors ligne cette module. Êtes-vous sur?</p>
                                             </div>
                                             <div class="modal-footer justify-content-center">
-                                                <button type="button" class="btn btn_annuler non_hors_ligne" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
-                                                <button type="submit" class="btn btn_enregistrer mettre_hors_ligne" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                <button type="submit" class="btn btn_enregistrer mettre_hors_ligne" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Hors Ligne</button>
+                                                <button type="button" class="btn btn_annuler non_hors_ligne" data-bs-dismiss="modal" id="{{$info->module_id}}"><i class='bx bx-x me-1'></i>Annuler</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1194,7 +1188,7 @@
                 </div>
             </div>
         </div>
-        <div class="filtrer mt-3">
+        {{-- <div class="filtrer mt-3">
             <div class="row">
                 <div class="col">
                     <p class="m-0">Filter les modules</p>
@@ -1429,7 +1423,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
@@ -1438,36 +1432,35 @@
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     let lien = ($(e.target).attr('href'));
     localStorage.setItem('ActiveTabMod', lien);
-    // alert(lien);
-    if (lien == '#publiees' || lien == '#hors_lignes') {
-    localStorage.setItem('ActiveTabMod', '#publies');
-    // alert("okey");
-    }
-    // alert(lien);
 });
+
 let ActiveTabMod = localStorage.getItem('ActiveTabMod');
 if(ActiveTabMod){
     $('#myTab a[href="' + ActiveTabMod + '"]').tab('show');
     $('#myTab a[href="' + ActiveTabMod + '"]').addClass('active');
 }
+
+
+
 function show(shown, hidden) {
     document.getElementById(shown).style.display='block';
     document.getElementById(hidden).style.display='none';
     if (shown == "Page2") {
         // alert(shown);
-        localStorage.setItem('ActiveTabModPage', '#publiees');
-        let ActiveTabModP = localStorage.getItem('ActiveTabModPage');
-        // alert(ActiveTabModP);
-        $('#mytab a[href="' + ActiveTabModP + '"]').tab('show');
-        $('#mytab a[href="' + ActiveTabModP + '"]').addClass('active');
+        // localStorage.setItem('ActiveTabModPage', '#publiees');
+        // let ActiveTabModP = localStorage.getItem('ActiveTabModPage');
+        // // alert(ActiveTabModP);
+        // $('#mytab a[href="' + ActiveTabModP + '"]').tab('show');
+        // $('#mytab a[href="' + ActiveTabModP + '"]').addClass('active');
     }
     if (shown == "Page1") {
         // alert(shown);
+        // localStorage.removeItem('ActiveTabModPage');
         // localStorage.setItem('ActiveTabMod', '#publies');
-        let ActiveTabModP = localStorage.getItem('ActiveTabMod');
-        // alert(ActiveTabModP);
-        $('#myTab a[href="' + ActiveTabModP + '"]').tab('show');
-        $('#myTab a[href="' + ActiveTabModP + '"]').addClass('active');
+        // let ActiveTabModP = localStorage.getItem('ActiveTabMod');
+        // // alert(ActiveTabModP);
+        // $('#myTab a[href="' + ActiveTabModP + '"]').tab('show');
+        // $('#myTab a[href="' + ActiveTabModP + '"]').addClass('active');
     }
     return false;
 }
@@ -1521,5 +1514,6 @@ $(".mettre_hors_ligne").on('click', function(e) {
         }
     });
 });
+
 </script>
 @endsection

@@ -11,7 +11,7 @@ class besoins extends Model
 {
     protected $table = "besoin_stagiaire";
     protected $fillable = [
-        'stagiaire_id','entreprise_id','domaines_id','thematique_id','anneePlan_id','objectif','date_previsionnelle','organisme','statut','type',   
+        'stagiaire_id','entreprise_id','domaines_id','thematique_id','anneePlan_id','objectif','date_previsionnelle','organisme','statut','type','reponse_stagiaire','dure','type_demande','priorite',  
     ];
 
     /**

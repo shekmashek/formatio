@@ -1,13 +1,13 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text_header m-0 mt-1">Modification matricule</h3>
+<h3 class="text_header m-0 mt-1">@lang('translation.Modification') @lang('translation.Matricule')</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('affProfilChefDepartement')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i>Retour</button></a>
+  <a href="{{route('affProfilChefDepartement')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i>@lang('translation.Précedent')</button></a>
 </div>
 <center>
 <div class="col-lg-4">
@@ -20,12 +20,12 @@
                             <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control input test"  name="matricule_chef" value="{{ $chef->matricule}}" >
 
-                        <label class="ml-3 form-control-placeholder">Matricule</label>
+                        <label class="ml-3 form-control-placeholder">@lang('translation.Matricule')</label>
                         </div>
                     </div>
                     <select  hidden  value="{{$genre}}" name="genre" class="form-select test input" id="genre"  >
-                        <option value="Homme"  >Homme</option>
-                        <option value="Femme">Femme</option>
+                        <option value="Homme"  >@lang('translation.Homme')</option>
+                        <option value="Femme">@lang('translation.Femme')</option>
 
                       </select>
 
@@ -60,7 +60,7 @@
 
 
 
-<button  class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
+<button  class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> @lang('translation.Enregistrer')</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

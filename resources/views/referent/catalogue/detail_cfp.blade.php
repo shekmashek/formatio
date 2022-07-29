@@ -34,7 +34,7 @@
                             @endphp
                         </p>
                         @else
-                            <p> Aucun horaire</p>
+                            <p class="text-center"> Aucun horaire</p>
                         @endif
 
                         </div>
@@ -74,14 +74,14 @@
                                     @endif
                                     <div class="rating-box ms-2">
                                         @if($avis_etoile[0]->pourcentage != null)
-                                            <span class="avis_verif"><span class="">{{ $avis_etoile[0]->pourcentage }}</span> ({{$avis_etoile[0]->nb_avis}} avis)</span>
+                                            <span class=""><span class="">{{ $avis_etoile[0]->pourcentage }}</span> ({{$avis_etoile[0]->nb_avis}} avis)</span>
                                         @else
                                             <span class="">0 sur 5 (0 avis)</span>
                                         @endif
                                     </div>
                                 </div>
                                 @endif
-                                <p class="mt-1"><i
+                                <p class="mt-3"><i
                                         class="bx bx-map me-2"></i>{{$cfp->adresse_lot}}&nbsp;{{$cfp->adresse_quartier}}&sbquo;&nbsp;{{$cfp->adresse_ville}}&nbsp;{{$cfp->adresse_code_postal}}&sbquo;&nbsp;{{$cfp->adresse_region}}
                                 </p>
                                 <div class="col-6 mb-3">
@@ -92,9 +92,8 @@
                         </div>
                         <div class="col-4 place_badge">
                             <div class="col d-flex flex-row mb-4">
-                                <span class="btn_actions" role="button"><a href="#"><i
-                                            class="bx bx-mail-send"></i>Email</a></span>
-                                <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank"><i class="bx bx-globe"></i>Site
+                                <span class="btn_fermer" role="button"><a href="#">Email</a></span>
+                                <span class="btn_fermer ms-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank">Site
                                         Web</a></span>
                             </div>
                             @foreach ($collaboration as $collab)
@@ -120,7 +119,7 @@
             <div class="col-12 mt-3 services">
                 <div class="row text-center">
                     <div class="col-4"><a href="#presentation">
-                            <p class="border_end choisir">Pourquoi nous choisir?</p>
+                            <p class="border_end choisir"><i class="bx bx-help-circle"></i> Pourquoi nous choisir?</p>
                         </a></div>
                     <div class="col-4"><a href="#domaines">
                             <p class="border_end"><i class="bx bx-pyramid"></i>Domaines de Formations</p>
@@ -277,7 +276,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-3">
-                            <a href="#avis" role="button" class="btn btn_annuler">voir les avis</a>
+                            <a href="#avis" role="button" class="btn btn_fermer">voir les avis</a>
                         </div>
                         @else
                         <div class="row d-flex">
@@ -415,7 +414,7 @@
                                                 <a href="{{route('select_par_module',$mod->module_id)}}" class="">
                                                     <div id="module{{$mod->module_id}}" class="row mb-3 module_lien justify-content-center align-items-center">
                                                         <div class="col-5 text_minifier">
-                                                            <div class="pt-2">{{$mod->nom_module}}</div>
+                                                            <div class="pt-2 titre_cfp mb-2">{{$mod->nom_module}}</div>
                                                             <div>
                                                                 <div class="Stars" style="--note: {{ $mod->pourcentage }};">
                                                                 </div>
@@ -429,19 +428,19 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-3 text_minifier">
-                                                            <div class="mb-2"><i class='bx bx-calendar bx_supprimer me-2'></i>{{$mod->duree_jour}}&nbsp;J / {{$mod->duree}}&nbsp;H</div>
-                                                            <div><i class='bx bx-windows bx_ajouter me-2'></i>{{$mod->modalite_formation}}</div>
+                                                            <div class="mb-2">{{$mod->duree_jour}}&nbsp;J / {{$mod->duree}}&nbsp;H</div>
+                                                            <div>{{$mod->modalite_formation}}</div>
                                                         </div>
                                                         <div class="col-2 text_minifier text-end">
-                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                             @if($mod->prix_groupe != null)
                                                                 <div>{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                             @endif
                                                         </div>
                                                         <div class="col-2 text_minifier text-center">
-                                                            <div class="mb-3">
+                                                            {{-- <div class="mb-3">
                                                                 <span class="btn_annuler text-uppercase">Organisme</span>
-                                                            </div>
+                                                            </div> --}}
                                                             <div class="">
                                                                 {{$mod->nom}}
                                                             </div>
@@ -478,7 +477,7 @@
                         </div>
                     </div>
                     <div class="row ms-1 mb-3">
-                        <p>{{ $avis->commentaire }}</p>
+                        <p class="">{{ $avis->commentaire }}</p>
                     </div>
                     @endforeach
                     @if(count($liste_avis_count) >= 10)

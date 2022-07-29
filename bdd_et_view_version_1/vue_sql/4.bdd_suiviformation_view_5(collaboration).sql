@@ -665,12 +665,55 @@ WHERE
     d.activiter = 1;
 
 
+-- CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
+--     d.activiter AS activiter_demande,
+--     rsp.email_resp_cfp,
+--     rsp.nom_resp_cfp,
+--     rsp.prenom_resp_cfp,
+--     rsp.photos_resp_cfp,
+
+--     c.id AS cfp_id,
+--     c.nom,
+--     c.adresse_lot,
+--     c.adresse_ville,
+--     c.adresse_region,
+--     c.email,
+--     c.telephone,
+--     c.slogan,
+--     c.nif,
+--     c.stat,
+--     c.rcs,
+--     c.cif,
+--     c.logo,
+--     c.activiter AS activiter_cfp,
+--     c.site_web,
+--     f.user_id,
+--     f.id AS formateur_id,
+--     f.nom_formateur,
+--     f.prenom_formateur,
+--     f.mail_formateur,
+--     f.numero_formateur,
+--     f.photos,
+--     f.genre_id,
+--     (IFNULL(g.genre,1)) genre,
+--     f.date_naissance,
+--     f.adresse,
+--     f.cin,
+--     f.specialite,
+--     f.niveau_etude_id,
+--     f.activiter AS activiter_formateur,
+--     f.user_id AS user_id_formateur
+-- FROM
+--     demmande_cfp_formateur d,cfps c,formateurs f,genre g,responsables_cfp rsp
+-- WHERE
+--     c.id = d.demmandeur_cfp_id AND
+--     f.id = d.inviter_formateur_id AND
+--     g.id = IFNULL(f.genre_id,1) AND d.activiter = 1 AND rsp.prioriter = 1;
+
+
+
 CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     d.activiter AS activiter_demande,
-    rsp.email_resp_cfp,
-    rsp.nom_resp_cfp,
-    rsp.prenom_resp_cfp,
-    rsp.photos_resp_cfp,
 
     c.id AS cfp_id,
     c.nom,
@@ -704,15 +747,12 @@ CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     f.activiter AS activiter_formateur,
     f.user_id AS user_id_formateur
 FROM
-    demmande_cfp_formateur d,cfps c,formateurs f,genre g,responsables_cfp rsp
-WHERE
-    c.id = d.demmandeur_cfp_id AND
-    f.id = d.inviter_formateur_id AND
-    g.id = IFNULL(f.genre_id,1) AND d.activiter = 1 AND rsp.prioriter = 1;
-
-
-
-
+    demmande_cfp_formateur d
+JOIN
+    cfps c on c.id = d.demmandeur_cfp_id
+JOIN formateurs f on f.id = d.inviter_formateur_id
+JOIN genre g ON g.id = IFNULL(f.genre_id,1)
+where d.activiter = 1;
 
 
 CREATE OR REPLACE VIEW v_refuse_demmande_cfp_etp AS SELECT
@@ -796,3 +836,35 @@ JOIN secteurs se ON
     e.secteur_id = se.id
 JOIN responsables r ON d.resp_etp_id = r.id
 JOIN responsables_cfp rc ON d.resp_cfp_id = rc.id;
+
+CREATE OR REPLACE VIEW collab_cfp_etp AS SELECT
+    collab.statut,
+    collab.demmandeur,
+    etp.id as id_etp,
+    etp.nom_etp,
+    etp.logo as logo_etp,
+    sect.nom_secteur,
+    resp.nom_resp,
+    resp.prenom_resp,
+    SUBSTRING(resp.nom_resp, 1, 1) AS nom_resp_initial,
+    SUBSTRING(resp.prenom_resp, 1, 1) AS prenom_resp_initial,
+    resp.photos,
+    resp.email_resp,
+    cfp.id as id_cfp,
+    cfp.nom,
+    cfp.logo,
+    resp_cfp.nom_resp_cfp,
+    resp_cfp.prenom_resp_cfp,
+    SUBSTRING(resp_cfp.nom_resp_cfp, 1, 1) AS nom_resp_cfp_inital,
+    SUBSTRING(resp_cfp.prenom_resp_cfp, 1, 1) AS prenom_resp_cfp_initial,
+    resp_cfp.photos_resp_cfp,
+    resp_cfp.email_resp_cfp,
+    collab.updated_at as date_refuse
+
+FROM collaboration_etp_cfp as collab
+JOIN entreprises as etp ON collab.etp_id = etp.id
+JOIN cfps as cfp ON collab.cfp_id = cfp.id
+JOIN secteurs as sect ON etp.secteur_id = sect.id
+JOIN responsables as resp ON collab.etp_id = resp.entreprise_id
+JOIN responsables_cfp as resp_cfp ON collab.cfp_id = resp_cfp.cfp_id
+WHERE resp.prioriter = 1 and resp_cfp.prioriter = 1;

@@ -74,7 +74,9 @@
 .detail__formation__result__avis span{
     font-size: 0.8rem;
 }
-
+.acf-description{
+    font-size: 0.8rem;
+}
 /* liste modules */
 
 .navigation_module .nav-link {
@@ -179,7 +181,7 @@
 .competence_box h5{
     background-color: #637381;
     color: white;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 .suppression_competence{
@@ -306,8 +308,7 @@
 
 .suppression_programme,
 .ajouter_cours,
-.modifier_cours,
-.suppression{
+.modifier_cours{
     display: none;
     transition: all 1s ;
 }
@@ -355,7 +356,7 @@
     bottom: -10.05px;
     border-left: 53px solid transparent;
     border-right: 53px solid transparent;
-    border-top: 10px solid #01b5af;
+    border-top: 10px solid #02c3ad;
 }
 .ribbon1 span {
     position: relative;
@@ -407,7 +408,7 @@
     width: 0;
     height: 0;
     left: -8.5px;
-    top: 30.05px;
+    top: 15px;
     border-left: 53px solid transparent;
     border-right: 53px solid transparent;
     border-top: 10px solid #01b5af;
@@ -445,24 +446,6 @@ left: -8px;
 top: 0;
 border-radius: 8px 8px 0 0;
 background: linear-gradient(60deg, #02AAB0,#00CDAC);
-}
-
-#popup{
-    height : auto;
-    background-color: rgba(255, 166, 0, 0.125);
-    position: relative;
-    width: 70%;
-    margin: auto;
-    border:2px solid orange;
-    border-radius: 5px;
-    text-align: center;
-    padding: 15px;
-    color: orange;
-    cursor: default;
-}
-
-#popup a:hover{
-    text-decoration: underline;
 }
 
 .aide_pogramme {
@@ -715,13 +698,10 @@ background: linear-gradient(60deg, #02AAB0,#00CDAC);
 
 .liste__formation {
     background: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: 1rem;
     transition: all 0.5s ease;
     border-radius: 5px;
-}
-.liste__formation__item:hover .liste__formation {
-    transform: scale(1.5s) !important;
 }
 .liste__formation .liste__formation__item .acf-nom-module{
     color: #7635dc;
@@ -744,7 +724,7 @@ background: linear-gradient(60deg, #02AAB0,#00CDAC);
 }
 
 .liste__formation__item3 .bx {
-    color: #7635dc;
+    color: #8F8A06;
 }
 .detail_inter .date {
     color: #7635dc;

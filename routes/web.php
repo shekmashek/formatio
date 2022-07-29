@@ -1,14 +1,14 @@
 <?php
-
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
+use App\Http\Controllers\TestController;
 use App\PlanFormation;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use phpseclib3\Crypt\RC2;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+// use Illuminate\Support\Facades\Storage;
+// use phpseclib3\Crypt\RC2;
+// use SimpleSoftwareIO\QrCode\Facades\QrCode;
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -28,6 +28,7 @@ Route::get('contact', function () {
 Route::get('contacts', function () {
     return view('contacts');
 });
+
 //Rout send email
 Route::post('/envoyer', 'SendEmailController@sendMail')->name('contact');
 Route::post('/mail_demande_devis', 'Send_devis_mail@mail_demande_devis')->name('mail_demande_devis');
@@ -146,6 +147,8 @@ Route::get('plus_avis_mod_etp','ProjetControlleur@plus_avis_mod_etp')->name('plu
 Route::get('select_par_module_etp/{id}', 'ProjetControlleur@affichageParModule')->name('select_par_module_etp');
 Route::get('affichage_formation_etp/{id}', 'ProjetControlleur@affichage_formation_etp')->name('affichage_formation_etp');
 Route::get('destroy_module_etp','ProjetControlleur@destroy_module_etp')->name('destroy_module_etp');
+Route::get('plus_avis_module_etp','ProjetControlleur@plus_avis_module_etp')->name('plus_avis_module_etp');
+
 
 
 //route groupe
@@ -155,13 +158,13 @@ Route::resource('groupe', 'GroupeController')->except([
 Route::get('liste_groupe', 'GroupeController@index')->name('liste_groupe');
 // Route::get('nouveau_groupe','GroupeController@create')->name('nouveau_groupe');
 // Route::get('nouveau_groupe/{idProjet}','GroupeController@create')->name('nouveau_groupe');
-Route::get('nouveau_groupe/{type_formation}','GroupeController@create')->name('nouveau_groupe');
-Route::get('nouveau_groupe_inter/{type_formation}','GroupeController@createInter')->name('nouveau_groupe_inter');
-Route::get('edit_groupe','GroupeController@edit')->name('edit_groupe');
-Route::get('destroy_groupe','GroupeController@destroy')->name('destroy_groupe');
-Route::post('update_groupe/{idGroupe}','GroupeController@update')->name('update_groupe');
-Route::post('nouveau_session_inter','GroupeController@storeInter')->name('nouveau_session_inter');
-Route::get('session_inter/{id?}','GroupeController@sessionInter')->name('session_inter');
+// Route::get('nouveau_groupe/{type_formation}','GroupeController@create')->name('nouveau_groupe');
+// Route::get('nouveau_groupe_inter/{type_formation}','GroupeController@createInter')->name('nouveau_groupe_inter');
+// Route::get('edit_groupe','GroupeController@edit')->name('edit_groupe');
+// Route::get('destroy_groupe','GroupeController@destroy')->name('destroy_groupe');
+// Route::post('update_groupe/{idGroupe}','GroupeController@update')->name('update_groupe');
+// Route::post('nouveau_session_inter','GroupeController@storeInter')->name('nouveau_session_inter');
+// Route::get('session_inter/{id?}','GroupeController@sessionInter')->name('session_inter');
 Route::get('nouveau_groupe/{type_formation}', 'GroupeController@create')->name('nouveau_groupe');
 Route::get('nouveau_groupe_inter/{type_formation}', 'GroupeController@createInter')->name('nouveau_groupe_inter');
 Route::get('edit_groupe', 'GroupeController@edit')->name('edit_groupe');
@@ -260,7 +263,7 @@ Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur'
 //route formateur profil
 Route::get('/profile_formateur/{id?}', 'ProfController@profile_formateur')->name('profile_formateur');
 Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
-    Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
+Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 });
 Route::get('/accueilFormateur', 'ProfController@accueil')->name('accueilFormateur');
 //Route update par champs prof
@@ -828,7 +831,21 @@ Route::post('/creationDemande','PlanFormationController@creation')->name('plan.c
 Route::get('/getanneP','PlanFormationController@getplan')->name('getanneP');
 Route::get('/countPlan','PlanFormationController@countplan')->name('countPlan');
 Route::get('/exportPD/{id}','PlanFormationController@besoin_PD')->name('besoin.PDF');
-Route::get('/delete/{id}','PlanformationController@delete')->name('besoin.delete');
+Route::get('/delete/{id}','PlanFormationController@delete')->name('besoin.delete');
+Route::get('/ArbitragePlan/{id}','PlanFormationController@arbitrage')->name('besoin.arbitrage');
+Route::post('/arbitrageP','PlanFormationController@modifA')->name('besoin.modifA');
+Route::post('/delarbitrage','PlanFormationController@delarbitrage');
+Route::post('/budgetPlan','PlanFormationController@budget');
+Route::post('/budgetPlanMod','PlanFormationController@budgetMod');
+Route::post('/ajoutRH','PlanFormationController@ajoutRH')->name('besoin.ajoutRH');
+Route::post('/budgetthematique','PlanFormationController@ajoutThematique');
+Route::post('/Modthematique','PlanFormationController@modthematique');
+Route::get('/getEmployer','PlanFormationController@getemployer');
+Route::post('/modcout','PlanFormationController@modcout');
+Route::get('/cloturePlan/{id}','PlanFormationController@cloture')->name('plan.cloture');
+Route::get('/besoin_valide_pdf/{id}','PlanFormationController@planPDF')->name('plan.besoinPDFV');
+Route::get('/plan_departement/{id}','PlanFormationController@plandepartement')->name('plan.besoin_departement_PDF');
+Route::get('/plan_module_PDF/{id}','PlanFormationController@planmodule')->name('plan.besoin_module_PDF');
 /////////////////fin modification Mahafaly //////////////////////////////
 
 //ajouter nouveau plan
@@ -973,6 +990,7 @@ Route::post('create_cfp_etp', 'CollaborationController@create_cfp_etp')->name('c
 Route::post('create_etp_cfp', 'CollaborationController@create_etp_cfp')->name('create_etp_cfp');
 Route::post('create_formateur_cfp', 'CollaborationController@create_formateur_cfp')->name('create_formateur_cfp');
 Route::post('create_cfp_formateur', 'CollaborationController@create_cfp_formateur')->name('create_cfp_formateur');
+Route::post('collaboration_entre_organisme', 'CollaborationController@collaboration_organisme')->name('collaboration_entre_organisme');
 
 
 Route::post('mettre_fin_cfp_etp', 'CollaborationController@mettre_fin_cfp_etp')->name('mettre_fin_cfp_etp');
@@ -985,18 +1003,19 @@ Route::post('mettre_fin_cfp_formateur', 'CollaborationController@mettre_fin_cfp_
 // Route::get('delete_formateur_cfp','CollaborationController@delete_formateur_cfp')->name('delete_formateur_cfp');
 // Route::get('delete_cfp_formateur','CollaborationController@delete_cfp_formateur')->name('delete_cfp_formateur');
 
-Route::get('annulation_cfp_etp/{id}', 'CollaborationController@annulation_invitation_cfp_etp')->name('annulation_cfp_etp');
+Route::get('annulation_cfp_etp/{id?}', 'CollaborationController@annulation_invitation_cfp_etp')->name('annulation_cfp_etp');
+// Route::get('suppresion_invite_cfp_etp/{id}', 'CollaborationController@suppresion_invite_cfp_etp')->name('suppresion_invite_cfp_etp');
 
 Route::get('annulation_cfp_etp_notif', 'CollaborationController@refuser')->name('annulation_cfp_etp_notif');
-Route::get('annulation_etp_cfp/{id}', 'CollaborationController@annulation_invitation_etp_cfp')->name('annulation_etp_cfp');
+Route::get('annulation_etp_cfp/{id?}', 'CollaborationController@annulation_invitation_etp_cfp')->name('annulation_etp_cfp');
 Route::get('annulation_formateur_cfp/{id}', 'CollaborationController@annulation_invitation_formateur_cfp')->name('annulation_formateur_cfp');
 Route::get('annulation_cfp_formateur/{id}', 'CollaborationController@annulation_invitation_cfp_formateur')->name('annulation_cfp_formateur');
 
-Route::get('accept_cfp_etp/{id}', 'CollaborationController@accept_invitation_cfp_etp')->name('accept_cfp_etp');
+Route::get('accept_cfp_etp/{id?}', 'CollaborationController@accept_invitation_cfp_etp')->name('accept_cfp_etp');
 
 
 Route::get('accept_invitation_cfp_etp_notif', 'CollaborationController@accept_invitation_cfp_etp_notif')->name('accept_invitation_cfp_etp_notif');
-Route::get('accept_etp_cfp/{id}', 'CollaborationController@accept_invitation_etp_cfp')->name('accept_etp_cfp');
+Route::get('accept_etp_cfp/{id?}', 'CollaborationController@accept_invitation_etp_cfp')->name('accept_etp_cfp');
 Route::get('accept_formateur_cfp/{id}', 'CollaborationController@accept_invitation_formateur_cfp')->name('accept_formateur_cfp');
 Route::get('accept_cfp_formateur/{id}', 'CollaborationController@accept_invitation_cfp_formateur')->name('accept_cfp_formateur');
 
@@ -1572,6 +1591,17 @@ Route::get('/teste', 'PlanFormationController@teste');
 
 Route::get('/valideStatut/{id}','PlanFormationController@valideStatut')->name('valideStatut');
 Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('refuseSatut');
+Route::get('/valideStatutstg/{id}','PlanFormationController@valideStatutstg')->name('valideStatutstg');
+Route::get('/refuseSatutstg/{id}','PlanFormationController@refuseSatutstg')->name('refuseSatutstg');
+Route::get('/listes_demandes_stagiaires','PlanFormationController@listes_demandes_stagiaires')->name('listes_demandes_stagiaires');
+Route::get('/envoye_autre_demande/{anneePlan_id}','PlanFormationController@envoye_demande_stg')->name('envoye_autre_demande');
+Route::get('/modifie_demande_stagiaire/{id}','PlanFormationController@modif_demande_stagiaire')->name('modifDemandeStagiaire');
+Route::post('/update_demande_stagiaire/{id}','PlanFormationController@update_demande_stg')->name('update_demande_stg');
+Route::get('/get_email_employe','PlanFormationController@getEmailEmploye')->name('getEmailEmploye');
+Route::post('/enregistrer_demande_stagiaire/{planAn_id}','PlanFormationController@enregistrer_demande_stagiaire')->name('enregistrer_demande_stagiaire');
+Route::post('/send_email_collecte','PlanFormationController@sendEmail')->name('send_email_collecte');
+
+
 
 
 
@@ -1606,3 +1636,13 @@ Route::get('parametrage_salle_etp','SalleFormationEtpController@index')->name('p
 Route::post('enregistrer_salle_etp','SalleFormationEtpController@store')->name('enregistrer_salle_etp');
 Route::get('supprimer_salle_etp/{id?}','SalleFormationEtpController@destroy')->name('supprimer_salle_etp');
 Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->name('modifier_salle_etp');
+Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
+
+Route::get('rapport_presence/{groupe?}','SessionController@rapport_presence')->name('rapport_presence');
+Route::get('rapport_presence_interne/{groupe?}','ProjetInterneController@rapport_presence')->name('rapport_presence_interne');
+
+
+
+Route::get('invitation_ajouter_employer/{groupe?}/{employe?}','SessionController@invitation_ajouter_employer')->name('invitation_ajouter_employer');
+//route multilangage
+Route::get('locale/{langue}', 'LanguageController@langChange')->name('locale');

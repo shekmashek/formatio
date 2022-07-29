@@ -297,13 +297,19 @@ class ResponsableController extends Controller
                 $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
 
                 $projets_counts = $fonct->findWhere("groupe_entreprises",["entreprise_id"],[$refs->entreprise_id]);
-                $cfp_counts = $fonct->findWhere("demmande_etp_cfp",["demmandeur_etp_id","activiter"],[$refs->entreprise_id,1]);
+                $projet_interne = $fonct->findWhere("projets_interne",["entreprise_id"],[$refs->entreprise_id]);
+
+                $total = count($projets_counts) + count($projet_interne);
+
+                $cfp_counts = $fonct->findWhere("collaboration_etp_cfp",["etp_id","statut"],[$refs->entreprise_id,2]);
+
                 $modulesInternes_counts = $fonct->findWhere("modules_interne",["etp_id"],[$refs->entreprise_id]);
+                
                 $projetIntra_counts = DB::select('select grp.id from groupes as grp join groupe_entreprises as grp_etp on grp.id = grp_etp.groupe_id join projets as prj on prj.id = grp.projet_id where grp_etp.entreprise_id = ? and prj.type_formation_id = ?',[$refs->entreprise_id, 1]);
                 $projetInter_counts = DB::select('select grp.id from groupes as grp join groupe_entreprises as grp_etp on grp.id = grp_etp.groupe_id join projets as prj on prj.id = grp.projet_id where grp_etp.entreprise_id = ? and prj.type_formation_id = ?',[$refs->entreprise_id, 2]);
                 $stagiaires_counts = $fonct->findWhere("stagiaires",["entreprise_id"],[$refs->entreprise_id]);
                 $chef_departements_counts = $fonct->findWhere("chef_departements",["entreprise_id"],[$refs->entreprise_id]);
-            return view('admin.responsable.profilResponsables', compact('refs','entreprise','projets_counts','cfp_counts','modulesInternes_counts','projetInter_counts','projetIntra_counts','stagiaires_counts','chef_departements_counts'));
+            return view('admin.responsable.profilResponsables', compact('projet_interne','total','refs','entreprise','projets_counts','cfp_counts','modulesInternes_counts','projetInter_counts','projetIntra_counts','stagiaires_counts','chef_departements_counts'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 
@@ -684,9 +690,7 @@ class ResponsableController extends Controller
     public function update(Request $request, $id)
     {
 
-
-
-            $fonct = new FonctionGenerique();
+        $fonct = new FonctionGenerique();
 
             // $resp_etp = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
 

@@ -1,13 +1,6 @@
 <?php
 
-/**
- * This file is part of Collision.
- *
- * (c) Nuno Maduro <enunomaduro@gmail.com>
- *
- *  For the full copyright and license information, please view the LICENSE
- *  file that was distributed with this source code.
- */
+declare(strict_types=1);
 
 namespace NunoMaduro\Collision;
 
@@ -17,11 +10,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Whoops\Handler\Handler as AbstractHandler;
 
 /**
- * This is an Collision Handler implementation.
+ * @internal
  *
- * @author Nuno Maduro <enunomaduro@gmail.com>
+ * @see \Tests\Unit\HandlerTest
  */
-class Handler extends AbstractHandler implements HandlerContract
+final class Handler extends AbstractHandler implements HandlerContract
 {
     /**
      * Holds an instance of the writer.
@@ -39,7 +32,7 @@ class Handler extends AbstractHandler implements HandlerContract
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle()
     {
@@ -49,7 +42,7 @@ class Handler extends AbstractHandler implements HandlerContract
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function setOutput(OutputInterface $output): HandlerContract
     {
@@ -59,7 +52,7 @@ class Handler extends AbstractHandler implements HandlerContract
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getWriter(): WriterContract
     {

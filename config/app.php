@@ -1,7 +1,8 @@
 <?php
 
-return [
 
+return [
+    // 'role_id' => DB::select('select role_id from role_users where  user_id = ?  and activiter=true', [Auth::id()]),
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -67,7 +68,6 @@ return [
     |
     */
 
-    // 'timezone' => 'UTC',
     'timezone' => 'Africa/Nairobi',
 
     /*
@@ -144,6 +144,7 @@ return [
         App\Providers\GoogleDriveServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
@@ -214,6 +215,7 @@ return [
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
+        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
@@ -255,6 +257,5 @@ return [
 
         //'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
     ],
-
 
 ];

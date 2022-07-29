@@ -5,7 +5,6 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/annuaire.css')}}">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 
 <div class="container-fluid pt-4">
     <div class="row fix_top_row">
@@ -121,7 +120,6 @@
                 </a>
                 @endif
 
-                <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
             </div>
         </div>
     </div>
@@ -146,7 +144,7 @@
                             </div>
                             <div class="col-3 ">
                                 <div class="row">
-                                <h4><a href="{{route('detail_cfp',$cfp->id)}}">{{$cfp->nom}}</a>
+                                <h4><a href="{{route('detail_cfp',$cfp->id)}}" class="titre_cfp">{{$cfp->nom}}</a>
                                     @foreach ($type_abonnement as $type)
                                         @if($cfp->id == $type->cfp_id)
                                             @if($type->type_abonnement_id == 1)
@@ -189,7 +187,7 @@
                                             </div>
                                             <div class="rating-box ms-2">
                                                 @if($avis->pourcentage != null)
-                                                    <span class="avis_verif"><span class="">{{ $avis->pourcentage }} / 5</span> ({{$avis->nb_avis}} avis)</span>
+                                                    <span class=""><span class="">{{ $avis->pourcentage }} / 5</span> ({{$avis->nb_avis}} avis)</span>
                                                 @else
                                                     <span class="">0 sur 5 (0 avis)</span>
                                                 @endif
@@ -207,12 +205,12 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="col d-flex flex-row mb-2">
-                                    <span class="btn_fermer me-3" role="button"><a href="#"><i class="bx bx-mail-send me-2"></i>Email</a></span>
-                                    <span class="btn_fermer me-3 contact_action" role="button" data-bs-toggle="collapse" href="#contact_{{ $cfp->id }}" aria-expanded="false" aria-controls="collapseprojet"><i class="bx bx-phone me-2"></i>Contact</span>
-                                    <span class="btn_fermer me-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank"><i class="bx bx-globe me-2"></i>Site
+                                <div class="col d-flex flex-row mb-3">
+                                    <span class="btn_fermer me-3" role="button"><a href="#">Email</a></span>
+                                    <span class="btn_fermer me-3 contact_action" role="button" data-bs-toggle="collapse" href="#contact_{{ $cfp->id }}" aria-expanded="false" aria-controls="collapseprojet">Contact</span>
+                                    <span class="btn_fermer me-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank">Site
                                             Web</a></span>
-                                    <span class="btn_fermer me-5" role="button"><a href="{{route('detail_cfp',$cfp->id)}}"><i class="bx bx-info-circle me-2"></i>Formations</a></span>
+                                    <span class="btn_fermer me-5" role="button"><a href="{{route('detail_cfp',$cfp->id)}}">Formations</a></span>
 
                                 </div>
                                 <div class="contact collapse" id="contact_{{ $cfp->id }}">
@@ -226,7 +224,7 @@
                                     </div>
                                 </div>
                                 <p class="mt-1 "><i class="bx bxs-map"></i>
-                                    @if ($cfp->adresse_lot=!null)
+                                    @if ($cfp->adresse_lot != null)
                                     {{$cfp->adresse_lot}}
                                     @else
                                     ------
@@ -259,9 +257,8 @@
                             </div>
                             <div class="col-1">
                                 <span class="badges">
-                                    {{-- {{dd($collaboration)}} --}}
                                     @foreach ($collaboration as $collab)
-                                        @if($collab->inviter_cfp_id == $cfp->id && $collab->activiter == 1)
+                                        @if($collab->statut == 2)
                                             <div class="main-wrapper">
                                                 <div class="badge green">
                                                     <div class="circle"> <i class="bx bxs-badge-check"></i></div>
@@ -460,7 +457,7 @@
                             html +=                     '</div>';
                             html +=                     '<div class="rating-box ms-2">';
                                                             if (userData['avis'][k]['pourcentage'] != null) {
-                            html +=                             '<span class="avis_verif"><span class="">'+ userData['avis'][k]['pourcentage']+' / 5</span> ('+ userData['avis'][k]['nb_avis']+' avis)</span>';
+                            html +=                             '<span class=""><span class="">'+ userData['avis'][k]['pourcentage']+' / 5</span> ('+ userData['avis'][k]['nb_avis']+' avis)</span>';
                                                             }else{
                             html +=                             '<span class="">0 sur 5 (0 avis)</span>';
                                                             }
@@ -479,16 +476,16 @@
                             html +=     '</div>';
 
                             html +=     '<div class="col-6">';
-                            html +=         '<div class="col d-flex flex-row mb-2">';
+                            html +=         '<div class="col d-flex flex-row mb-3">';
                             html +=             '<span class="btn_fermer" role="button">';
-                            html +=                 '<a href="#"><i class="bx bx-mail-send me-2"></i>Email</a>';
+                            html +=                 '<a href="#">Email</a>';
                             html +=             '</span>';
-                            html +=             '<span class="btn_fermer ms-3 contact_action" role="button" data-bs-toggle="collapse"href="#contact_' + userData['cfp'][i]['id'] + '" aria-expanded="false" aria-controls="collapseprojet"><i class="bx bx-phone me-2"></i>Contact</span>';
+                            html +=             '<span class="btn_fermer ms-3 contact_action" role="button" data-bs-toggle="collapse"href="#contact_' + userData['cfp'][i]['id'] + '" aria-expanded="false" aria-controls="collapseprojet">Contact</span>';
                             html +=             '<span class="btn_fermer ms-3" role="button">';
-                            html +=                 '<a href="https://' + userData['cfp'][i]['site_web'] + '" target="_blank"><i class="bx bx-globe me-2"></i>Site Web</a>';
+                            html +=                 '<a href="https://' + userData['cfp'][i]['site_web'] + '" target="_blank">Site Web</a>';
                             html +=             '</span>';
                             html +=             '<span class="btn_fermer ms-3" role="button">';
-                            html +=                 '<a href="' + url_detail_cfp + '"><i class="bx bx-info-circle me-2"></i>Plus d\'infos</a>';
+                            html +=                 '<a href="' + url_detail_cfp + '">Plus d\'infos</a>';
                             html +=             '</span>';
                             html +=         '</div>';
                             html +=         '<div class="contact collapse" id="contact_' + userData['cfp'][i]['id'] + '">';
@@ -502,8 +499,8 @@
                             html +=             '</div>';
                             html +=         '</div>';
 
-                            html +=         '<p class="mt-1 adresse"><i class="bx bxs-map"></i>';
-                                                if (userData['cfp'][i]['adresse_lot'] = !null) {
+                            html +=         '<p class="mt-1 "><i class="bx bxs-map"></i>';
+                                                if (userData['cfp'][i]['adresse_lot'] != null) {
                             html +=                 '' + userData['cfp'][i]['adresse_lot'] + '';
                                                 } else {
                             html +=                 '------';

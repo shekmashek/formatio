@@ -3,11 +3,50 @@
     <p class="text_header m-0 mt-1">Nouveau Projet Inter</p>
 @endsection
 @section('content')
+<style>
+    .instruction{
+    background: rgba(128, 128, 128, 0.193);
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: .8rem 1rem;
+    font-size: 0.850rem;
+    margin-left: 2px;
+}
+</style>
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
-<div class="container pt-5">
+{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
+<div class="container-fluid">
     {{-- <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5> --}}
+    <div class="row instruction mb-3">
+        <div class="col-11">
+            <p class="mb-0 ">Pour créer un projet inter, vous devez choisir le module de formation et cliquer sur ' + Session inter' pour compléter les informations requises pour le projet.</p>
+        </div>
+        <div class="col-1 text-end">
+            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();" style="cursor: pointer;"></i>
+        </div>
+    </div>
     <div class="m-4">
-        <h6>Listes des formations disponibles</h6>
+        <div class="row mb-4">
+            <div class="col-6">
+                <h5>Nouveau Projet Inter</h5>
+            </div>
+            <div class="col-6 text-end">
+                <div>
+                    <a class="new_list_nouvelle " href="{{url()->previous()}}">
+                    <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
+                </a>
+                </div>
+            </div>
+        </div>
+        <div class="row instruction mb-3">
+            <div class="col-11">
+                <p class="mb-0 text-center">Pour créer un projet inter, vous devez choisir le module de formation et cliquer sur <a class="btn_nouveau position_button" role="button"><i class="bx bx-plus-medical"></i>Session Inter</a> pour compléter les informations requises pour le projet 😊!</p>
+            </div>
+            <div class="col-1 text-end">
+                <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();"></i>
+            </div>
+        </div>
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
 
             <li class="nav-item">
@@ -16,7 +55,7 @@
             </li>
             {{-- indice 0 par defaut active --}}
             @foreach ($formations as $frm)
-            @if($formations[0]->id!=$frm->id)
+            @if($formations[0]->id != $frm->id)
             <li class="nav-item">
                 <a href="#formation_{{$frm->id}}" class="nav-link" data-bs-toggle="tab">{{$frm->nom_formation}}</a>
             </li>
@@ -26,72 +65,149 @@
 
         <div class="tab-content">
             {{-- indice 0 par defaut active --}}
-            @foreach ($modules as $mod1)
-            @if ($formations[0]->id == $mod1->formation_id)
+            @foreach ($formations as $frm)
+            @if ($formations[0]->id == $frm->id)
             <div class="tab-pane fade show active " id="formation_{{$formations[0]->id}}">
-                <div class="container d-flex flex-wrap">
-                    @foreach ($modules as $mod1)
-                    @if($mod1->formation_id === $formations[0]->id)
-                    <div class="row detail__formation__result new_card_module bg-light mb-3" id="border_premier">
-                        <div class="detail__formation__result__content">
-                            <div class="detail__formation__result__item ">
-                                <h4 class="mt-3"><span id="preview_categ"><span
-                                            class=" acf-categorie">{{$mod1->nom_formation}}</span></span><span>&nbsp;-&nbsp;</span>
-                                    <span></span>
-                                    <span id="preview_module"><span
-                                            class="acf-nom_module">{{$mod1->nom_module}}</span></span>
-                                </h4>
-                                <p id="preview_descript"><span class="acf-description"
-                                        style="font-size: 0.850rem">{{$mod1->description}}</span></p>
-                                <div class="d-flex ">
-                                    <div class="col-6 detail__formation__result__avis">
-                                        <div style="--note: 4.5;">
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star-half'></i>
+                <div class="container-fluid pt-3">
+                    @foreach ($modules as $info)
+                    @if($info->formation_id == $formations[0]->id)
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="row liste__formation justify-content-space-between mb-4 ribbons">
+                                <div class="col-1 d-flex flex-column">
+                                    <a href="{{route('detail_cfp',$info->cfp_id)}}" class="justify-content-center text-center">
+                                        <img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
+                                    </a>
+                                </div>
+                                @if($info->jours_restant > 0)
+                                <div class="col-2 liste__formation__content">
+                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                        <div class="liste__formation__item">
+                                            <span class="acf-nom-module">{{$info->nom_module}}</span>
+                                            <p><span class="acf-description">{{$info->nom_formation}}</span></p>
                                         </div>
-                                        <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                    </a>
+                                </div>
+                                @else
+                                <div class="col-3 liste__formation__content">
+                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                        <div class="liste__formation__item">
+                                            <span class="acf-nom-module">{{$info->nom_module}}</span>
+                                            <p><span class="acf-description">{{$info->nom_formation}}</span></p>
+                                            {{-- <p>Réference : <span>{{$info->reference}}</span></p> --}}
+
+                                        </div>
+                                    </a>
+                                </div>
+                                @endif
+                                @if($info->jours_restant > 0)
+                                <div class="col-4">
+                                    <div class="liste__formation__avis mb-3 d-flex flex-row justify-content-between">
+                                        <div>
+                                            <div class="Stars" style="--note: {{ $info->pourcentage }};">
+                                            </div>
+                                            <span class="me-3">{{ $info->pourcentage }}/5
+                                                @if($info->total_avis != null)
+                                                ({{$info->total_avis}} avis)
+                                                @else
+                                                (0 avis)
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span>Réf : {{$info->reference}}</span>
+                                        </div>
+
                                     </div>
-                                    <div class="col-6 ms-3 w-100">
-                                        <p class="m-0">
-                                            <span class="new_module_prix">
-                                                @php
-                                                echo number_format($mod1->prix, 0, ' ', ' ');
-                                                @endphp
-                                                &nbsp;AR</span>&nbsp;HT
-                                        </p>
-                                        @if($mod1->min_pers != 0 && $mod1->max_pers != 0)
-                                        <span>{{$mod1->min_pers}}&nbsp;-&nbsp;{{$mod1->max_pers}}&nbsp;personne</span>
+                                    <div class="liste__formation__item3 description d-flex flex-row">
+                                        <div class="me-2"><i class="bx bx-alarm bx_icon"></i>
+                                            <span>
+                                                @isset($info->duree_jour)
+                                                {{$info->duree_jour}} jours
+                                                @endisset
+                                            </span>
+                                            <span>
+                                                @isset($info->duree)
+                                                /{{$info->duree}} h
+                                                @endisset
+                                            </span> </p>
+                                        </div>
+                                        <div class="me-2"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
+                                        </div>
+                                        <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
+                                        </div>
+                                        <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                                        </div>
+                                        @if($info->min_pers != 0 && $info->max_pers != 0)
+                                            <div>
+                                                <span class="">&nbsp;{{$info->min_pers}}&nbsp;à&nbsp;{{$info->max_pers}}&nbsp;pax</span>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                                @else
+                                <div class="col-4">
+                                    <div class="liste__formation__avis mb-3 d-flex flex-row justify-content-between">
+                                        <div>
+                                            <div class="Stars" style="--note: {{ $info->pourcentage }};">
+                                            </div>
+                                            <span class="me-3">{{ $info->pourcentage }}/5
+                                                @if($info->total_avis != null)
+                                                ({{$info->total_avis}} avis)
+                                                @else
+                                                (0 avis)
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span>Réf : {{$info->reference}}</span>
+                                        </div>
 
-                        <div class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
-                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                    class="bx bxs-alarm bx_icon"
-                                    style="color: #7635dc !important; font-size: 0.800rem"></i>
-                                <span id="preview_jour"><span class="acf-jour">
-                                        {{$mod1->duree_jour}}
-                                    </span>j</span>
-                                <span id="preview_heur">/<span class="acf-heur">
-                                        {{$mod1->duree}}
-                                    </span>h</span>
+                                    </div>
+                                    <div class="liste__formation__item3 description d-flex flex-row">
+                                        <div class="me-2"><i class="bx bx-alarm bx_icon"></i>
+                                            <span>
+                                                @isset($info->duree_jour)
+                                                {{$info->duree_jour}} jours
+                                                @endisset
+                                            </span>
+                                            <span>
+                                                @isset($info->duree)
+                                                /{{$info->duree}} h
+                                                @endisset
+                                            </span> </p>
+                                        </div>
+                                        <div class="me-2"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
+                                        </div>
+                                        <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
+                                        </div>
+                                        <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                                        </div>
+                                        @if($info->min_pers != 0 && $info->max_pers != 0)
+                                            <div>
+                                                <span class="">&nbsp;{{$info->min_pers}}&nbsp;à&nbsp;{{$info->max_pers}}&nbsp;pax</span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="col-2 text-end">
+                                    <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    @if($info->prix_groupe != null)
+                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($info->max_pers != 0)/ {{$info->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    @endif
+                                </div>
+                                <div class="col">
+                                    <div class="new_btn_programme text-center">
+                                        <button type="button" class="btn_nouveau p-1" id="{{$info->module_id}}"><i class="bx bx-plus-medical me-1"></i><a href="{{route('session_inter', $info->module_id)}}">Session Inter</a></button>
+                                    </div>
+                                </div>
+                                @if($info->jours_restant > 0)
+                                <div class="col-1">
+                                    <span class="ribbon2"><span>Nouveau<br></span></span>
+                                </div>
+                                @endif
                             </div>
-                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                    class="bx bxs-devices bx_icon" style="color: #7635dc !important;"></i>&nbsp;<span
-                                    class="acf-modalite">{{$mod1->modalite_formation}}</span>
-                            </div>
-                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                <i class='bx bx-equalizer bx_icon' style="color: #7635dc !important;"></i>&nbsp;<span
-                                    class="acf-niveau">{{$mod1->niveau}}</span>
-                            </div>
-                        </div>
-                        <div class="new_btn_programme text-center">
-                            <button type="button" class="btn btn_competence non_pub" ><a href="{{route('session_inter', $mod1->module_id)}}">Créer une session inter</a></button>
                         </div>
                     </div>
                     @endif
@@ -104,71 +220,147 @@
             @foreach ($formations as $frm)
             @if($formations[0]->id != $frm->id)
             <div class="tab-pane fade " id="formation_{{$frm->id}}">
-                <div class="container d-flex flex-wrap">
-                    @foreach ($modules as $mod) @if($mod->formation_id === $frm->id)
-                    <div class="row detail__formation__result new_card_module bg-light mb-3" id="border_premier">
-                        <div class=" detail__formation__result__content">
-                            <div class="detail__formation__result__item ">
-                                <h4 class="mt-3"><span id="preview_categ"><span
-                                            class=" acf-categorie">{{$mod->nom_formation}}</span></span><span>&nbsp;-&nbsp;</span>
-                                    <span></span>
-                                    <span id="preview_module"><span
-                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
-                                </h4>
-                                <p id="preview_descript"><span class="acf-description"
-                                        style="font-size: 0.850rem">{{$mod->description}}</span></p>
-                                <div class="d-flex ">
-                                    <div class="col-6 detail__formation__result__avis">
-                                        <div style="--note: 4.5;">
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star-half'></i>
+                <div class="container-fluid">
+                    @foreach ($modules as $info)
+                    @if($info->formation_id == $frm->id)
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="row liste__formation justify-content-space-between mb-4 ribbons">
+                                <div class="col-1 d-flex flex-column">
+                                    <a href="{{route('detail_cfp',$info->cfp_id)}}" class="justify-content-center text-center">
+                                        <img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
+                                    </a>
+                                </div>
+                                @if($info->jours_restant > 0)
+                                <div class="col-2 liste__formation__content">
+                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                        <div class="liste__formation__item">
+                                            <span class="acf-nom-module">{{$info->nom_module}}</span>
+                                            <p><span class="acf-description">{{$info->nom_formation}}</span></p>
+                                            {{-- <p>Réference : <span>{{$info->reference}}</span></p> --}}
                                         </div>
-                                        <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                    </a>
+                                </div>
+                                @else
+                                <div class="col-3 liste__formation__content">
+                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                        <div class="liste__formation__item">
+                                            <span class="acf-nom-module">{{$info->nom_module}}</span>
+                                            <p><span class="acf-description">{{$info->nom_formation}}</span></p>
+                                            {{-- <p>Réference : <span>{{$info->reference}}</span></p> --}}
+
+                                        </div>
+                                    </a>
+                                </div>
+                                @endif
+                                @if($info->jours_restant > 0)
+                                <div class="col-4">
+                                    <div class="liste__formation__avis mb-3 d-flex flex-row justify-content-between">
+                                        <div>
+                                            <div class="Stars" style="--note: {{ $info->pourcentage }};">
+                                            </div>
+                                            <span class="me-3">{{ $info->pourcentage }}/5
+                                                @if($info->total_avis != null)
+                                                ({{$info->total_avis}} avis)
+                                                @else
+                                                (0 avis)
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span>Réf : {{$info->reference}}</span>
+                                        </div>
+
                                     </div>
-                                    <div class="col-6 ms-3 w-100">
-                                        <p class="m-0">
-                                            <span class="new_module_prix"
-                                                style="color: #7635dc !important; font-weight:500 !important;">
-                                                @php
-                                                echo number_format($mod->prix, 0, ' ', ' ');
-                                                @endphp
-                                                &nbsp;AR</span>&nbsp;HT
-                                        </p>
-                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                        <span>{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                    <div class="liste__formation__item3 description d-flex flex-row">
+                                        <div class="me-2"><i class="bx bx-alarm bx_icon"></i>
+                                            <span>
+                                                @isset($info->duree_jour)
+                                                {{$info->duree_jour}} jours
+                                                @endisset
+                                            </span>
+                                            <span>
+                                                @isset($info->duree)
+                                                /{{$info->duree}} h
+                                                @endisset
+                                            </span> </p>
+                                        </div>
+                                        <div class="me-2"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
+                                        </div>
+                                        <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
+                                        </div>
+                                        <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                                        </div>
+                                        @if($info->min_pers != 0 && $info->max_pers != 0)
+                                            <div>
+                                                <span class="">&nbsp;{{$info->min_pers}}&nbsp;à&nbsp;{{$info->max_pers}}&nbsp;pax</span>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                                @else
+                                <div class="col-4">
+                                    <div class="liste__formation__avis mb-3 d-flex flex-row justify-content-between">
+                                        <div>
+                                            <div class="Stars" style="--note: {{ $info->pourcentage }};">
+                                            </div>
+                                            <span class="me-3">{{ $info->pourcentage }}/5
+                                                @if($info->total_avis != null)
+                                                ({{$info->total_avis}} avis)
+                                                @else
+                                                (0 avis)
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span>Réf : {{$info->reference}}</span>
+                                        </div>
 
-                        <div class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
-                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                    class="bx bxs-alarm bx_icon"
-                                    style="color: #7635dc !important; font-size: 0.800rem"></i>
-                                <span id="preview_jour"><span class="acf-jour">
-                                        {{$mod->duree_jour}}
-                                    </span>j</span>
-                                <span id="preview_heur">/<span class="acf-heur">
-                                        {{$mod->duree}}
-                                    </span>h</span>
+                                    </div>
+                                    <div class="liste__formation__item3 description d-flex flex-row">
+                                        <div class="me-2"><i class="bx bx-alarm bx_icon"></i>
+                                            <span>
+                                                @isset($info->duree_jour)
+                                                {{$info->duree_jour}} jours
+                                                @endisset
+                                            </span>
+                                            <span>
+                                                @isset($info->duree)
+                                                /{{$info->duree}} h
+                                                @endisset
+                                            </span> </p>
+                                        </div>
+                                        <div class="me-2"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
+                                        </div>
+                                        <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
+                                        </div>
+                                        <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                                        </div>
+                                        @if($info->min_pers != 0 && $info->max_pers != 0)
+                                            <div>
+                                                <span class="">&nbsp;{{$info->min_pers}}&nbsp;à&nbsp;{{$info->max_pers}}&nbsp;pax</span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="col-2 text-end">
+                                    <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    @if($info->prix_groupe != null)
+                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($info->max_pers != 0)/ {{$info->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    @endif
+                                </div>
+                                <div class="col">
+                                    <div class="new_btn_programme text-center">
+                                        <button type="button" class="btn_nouveau p-1" id="{{$info->module_id}}"><i class="bx bx-plus-medical me-1"></i><a href="{{route('session_inter', $info->module_id)}}">Session Inter</a></button>
+                                    </div>
+                                </div>
+                                @if($info->jours_restant > 0)
+                                <div class="col-1">
+                                    <span class="ribbon2"><span>Nouveau<br></span></span>
+                                </div>
+                                @endif
                             </div>
-                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                    class="bx bxs-devices bx_icon" style="color: #7635dc !important;"></i>&nbsp;<span
-                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
-                            </div>
-                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                <i class='bx bx-equalizer bx_icon' style="color: #7635dc !important;"></i>&nbsp;<span
-                                    class="acf-niveau">{{$mod->niveau}}</span>
-                            </div>
-
-                        </div>
-
-                        <div class="new_btn_programme text-center">
-                            <button type="button" class="btn btn_competence non_pub" id="{{$mod->module_id}}"><a href="{{route('session_inter', $mod->module_id)}}">Session Inter</a></button>
                         </div>
                     </div>
                     @endif
@@ -177,13 +369,15 @@
             </div>
             @endif
             @endforeach
-
-
         </div>
     </div>
 </div>
 <script src="{{asset('js/projet_inter_intra.js')}}"></script>
 <script>
+    function cacher_instruction() {
+        $(".instruction").hide();
+    }
+
     $(document).on('click', '#removeRow', function() {
         $(this).closest('#inputFormRow').remove();
     });
@@ -245,5 +439,9 @@
             }
         });
     });
+
+    function cacher_instruction() {
+        $(".instruction").hide();
+    }
 </script>
 @endsection

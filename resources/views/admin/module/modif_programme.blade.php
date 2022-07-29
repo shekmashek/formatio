@@ -57,7 +57,7 @@
             <div class="col-lg-6 col-md-6">
                 <div class="detail__formation__result__item2">
                     <a href="#">
-                        <h6 class="py-4 text-center text_black">Formation Proposée par&nbsp;<span>{{$res->nom}}</span>
+                        <h6 class="py-4 text-center text_black">Formation proposée par&nbsp;<span>{{$res->nom}}</span>
                         </h6>
                     </a>
                     <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid"
@@ -91,7 +91,7 @@
                     @endif
                 </div>
             </div>
-            <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between ">
+            <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between mt-2">
                 <div id="objectif"></div>
                 <div class="col background_contrast"><i class="bx bxs-alarm bx_icon"></i>
                     <span>
@@ -228,17 +228,14 @@
                         </div>
                         <br>
                         <div class="row detail__formation__item__left__accordion ">
-                            <div class="accordionWrapper">
+                            <div class="accordionWrapper" id="accordio_drag">
                                 <?php $i=0 ?>
                                 @foreach ($programmes as $prgc)
                                 <div class="accordionItem open" id="programme{{$prgc->id}}">
                                     <h6 class="accordionItemHeading py-2 ps-3 pe-3 justify-content-between d-flex flex-row">
-                                        <div class="pt-2">{{$i+1}} - {{$prgc->titre}}</div>
+                                        <div class="pt-2"> {{$prgc->titre}}</div>
                                         <div class="d-flex flex-row test_affichage">
-                                            <div role="button" data-bs-toggle="modal" class="ajouter_cours me-2" data-bs-target="#Modal_cours_{{$prgc->id}}" id="{{$prgc->id}}" title="ajouter une nouvelle point">
-                                                <i class='bx bx-plus-medical bx_ajouter'></i>
-                                            </div>
-                                            <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" id="{{$prgc->id}}" title="modifier le programme">
+                                            <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" data-bs-target="#Modal_{{$prgc->id}}"  id="{{$prgc->id}}" title="modifier le programme">
                                                 <i class='bx bxs-edit-alt bx_modifier'></i>
                                             </div>
                                             <div class="suppression_programme" title="Supprimer le programme" id="{{$prgc->id}}">
@@ -246,108 +243,41 @@
                                             </div>
                                         </div>
                                     </h6>
-                                    <div class="accordionItemContent">
+                                    <div class="accordionItemContent ">
                                         @foreach ($cours as $c)
                                         @if($c->programme_id == $prgc->id)
                                         <div id="cours{{$c->cours_id}}" class="ps-4 m-0 pb-3 pt-2 p-0 cours_hover d-flex flex-row justify-content-between">
                                             <div class="pt-2"><i class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}}</div>
-                                            <div class="me-2">
-                                                <span class="suppression mt-2" title="Supprimer le Cours" id="{{$c->cours_id}}">
-                                                    <i class='bx bx-trash bx_supprimer'></i>
-                                                </span>
-                                            </div>
+
                                         </div>
                                         @endif
                                         @endforeach
-
                                     </div>
-                                    {{-- data-target="#Modal_{{$prgc->id}}" --}}
                                 </div>
                                 <div>
-                                    <div class="modal fade" id="Modal_{{$prgc->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" role="dialog"
-                                        aria-labelledby="Modal{{$prgc->id}}">
+                                    <div class="modal fade" id="Modal_{{$prgc->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"
+                                        aria-labelledby="Modal_{{$prgc->id}}" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="ModalLabel">Modifier les Cours et le Programme</h5>
                                                 </div>
                                                 <div class="modal-body">
+                                                    <div class="mt-2 text-center">
+                                                        <span class="btn_nouveau text-center" onclick="Cours();" >
+                                                            <i class='bx bx-plus-medical me-1'></i>Ajouter un point
+                                                        </span>
+                                                    </div>
                                                     <form action="{{route('update_prog_cours')}}" method="POST"
                                                         class="form_modif">
                                                         @csrf
                                                         <div class="rowModifier"></div>
-                                                        {{-- <input type="hidden" value="{{$prgc->id}}" name="id_prog">
-                                                        <div class="form-row">
-                                                            <label for="" class="mb-2">Titre de Section</label>
-                                                            <input type="text" name="titre_prog"
-                                                                class="w-100  titre_{{$i}} input" value="{{$prgc->titre}}">
-                                                            <hr>
-                                                            <label for="" class="mb-2">Liste des Points en Cours</label>
-                                                            <div class="d-flex flex-column">
-                                                                <?php $j=0 ?>
-                                                                @foreach ($cours as $c)
-                                                                @if($c->programme_id == $prgc->id)
-                                                                <input type="text"
-                                                                    name="cours_{{$prgc->id}}_{{$c->cours_id}}"
-                                                                    class="w-100 cours_{{$j}} input mb-2"
-                                                                    value="{{$c->titre_cours}}" required>
-                                                                <input type="hidden"
-                                                                    name="id_cours_{{$prgc->id}}_{{$c->cours_id}}"
-                                                                    value="{{$c->cours_id}}">
-                                                                <?php $j++ ?>
-                                                                @endif
-                                                                @endforeach
-                                                            </div>
-                                                        </div> --}}
+                                                        <div class="newRowCours"></div>
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
-                                                    <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                                    <button type="button" class="btn btn_annuler remove_input" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                                 </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="modal fade" id="Modal_cours_{{$prgc->id}}" tabindex="-1" role="dialog"
-                                        aria-labelledby="Modal_cours_{{$prgc->id}}" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <form action="{{route('insertion_cours')}}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="id_prog" id="id" value="{{$prgc->id}}">
-                                                    <div class="modal-header">
-                                                        <h6>Ajouter des nouvelles Points dans&nbsp;{{$prgc->titre}}</h6>
-                                                    </div>
-                                                    <div class="modal-body mt-2 mb-2">
-                                                        <div class="container">
-                                                            <div class="row mb-5">
-                                                                <div class="mt-2 text-center">
-                                                                    <span class="btn_nouveau text-center" onclick="Cours();" >
-                                                                        <i class='bx bx-plus-medical me-1'></i>Ajouter un point
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="col-12">
-                                                                    <div class="form-group">
-                                                                        <div class="form-row">
-                                                                            <input type="text" name="cours[]" id="cours"
-                                                                                class="form-control input" placeholder="Nouveau Point" required>
-                                                                            <label for="cours"
-                                                                                class="form-control-placeholder">Nouveau Point </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="newRowCours"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_fermer" id="fermerCours" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
-                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -376,7 +306,7 @@
                     </div>
                     @if($liste_avis_count > 0)
                     <div class="col-12 mb-5">
-                        <div class="card p-2 pt-1">
+                        <div class="card p-2 pt-1 hr_last">
                             <div class="row detail__formation__programme__avis__rated d-flex">
                                 <div class="col-md-4 text-center d-flex flex-column">
                                     <div class="rating-box">
@@ -464,7 +394,7 @@
                             <div class="row">
                                 <div class="d-flex flex-row">
                                     <div class="col">
-                                        <h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }}.{{ $avis->prenom_stagiaire }}
+                                        <h5 class="mt-3 mb-0 nom_stagiare">{{ $avis->nom_stagiaire }}.{{ $avis->prenom_stagiaire }}
                                         </h5>
                                     </div>
                                     <div class="col">
@@ -486,6 +416,7 @@
                             <div class="row ms-1 mb-3">
                                 <p>{{ $avis->commentaire }}</p>
                             </div>
+                            <hr>
                             @endforeach
                             @if(count($liste_avis_count) >= 10)
                                 <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$infos[0]->module_id}}">voir tous les avis</a></div>
@@ -583,29 +514,14 @@
                     @endif
                 </div>
             </div>
-
             {{-- FIXME:mise en forme de design --}}
             <div class="col-lg-3 g-0 p-0 m-0 cacher_pdf">
-
                 @if($competences != null)
                 <div class="row g-0 competence_box mb-3 ">
-                    <h5 class="text-center py-2">Compétences à Acquérir</h5>
-                        {{-- @foreach ($competences as $comp)
-                        <div class="row text-start g-0 px-1" id="competence_{{$comp->id}}">
-                            <div class="col-1">
-                                <i class="bx bx-check check_comp"></i>&nbsp;
-                            </div>
-                            <div class="col-11 mb-3">
-                                <span class="text-capitalize">{{$comp->titre_competence}}</span>
-                            </div>
-                        </div>
-                        @endforeach --}}
+                    <h5 class="text-center py-2">Compétences à acquérir</h5>
                         <canvas id="marksChart" width="1000" height="800" class="justify-content-center"></canvas>
                         <div class="text-center mb-3">
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id}}" id="{{$id}}" onclick="competence();" title="ajouter une nouvelle competence">
-                                <i class='bx bx-plus-medical bx_ajouter'></i>
-                            </span>
-                            @if(count($competences) > 3)
+                            @if(count($competences) > 2)
                                 <span class=" ms-2 mb-2 mt-2 pb-2 .show_modal" data-bs-toggle="modal" data-bs-target="#Modal_{{$id}}" id="{{$id}}" title="modifier les competence" role="button">
                                     <i class='bx bxs-edit-alt bx_modifier'></i>
                                 </span>
@@ -613,65 +529,6 @@
                         </div>
                 </div>
                 @endif
-                <div>
-                    <div class="modal fade" id="ModalCompetence_{{$id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action="{{route('ajout_competence')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="id" id="id" value="{{$id}}">
-                                    <div class="modal-header">
-                                        <h6>Compétences a évaluer</h6>
-                                    </div>
-                                    <div class="modal-body mt-2 mb-2">
-                                        <div class="container">
-                                            {{-- <div class="row">
-                                                <div class="mt-2 text-center mb-5">
-                                                    <span id="addRow" class="btn_nouveau text-center " onclick="competence();" >
-                                                        <i class='bx bx-plus-medical me-1'></i>Ajouter une competence
-                                                    </span>
-
-                                                </div>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="col-8">
-                                                    <div class="form-group">
-                                                        <div class="form-row">
-                                                            <input type="text" name="titre_competence[]"
-                                                                id="titre_competence"
-                                                                class="form-control input" placeholder="Compétences"
-                                                                required>
-                                                            <label for="titre_competence"
-                                                                class="form-control-placeholder">Compétences</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="form-group ms-1">
-                                                        <div class="form-row">
-                                                            <input type="text" name="notes[]"
-                                                                id="notes" min="1" max="10"
-                                                                onfocus="(this.type='number')"
-                                                                class="form-control input" placeholder="Notes"
-                                                                required>
-                                                            <label for="notes"
-                                                                class="form-control-placeholder">Notes</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> --}}
-                                            <div class="newRowComp"></div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_fermer" id="fermerComp" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div>
                     <?php $i=0 ?>
                     <div class="modal fade" id="Modal_{{$id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -685,9 +542,14 @@
                                     </div>
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
+                                            <div class="text-center mb-3">
+                                                <span class="btn_nouveau ms-2 mb-2 mt-2 pb-2" id="{{$id}}" onclick="competence();" title="ajouter une nouvelle competence">
+                                                    <i class='bx bx-plus-medical me-2'></i>Ajouter competence
+                                                </span>
+                                            </div>
                                             @foreach ($competences as $comp)
                                             <div class="d-flex count_input" id="countt_{{$comp->id}}">
-                                                <div class="col-9">
+                                                <div class="col-8">
                                                     <div class="form-group">
                                                         <div class="form-row">
                                                             <input type="text" name="titre_competence_{{$comp->module_id}}_{{$comp->id}}"
@@ -702,7 +564,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-2">
+                                                <div class="col-3">
                                                     <div class="form-group ms-1">
                                                         <div class="form-row">
                                                             <input type="text" name="notes_{{$comp->module_id}}_{{$comp->id}}"
@@ -723,11 +585,12 @@
                                                 </div>
                                             </div>
                                             @endforeach
+                                            <div class="newRowComp"></div>
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_fermer" id="fermer4" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                     </div>
                                 </form>
                             </div>
@@ -754,8 +617,8 @@
                                             <label for="nom_module" class="form-control-placeholder">Nom module</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -774,13 +637,16 @@
                                         <h5 class="modal-title text-center">Déscription module</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control module module input" name="description" required value="{{$res->description}}" placeholder="Déscription module" >
-                                            <label for="description" class="form-control-placeholder">Déscription</label>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <textarea id="description" name="description" class="form-control text_area" required placeholder="Déscription module" maxlength="150">{{$res->description}}</textarea>
+                                                <label for="description" class="form-control-placeholder-text_area">Description courte</label>
+                                                <p class="text-center text-muted" style="font-size: .75rem;">La description courte est limité à 150 caractères !</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                                <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -872,28 +738,28 @@
                                             <label for="reference" class="form-control-placeholder">Référence</label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control module module input" name="prix" required value="{{$res->prix}}" onfocus="(this.type='number')" placeholder="Prix module" >
+                                            <input type="text" class="form-control module module input" name="prix" value="{{$res->prix}}" onfocus="(this.type='number')" placeholder="Prix module" >
                                             <label for="prix" class="form-control-placeholder">Prix en {{$devise->devise}}</label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control module module input" name="prix_groupe" required value="{{$res->prix_groupe}}" onfocus="(this.type='number')" placeholder="Prix en groupe module" >
+                                            <input type="text" class="form-control module module input" name="prix_groupe" value="{{$res->prix_groupe}}" onfocus="(this.type='number')" placeholder="Prix en groupe module" >
                                             <label for="prix_groupe" class="form-control-placeholder">Prix groupe en {{$devise->devise}}</label>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col">
-                                                    <input type="text" class="form-control module module input" id="pax_min" name="pax_min" required value="{{$res->min_pers}}" onfocus="(this.type='number')" max="20" min="3" placeholder=">Pax minimal" >
+                                                    <input type="text" class="form-control module module input" id="pax_min" name="pax_min" value="{{$res->min_pers}}" onfocus="(this.type='number')" max="20" min="3" placeholder="Pax minimal" >
                                                     <label for="prix_groupe" class="form-control-placeholder">Pax minimal</label>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" class="form-control module module input" id="pax_max" name="pax_max" required value="{{$res->max_pers}}" onfocus="(this.type='number')" max="40"  placeholder=">Pax maximal" >
+                                                    <input type="text" class="form-control module module input" id="pax_max" name="pax_max" value="{{$res->max_pers}}" onfocus="(this.type='number')" max="40"  placeholder="Pax maximal" >
                                                     <label for="prix_groupe" class="form-control-placeholder">Pax maximal</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -920,8 +786,8 @@
 
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -947,8 +813,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -974,8 +840,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -1001,8 +867,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -1028,8 +894,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -1055,8 +921,8 @@
                                             </div>
                                         </div>
                                         <div class="mt-3 text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            <button type="button" class="btn btn_annuler" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-x me-1'></i>annuler</button>
                                         </div>
                                     </div>
                                 </form>
@@ -1075,6 +941,7 @@
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
@@ -1105,7 +972,7 @@ $('.modifier_cours').on('click',function(e){
                         html +=         '<?php $j=0 ?>';
                                         for (let $k = 0; $k < userData['cours'].length; $k++) {
                                             if (userData['cours'][0]['programme_id'] == userData['cours'][$k]['programme_id']) {
-                        html +=                 '<input type="text" name="cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" class="w-100 cours_'+$k+' input mb-2" value="'+userData['cours'][$k]['titre_cours']+'" required>';
+                        html +=                 '<div class="d-flex flex-row cours_'+userData['cours'][$k]['cours_id']+'" ><input type="text" name="cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" class="w-100 me-2 cours_'+userData['cours'][$k]['cours_id']+' input mb-2" value="'+userData['cours'][$k]['titre_cours']+'" required ><span class="suppression mt-2" title="Supprimer le Cours" id="'+userData['cours'][$k]['cours_id']+'"><i class="bx bx-trash bx_supprimer"></i></span></div>';
                         html +=                 '<input type="hidden" name="id_cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" value="'+userData['cours'][$k]['cours_id']+'">';
                                             }
                                         }
@@ -1118,6 +985,27 @@ $('.modifier_cours').on('click',function(e){
                 $('.rowModifier').empty();
                 $('.rowModifier').append(html);
                 $('#Modal_'+ id).modal('show');
+                $(".suppression").on("click", function(e) {
+                    let id = $(e.target).closest('.suppression').attr("id");
+                    // alert(id);
+                        $.ajax({
+                        type: "GET",
+                        url: "{{route('suppression_cours')}}",
+                        data: {
+                            Id: id,
+                        },
+                        success: function(response) {
+                            $(".cours_" + id).remove();
+                            // Display a success toast, with a title
+                            toastr.success('Une cours à été supprimer 💪 ');
+
+                            // window.location.reload();
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        },
+                        });
+                });
 
             }
             , error: function(error) {
@@ -1221,51 +1109,6 @@ $('.modifier_cours').on('click',function(e){
         $("#ouvrir_flottant").modal("show");
 }
 
-// $('#pax_max').on('change keyup', function(e){
-//     let value_max = $(this).val();
-//     let value_min = $('#pax_min').on('change keyup').val();
-
-    // if(value_max =< value_min){
-    //     toastr.warning('la valeur est inferieure au minimale requis');
-    //     $(this).attr({
-    //         "max" : value_min * 2;
-    //     });
-    // }
-//     console.log(value_min,value_max);
-// });
-
-
-$('#pax_min').on('change keyup', function(e){
-    let value_min = $(this).val();
-    let value_max = $('#pax_max').on('change keyup').val();
-    if(parseInt(value_min) >= parseInt(value_max)){
-        toastr.warning('la valeur est supérieur au valeur maximal requis');
-        $(this).val('');
-        $(this).val(parseInt(value_max) - 1);
-    }
-    if(value_min <= 0){
-        toastr.warning('la valeur est ne doit pas être inferieur à 0');
-        $(this).val(5);
-    }
-});
-
-
-$('#pax_max').on('change keyup', function(e){
-    let value_max = $(this).val();
-    let value_min = $('#pax_min').val();
-    $("input[type='number']").prop('min',value_min);
-    if(parseInt(value_max) <= parseInt(value_min)){
-        toastr.warning('la valeur est inferieure au valeur minimale requis');
-        // alert(parseInt(value_min)+1);
-        $(this).val('');
-        $(this).val(parseInt(value_min)+1);
-    }
-});
-
-
-
-
-
 $('.plus_avis').on('click', function(e){
         let id = $(e.target).closest('.plus_avis').attr("id");
 
@@ -1280,6 +1123,7 @@ $('.plus_avis').on('click', function(e){
                 if (moduleData['liste_avis'] != null || undefined){
                     let html = '';
 
+                    html += '<hr>';
                     for (let i = 0; i < moduleData['liste_avis'].length; i++) {
                         html += '<div class="row" id="avis">';
                         html +=     '<div class="d-flex flex-row">';
@@ -1299,6 +1143,7 @@ $('.plus_avis').on('click', function(e){
                         html += '<div class="row ms-1">';
                         html +=     '<p>'+moduleData['liste_avis'][i]['commentaire']+'</p>';
                         html += '</div>';
+                        html += '<hr>';
                     }
                     $('.newRowAvis').empty();
                     $('.newRowAvis').append(html);
@@ -1464,6 +1309,33 @@ $(".print_to_pdf").on('click', function(e){
     html2pdf().set(opt).from(element).save().then(function () {window.location.reload()});
 
 });
+
+let sPositions = localStorage.positions || "{}";
+let positions = JSON.parse(sPositions);
+
+// $("#accordio_drag").accordion({
+//         collapsible: true,
+//         header: "> div > h2",
+//         dropOnEmpty: true,
+//         autoHeight: true,
+//         active: false
+//     }).sortable({
+//             axis: "y",
+//             // containment: "#accordionWrapper",
+//             // scroll: false,
+//             stop: function(event, ui) {
+//                 $.each(positions, function (id, pos) {
+//                     alert(id);
+//                     console.log($("#"+id).css(pos));
+//                 });
+//                 positions[this.id] = ui.position
+//                 localStorage.positions = JSON.stringify(positions);
+//                 console.log(positions);
+//             },
+//             connectWith: '.connectedSortable',
+//             helper: 'clone',
+//             axis: 'y'
+//         });
 
 </script>
 

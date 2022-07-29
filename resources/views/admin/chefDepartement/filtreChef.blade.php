@@ -1,27 +1,27 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text_header m-0 mt-1">Résultat</h3>
+<h3 class="text_header m-0 mt-1">@lang('translation.Résultat')</h3>
 @endsection
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md">
-                <h4 class="h4">Résultat du filtre</h4>
+                <h4 class="h4">@lang('translation.Résultat') @lang('translation.du') @lang('translation.filtre')</h4>
             </div>
             <div class="col-md-2">
-                <a href="{{ route('employes') }}" class="btn btn-success btn-sm" style="width: 120px; background-color: #7635dc">Retour</a>
+                <a href="{{ route('employes') }}" class="btn btn-success btn-sm" style="width: 120px; background-color: #7635dc">@lang('translation.Précedent')</a>
             </div>
         </div>
     <table class="table table-hover table-striped">
         <thead>
             <tr>
-                <th>Photo</th>
-                <th>Matricule</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Fonction</th>
-                <th>E-mail</th>
-                <th>Télephone</th>
+                <th>@lang('translation.Image')</th>
+                <th>@lang('translation.Matricule')</th>
+                <th>@lang('translation.Nom')</th>
+                <th>@lang('translation.Prénom')</th>
+                <th>@lang('translation.Fonction')</th>
+                <th>@lang('translation.E-mail')</th>
+                <th>@lang('translation.Téléphone')</th>
             </tr>
         </thead>
         <tbody id="tbody">
@@ -52,22 +52,21 @@
                     <td>{{ $v->fonction_chef }}</td>
                     <td>{{ $v->mail_chef }}</td>
                     <td>{{ $v->telephone_chef }}</td>
-                    
+
                 </tr>
             @empty
                 <tr>
                     <td class="alert alert-danger" colspan="7">
-                        Aucun résultat trouvé
+                        @lang('translation.Aucun') @lang('translation.Résultat') @lang('translation.trouvé')
                     </td>
                 </tr>
             @endforelse
         </tbody>
     </table>
     <ul>
-        
+
     </ul>
 
     </div>
-    
+
 @endsection
-  

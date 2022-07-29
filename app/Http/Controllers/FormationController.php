@@ -418,7 +418,9 @@ class FormationController extends Controller
 
            if(Gate::allows('isReferent')) $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$entreprise_id->entreprise_id, $resp_etp_connecter->id]);
 
-            $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1,$entreprise_id->entreprise_id]);
+            // $collab_etp_envoi = DB::select('select decs.activiter, decs.inviter_cfp_id from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1,$entreprise_id->entreprise_id]);
+
+            $collaboration = DB::select('select statut from collaboration_etp_cfp where etp_id = ? and statut = ?',[$entreprise_id->entreprise_id,2]);
             $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis, md.cfp_id from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id join cfps as cfp on md.cfp_id = cfp.id where md.cfp_id = cfp.id group by md.cfp_id');
             $type_abonnement = DB::select('select abc.type_abonnement_id, tpof.nom_type, abc.cfp_id from abonnement_cfps as abc join type_abonnements_of as tpof on abc.type_abonnement_id = tpof.id join cfps as cfp on abc.cfp_id = cfp.id where abc.cfp_id = cfp.id and abc.activite = 1');
             // dd($type_abonnement);
@@ -441,6 +443,7 @@ class FormationController extends Controller
             $nom_entiter = $req->nom_entiter;
         }
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager') or Gate::allows('isChefDeService')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id]);
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
             $cfps = $this->fonct->findWhereTrieOrderBy("cfps", ["upper(nom)"], ["LIKE"], ["%" . $nom_entiter . "%"], ["nom"], "ASC", ($nbPagination), $nb_limit);
             $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1,$entreprise_id->entreprise_id]);

@@ -18,8 +18,8 @@
     <div class="row">
          @if ($message = Session::get('success'))
             <div class="alert alert-primary" role="alert">
-                <p style="text-align: center;" class="align-middle mt-2 p-1" >Demande envoyer!!</p>
-            </div> 
+                <p style="text-align: center;" class="align-middle mt-2 p-1" >Demande envoyée!!</p>
+            </div>
         @endif
         <div class="col-md-12">
             <div class="float-start">
@@ -28,7 +28,7 @@
             <div class="float-end">
                 <a href="/planFormation" class="btn btn-dark text-light"> <i class="fa-solid fa-caret-left"></i> &nbsp;Retour à la liste</a>
             </div>
-           
+
         </div>
     </div>
     @foreach ($collaborateur as $c)
@@ -56,9 +56,9 @@
                             <option value="null" disable selected hidden>Choisissez la
                                 domaine de formation ...</option>
                             @foreach ($domaine as $d)
-                                <option value="{{$d->id}}" data-value="{{$d->nom_domaine}}">{{$d->nom_domaine}}</option>  
+                                <option value="{{$d->id}}" data-value="{{$d->nom_domaine}}">{{$d->nom_domaine}}</option>
                             @endforeach
-                            
+
                         </select>
                     </div>
                     <div class="input-groupe mt-2">
@@ -68,10 +68,14 @@
                         <p id="domaine_id_err" style="font-size: 14px;color:blue" >Choisissez une zone de formation, puis sélectionnez le thème du coparrainant.</p>
                     </div>
                     <div class="input-groupe mt-2">
-                        <label for="">Objectif attendue :</label>
-                        <input type="text" name="objectif" class="form-control" >
+                        <label for="">Raison de la formation :</label>
+                        <select name="objectif" id="" class="form-control">
+                            <option value="">Adaptation au poste</option>
+                            <option value="">Evolution dans l'empoi</option>
+                            <option value="">Développement de competence</option>
+                        </select>
                     </div>
-                
+
                 </div>
                 <div class="col-md-6">
                     <div class="input-groupe mt-3">
@@ -82,16 +86,38 @@
                         <label for="">Organisme sugére:</label>
                         <input type="text" name="organisme" class="form-control" >
                     </div>
+                    <div class="input-groupe mt-2">
+                        <label for="">durée de la formation formation:</label>
+                        <input type="number" name="dure" class="form-control" >
+                    </div>
+                    <div class="input-groupe mt-2">
+                        <label for="">Type de demande:</label>
+                        <select name="t_dem" id="" class="form-control">
+                            <option value="" selected hidden> Choisissez le type du demande</option>
+                            <option value="Collectif">Collectif</option>
+                            <option value="Individuel">Individuel</option>
+
+                        </select>
+                    </div>
+                    <div class="input-groupe mt-4">
+                        <label for="">Priorité:</label>
+                        <select name="priorite" id="" class="form-control">
+                            <option value="1 Peu critique" > 1 Peu critique</option>
+                            <option value="2 Critique"> 2 Critique</option>
+                            <option value="3 Trés critique">3 Trés critique</option>
+
+                        </select>
+                    </div>
                     <div class="input-groupe mt-3">
-                        <label for="">Type:</label>
-                    </div> 
-                    <div class="div mt-2" style="display: flex">
+                        <label for="">Urgence:</label>
+                    </div>
+                    <div class="div mt-1" style="display: flex">
                         <input type="radio" class="mt-1" style="" name="type" value="urgent" id="type">&nbsp;&nbsp;<p class="m-2">Urgent</p>
                         <input type="radio" class="mt-1" style="margin-left:200px" value="non-urgent" name="type" id="type">&nbsp;&nbsp;<p class="m-2">Non urgent</p>
                     </div>
                 <button type="submit" style="float: right" class="btn btn-info mt-4 text-light">Envoyer la demande</button>
                 </div>
-            
+
         </div>
     </form>
     @endforeach

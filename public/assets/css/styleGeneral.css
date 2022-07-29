@@ -5,7 +5,7 @@
     --first-color: white;
     --first-color-light: rgba(238, 238, 238, 0.863);
     --second-color: #b4b4b4dc;
-    --body-font-color: black;
+    --body-font-color: #1d2424;
     --body-font: 'Roboto', sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100;
@@ -28,6 +28,7 @@ body {
     width: 100%;
     color: var(--body-font-color);
     overflow: auto;
+    font-size: .830rem;
 }
 .content_body {
     background: white;
@@ -40,6 +41,16 @@ a {
     pointer-events: auto;
     cursor: pointer;
 }
+
+.nom_stagiare{
+    color: black !important;
+}
+
+.adresse__icon{
+    font-size: 1.3rem !important;
+    color: #7635dc !important;
+}
+
 a:focus,
 .logo_content .logo .logo_name a:hover {
     text-decoration: none;
@@ -981,29 +992,46 @@ a{
 }
 
 .badge_invitation{
-    padding: 0px 6px;
+    padding: 6px ;
     color: white;
-    background-color: red;
+    background-color: orangered;
     font-size: .8rem;
     border: none;
-    border-radius: 30px;
+    border-radius: 50px;
     position: absolute;
     bottom: 25px;
-    left: 20px;
+    right: 20px;
+    height: 19px;
+    display: none;
 }
 
-.badge_notification{
-    padding: 0px 6px;
+.badge_invitation_etp{
+    padding: 6px ;
     color: white;
-    background-color: red;
+    background-color: orangered;
     font-size: .8rem;
     border: none;
-    border-radius: 30px;
+    border-radius: 50px;
     position: absolute;
     bottom: 25px;
-    /* left: 20px; */
+    right: 20px;
+    height: 19px;
+    display: none;
 }
 
+.index{
+    padding: 6px ;
+    color: white;
+    background-color: orangered;
+    font-size: .8rem;
+    border: none;
+    border-radius: 50px;
+    position: absolute;
+    bottom: 25px;
+    right: 20px;
+    height: 19px;
+    display: none;
+}
 .agrandir{
     width: 700px;
     height: auto;
@@ -1026,11 +1054,11 @@ a{
     border: none;
 }
 
-/* .nav-item .nav-link.active {
+.nav-item .nav-link.active {
     border-bottom: 3px solid #7635dc !important;
     border: none;
     color: #7635dc;
-} */
+}
 
 .nav-tabs .nav-link:hover {
     background-color: rgb(245, 243, 243);
@@ -1040,4 +1068,40 @@ a{
 .nav-tabs .nav-item a{
     text-decoration: none;
     text-decoration-line: none;
+}
+
+#popup{
+    height : auto;
+    background-color: white;
+    position: relative;
+    width: auto;
+    margin: auto;
+    border-left: 3px solid rgba(255, 68, 0, 0.762);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 10px;
+    cursor: default;
+    font-size: 0.8rem;
+}
+
+.lien_condition{
+    color: orange!important;
+}
+
+.icon_upgrade{
+    color: orangered;
+    font-size: 1.5rem;
+    align-items: center;
+    position: relative;
+    top: 6px;
+}
+
+.sous_text{
+    font-size: .8rem;
+}
+.liste__formation:hover{
+    background: #d3d5d646;
 }

@@ -264,7 +264,7 @@ class AbonnementController extends Controller
                     $mois_suivant =  date('Y-m-d', strtotime($mois_dernier. ' + 30 days'));
                     $due_suivant =  date('Y-m-d', strtotime($mois_suivant. ' + 15 days'));
 
-                    //si on est au mois suivant par rapport à la dernière facture, on regénère une nouvelle factur
+                    //si on est au mois suivant par rapport à la dernière facture, on regénère une nouvelle facture
                     if($dt == $mois_suivant ){
                         $this->abonnement_model->insert_factures_abonnements_etp($facture[0]->abonnement_id,$mois_suivant,$due_suivant,$facture[0]->montant_facture);
                     }

@@ -260,3 +260,134 @@ recreer les view dans bdd_suiviformation_view_30(formation_interne).sql
 copier les requettes bdd_evaluation_froid.sql
 
 alter table modules add column date_eval_froid int(2) default 3;
+
+-----------14 juillet ----------------
+recreer vue v_liste_avis_interne dans bdd_suiviformation_view_30
+
+-----------26 juillet ----------------
+Creation table collaboration_etp_cfp
+
+DROP TABLE IF EXISTS collaboration_etp_cfp;
+CREATE table collaboration_etp_cfp (
+	`id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `etp_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
+  `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `statut` int(11) NOT NULL DEFAULT 0,
+  `demmandeur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp default current_timestamp(),
+  `updated_at` timestamp default current_timestamp()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+view a creer
+
+CREATE OR REPLACE VIEW collab_cfp_etp AS SELECT
+    collab.statut,
+    collab.demmandeur,
+    etp.id as id_etp,
+    etp.nom_etp,
+    etp.logo as logo_etp,
+    sect.nom_secteur,
+    resp.nom_resp,
+    resp.prenom_resp,
+    SUBSTRING(resp.nom_resp, 1, 1) AS nom_resp_initial,
+    SUBSTRING(resp.prenom_resp, 1, 1) AS prenom_resp_initial,
+    resp.photos,
+    resp.email_resp,
+    cfp.id as id_cfp,
+    cfp.nom,
+    cfp.logo,
+    resp_cfp.nom_resp_cfp,
+    resp_cfp.prenom_resp_cfp,
+    SUBSTRING(resp_cfp.nom_resp_cfp, 1, 1) AS nom_resp_cfp_inital,
+    SUBSTRING(resp_cfp.prenom_resp_cfp, 1, 1) AS prenom_resp_cfp_initial,
+    resp_cfp.photos_resp_cfp,
+    resp_cfp.email_resp_cfp,
+    collab.updated_at as date_refuse
+
+FROM collaboration_etp_cfp as collab
+JOIN entreprises as etp ON collab.etp_id = etp.id
+JOIN cfps as cfp ON collab.cfp_id = cfp.id
+JOIN secteurs as sect ON etp.secteur_id = sect.id
+JOIN responsables as resp ON collab.etp_id = resp.entreprise_id
+JOIN responsables_cfp as resp_cfp ON collab.cfp_id = resp_cfp.cfp_id
+WHERE resp.prioriter = 1 and resp_cfp.prioriter = 1;
+
+recreer view responsables dans 0.bdd_suiviformation_view_employes
+
+CREATE OR REPLACE view responsables as
+SELECT
+    employers.id,
+    employers.entreprise_id,
+    (employers.matricule_emp) matricule,
+    (employers.nom_emp) nom_resp,
+    (employers.prenom_emp) prenom_resp,
+    employers.genre_id,
+    (genre.genre) sexe_resp,
+    (employers.fonction_emp) fonction_resp,
+    (employers.email_emp) email_resp,
+    (employers.telephone_emp) telephone_resp,
+    employers.user_id,
+    (employers.prioriter) prioriter_emp,
+    employers.service_id,
+    vd.nom_service,
+    url_photo,
+    employers.departement_entreprises_id,
+    vd.nom_departement,
+    employers.photos,
+    (employers.cin_emp) cin_resp,
+    (employers.date_naissance_emp) date_naissance_resp,
+    employers.activiter,
+    employers.adresse_quartier,
+    employers.adresse_code_postal,
+    employers.adresse_ville,
+    employers.adresse_region,
+    employers.adresse_lot,
+    employers.branche_id,
+    bc.nom_branche,
+    role_users.role_id,
+    role_users.prioriter,
+    employers.created_at,
+    employers.updated_at,
+    niveau_etude_id,
+    niveau_etude.niveau_etude,
+    etp.logo,
+    etp.nom_etp,
+    etp.adresse_rue as adresse_rue_etp,
+    etp.adresse_quartier as adresse_quartier_etp,
+    etp.adresse_code_postal as adresse_code_postal_etp,
+    etp.adresse_ville as adresse_ville_etp,
+    etp.adresse_region as adresse_region_etp,
+    etp.site_etp
+FROM
+employers
+LEFT JOIN v_departement_service_entreprise vd ON vd.service_id = employers.service_id and vd.departement_entreprise_id = employers.departement_entreprises_id
+LEFT JOIN branches bc ON bc.id = employers.branche_id
+JOIN role_users ON role_users.user_id =  employers.user_id
+JOIN genre ON genre.id = employers.genre_id
+JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
+JOIN entreprises as etp ON etp.id = employers.entreprise_id
+WHERE role_users.role_id=2;
+
+recreer view v_responsable_cfp dans 15.bdd_suiviformation_view_25_responsable_cfp
+
+create or replace  view v_responsable_cfp as SELECT
+    responsables_cfp.*,
+    cfps.slogan,
+    cfps.nif,
+    cfps.stat,
+    cfps.rcs,
+    cfps.cif,
+    genre.genre,
+    (cfps.nom) nom_cfp,
+    (cfps.adresse_lot) adresse_lot_cfp,
+    (cfps.adresse_quartier) adresse_quartier_cfp,
+    (cfps.adresse_code_postal) adresse_code_postal_cfp,
+    (cfps.adresse_ville) adresse_ville_cfp,
+    (cfps.adresse_region) adresse_region_cfp,
+    cfps.logo,
+    cfps.site_web
+
+FROM
+    responsables_cfp
+JOIN cfps ON  responsables_cfp.cfp_id = cfps.id
+LEFT JOIN genre ON  responsables_cfp.sexe_resp_cfp = genre.id
