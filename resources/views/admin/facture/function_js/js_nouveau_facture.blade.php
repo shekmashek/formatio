@@ -573,7 +573,7 @@
                 }
                 if (userData2.length > 0) {
                     for (var $i = 0; $i < userData2.length; $i++) {
-                        $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '/'+ userData[$i].groupe_id+'">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
+                        $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '/'+ userData2[$i].groupe_id+'">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
                     }
                     document.getElementById("session_id_err").innerHTML = "";
                 } else {

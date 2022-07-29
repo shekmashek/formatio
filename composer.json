@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-curl": "*",
         "barryvdh/laravel-debugbar": "^3.7",
         "barryvdh/laravel-dompdf": "^2.0",
         "consoletvs/charts": "^7.3",
@@ -23,8 +24,7 @@
         "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.59",
         "psr/simple-cache": "^1.0",
-        "simplesoftwareio/simple-qrcode": "^4.2",
-        "ext-curl": "*"
+        "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0",
