@@ -597,6 +597,7 @@
 
         $(".informm").on('click', function(e) {
         let id = $(this).data("id");
+        alert(id);
         $.ajax({
             method: "GET"
             , url: "/information_formateur"
