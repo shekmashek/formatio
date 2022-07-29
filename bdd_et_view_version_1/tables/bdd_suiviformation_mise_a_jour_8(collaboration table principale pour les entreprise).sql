@@ -1,3 +1,4 @@
+-- Active: 1656573946460@@127.0.0.1@3306@mahafaly
 
 create table demmande_cfp_etp(
     id bigint(20) unsigned primary key not null auto_increment,

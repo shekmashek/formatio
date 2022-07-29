@@ -1,4 +1,4 @@
--- Active: 1657548149937@@127.0.0.1@3306@mydb2
+-- Active: 1656573946460@@127.0.0.1@3306@mahafaly
 CREATE TABLE genre (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   genre varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,

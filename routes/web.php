@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AbonnementController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\TestController;
 use App\PlanFormation;

@@ -1,3 +1,4 @@
+-- Active: 1656573946460@@127.0.0.1@3306@mahafaly
 CREATE OR REPLACE VIEW v_type_abonnement_etp AS SELECT
     t.id AS type_abonnements_etp_id,
     t.nom_type,
