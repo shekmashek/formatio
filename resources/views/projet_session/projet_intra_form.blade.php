@@ -107,7 +107,7 @@
                                     <option value="CNE">Ajouter une nouvelle entreprise</option>
                                     <option value="null" disabled="disabled" selected>Sélectionnez</option>ÍÍ
                                     @foreach ($entreprise as $etp)
-                                        <option value="{{ $etp->entreprise_id }}">{{ $etp->nom_etp }}</option>
+                                        <option value="{{ $etp->id_etp }}">{{ $etp->nom_etp }}</option>
                                     @endforeach
                                 </select>
                             </div>

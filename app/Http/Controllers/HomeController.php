@@ -333,7 +333,7 @@ class HomeController extends Controller
             // $drive->create_sub_folder($cfp, "Mes documents");
 
             $formateur = DB::select('select * from demmande_cfp_formateur where demmandeur_cfp_id = ' . $centre_fp . ' ');
-            $dmd_cfp_etp = DB::select('select * from demmande_cfp_etp where demmandeur_cfp_id = ' . $centre_fp . ' ');
+            // $dmd_cfp_etp = DB::select('select * from demmande_cfp_etp where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $resp_cfp = DB::select('select * from responsables_cfp where user_id = ' . $user_id . ' ');
 
             $module_publié = DB::select('select * from modules where status = 2 and cfp_id = ' . $cfp_id . ' ');
@@ -497,9 +497,7 @@ class HomeController extends Controller
                 // $formateur_referent = $formateurs[0];
 
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-                $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
-                $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
-                $cfps = $fonct->concatTwoList($etp1Collaborer, $etp2Collaborer);
+                $cfps = $fonct->findWhere("v_collab_cfp_etp", ["id_etp"], [$entreprise_id]);
 
                 $facture_paye = DB::select('select * from v_facture_actif where facture_encour = "terminer" and entreprise_id = ' . $ref . ' ');
                 $facture_non_echu = DB::select('select * from v_facture_actif where facture_encour = "en_cours" and entreprise_id = ' . $ref . ' ');
@@ -982,7 +980,7 @@ class HomeController extends Controller
             //conditions d'aaffichage et apprendre
             $nb_modules = DB::select('select count(*) from v_module where cfp_id = ?',[$cfp_id]);
             $nb_formateur = DB::select('select count(*) from v_demmande_cfp_formateur where cfp_id = ?',[$cfp_id]);
-            $nb_collaboration = DB::select('select count(*) from v_demmande_etp_cfp where cfp_id = ?',[$cfp_id]);
+            $nb_collaboration = DB::select('select count(*) from v_collab_cfp_etp where cfp_id = ?',[$cfp_id]);
             $abonnement_cfp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_cfp_id,v_tac.nb_projet,v_tac.illimite from v_type_abonnement_cfp v_tac JOIN cfps as cfp on v_tac.cfp_id = cfp.id where cfp_id = ? and statut_compte_id = ? and status = ?',[$cfp_id,2,"Activé"]);
             // dd($abonnement_cfp);
             // $nb_formateur

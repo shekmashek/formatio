@@ -79,7 +79,7 @@
                     @foreach($cfp as $cfp)
                     <tr class="information" data-id="{{$cfp->id_cfp}}" id="{{$cfp->id_cfp}}">
                         <td role="button" onclick="afficherInfos();">
-                            <img src="{{asset("images/CFP/".$cfp->logo)}}" style="width: 80px;height:
+                            <img src="{{asset("images/CFP/".$cfp->logo_cfp)}}" style="width: 80px;height:
                             80px;text-align:center;"><span class="ms-3">{{$cfp->nom}}</span>
                         </td>
                         <td role="button" onclick="afficherInfos();">
@@ -87,7 +87,8 @@
                             <span class="d-flex flex-row">
                                 <div class='randomColor'
                                     style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">
-                                    {{$cfp->nom_resp_cfp_inital.''.$cfp->prenom_resp_cfp_initial}} </div>
+                                    {{-- {{$cfp->nom_resp_cfp_inital.''.$cfp->prenom_resp_cfp_initial}}  --}}
+                                </div>
                                 <span class="ms-3">{{$cfp->nom_resp_cfp}} {{$cfp->prenom_resp_cfp}}</span>
                             </span>
                             @else

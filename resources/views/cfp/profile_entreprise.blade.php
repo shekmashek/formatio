@@ -82,7 +82,8 @@
                                     <span class="d-flex flex-row">
                                         <div class='randomColor'
                                             style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">
-                                            {{$etp->nom_resp_initial.''.$etp->prenom_resp_initial}}</div>
+                                            {{-- {{$etp->nom_resp_initial.''.$etp->prenom_resp_initial}} --}}
+                                        </div>
                                         <span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                                     </span>
                                     @else

@@ -52,9 +52,9 @@ class EntrepriseController extends Controller
         if (Gate::allows('isCFP')) {
 
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
-            $refuse_demmande_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,3,'etp']);
-            $entreprise = DB::select('select id_etp,logo_etp,nom_etp,nom_resp_initial,prenom_resp_initial,photos,nom_resp,prenom_resp from collab_cfp_etp where id_cfp = ? and statut = ?',[$cfp_id,2]);
+            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_responsable as email_resp,nom_etp,nom_secteur from v_collab_cfp_etp where cfp_id = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
+            $refuse_demmande_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_responsable as email_resp,nom_etp,nom_secteur,date_refuse from v_collab_cfp_etp where cfp_id = ? and statut = ? and demmandeur = ?',[$cfp_id,3,'etp']);
+            $entreprise = DB::select('select id_etp,logo_etp,nom_etp,photos_resp as photos,nom_resp,prenom_resp from v_collab_cfp_etp where cfp_id = ? and statut = ?',[$cfp_id,2]);
             $abonnement_cfp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_cfp_id,v_tac.nb_projet from v_type_abonnement_cfp v_tac JOIN cfps as cfp on v_tac.cfp_id = cfp.id where cfp_id = ? and statut_compte_id = ? or statut_compte_id = ?',[$cfp_id,1,3]);
             // dd($invitation_etp);
             return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp','abonnement_cfp'));

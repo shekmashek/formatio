@@ -38,9 +38,9 @@ class CfpController extends Controller
         $fonct = new FonctionGenerique();
 
         $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-        $invitation = DB::select('select id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,1,'cfp']);
-        $refuse_demmande_cfp = DB::select('select id_cfp,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,3,'cfp']);
-        $cfp = DB::select('select id_cfp,logo,nom,logo,nom_resp_cfp_inital,prenom_resp_cfp_initial,nom_resp_cfp,prenom_resp_cfp,photos_resp_cfp from collab_cfp_etp where id_etp = ? and statut = ? ',[$etp_id,2]);
+        $invitation = DB::select('select cfp_id as id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from v_collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,1,'cfp']);
+        $refuse_demmande_cfp = DB::select('select cfp_id as id_cfp,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur,date_refuse from v_collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,3,'cfp']);
+        $cfp = DB::select('select cfp_id as id_cfp,logo_cfp,nom,logo_etp,nom_resp_cfp,prenom_resp_cfp,photos_resp_cfp from v_collab_cfp_etp where id_etp = ? and statut = ? ',[$etp_id,2]);
         $abonnement_etp = DB::select('select v_tep.nom_type,v_tep.type_abonnements_etp_id from v_type_abonnement_etp v_tep JOIN entreprises as etp on v_tep.entreprise_id = etp.id where v_tep.entreprise_id = ? and etp.statut_compte_id = ? or etp.statut_compte_id = ?',[$etp_id,1,3]);
         // dd($invitation);
         // dd($refuse_demmande_cfp);

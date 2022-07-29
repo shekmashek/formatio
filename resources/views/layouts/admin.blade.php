@@ -682,8 +682,8 @@
                     @endcanany
                 </div>
                 <div class="col-3 header-right align-items-center d-flex flex-row">
-                    <div class="col-4"></div>
-                    <div class="col-8">
+                    <div class="col-3"></div>
+                    <div class="col-9">
                         <div class="row justify-content-end">
                             <div class="col-12 text-end icones_header">
                                 <a class="dropdown-toggle p-1" id="dropdownMenuLang" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">@if(Session::get("locale") == "fr") <img src="{{asset('flags/fr.svg')}}" class="me-2" alt="drapeau pays" width="22px" height="22px">@else <img src="{{asset('flags/gb.svg')}}" class="me-2" alt="drapeau pays" width="22px" height="22px">@endif</a>
