@@ -1640,6 +1640,3 @@ Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->na
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
 
 Route::get('invitation_ajouter_employer/{groupe?}/{employe?}','SessionController@invitation_ajouter_employer')->name('invitation_ajouter_employer');
-
-// TestController
-Route::get('/fullProjects', [HomeController::class, 'fullProject']);

@@ -552,7 +552,7 @@ class FonctionGenerique extends Model
             left join entreprises on v_groupe_projet_module.entreprise_id = entreprises.id 
             left join groupes on v_groupe_projet_module.groupe_id = groupes.id 
             left join type_formations on v_groupe_projet_module.type_formation_id = type_formations.id 
-            left join cfps on v_groupe_projet_module.cfp_id = cfps.id WHERE v_groupe_projet_module.cfp_id = ?', [$cfp_id]);
+            left join cfps on v_groupe_projet_module.cfp_id = cfps.id WHERE v_groupe_projet_module.cfp_id = ? order by v_groupe_projet_module.groupe_id asc', [$cfp_id]);
 
         return $req;
     }

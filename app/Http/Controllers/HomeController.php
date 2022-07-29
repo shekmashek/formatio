@@ -1015,38 +1015,29 @@ class HomeController extends Controller
             // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
 
-            // filter multi select
-            $nomEntreprises = DB::select('select nom_etp,groupe_id  from v_groupe_entreprise group by nom_etp');
-            $nomSessions = DB::select('select nom_groupe from v_groupe_projet_module where cfp_id  = ? group by nom_groupe', [$cfp_id]);
-            $nomModalites = DB::select('select modalite from v_groupe_projet_module group by modalite');
-            $nmdls = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
-            $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module group by item_status_groupe');
-            $ntps = DB::select('select type_formation from v_groupe_projet_module group by type_formation');
             //conditions d'aaffichage et apprendre
             $nb_modules = DB::select('select count(*) from v_module where cfp_id = ?',[$cfp_id]);
             $nb_formateur = DB::select('select count(*) from v_demmande_cfp_formateur where cfp_id = ?',[$cfp_id]);
             $nb_collaboration = DB::select('select count(*) from v_demmande_etp_cfp where cfp_id = ?',[$cfp_id]);
             $abonnement_cfp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_cfp_id,v_tac.nb_projet,v_tac.illimite from v_type_abonnement_cfp v_tac JOIN cfps as cfp on v_tac.cfp_id = cfp.id where cfp_id = ? and statut_compte_id = ? and status = ?',[$cfp_id,2,"Activé"]);
-            // dd($abonnement_cfp);
-            // $nb_formateur
-            // $nb_modules
-
-            // dd($data);
-            $nomProjet = DB::table('v_projet_session')
-            ->select('nom_projet')
-            ->groupBy('nom_projet')
-            ->orderBy('projet_id', 'ASC')
-            ->get();
+            
+            // filter multi select
+            $nomProjet = DB::select('select distinct nom_projet from v_groupe_projet_module where cfp_id = ? order by groupe_id asc', [$cfp_id]);
+            $nomSessions = DB::select('select distinct nom_groupe from v_groupe_projet_module where cfp_id  = ? order by groupe_id asc', [$cfp_id]);
+            $nomModules = DB::select('select distinct nom_module from v_groupe_projet_module where cfp_id  = ? order by groupe_id asc', [$cfp_id]);
+            $nomEntreprises = DB::select('select distinct(entreprises.nom_etp) from v_groupe_projet_module 
+            join entreprises on v_groupe_projet_module.entreprise_id = entreprises.id where cfp_id = ?', [$cfp_id]);
+            $nomModalites = DB::select('select distinct modalite from v_groupe_projet_module where cfp_id = ?', [$cfp_id]);
+            $nomTypes = DB::select('select distinct type_formation from v_groupe_projet_module where cfp_id = ?', [$cfp_id]);
+            $nomStatuts = DB::select('select distinct item_status_groupe from v_groupe_projet_module where cfp_id = ?', [$cfp_id]);
 
             $fullProjects = $fonct->projetSessionFull($cfp_id);
 
-            return view('projet_session.index2', compact( 'fullProjects', 'nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'ntps', 'nomModalites', 'nmdls', 'nomStatuts','nomProjet'));
-            // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
-
-
-            // dd($data);
-            // return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'nomTypes', 'nomModalites', 'nomModules', 'nomStatuts', 'nomProjet'));
+            return view('projet_session.index2', compact( 'fullProjects', 'nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data',
+                'lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 
+                'nomSessions', 'nomStatuts','nomProjet', 'nomModules', 'nomEntreprises', 'nomModalites', 'nomTypes'));
         }
+
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             // $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?", [$user_id])[0]->cfp_id;
@@ -1217,24 +1208,6 @@ class HomeController extends Controller
             $nomEntreprises = $fonct->dataDrop('nom_etp', "v_groupe_entreprise", "nom_etp");
 
             return view('projet_session.index2Filter', compact('nomStatuts','nomModules', 'nomModalites' ,'nomTypes','nomSessions', 'nomEntreprises', 'projet','ref', 'data','lieu_formation' ,'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise'));
-        }
-    }
-
-    public function fullProject(){
-        $fonct = new FonctionGenerique();
-        $user_id = Auth::user()->id;
-
-        if (Gate::allows('isCFP')) {
-            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-            $fullProjects = $fonct->projetSessionFull($cfp_id);
-
-            // test date
-            $date = DB::table('v_groupe_projet_module')
-              ->whereDate('date_debut', '=', Carbon::today()->toDateString())
-              ->get();
-            dd($date);
-
-            return view('projet_session.index2', compact('fullProjects'));
         }
     }
 
