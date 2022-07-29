@@ -23,6 +23,8 @@ use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Facture;
+use Exception;
+
 use function PHPSTORM_META\type;
 
 class AbonnementController extends Controller
@@ -52,14 +54,33 @@ class AbonnementController extends Controller
         return view('superadmin.abonnement', compact('type_abonne', 'categorie'));
     }
 
+    public function nouveau_autres_type(){
+        $type_services = DB::select('select id,type_service from type_services');
+        return view('superadmin.nouveau_autres_service', compact('type_services'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        try {
+            if($request->service == null){
+                throw new Exception('Vous devez choisir une service');
+            }
+            if($request->prix_fixe == null){
+                throw new Exception('Vous devez completer le champ prix fixe');
+            }
+            if($request->prix_employee == null){
+                throw new Exception('Vous devez completer le champ prix par employé');
+            }
+            DB::insert('insert into autres_types_abonnements(type_service_id,prix_fixe,prix_par_employe) values(?,?,?)',[$request->service,$request->prix_fixe,$request->prix_employee]);
+            return redirect()->route('listeAbonne');
+        }catch(Exception $e){
+            return back()->with('message', $e->getMessage());
+        }
     }
 
     /**
@@ -706,7 +727,8 @@ class AbonnementController extends Controller
         $typeAbonnement_etp =$this->fonct->findAll('type_abonnements_etp');
         $typeAbonnement_of =$this->fonct->findAll('type_abonnements_of');
         $liste_coupon = $this->fonct->findAll('coupon');
-        return view('superadmin.activation-abonnement', compact('liste_coupon','liste','cfpListe','typeAbonnement_etp','typeAbonnement_of'));
+        $autres_types = DB::select('select type_service_id,prix_fixe,prix_par_employe,type_service from type_services join autres_types_abonnements on autres_types_abonnements.type_service_id = type_services.id');
+        return view('superadmin.activation-abonnement', compact('liste_coupon','liste','cfpListe','typeAbonnement_etp','typeAbonnement_of','autres_types'));
     }
     //activation de compte
     public function activation()

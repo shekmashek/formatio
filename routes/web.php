@@ -939,9 +939,15 @@ Route::get('/', function () {
 Route::get('nouveau_type',function(){
     return view('superadmin.nouveau_type');
 })->name('nouveau_type');
+
+
+Route::get('nouveau_type_autres','AbonnementController@nouveau_autres_type')->name('nouveau_type_autres');
+Route::post('creation_autres_types','AbonnementController@create')->name('creation_autres_types');
+
 Route::get('nouveau_coupon',function(){
     return view('superadmin.nouveau_coupon');
 })->name('nouveau_coupon');
+
 
 Route::get('modifier_abonnement_of/{id}','AbonnementController@modifier_abonnement_of')->name('modifier_abonnement_of');
 Route::post('enregistrer_modification_abonnement_of/{id}','AbonnementController@enregistrer_modification_abonnement_of')->name('enregistrer_modification_abonnement_of');

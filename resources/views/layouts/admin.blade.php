@@ -695,9 +695,16 @@
                                 @can('isSuperAdmin')
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
-                                        <li><a class="dropdown-item" href="{{route('nouveau_type')}}"> <i
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('nouveau_type')}}"> <i
                                                     class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;@lang('translation.NouveauType')
-                                            </a></li>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('nouveau_type_autres')}}"> <i
+                                                    class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Autres services
+                                            </a>
+                                        </li>
                                             <li id="abo"><a class="dropdown-item" href="{{route('nouveau_coupon')}}"> <i
                                                 class='bx bx-money '></i>&nbsp;@lang('translation.NouveauCoupon')
                                         </a></li>

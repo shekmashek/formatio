@@ -68,22 +68,22 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#types" class="nav-link active" data-bs-toggle="tab">Liste des abonnements</a>
+                <a href="#types" class="nav-link" data-toggle="tab">Liste des abonnements</a>
             </li>
             <li class="nav-item">
-                <a href="#entreprise" class="nav-link" data-bs-toggle="tab">Entreprise</a>
+                <a href="#entreprise" class="nav-link" data-toggle="tab">Entreprise</a>
             </li>
             <li class="nav-item">
-                <a href="#of" class="nav-link " data-bs-toggle="tab">Organisme de formation</a>
+                <a href="#of" class="nav-link " data-toggle="tab">Organisme de formation</a>
             </li>
             <li class="nav-item">
-                <a href="#coupon" class="nav-link " data-bs-toggle="tab">Coupon</a>
+                <a href="#coupon" class="nav-link " data-toggle="tab">Coupon</a>
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="types">
+            <div class="tab-pane fade show" id="types">
                 <div class="row mt-3">
-                    <p>Offre pour organisme de formation</p>
+                    <p>Offre pour organisme de formation(formation.mg)</p>
                     <div class="col-lg-12 d-flex">
                         <?php $i = 0; ?>
                         @foreach ($typeAbonnement_of as $types_of)
@@ -113,7 +113,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <p>Offre pour entreprise</p>
+                    <p>Offre pour entreprise(formation.mg)</p>
                     <div class="col-lg-12 d-flex">
                         <?php $i = 0; ?>
                         @foreach ($typeAbonnement_etp as $types_etp)
@@ -136,6 +136,26 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                         @endif
 
                                     </ul>
+                                    <button class="btn btn-primary"><a href="{{route('modifier_abonnement_entreprise',$types_etp->id)}}">Modifier</a></button>
+                                </div>
+                            </div>
+                        <?php $i+=1; ?>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <p>Autres services</p>
+                    <div class="col-lg-12 d-flex">
+                        <?php $i = 0; ?>
+                        @foreach ($autres_types as $autre)
+                            <div class="col mt-2 justify-content-between">
+                                <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
+                                    <p class="h-1 pt-5 nom_type">{{ $autre->type_service }}</p>
+                                    {{-- <span class="description mt-2">{{ $types_etp->description }}</span> --}}
+                                    <span class="tarif"> <span class="number"> {{number_format($autre->prix_fixe,0, ',', '.')}}</span> <sup
+                                            class="sup">AR</sup>/ mois</span>
+                                    <span class="tarif"> <span class="number">+ {{number_format($autre->prix_par_employe,0, ',', '.')}}</span> <sup
+                                            class="sup">AR</sup>/ Employé</span>
                                     <button class="btn btn-primary"><a href="{{route('modifier_abonnement_entreprise',$types_etp->id)}}">Modifier</a></button>
                                 </div>
                             </div>

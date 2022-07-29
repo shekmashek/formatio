@@ -48,7 +48,7 @@ class FormationController extends Controller
             $domaine_col2 = DB::select('select * from domaines limit ' . $offset . ' offset ' . $offset . '');
             $domaine_col3 = DB::select('select * from domaines limit ' . $offset . ' offset ' . ($offset * 2) . '');
             $domaine_col4 = DB::select('select * from domaines limit ' . $offset . ' offset ' . ($offset * 3) . '');
-            return view('admin.formation.formation', compact('formation', 'domaine', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+            return view('admin.formation.formation', compact('formation', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
         if (Gate::allows('isFormateur')) {
             $categorie = formation::orderBy('nom_formation')->get();
