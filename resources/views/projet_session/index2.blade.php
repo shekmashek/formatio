@@ -1068,21 +1068,28 @@
         padding-bottom: 20px !important; 
     }
     
-   
-    table .dropdown-menu {
-        position: fixed !important; 
-        z-index: 999 !important;
-        background: rgb(105, 100, 100);
+    table .dropdown-menu  {
+        position:fixed !important; 
+        z-index: 1;
+        background: white;
         opacity: inherit;
-
     }
     
-    .dataTables_wrapper.no-footer div.dataTables_scrollBody>table {
+    .dataTables_wrapper.no-footer div.dataTables_scrollBody > table {
         position: relative; 
         z-index: 0;
-        opacity: unset;
+        
+        /* overflow: hidden !important; */
+        /* background: white; */
     }
+
+    /* div.dataTables_scrollHead {
+  overflow: visible !important;
+} */
    
+    .table{
+        overflow: unset !important;
+    }
     
     /* .dropdown-menu {
     overflow: overlay !important;
@@ -1108,8 +1115,8 @@
 </style>
 <div class="container-fluid " style="height: 700px;z-index:-1!important;margin-top:-60px">
     <div >
-        <div class="dropdown" style="position: relative;margin-left:40px;top:165px;z-index:1;width:150px">
-            <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown"   style="position: relative;margin-left:40px;top:165px;z-index:1;width:150px">
+            <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class='bx bx-library align-middle'></i> Projet
             </button>
             <ul class="dropdown-menu main p-2" >
@@ -1182,9 +1189,10 @@
 
     <table class="table order-column  modifTable "   id="example">
         {{-- en tete --}}
-        <thead  style="position: sticky; top: 0">
+        <thead  style=" top: 0">
             
             <tr style="background: #d4d1d139;margin-top:-10px">
+                
                 <th >
                     
                 </th>
@@ -1196,10 +1204,11 @@
                     
                 </th>
                 <th class="headProject" >
-                    <div class="dropdown" >
-                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="dropdown z-index-2" id="ta">
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class='bx bx-building-house align-middle'></i> Entreprise
                         </button>
+                        
                         <ul  class="dropdown-menu main p-2">
                             <li>
                                 <input type="text" class="column_search form-control form-control-sm">
@@ -1253,7 +1262,7 @@
                     </div>
                     <div hidden>
                         <div data-name="popover-content">
-                            <table>
+                            <table class="table">
                                 <thead>
                                     <form action="{{ route('project.filterBydate') }}" method="post">
                                         @csrf
@@ -2323,9 +2332,9 @@
             var table = $('#example').DataTable( {
                 // dom:            "Bfrtip",
                 "dom": 'C<"clear">lfrtip',
-                scrollY:        "500px",
+                // scrollY:        "500px",
                 scrollX:        true,
-                scrollCollapse: true,
+                // scrollCollapse: true,
                 paging:         true,
                 buttons:        [ 'colvis','colonne' ],
                 select: true,
@@ -2349,6 +2358,8 @@
                 }
                 }
             } );
+            // $('.dataTables_scrollBody').addClass("z-index-n2 overflow-visible");
+            // $('.dropdown-menu').addClass("z-index-master position-relative overflow-scroll");
             new $.fn.dataTable.FixedColumns( table, {
                 leftColumns: 3,
             } );
@@ -2398,5 +2409,7 @@
                 table.column(8).search(Type, true,false,false).draw();
             });
         } );
+
+        
     </script>
 @endsection
