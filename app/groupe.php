@@ -237,11 +237,11 @@ class Groupe extends Model
     }
 
     public function dataFraisSession($groupe_id){
-        $frais_session = DB::table('groupe_factures')
-                        ->select('montant','qte')
-                        ->where('groupe_id',$groupe_id)
-                        ->get();
-        return  $frais_session;
+        $frais_session = DB::select('select montant,qte from groupe_factures where groupe_id = ?',[$groupe_id]);
+        if(count($frais_session)< 1){
+            return 0;
+        }
+        return  $frais_session[0]->montant;
     }
 
     public function fraisAnnexeSession($projet_id,$cfp_id){
@@ -264,7 +264,7 @@ class Groupe extends Model
         return $stagiaire;
     }
 
-    public function dataApprenantAll($groupe_id){ 
+    public function dataApprenantAll($groupe_id){
         $stagiaire = DB::table('v_stagiaire_groupe')
             ->select('*')
             ->where('groupe_id', $groupe_id)
@@ -295,7 +295,7 @@ class Groupe extends Model
             ->get();
         if(count($villes) > 0){
             return $villes[0]->lieu;
-        }   
+        }
         return '-';
     }
 }

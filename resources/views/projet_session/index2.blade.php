@@ -2426,6 +2426,7 @@
                                         <th class="headProject" style="min-width: 10%;"><i class='bx bx-library'></i> Projet</th>
                                         <th class="headProject" style="min-width: 10%;"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
                                         <th class="headProject" style="min-width: 10%;"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-money' style="color: #2e3950"></i>Ar</th>
                                         <th class="headProject" style="min-width: 10%;"><i class='bx bx-building-house'></i> Centre de formation</th>
                                         <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-check' ></i> Modalité</th>
                                         <th class="headProject" style="min-width: 10%;"><i class='bx bx-time-five' ></i> Date session</th>
@@ -2438,6 +2439,7 @@
                                         <th class="headProject">Projet</th>
                                         <th class="headProject">Session</th>
                                         <th class="headProject">Module</th>
+                                        <th class="headProject">$</th>
                                         <th class="headProject">Centre de formation</th>
                                         <th class="headProject">Modalité</th>
                                         <th class="headProject">Date session</th>
@@ -2464,6 +2466,15 @@
                                             </td>
                                             <td>
                                                 <span style="font-size: 13px">{{ $pj->nom_module }}</span>
+                                            </td>
+                                            <td class="text-end">
+                                                <span style="font-size: 13px">
+                                                    @php
+                                                        $resultat_montant = $groupe->dataFraisSession($pj->groupe_id);
+                                                        echo number_format($resultat_montant,0,'.',' ');
+                                                    @endphp
+
+                                                </span>
                                             </td>
                                             <td>
                                                 <span style="font-size: 13px">{{ $pj->nom_cfp }}</span>
