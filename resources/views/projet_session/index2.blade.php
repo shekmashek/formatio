@@ -2471,7 +2471,7 @@
                                                 <span style="font-size: 13px">
                                                     @php
                                                         $resultat_montant = $groupe->dataFraisSession($pj->groupe_id);
-                                                        echo number_format($resultat_montant,0,'.',' ');
+                                                        echo number_format($resultat_montant,0,' ','.');
                                                     @endphp
 
                                                 </span>

@@ -492,17 +492,16 @@
                         @can('isCFP')
                             <p class="text-dark mt-3"> CA :<strong>
                                     <span>
-                                        @if (count($groupe->dataFraisSession($projet[0]->groupe_id)) > 0)
-                                            @foreach ($groupe->dataFraisSession($projet[0]->groupe_id) as $cout)
-                                                {{ number_format($cout->montant,0,'.',' ')}}
-                                            @endforeach
-                                        @else
-                                            -
-                                        @endif
+
+                                        @php
+                                            $resultat_montant = $groupe->dataFraisSession($projet[0]->groupe_id);
+                                            echo number_format($resultat_montant,0,' ','.');
+                                        @endphp
                                     </span>
                                     {{ $ref }}</strong> </p>&nbsp;&nbsp;
                             <p class="text-dark mt-3"> FA : <strong>
                                     <span>
+
                                         @php
                                             $frais = $groupe->frais_annexe_of($projet[0]->groupe_id);
                                             if ($frais == null) {
@@ -516,13 +515,14 @@
                         @endcan
                         @canany(['isReferent', 'isReferentSimple', 'isManager', 'isChefDeService'])
                             <p class="text-dark mt-3"> CP : <strong>
-                                @if (count($groupe->dataFraisSession($projet[0]->groupe_id)) > 0)
-                                    @foreach ($groupe->dataFraisSession($projet[0]->groupe_id) as $cout)
-                                        {{ number_format($cout->montant,0,'.',' ')}}
-                                    @endforeach
-                                @else
-                                    -
-                                @endif{{ $ref }}
+                                @php
+                                    $resultat_montant = $groupe->dataFraisSession($projet[0]->groupe_id);
+                                    echo number_format($resultat_montant,0,' ','.');
+                                @endphp
+                            {{-- @php
+                                $resultat_montant = $groupe->dataFraisSession($projet[0]->groupe_id);
+                                echo number_format($resultat_montant,0,' ','.');
+                            @endphp --}}
                                 </strong> </p>&nbsp;&nbsp;
                             <p class="text-dark mt-3"> FA : <strong id="frais_annex_entreprise">
                                     @php

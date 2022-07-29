@@ -89,9 +89,9 @@
                             </div>
                             <div class="col-lg-6 text-start">
                                 <select class="form-select input_select my_input_select" name="module_id" id="module_id"
-                                     style="width: 25rem;" required>
-                                     <option value="CRM">Ajouter un nouveau module</option>
-                                     <option value="null" disabled="disabled" selected>Sélectionnez</option>
+                                    style="width: 25rem;" required>
+                                    <option value="CRM">Ajouter un nouveau module</option>
+                                    <option value="null" disabled="disabled" selected>Sélectionnez</option>
                                         @foreach ($modules as $mod)
                                             <option value="{{ $mod->id }}">{{ $mod->nom_module }}</option>
                                         @endforeach
@@ -145,10 +145,6 @@
                             <div class="col-lg-6 text-start">
                                 <a href="{{ route('liste_projet') }}"><button type="button" class="btn  btn_annuler py-1"
                                 data-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button></a>
-                            </div>
-                            <div class="col-lg-6 text-start">
-                                <a href="{{ route('liste_projet') }}"><button type="button" class="btn  btn_enregistrer py-1"
-                                data-dismiss="modal"><i class='bx bxs-chevron-left me-1'></i>Retour en arrière</button></a>
                             </div>
                         </div>
                     </div>

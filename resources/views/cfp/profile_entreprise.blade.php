@@ -82,7 +82,7 @@
                                     <span class="d-flex flex-row">
                                         <div class='randomColor'
                                             style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">
-                                            {{$etp->nom_resp_initial.''.$etp->prenom_resp_initial}}</div>
+                                            {{$etp->initial_resp_etp}}</div>
                                         <span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                                     </span>
                                     @else
@@ -186,7 +186,7 @@
                                 <tr align="left">
                                     <td>
                                         {{$invit_etp->nom_resp.' '.$invit_etp->prenom_resp}}
-                                        <p class="sous_text text-muted">{{$invit_etp->email_resp}}</p>
+                                        <p class="sous_text text-muted">{{$invit_etp->email_responsable}}</p>
                                     </td>
                                     <td>
                                         {{$invit_etp->nom_etp}}
@@ -223,7 +223,7 @@
                                 <tr align="left">
                                     <td>
                                         {{$refuse_invit->nom_resp.' '.$refuse_invit->prenom_resp}}
-                                        <p class="sous_text text-muted">{{$refuse_invit->email_resp}}</p>
+                                        <p class="sous_text text-muted">{{$refuse_invit->email_responsable}}</p>
                                     </td>
                                     <td>
                                         {{$refuse_invit->nom_etp}}
@@ -232,11 +232,11 @@
                                     <td>
                                         <p>envoyé le {{$refuse_invit->date_refuse}}</p>
                                     </td>
-                                    {{-- <td>
-                                        <a href="{{ route('suppresion_invite_cfp_etp',$refuse_invit->id) }}">
-                                            <span class="btn_annuler"><i class="bx bx-x  me-2" title="Refuser"></i>supprimer</span>
+                                    <td>
+                                        <a href="{{ route('suppresion_invite_etp_cfp',$refuse_invit->id_etp,$refuse_invit->id) }}">
+                                            <span class=""><i class="bx bx-trash bx_supprimer" title="Refuser"></i></span>
                                         </a>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                                 @endforeach
                                 @endif

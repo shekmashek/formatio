@@ -705,7 +705,6 @@
                     html += '</div>';
                     html += '<div class="col-3">';
                     html += '<select class="form-select selectP input_section4"  id="session_id[]" name="session_id[]" required>';
-
                     for (var $i = 0; $i < userData.length; $i++) {
                         html += '<option value="' + userData[$i].groupe_entreprise_id + '">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
                     }
@@ -727,7 +726,7 @@
                     html += '<button id="removeRowMontant" type="button" class="btn icon_suppre_frais "><i class="fa fa-trash"></i></button></span></p>';
                     html += '</div>';
                     html += '</div>';
-
+                    alert(html);
                     $('#newRowMontant').append(html);
                 }
                 , error: function(error) {

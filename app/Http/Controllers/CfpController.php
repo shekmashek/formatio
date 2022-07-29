@@ -38,14 +38,11 @@ class CfpController extends Controller
         $fonct = new FonctionGenerique();
 
         $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-        $invitation = DB::select('select id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,1,'cfp']);
-        $refuse_demmande_cfp = DB::select('select id_cfp,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur,date_refuse from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,3,'cfp']);
-        $cfp = DB::select('select id_cfp,logo,nom,logo,nom_resp_cfp_inital,prenom_resp_cfp_initial,nom_resp_cfp,prenom_resp_cfp,photos_resp_cfp from collab_cfp_etp where id_etp = ? and statut = ? ',[$etp_id,2]);
+        $invitation = DB::select('select id,cfp_id as id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from v_collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,1,'cfp']);
+        $refuse_demmande_cfp = DB::select('select id,cfp_id as id_cfp,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur,date_refuse from v_collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$etp_id,3,'cfp']);
+        $cfp = DB::select('select cfp_id as id_cfp,logo_cfp,nom,initial_resp_cfp,nom_resp_cfp,prenom_resp_cfp,photos_resp_cfp from v_collab_cfp_etp where id_etp = ? and statut = ? ',[$etp_id,2]);
         $abonnement_etp = DB::select('select v_tep.nom_type,v_tep.type_abonnements_etp_id from v_type_abonnement_etp v_tep JOIN entreprises as etp on v_tep.entreprise_id = etp.id where v_tep.entreprise_id = ? and etp.statut_compte_id = ? or etp.statut_compte_id = ?',[$etp_id,1,3]);
-        // dd($invitation);
-        // dd($refuse_demmande_cfp);
 
-        //$cfp=DB::select('select logo_cfp,nom,cfp_id,photos_resp_cfp,nom_resp_cfp,prenom_resp_cfp ,SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, SUBSTRING(nom_resp_cfp, 1, 1) AS nm from v_demmande_etp_cfp where entreprise_id=?',[$entreprise_id]);
         return view('cfp.cfp', compact('cfp','refuse_demmande_cfp', 'invitation','abonnement_etp'));
     }
 
@@ -53,11 +50,7 @@ class CfpController extends Controller
     public function affInfoOf(Request $request)
     {
         $id = $request->Id;
-        // $fonct = new FonctionGenerique();
-        // $cfp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$id]);
-        // $cfp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$id]);
-        // $ccfp = $fonct->concatTwoList($cfp1, $cfp2);
-      //  $ccfp = DB::select('select * from v_demmande_cfp_etp where entreprise_id = ?', [$entreprise_id]);
+
         $cfp = DB::select('select logo,nom_cfp,nom_resp_cfp,prenom_resp_cfp,adresse_lot_cfp,adresse_quartier_cfp,adresse_code_postal_cfp,adresse_ville_cfp,adresse_region_cfp,email_resp_cfp,telephone_resp_cfp,site_web from v_responsable_cfp where cfp_id = ?',[$id]);
 
         return response()->json($cfp);
@@ -228,22 +221,7 @@ class CfpController extends Controller
                 return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
             }
     }
-    // public function modifier_nom($id,Request $request){
-    //    if($request->nom == null){
-    //     return redirect()->back()->with('error_nom', 'Entrez le nom de votre organisme avant de cliquer sur enregistrer');
-    //    }
-    //    else{
-    //     DB::update('update cfps set nom = ?, slogan = ? where id = ?', [$request->nom,$request->slogan,$id]);
-    //                 return redirect()->route('profil_of', [$id]);
 
-    //    }
-
-    // }
-    // public function c($id,Request $request){
-    //     if($request->mail == null){
-    //      return redirect()->back()->with('error_email', 'Entrez email de votre organisme avant de cliquer sur enregistrer');
-    //     }
-    // }
     public function modifier_nom($id, Request $request)
     {
         if ($request->nom == null) {
@@ -294,15 +272,7 @@ class CfpController extends Controller
         DB::update('update entreprises set adresse_rue = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot, $request->quartier, $request->code_postal, $request->ville, $request->region, $id]);
         return redirect()->route('profil_of', [$id]);
     }
-    // public function modifier_slogan($id, Request $request)
-    // {
-    //     if ($request->slogan == null) {
-    //         return redirect()->back()->with('error_slogan', 'Entrez le slogan de votre organisme avant de cliquer sur enregistrer');
-    //     } else {
-    //         DB::update('update cfps set slogan = ? where id = ?', [$request->slogan, $id]);
-    //         return redirect()->route('profil_of', [$id]);
-    //     }
-    // }
+
     public function modifier_site($id, Request $request)
     {
         if ($request->site == null) {

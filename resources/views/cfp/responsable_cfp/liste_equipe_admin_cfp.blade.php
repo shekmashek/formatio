@@ -195,11 +195,11 @@
                                     @foreach($cfp as $responsables_cfp)
                                         <tr class="information">
                                             @if($responsables_cfp->photos_resp_cfp == NULL or $responsables_cfp->photos_resp_cfp == '' or $responsables_cfp->photos_resp_cfp == 'XXXXXXX')
-                                                <td role="button" class="randomColor m-auto mt-2 text-uppercase" style="width:40px;height:40px; border-radius:100%; color:white; display: grid; place-content: center">
+                                                <td role="button" class="randomColor m-auto mt-2 text-uppercase empNew" style="width:40px;height:40px; border-radius:100%; color:white; display: grid; place-content: center" data-id={{$responsables_cfp->id}} id={{$responsables_cfp->id}} onclick="afficherInfos();">
                                                     <span class=""> {{$responsables_cfp->nom}} {{$responsables_cfp->pr}} </span>
                                                 </td>
                                             @else
-                                                <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                                <td class="td_hover empNew" role="button" style="display: grid; place-content: center" data-id={{$responsables_cfp->id}} id={{$responsables_cfp->id}} onclick="afficherInfos();">
                                                     <img src="{{asset("images/responsables/".$responsables_cfp->photos_resp_cfp)}}" style="width:40px;height:40px; border-radius:100%">
                                                 </td>
                                             @endif
@@ -362,9 +362,68 @@
             </div>
         </div>
     </div>
+    {{--AfficheInfos--}}
+    <div class="infos mt-3">
+        <div class="row">
+            <div class="col">
+                <p class="m-0 text-center">INFORMATION</p>
+            </div>
+            <div class="col text-end">
+                <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+            </div>
+            <hr class="mt-2">
+
+            <div class="mt-2" style="font-size:14px">
+                {{-- <div class="mt-1">
+                        <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
+            </div> --}}
+            <div class="mt-1 text-center mb-3">
+                <span id="donner"></span>
+            </div>
+
+            <div class="mt-1 text-center">
+                <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+            </div>
+            {{-- <div class="mt-1 mb-3 text-center">
+                <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
+            </div> --}}
+            <div class="mt-1">
+                <div class="row">
+                    <div class="col-md-1"><i class='bx bx-user'></i></div>
+                    <div class="col-md-3">Nom_prénoms</div>
+                    <div class="col-md">
+                        <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                        <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-1">
+                <div class="row">
+                    <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                    <div class="col-md-3">E-mail</div>
+                    <div class="col-md"><span id="mail_stagiaire"></span></div>
+                </div>
+            </div>
+            <div class="mt-1">
+                <div class="row">
+                    <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                    <div class="col-md-3">Télephone</div>
+                    <div class="col-md">
+                        <span></span><span id="telephone_stagiaire"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-1">
+                <div class="row">
+                    <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                    <div class="col-md-3">Adresse</div>
+                    <div class="col-md"><span id="adresse"></span></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
-@endsection
-@section('script')
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
@@ -383,7 +442,7 @@
                 var defaultSearch = 0;
 
                 $(document).on('change keyup', '#select-column', function(){
-                    defaultSearch = this.value; 
+                    defaultSearch = this.value;
                 });
 
                 $(document).on('change keyup', '#search-by-column', function(){
@@ -391,9 +450,9 @@
                     table.column(defaultSearch).search(this.value).draw();
                 });
             }
-            
+
             $( '#modifTable thead'  ).on( 'keyup', ".column_search",function () {
-        
+
                 table
                     .column( $(this).parent().index() )
                     .search( this.value )
@@ -422,50 +481,50 @@
                     "lengthMenu":     "Affichage _MENU_ ",
                 }
             });
-            
+
             $('input:checkbox').on('change', function () {
                 var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
                     return '^' + this.value + '$';
                 }).get().join('|');
-                
+
                 table.column(0).search(Projet, true, false, false).draw(false);
 
                 var Session = $('input:checkbox[name="session"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(1).search(Session, true, false, false).draw(false);
 
                 var Entreprise = $('input:checkbox[name="entreprise"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(3).search(Entreprise, true, false, false).draw(false);
 
                 var Modalite = $('input:checkbox[name="modalite"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(4).search(Modalite, true, false, false).draw(false);
-                
+
                 var TypeFormation = $('input:checkbox[name="typeFormation"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(8).search(TypeFormation, true, false, false).draw(false);
-                
+
                 var Module = $('input:checkbox[name="module"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(2).search(Module, true, false, false).draw(false);
-                
+
                 var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(7).search(Statut, true, false, false).draw(false);
-            
+
             });
 
             searchByColumn(table);
@@ -532,6 +591,62 @@
                 }
                 , error: function(error) {
                     console.log(error)
+                }
+            });
+        });
+
+        $('.empNew').on('click', function(){
+            var user_id = $(this).data("id");
+            $.ajax({
+                method: "GET"
+                , url: "/newAfficheInfo/employe_cfp/"+user_id
+                , dataType: "html"
+                , success: function(response) {
+                    let userData = JSON.parse(response);
+                    for (let $i = 0; $i < userData.length; $i++) {
+                        let url_photo = '<img src="{{asset("images/employes/:url_img")}}" style="height80px; width:80px;">';
+                        url_photo = url_photo.replace(":url_img", userData[$i].photos);
+                        var nom = (userData[$i].nom_resp_cfp).substr(0, 1);
+                        var prenom = (userData[$i].prenom_resp_cfp).substr(0, 1);
+
+                        if(userData[$i].photos == null){
+                            $('#donner').html(" ");
+                            $('#donner').append('<p style="background-color: #5c6bc0; width: 80px; height: 80px; border-radius: 50%; padding: 30px; color: white; font-weight: 700; font-size: 14px; marging-bottom: 20px; position: relative; left: 40%"><span>'+nom+prenom+'</span></p>');
+                        }else{
+                            $("#donner").html(" ");
+                            $("#donner").append(url_photo);
+                        }
+
+                        $("#nom").text(': '+userData[$i].nom_resp_cfp);
+                        $("#prenom").text(userData[$i].prenom_resp_cfp);
+                        $("#mail_stagiaire").text(': '+userData[$i].email_resp_cfp);
+
+                        if(userData[$i].telephone_resp_cfp == null) var phone = "-------";
+                        else var phone = userData[$i].telephone_resp_cfp;
+
+                        $("#telephone_stagiaire").text(': '+phone);
+
+                        if(userData[$i].adresse_lot == null){
+                            var lot = "-------"
+                        }
+                        else  var lot = userData[$i].adresse_lot;
+                            if(userData[$i].adresse_quartier == null){
+                            var quartier = "-------"
+                        }
+                        else  var quartier = userData[$i].adresse_quartier;
+
+                        if(userData[$i].adresse_ville == null){
+                            var ville = "-------"
+                        }
+                        else  var ville = userData[$i].adresse_ville;
+
+                        if(userData[$i].adresse_region == null){
+                            var region = "-------"
+                        }
+                        else  var region = userData[$i].adresse_region;
+                        $("#adresse").text(': '+lot+' '+quartier+ ' '+ville+ ' '+region);
+                        $("#code_postal").text(': '+userData[$i].adresse_code_postal);
+                    }
                 }
             });
         });

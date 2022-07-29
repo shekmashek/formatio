@@ -534,7 +534,7 @@ class AbonnementController extends Controller
                     else{
                         if($etp_ab == null) $type_abonnement = "Gratuit";
                         else $type_abonnement = $etp_ab[0]->nom_type;
-                        return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                        return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab', 'entreprise', 'cfps', 'typeAbonnement'));
                     }
                 }
                 else{

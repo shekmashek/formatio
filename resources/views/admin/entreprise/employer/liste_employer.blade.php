@@ -506,8 +506,7 @@
             </div>
         </div>
     </div>
-@endsection
-@section('script')
+
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
@@ -618,7 +617,6 @@
 
         $('.empNew').on('click', function(){
             var user_id = $(this).data("id");
-            console.log(user_id);
             $.ajax({
                 method: "GET"
                 , url: "/newAfficheInfo/employe/"+user_id

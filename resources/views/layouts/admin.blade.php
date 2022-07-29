@@ -961,14 +961,12 @@
                                         @csrf
                                         <div class="modal-header .avertissement  d-flex justify-content-center"
                                             style="color: white">
-                                            <h6 class="modal-title">Créer un Nouveau module</h6>
+                                            <h6 class="modal-title">@lang('translation.DomaineDeFormation')</h6>
                                         </div>
                                         <div class="modal-body mb-3">
                                             <div class="form-group" >
-                                                {{-- <p class="text-center">Pour créer un nouveau module choisissez d'abord votre domaine de formation et la thématique</p> --}}
-                                                <select class="form-control select_formulaire input mt-2" id="acf-domaine" name="domaine" style="height: 40px;" required>
-                                                    <option value="null" disable selected hidden>Choisissez la
-                                                        domaine de formation ...</option>
+                                                <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 40px;" required>
+                                                    <option value="null" disable selected hidden>@lang('translation.ChoisissezLaDomaineDeFormation') ...</option>
                                                     @php
                                                         $data = $domaine->domaine();
                                                     @endphp
@@ -986,8 +984,8 @@
                                                 <p id="domaine_id_err" class="text-danger">@lang('translation.ChoisirLeDomaineDeFormationValide')</p>
                                             </div>
                                         <div class="modal-footer justify-content-center">
-                                            <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Créer votre module</button>
-                                            <button type="button" class="btn btn_annuler redirect_annule" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
+                                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>@lang('translation.Non')</button>
+                                            <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>@lang('translation.CréerVotreModule')</button>
                                         </div>
                                     </form>
                                 </div>
