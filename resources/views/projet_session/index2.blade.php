@@ -27,21 +27,26 @@
         color: #7635dc;
         border-right:.2rem solid  #7635dc;
     }
+
     .nav-tabs .nav-link:hover {
         background-color: rgb(245, 243, 243);
         transform: scale(1.1);
         border: none;
     }
+
     .nav-tabs .nav-item a {
         text-decoration: none;
         text-decoration-line: none;
     }
+
     .corps_planning .nav-item .planning{
         border-right:.2rem solid  #c5c4c49b;
     }
+
     .dropdown-item.active{
         background-color: transparent !important;
     }
+
     .dropdown-item.active:hover{
         background-color: #ececec !important;
     }
@@ -55,6 +60,7 @@
         position: relative;
         bottom: 1px;
     }
+
     .status_reprogrammer {
         border-radius: 5px;
         background-color: #00CDAC;
@@ -65,6 +71,7 @@
         position: relative;
         bottom: 1px;
     }
+
     .status_cloturer {
         border-radius: 5px;
         background-color: #314755;
@@ -75,6 +82,7 @@
         position: relative;
         bottom: 1px;
     }
+
     .status_reporter {
         border-radius: 5px;
         background-color: #26a0da;
@@ -85,6 +93,7 @@
         position: relative;
         bottom: 1px;
     }
+
     .status_annulee {
         border-radius: 5px;
         background-color: #b31217;
@@ -95,6 +104,7 @@
         position: relative;
         bottom: 1px;
     }
+
     .status_termine {
         border-radius: 5px;
         background-color: #1E9600;
@@ -105,6 +115,7 @@
         position: relative;
         bottom: 1px;
     }
+
     .status_confirme {
         border-radius: 5px;
         background-color: #2B32B2;
@@ -116,6 +127,7 @@
         position: relative;
         bottom: 1px;
     }
+
     .statut_active {
         border-radius: 5px;
         background-color: rgb(15, 126, 145);
@@ -126,6 +138,7 @@
         position: relative;
         bottom: 1px;
     }
+
     .modalite {
         border-radius: 5px;
         background-color: #26a0da;
@@ -137,6 +150,7 @@
         min-width: 140px;
         display: inline-block;
     }
+
     .btn_creer {
         background-color: white;
         border: none;
@@ -145,19 +159,23 @@
         color: black;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     }
+
     .btn_creer a {
         font-size: .8rem;
         position: relative;
         bottom: .2rem;
     }
+
     .btn_creer:hover {
         background: #6373812a;
         color: blue;
     }
+
     .btn_creer:focus {
         color: blue;
         text-decoration: none;
     }
+
     .icon_creer {
         background-image: linear-gradient(60deg, #f206ee, #0765f3);
         background-clip: text;
@@ -168,15 +186,19 @@
         top: .4rem;
         margin-right: .3rem;
     }
+
     .rapport_finale {
         background-color: #F16529 !important;
     }
+
     .rapport_finale button {
         color: #ffffff !important;
     }
+
     .rapport_finale:hover {
         background-color: #af3906 !important;
     }
+
     .pdf_download {
         background-color: #e73827 !important;
         padding: 0.3rem;
@@ -186,15 +208,19 @@
         color: white !important;
         position: relative;
     }
+
     .pdf_download:hover {
         background-color: #af3906 !important;
     }
+
     .pdf_download button {
         color: #ffffff !important;
     }
+
     tbody tr {
         vertical-align: middle;
     }
+
     .btn-label-session {
         position: relative;
         left: -12px;
@@ -204,10 +230,12 @@
         /* background-color: #a8e063; */
         border-radius: 3px 0 0 3px;
     }
+
     .btn-ajout-session {
         padding-top: 0;
         padding-bottom: 0;
     }
+
     .resultat_stg{
         background-color: #2cb445;
         padding: 0.3rem;
@@ -222,6 +250,7 @@
     .resultat_stg:hover{
         background-color: #1c7f2e;
     }
+
     .btn_eval_stg{
         background-color: #363dbc;
         padding: 0.3rem;
@@ -242,6 +271,7 @@
         font-weight: 700;
         padding: 4px;
     }
+
     .red{
         color: #5e35b1;
         border: 2px solid #f4511e;
@@ -250,6 +280,7 @@
         font-weight: 700;
         padding: 4px;
     }
+
     .yellow{
         color: #5e35b1;
         border: 2px solid #fdd835;
@@ -258,6 +289,7 @@
         font-weight: 700;
         padding: 4px;
     }
+
     .saClass{
         font-size: 21px;
         color: #637381;
@@ -271,11 +303,13 @@
         max-height: 750px;
         overflow-y: scroll;
     }
+
     .spanClass:hover{
         color: #673ab7;
         transition: 0.3s ease-in-out;
         /* border-bottom: 3px solid #673ab7; */
     }
+
     .head{
         font-size: 14px;
     }
@@ -287,27 +321,35 @@
     .shadow {
         height: auto;
     }
+
     * {
         font-size: 1rem;
     }
+
     .body_nav p {
         font-size: 0.9rem;
     }
+
     .chiffre_d_affaire p {
         font-size: 0.9rem;
     }
+
+
     .body_nav {
         padding: 6px 8px;
         border-radius: 4px 4px 0 0;
     }
+
     .numero_session {
         background-color: rgb(255, 255, 255);
         padding: 0 6px;
         border-radius: 4px;
     }
+
     strong {
         font-size: 10px;
     }
+
     .img_commentaire {
         border-radius: 5rem;
         position: absolute;
@@ -315,42 +357,53 @@
         height: 40px;
         margin-right: 10px;
     }
+
     .img_commentaire:hover {
         cursor: pointer;
     }
+
     .height_default {
         height: 27px;
         align-items: center
     }
+
     a {
         font-size: 12px;
         text-decoration: none;
     }
+
     #myDIV {
         position: absolute;
         display: none;
         margin-left: 57%;
         margin-top: 20px;
     }
+
     u {
         font-size: 12px;
     }
+
     .pad_img {
         padding-left: 10px;
     }
+
     a:hover {
         color: blueviolet;
     }
+
     p {
         font-size: 10px;
     }
+
     .img_superpose {
         margin-left: -10px;
         border: 2px solid white;
     }
+
     .chiffre_d_affaire {
         padding: 0 10px;
     }
+
     .status_grise {
         border-radius: 1rem;
         background-color: #637381;
@@ -359,6 +412,7 @@
         align-items: center margin: 0 auto;
         padding: .1rem .5rem;
     }
+
     .status_reprogrammer {
         border-radius: 1rem;
         background-color: #00CDAC;
@@ -367,6 +421,7 @@
         align-items: center margin: 0 auto;
         padding: .1rem .5rem;
     }
+
     .status_cloturer {
         border-radius: 1rem;
         background-color: #314755;
@@ -375,6 +430,7 @@
         align-items: center margin: 0 auto;
         padding: .1rem .5rem;
     }
+
     .status_reporter {
         border-radius: 1rem;
         background-color: #26a0da;
@@ -383,6 +439,7 @@
         align-items: center margin: 0 auto;
         padding: .1rem .5rem;
     }
+
     .status_annulee {
         border-radius: 1rem;
         background-color: #b31217;
@@ -391,6 +448,7 @@
         align-items: center margin: 0 auto;
         padding: .1rem .5rem;
     }
+
     .status_termine {
         border-radius: 1rem;
         background-color: #2ebf91;
@@ -399,6 +457,7 @@
         align-items: center margin: 0 auto;
         padding: .1rem .5rem;
     }
+
     .status_confirme {
         border-radius: 1rem;
         background-color: #2B32B2;
@@ -407,6 +466,7 @@
         align-items: center margin: 0 auto;
         padding: .1rem .5rem;
     }
+
     .statut_active {
         border-radius: 1rem;
         background-color: rgb(15, 126, 145);
@@ -415,14 +475,18 @@
         align-items: center margin: 0 auto;
         padding: .1rem .5rem;
     }
+
     .modalite {
         border-radius: 1rem;
         background-color: #26a0da;
         color: rgb(255, 255, 255);
         /* width: 60%; */
         align-items: center margin: 0 auto;
+
         padding: 0.1rem 0.5rem !important;
     }
+
+
     .dernier_planning {
         text-align: left;
         padding-left: 6px;
@@ -430,17 +494,22 @@
         font-size: 12px;
         background-color: rgba(230, 228, 228, 0.39);
     }
+
     .dernier_planning:focus {
         color: rgb(130, 33, 100);
         background-color: white;
         font-weight: bold;
     }
+
+
+
     button {
         background-color: white;
         border: none;
         margin: 0;
         padding: 0;
     }
+
     .titre_card {
         background-color: rgb(223, 219, 219);
         height: 30px;
@@ -448,24 +517,29 @@
         margin: 2px 0;
         color: white;
     }
+
     .tabcontent {
         display: none;
     }
+
     .btn_modifier_statut {
         border-radius: 30px;
         padding: 1rem 1rem;
         color: black;
     }
+
     .btn_modifier_statut a {
         font-size: .8rem;
         position: relative;
         bottom: .2rem;
     }
+
     .btn_modifier_statut:hover {
         background-color: white;
         color: black;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     }
+
     .planning {
         text-align: left;
         padding-left: 6px;
@@ -473,12 +547,15 @@
         font-size: 12px;
         margin:0;
     }
+
     .planning:hover {
         background-color: #eeeeee;
     }
+
     .planning p{
         font-size: .85rem;
     }
+
     @keyframes action{
         0%{
             filter: brightness(0.99);
@@ -496,12 +573,15 @@
             filter: brightness(1);
         }
     }
+
+
     .action_animation{
         animation-name: action;
         animation-duration: 3s;
         animation-delay: 1s;
         animation-iteration-count: infinite;
     }
+
     .icon_creer {
         background-image: linear-gradient(60deg, #f206ee, #0765f3);
         background-clip: text;
@@ -512,16 +592,19 @@
         top: .4rem;
         margin-right: .3rem;
     }
+
     .liste_projet{
         background-color: #637381;
         margin: 0;
         padding: 1;
         color: #ffffff;
     }
+
     .liste_projet:hover{
         background-color: #cfccccc5;
         color: #191818;
     }
+
     .pdf_download{
             background-color: #e73827 !important;
             border-radius: 5px;
@@ -532,12 +615,14 @@
     .pdf_download button{
         color: #ffffff !important;
     }
+
     .type_formation{
         border-radius: 1rem;
         background-color: #826bf3;
         color: rgb(255, 255, 255);
         /* width: 60%; */
         align-items: center margin: 0 auto;
+
         padding: 0.1rem 0.5rem !important;
     }
     .type_intra{
@@ -553,11 +638,13 @@
         position: relative;
         align-items: center margin: 0 auto;
     }
+
     .type_intra:hover,
     .type_inter:hover{
         cursor: default;
         color: white;
     }
+
     .type_inter{
         padding: 0.1rem 0.5rem !important;
         font-size: 0.85rem;
@@ -571,6 +658,7 @@
         position: relative;
         align-items: center; margin: 0 auto;
     }
+
     /*info SESSION*/
     .green{
         color: #5e35b1;
@@ -580,6 +668,7 @@
         font-weight: 700;
         padding: 4px;
     }
+
     .red{
         color: #5e35b1;
         border: 2px solid #f4511e;
@@ -588,6 +677,7 @@
         font-weight: 700;
         padding: 4px;
     }
+
     .yellow{
         color: #5e35b1;
         border: 2px solid #fdd835;
@@ -596,6 +686,7 @@
         font-weight: 700;
         padding: 4px;
     }
+
     .saClass{
         font-size: 22px;
         color: #637381;
@@ -628,28 +719,33 @@
             padding: 25px;
         }
     }
+
     .timeline-1 .event {
         border-bottom: 1px dashed #000;
         padding-bottom: 25px;
         margin-bottom: 25px;
         position: relative;
     }
+
     @media (max-width: 767px) {
         .timeline-1 .event {
             padding-top: 30px;
         }
     }
+
     .timeline-1 .event:last-of-type {
         padding-bottom: 0;
         margin-bottom: 0;
         border: none;
     }
+
     .timeline-1 .event:before,
     .timeline-1 .event:after {
         position: absolute;
         display: block;
         top: 0;
     }
+
     .timeline-1 .event:before {
         left: -207px;
         content: attr(data-date);
@@ -658,12 +754,14 @@
         font-size: 0.9em;
         min-width: 120px;
     }
+
     @media (max-width: 767px) {
         .timeline-1 .event:before {
             left: 0px;
             text-align: left;
         }
     }
+
     .timeline-1 .event:after {
         -webkit-box-shadow: 0 0 0 3px #b565a7;
         box-shadow: 0 0 0 3px #b565a7;
@@ -682,22 +780,26 @@
         margin-bottom: 25px;
         position: relative;
     }
+
     @media (max-width: 767px) {
         .timeline-1 .event_terminer {
             padding-top: 30px;
         }
     }
+
     .timeline-1 .event_terminer:last-of-type {
         padding-bottom: 0;
         margin-bottom: 0;
         border: none;
     }
+
     .timeline-1 .event_terminer:before,
     .timeline-1 .event_terminer:after {
         position: absolute;
         display: block;
         top: 0;
     }
+
     .timeline-1 .event_terminer:before {
         left: -207px;
         content: attr(data-date);
@@ -706,12 +808,14 @@
         font-size: 0.9em;
         min-width: 120px;
     }
+
     @media (max-width: 767px) {
         .timeline-1 .event_terminer:before {
             left: 0px;
             text-align: left;
         }
     }
+
     .timeline-1 .event_terminer:after {
         -webkit-box-shadow: 0 0 0 3px #b565a7;
         box-shadow: 0 0 0 3px #b565a7;
@@ -735,17 +839,20 @@
             padding-top: 30px;
         }
     }
+
     .timeline-1 .event_repro:last-of-type {
         padding-bottom: 0;
         margin-bottom: 0;
         border: none;
     }
+
     .timeline-1 .event_repro:before,
     .timeline-1 .event_repro:after {
         position: absolute;
         display: block;
         top: 0;
     }
+
     .timeline-1 .event_repro:before {
         left: -207px;
         content: attr(data-date);
@@ -754,12 +861,14 @@
         font-size: 0.9em;
         min-width: 120px;
     }
+
     @media (max-width: 767px) {
         .timeline-1 .event_repro:before {
             left: 0px;
             text-align: left;
         }
     }
+
     .timeline-1 .event_repro:after {
         -webkit-box-shadow: 0 0 0 3px #b565a7;
         box-shadow: 0 0 0 3px #b565a7;
@@ -826,6 +935,7 @@
         letter-spacing: 1px !important;
         height: 40px !important;
     }
+
     .select2-container .select2-selection--single :focus {
         -moz-box-shadow: none !important;
         -webkit-box-shadow: none !important;
@@ -833,6 +943,7 @@
         border-bottom: 2px solid #28a7eb !important;
         outline-width: 0 !important;
     }
+
     .select2-container .select2-selection--single{
         height: 40px !important;
         border: 1px solid #28a7eb !important;
@@ -840,26 +951,32 @@
     .popover{
         max-width:500px;
     }
+
     .myCircle:hover{
         color: #1e9600;
     }
     .hideAction{
         display: none;
     }
+
     .select2-container--default .select2-selection--single .select2-selection__arrow {
         height: 35px !important;
     }
+
     .fixedTop{
         overflow-y: scroll;
     }
+
     #myDiv{
         position: fixed;
         top: 0;
+
     }
     .spanClass:hover{
         color: #673ab7;
         transition: 0.3s ease-in-out;
     }
+
     .modifTable_length label, .modifTable_length select, .modifTable_filter label, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
         font-size: 13px;
     }
@@ -870,6 +987,7 @@
     .redClass{
         color: #f44336 !important;
     }
+
     .arrowDrop{
         color: #1e9600;
         
@@ -879,14 +997,17 @@
         color: red !important;
         transition: 0.3s !important;
     }
+
     #example_length select{
         height: 25px;
         font-size: 13px;
         vertical-align: middle;
     }
+
     .popover{
         max-width:500px;
     }
+
     .myCircle:hover{
         color: #1e9600;
     }
@@ -896,15 +1017,18 @@
     .dataTables_empty{
         font-size: 13px;
     }
+
     /* colvis */
     th, td { 
         white-space: nowrap; 
         border: none;
     }
+
     div.dataTables_wrapper {
         width: 95%;
         margin: 0 auto;
     }
+
     div.ColVis {
         float: left;
     }
@@ -913,16 +1037,19 @@
         padding-top: 0px;
         background: #ffff;
     }
+
     ul.ColVis_collection{
         box-shadow: none !important;
         background: #f3f3f3 !important;
     }
+
     ul.ColVis_collection li{
         background: #f3f3f3;
         box-shadow: none !important;
         border: none;
         font-size: px;
     }
+
     ul.ColVis_collection li{
         background: #f3f3f3;
         box-shadow: none !important;
@@ -951,19 +1078,45 @@
     .dataTables_wrapper.no-footer div.dataTables_scrollBody > table {
         position: relative; 
         z-index: 0;
+        
+        /* overflow: hidden !important; */
+        /* background: white; */
     }
 
+    /* div.dataTables_scrollHead {
+  overflow: visible !important;
+} */
+   
     .table{
         overflow: unset !important;
     }
     
+    /* .dropdown-menu {
+    overflow: overlay !important;
+    overflow-x: overlay !important;
+    overflow-y: overlay !important;
+    } */
+    /* .dataTables_scrollHead {
+        position: relative;
+        background: #ffff;
+        overflow: initial !important;
+        overflow-x: initial !important;
+        overflow-y: initial !important;
+        min-height: 0
+        z-index:-1;
+    } */
+    /* .dropdown-menu {
+    
+    z-index: 1080 !important;
+    } */
+    /* .myTbody tr td {
+        border-bottom: 2px solid red;
+    } */
 </style>
 <div class="container-fluid mt-5">
 
-    <table class="table order-column  modifTable "   id="example">
-        {{-- en tete --}}
+    <table class="table order-column  modifTable"  id="example">
         <thead  style=" top: 0">
-            
             <tr style="background: #d4d1d139;margin-top:-10px">
                 <th >
                     <div class="dropdown">
@@ -982,13 +1135,13 @@
                                 @foreach ($nomProjet as $prj)
                                     <div class="form-check">
                                         <li>
-                                            <input class="checkbox form-check-input" type="checkbox" name="Projet" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
+                                            <input class="checkbox form-check-input" type="checkbox" name="ProjectE" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
                                         </li>
                                     </div>
                                 @endforeach
                             </ul>
-                        </ul>
-                    </div> 
+                      </ul>
+                    </div>
                 </th>
                 <th >
                     <div class="dropdown">
@@ -1012,12 +1165,13 @@
                                     </div>
                                 @endforeach
                             </ul>
-                        </ul>
+                      </ul>
                     </div>
                 </th>
                 
                 <th class="headProject" >
                     <div class="dropdown">
+            
                         <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bx bxs-customize align-middle" style="color: #2e3950"></i> Module
                         </button>
@@ -1026,19 +1180,19 @@
                                 <input type="text" class="column_search form-control form-control-sm">
                             </li>
                             <li>
-                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
-                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all2">
+                                <label class="form-check-label label" for="select_all2" style="font-size: 12px">Selectionez tout</label>
                             </li>
                             <ul>
-                                @foreach ($nomModules as $mdl)
+                                @foreach ($nomModules as $m)
                                     <div class="form-check">
                                         <li>
-                                            <input class="checkbox form-check-input" type="checkbox" name="Module" value="{{ $mdl->nom_module}}"><span style="font-size: 12px">{{ $mdl->nom_module}}</span>
+                                            <input class="checkbox form-check-input" type="checkbox" name="Module" value="{{ $m->nom_module}}"><span style="font-size: 12px">{{ $m->nom_module}}</span>
                                         </li>
                                     </div>
                                 @endforeach
                             </ul>
-                        </ul>
+                      </ul>
                     </div>
                 </th>
                 <th class="headProject" >
@@ -1052,14 +1206,14 @@
                                 <input type="text" class="column_search form-control form-control-sm">
                             </li>
                             <li>
-                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
-                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all3">
+                                <label class="form-check-label label" for="select_all3" style="font-size: 12px">Selectionez tout</label>
                             </li>
                             <ul>
-                                @foreach ($nomEntreprises as $et)
+                                @foreach ($nomEntreprises as $e)
                                     <div class="form-check">
                                         <li>
-                                            <input class="checkbox form-check-input" type="checkbox" name="Enterprise" value="{{ $et->nom_etp}}"><span style="font-size: 12px">{{ $et->nom_etp}}</span>
+                                            <input class="checkbox form-check-input" type="checkbox" name="EntrepriseE" value="{{ $e->nom_etp}}"><span style="font-size: 12px">{{ $e->nom_etp}}</span>
                                         </li>
                                     </div>
                                 @endforeach
@@ -1077,8 +1231,8 @@
                                 <input type="text" class="column_search form-control form-control-sm">
                             </li>
                             <li>
-                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
-                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all4">
+                                <label class="form-check-label label" for="select_all4" style="font-size: 12px">Selectionez tout</label>
                             </li>
                             <ul>
                                 @foreach ($nomModalites as $mdlt)
@@ -1094,7 +1248,7 @@
                 </th>
                 <th>
                     <div class="dropdown">
-                        <a id="exampleE1" tabindex="0" class="btn btn-sm btn-default" role="button" data-bs-placement="bottom" data-bs-toggle="popover" title="Recherche entre 2 périodes" style="width: 100%;">
+                        <a id="exampleE1" tabindex="0" class="btn btn-sm btn-default" role="button" data-bs-toggle="popover" title="Recherche entre 2 périodes" style="width: 100%;">
                             <i class='bx bx-time-five'></i> <span style="font-size: 13px">Date</span> &nbsp;&nbsp;<i class='bx bx-caret-down' style="font-size: 12px"></i>
                         </a>
                     </div>
@@ -1145,7 +1299,7 @@
                         </button>
                     </div>
                 </th>
-                <th  >
+                <th >
                     <div class="dropdown" >
                         <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class='bx bx-book-content align-middle' style="vertical-align: middle"></i> Type
@@ -1155,8 +1309,8 @@
                                 <input type="text" class="column_search form-control form-control-sm">
                             </li>
                             <li>
-                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
-                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all6">
+                                <label class="form-check-label label" for="select_all6" style="font-size: 12px">Selectionez tout</label>
                             </li>
                             <ul>
                                 @foreach ($nomTypes as $ntp)
@@ -1264,6 +1418,8 @@
                 <th >PDF</th>
                 <th >Action</th>
             </tr>
+            
+        
         </thead>
         <tbody class="myTbody">
             @foreach ($fullProjects as $projet)
@@ -1469,6 +1625,7 @@
                                                     <div class="col-md-8">
                                                             @php
                                                                 $dataFrais = $groupe->dataFraisAnnexe($projet->groupe_id, $projet->entreprise_id);
+
                                                                 $somme = 0;
                                                                 if (count($dataFrais) > 0) {
                                                                     foreach ($dataFrais as $dataFrai) {
@@ -1491,6 +1648,7 @@
                                                     <div class="col-md-8">
                                                             {{-- @php
                                                                 $dataFrais = $groupe->dataFraisAnnexe($projet->groupe_id, $projet->entreprise_id);
+
                                                                 $somme = 0;
                                                                 if (count($dataFrais) > 0) {
                                                                     foreach ($dataFrais as $dataFrai) {
@@ -2192,53 +2350,85 @@
                 }
                 }
             } );
-            // $('.dataTables_scrollBody').addClass("z-index-n2 overflow-visible");
-            // $('.dropdown-menu').addClass("z-index-master position-relative overflow-scroll");
+
             new $.fn.dataTable.FixedColumns( table, {
                 leftColumns: 3,
             } );
             $('.ColVis_Button').text('Afficher / Masquer');
+
             $('input:checkbox').on('change', function () {
-                var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
+                var Projet = $('input:checkbox[name="ProjectE"]:checked').map(function() {
                     return '^' + this.value + '$';
                 }).get().join('|');
                 
-                table.column(0).search(Projet, true,true,true).draw();
+                table.column(0).search(Projet, true,false,true).draw();
+
                 var Session = $('input:checkbox[name="Session"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(1).search(Session, true,true,true).draw();
+                table.column(1).search(Session, true,false,true).draw();
                 
                 var Module = $('input:checkbox[name="Module"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(2).search(Module, true,false,false).draw();
-                var Entreprise = $('input:checkbox[name="Enterprise"]:checked').map(function() {
+                table.column(2).search(Module, true,false,true).draw();
+
+                var Entreprise = $('input:checkbox[name="EntrepriseE"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(3).search(Entreprise, true,false,false).draw();
+                table.column(3).search(Entreprise, true,false,true).draw();
+
                 var Modalite = $('input:checkbox[name="Modalite"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(4).search(Modalite, true,true,true).draw();
-                
-                var TypeF = $('input:checkbox[name="TypeF"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(7).search(TypeF, true,true,true).draw();
+                table.column(4).search(Modalite, true,false,true).draw();
                 
                 var Statut = $('input:checkbox[name="Statut"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(8).search(Statut, true,false,false).draw();
+                table.column(8).search(Statut, true,false,true).draw();
+
+                var Type = $('input:checkbox[name="TypeF"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(7).search(Type, true,false,true).draw();
             });
+
+            $('.column_search').on('keyup' ,function () {
+                console.log($(this).val());
+                table.column( $(this).parent().parent().parent().parent().index() ).search( this.value ).draw();
+            } );
+
+            // select all
+            $('.select_all').on('click', function(){
+                if(this.checked){
+                    $('.checkbox').each(function(){
+                        this.checked = true;
+                    });
+                }else{
+                    $('.checkbox').each(function(){
+                        this.checked = false;
+                    });
+                }
+            });
+
+            $('.checkbox').on('click', function(){
+                if(('.checkbox:checked').length == $('.checkboxx').length){
+                    $('.select_all').prop('checked', true);
+                } else{
+                    $('.select_all').prop('checked', false);
+                }
+            });
+            // end select all
+
         } );
+
         
     </script>
 @endsection
