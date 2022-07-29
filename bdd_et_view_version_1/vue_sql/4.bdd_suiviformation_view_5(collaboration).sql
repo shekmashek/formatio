@@ -838,6 +838,7 @@ JOIN responsables r ON d.resp_etp_id = r.id
 JOIN responsables_cfp rc ON d.resp_cfp_id = rc.id;
 
 CREATE OR REPLACE VIEW v_collab_cfp_etp AS SELECT
+    collab.id,
     collab.statut,
     collab.demmandeur,
     e.id AS id_etp,

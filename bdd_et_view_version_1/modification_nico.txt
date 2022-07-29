@@ -281,6 +281,7 @@ CREATE table collaboration_etp_cfp (
 view a creer
 
 CREATE OR REPLACE VIEW v_collab_cfp_etp AS SELECT
+    collab.id,
     collab.statut,
     collab.demmandeur,
     e.id AS id_etp,
@@ -413,3 +414,15 @@ FROM
     responsables_cfp
 JOIN cfps ON  responsables_cfp.cfp_id = cfps.id
 LEFT JOIN genre ON  responsables_cfp.sexe_resp_cfp = genre.id
+
+faire les alters tables suivants :
+
+ALTER TABLE `entreprises` CHANGE `adresse_rue` `adresse_rue` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_quartier` `adresse_quartier` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_code_postal` `adresse_code_postal` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_ville` `adresse_ville` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_region` `adresse_region` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `stat` `stat` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `rcs` `rcs` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `cif` `cif` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `site_etp` `site_etp` archar(191) COLLATE utf8mb4_unicode_ci  default null;

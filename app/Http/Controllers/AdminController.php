@@ -187,7 +187,7 @@ class AdminController extends Controller
 
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
-            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur from v_collab_cfp_etp where cfp_id = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
+            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_responsable as email_resp,nom_etp,nom_secteur from v_collab_cfp_etp where cfp_id = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
             $user = $fonct->findWhereMulitOne(("v_responsable_cfp"),["user_id"],[$id_user])->photos_resp_cfp;
             $photo ='';
             if($user == null){

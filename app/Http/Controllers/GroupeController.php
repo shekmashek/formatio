@@ -51,7 +51,7 @@ class GroupeController extends Controller
         $type_formation = request()->type_formation;
         $modules = $fonct->findWhere("modules", ["cfp_id",'status'], [$cfp_id,2]);
 
-        $entreprise = DB::select('select id_etp,logo_etp,nom_etp,initial_resp_etp,photos_resp,nom_resp,prenom_resp from v_collab_cfp_etp where cfp_id = ? and statut = ?',[$cfp_id,2]);
+        $entreprise = DB::select('select id_etp as entreprise_id,logo_etp,nom_etp,initial_resp_etp,photos_resp,nom_resp,prenom_resp from v_collab_cfp_etp where cfp_id = ? and statut = ?',[$cfp_id,2]);
 
         $payement = $fonct->findAll("type_payement");
 

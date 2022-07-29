@@ -15,17 +15,7 @@
 }
 </style>
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
-{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 <div class="container-fluid">
-    {{-- <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5> --}}
-    <div class="row instruction mb-3">
-        <div class="col-11">
-            <p class="mb-0 ">Pour créer un projet inter, vous devez choisir le module de formation et cliquer sur ' + Session inter' pour compléter les informations requises pour le projet.</p>
-        </div>
-        <div class="col-1 text-end">
-            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();" style="cursor: pointer;"></i>
-        </div>
-    </div>
     <div class="m-4">
         <div class="row mb-4">
             <div class="col-6">
@@ -81,7 +71,7 @@
                                 </div>
                                 @if($info->jours_restant > 0)
                                 <div class="col-2 liste__formation__content">
-                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                    <a href="{{route('modif_programmes',$info->module_id)}}">
                                         <div class="liste__formation__item">
                                             <span class="acf-nom-module">{{$info->nom_module}}</span>
                                             <p><span class="acf-description">{{$info->nom_formation}}</span></p>
@@ -90,7 +80,7 @@
                                 </div>
                                 @else
                                 <div class="col-3 liste__formation__content">
-                                    <a href="{{route('select_par_module',$info->module_id)}}">
+                                    <a href="{{route('modif_programmes',$info->module_id)}}">
                                         <div class="liste__formation__item">
                                             <span class="acf-nom-module">{{$info->nom_module}}</span>
                                             <p><span class="acf-description">{{$info->nom_formation}}</span></p>

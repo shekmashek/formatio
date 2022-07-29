@@ -194,15 +194,15 @@ class CollaborationController extends Controller
     //     return $this->collaboration->verify_annulation_collaboration_etp_cfp($id);
     // }
 
-    public function suppresion_invite_cfp_etp($id){
-        DB::delete('delete from collaboration_etp_cfp where statut = ? and cfp_id = ?',[3,$id]);
+    public function suppresion_invite_cfp_etp($id,$id_collab){
+        DB::delete('delete from collaboration_etp_cfp where statut = ? and cfp_id = ? and id = ?',[3,$id,$id_collab]);
         DB::commit();
 
         return back();
     }
 
-    public function suppresion_invite_etp_cfp($id){
-        DB::delete('delete from collaboration_etp_cfp where statut = ? and etp_id = ?',[3,$id]);
+    public function suppresion_invite_etp_cfp($id,$id_collab){
+        DB::delete('delete from collaboration_etp_cfp where statut = ? and etp_id = ? and id = ?',[3,$id,$id_collab]);
         DB::commit();
 
         return back();
@@ -319,14 +319,14 @@ class CollaborationController extends Controller
 
     // =========================== annulation invation ======================================
 
-    public function annulation_invitation_etp_cfp($id)
+    public function annulation_invitation_etp_cfp($id,$id_collab)
     {
-        return $this->collaboration->suprime_invitation_collaboration_etp_cfp($id);
+        return $this->collaboration->suprime_invitation_collaboration_etp_cfp($id,$id_collab);
     }
 
-    public function annulation_invitation_cfp_etp($id)
+    public function annulation_invitation_cfp_etp($id,$id_collab)
     {
-        return $this->collaboration->suprime_invitation_collaboration_cfp_etp($id);
+        return $this->collaboration->suprime_invitation_collaboration_cfp_etp($id,$id_collab);
     }
 
     public function annulation_invitation_formateur_cfp($id)
@@ -342,18 +342,18 @@ class CollaborationController extends Controller
     // ========================== accepter inviation ============
 
 
-    public function accept_invitation_etp_cfp($id)
+    public function accept_invitation_etp_cfp($id,$id_collab)
     {
         $user_id = Auth::user()->id;
         $resp_etp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id]);
-        return $this->collaboration->accept_invitation_collaboration_etp_cfp($id,$resp_etp->id);
+        return $this->collaboration->accept_invitation_collaboration_etp_cfp($id,$resp_etp->id,$id_collab);
     }
 
-    public function accept_invitation_cfp_etp($id)
+    public function accept_invitation_cfp_etp($id,$id_collab)
     {
         $user_id = Auth::user()->id;
         $resp_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id]);
-        return $this->collaboration->accept_invitation_collaboration_cfp_etp($id,$resp_cfp->id);
+        return $this->collaboration->accept_invitation_collaboration_cfp_etp($id,$resp_cfp->id,$id_collab);
     }
 
     public function accept_invitation_formateur_cfp($id)

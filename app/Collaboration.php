@@ -48,19 +48,19 @@ class Collaboration extends Model
     }
 
     // ========================= invitation refuse
-    public function suprime_invitation_collaboration_etp_cfp($id)
+    public function suprime_invitation_collaboration_etp_cfp($id,$id_collab)
     {
-        DB::update('update collaboration_etp_cfp set statut = ? where cfp_id = ?', [3,$id]);
+        DB::update('update collaboration_etp_cfp set statut = ? where cfp_id = ? and id = ?', [3,$id,$id_collab]);
         DB::commit();
 
         return back();
     }
 
-   
+
     // -----------------------------------------
-    public function suprime_invitation_collaboration_cfp_etp($id)
+    public function suprime_invitation_collaboration_cfp_etp($id,$id_collab)
     {
-        DB::update('update collaboration_etp_cfp set statut = ? where etp_id = ?', [3,$id]);
+        DB::update('update collaboration_etp_cfp set statut = ? where etp_id = ? and id = ?', [3,$id,$id_collab]);
         DB::commit();
         return back();
     }
@@ -86,14 +86,14 @@ class Collaboration extends Model
 
 
     //=================   accepter invitation==========================
-    public function accept_invitation_collaboration_etp_cfp($id,$resp_etp_id)
+    public function accept_invitation_collaboration_etp_cfp($id,$resp_etp_id,$id_collab)
     {
         $demande = $this->fonct->findWhereMulitOne("collaboration_etp_cfp", ["cfp_id","demmandeur"], [$id,'cfp']);
         $verify_exist = $this->fonct->findWhere("collaboration_etp_cfp", ["etp_id", "cfp_id","demmandeur"], [$demande->etp_id, $demande->cfp_id,'cfp']);
         if ($verify_exist != null) {
             DB::beginTransaction();
             try {
-                $query = DB::update("update collaboration_etp_cfp set statut = ? where cfp_id = ? and demmandeur = ?", [2,$id,'cfp']);
+                $query = DB::update("update collaboration_etp_cfp set statut = ? where cfp_id = ? and demmandeur = ? and id = ?", [2,$id,'cfp',$id_collab]);
                 DB::commit();
 
             } catch (\Exception $e) {
@@ -104,14 +104,14 @@ class Collaboration extends Model
         return back();
     }
 
-    public function accept_invitation_collaboration_cfp_etp($id,$resp_cfp_id)
+    public function accept_invitation_collaboration_cfp_etp($id,$resp_cfp_id,$id_collab)
     {
         $demande = $this->fonct->findWhereMulitOne("collaboration_etp_cfp", ["etp_id","demmandeur"], [$id,'etp']);
         $verify_exist = $this->fonct->findWhere("collaboration_etp_cfp", ["cfp_id", "etp_id","demmandeur"], [$demande->cfp_id, $demande->etp_id,'etp']);
         if ($verify_exist != null) {
             DB::beginTransaction();
             try {
-                DB::update("update collaboration_etp_cfp set statut = ? where etp_id = ? and demmandeur = ?", [2,$id,'etp']);
+                DB::update("update collaboration_etp_cfp set statut = ? where etp_id = ? and demmandeur = ? and id = ?", [2,$id,'etp',$id_collab]);
                 DB::commit();
 
             } catch (\Exception $e) {

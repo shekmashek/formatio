@@ -47,7 +47,7 @@ class ResponsableCfpController extends Controller
                 $projets_counts = $fonct->findWhere("projets",["cfp_id"],[$refs->cfp_id]);
                 $factures_counts = $fonct->findWhere("factures",["cfp_id"],[$refs->cfp_id]);
                 $formateurs_counts = $fonct->findWhere("demmande_cfp_formateur",["demmandeur_cfp_id","activiter"],[$refs->cfp_id,1]);
-                $entreprises_counts = $fonct->findWhere("collaboration_etp_cfp", ["cfp_id","demmandeur"], [$refs->cfp,'cfp']);
+                $entreprises_counts = $fonct->findWhere("collaboration_etp_cfp", ["cfp_id","demmandeur"], [$refs->cfp_id,'cfp']);
                 $projetInter_counts = $fonct->findWhere("projets",["cfp_id","type_formation_id"],[$refs->cfp_id,2]);
                 $projetIntra_counts = $fonct->findWhere("projets",["cfp_id","type_formation_id"],[$refs->cfp_id,1]);
                 $sessions_counts = DB::select('select grp.id from groupes as grp join projets as prj on grp.projet_id = prj.id where prj.cfp_id = ?',[$refs->cfp_id]);
@@ -82,7 +82,7 @@ class ResponsableCfpController extends Controller
                 $projets_counts = $fonct->findWhere("projets",["cfp_id"],[$refs->cfp_id]);
                 $factures_counts = $fonct->findWhere("factures",["cfp_id"],[$refs->cfp_id]);
                 $formateurs_counts = $fonct->findWhere("demmande_cfp_formateur",["demmandeur_cfp_id","activiter"],[$refs->cfp_id,1]);
-                $entreprises_counts = $fonct->findWhere("collaboration_etp_cfp", ["cfp_id","demmandeur"], [$refs->cfp,'cfp']);
+                $entreprises_counts = $fonct->findWhere("collaboration_etp_cfp", ["cfp_id","demmandeur"], [$refs->cfp_id,'cfp']);
                 $projetInter_counts = $fonct->findWhere("projets",["cfp_id","type_formation_id"],[$refs->cfp_id,2]);
                 $projetIntra_counts = $fonct->findWhere("projets",["cfp_id","type_formation_id"],[$refs->cfp_id,1]);
                 $sessions_counts = DB::select('select grp.id from groupes as grp join projets as prj on grp.projet_id = prj.id where prj.cfp_id = ?',[$refs->cfp_id]);

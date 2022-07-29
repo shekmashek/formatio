@@ -207,13 +207,13 @@
                                     {{-- <p class="sous_text text-muted">{{$invit_cfp->nom_secteur}}</p> --}}
                                 </td>
                                 <td>
-                                    <a href="{{ route('accept_etp_cfp',$invit_cfp->id_cfp) }}" class="accept_etp">
+                                    <a href="{{ route('accept_etp_cfp',$invit_cfp->id_cfp,$invit_cfp->id) }}" class="accept_etp">
                                         <span class="btn_nouveau"><i class="bx bx-check me-2"
                                                 title="Accepter"></i>accepter</span>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('annulation_etp_cfp',$invit_cfp->id_cfp) }}" class="refuse_etp">
+                                    <a href="{{ route('annulation_etp_cfp',$invit_cfp->id_cfp,$invit_cfp->id) }}" class="refuse_etp">
                                         <span class="btn_annuler"><i class="bx bx-x  me-2"
                                                 title="Refuser"></i>refuser</span>
                                     </a>
@@ -251,7 +251,7 @@
                                     <p>envoyé le {{$refuse_invit->date_refuse}}</p>
                                 </td>
                                 <td>
-                                    <a href="{{ route('suppresion_invite_cfp_etp',$refuse_invit->id_cfp) }}">
+                                    <a href="{{ route('suppresion_invite_cfp_etp',$refuse_invit->id_cfp,$refuse_invit->id) }}">
                                         <span class=""><i class="bx bx-trash bx_supprimer"
                                                 title="Refuser"></i></span>
                                     </a>
