@@ -1645,3 +1645,6 @@ Route::get('rapport_presence_interne/{groupe?}','ProjetInterneController@rapport
 Route::get('invitation_ajouter_employer/{groupe?}/{employe?}','SessionController@invitation_ajouter_employer')->name('invitation_ajouter_employer');
 //route multilangage
 Route::get('locale/{langue}', 'LanguageController@langChange')->name('locale');
+
+/**generation badge avec qrcode */
+Route::get("qr_code/{id}", "ParticipantController@generate_badge")->name('qr_code');

@@ -288,6 +288,7 @@
                                 <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
                                 @can('isReferent')
                                     <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
+                                     <th scope="col" class="table-head font-weight-light align-middle text-center ">Badge</th>
                                 @endcan
                             </tr>
                         </thead>
@@ -400,6 +401,9 @@
                                                 <i class=' bx bxs-trash' style='color:#e21717'></i>
                                             </button>
                                         </td>
+                                        <td class="align-middle text-center text-secondary">
+                                        <a href="{{ route('qr_code',$employers[$i]->id) }}">Badge</a>
+                                        </td>
                                     @endcan
                                 </tr>
                                 <div class="modal fade" id="delete_emp_{{ $employers[$i]->id }}" tabindex="-1" role="dialog"
@@ -499,8 +503,8 @@
                             <div class="col-md-3">Adresse</div>
                             <div class="col-md"><span id="adresse"></span></div>
                         </div>
-
                     </div>
+                    
                 </div>
             </div>
         </div>

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Image;
 
 /* ====================== Exportation Excel ============= */
@@ -127,8 +128,8 @@ class ParticipantController extends Controller
 
     public function liste_employer($paginations = null)
     {
-        $current_route = request()->path();
-        if($current_route == "employes.liste"){
+     
+    
 
             $entreprise_id = 0;
             $nb_limit = 10;
@@ -241,13 +242,7 @@ class ParticipantController extends Controller
         }
 
             // return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'pagination'));
-        }
-        else {
-            $emp = $this->fonct->findAll("employers");
-            return response()->json($emp);
-        }
-
-// dd($pagination);
+  
         return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'form_int'));
     }
 
@@ -1329,5 +1324,15 @@ class ParticipantController extends Controller
             DB::update('delete from role_users where user_id = ? and role_id = 8 ', [$user_id->user_id]);
             DB::update('update role_users set activiter = 0 where user_id = ? and role_id = 3', [$user_id->user_id]);
         }
+    }
+    /**generation badge avec qrcode */
+    public function generate_badge($id){
+        $emp = $this->fonct->findWhereMulitOne("employers",["id"],[$id]);
+        $info = $emp->matricule_emp . $emp->nom_emp . $emp->prenom_emp;
+    	# 2. On génère un QR code de taille 200 x 200 px
+    	$qrcode = QrCode::size(50)->generate($id);
+
+    	# 3. On envoie le QR code généré à la vue "simple-qrcode"
+    	return view("stagiaire.badge", compact('qrcode','emp'));
     }
 }

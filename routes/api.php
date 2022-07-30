@@ -27,4 +27,6 @@ Route::group([
     Route::get('user', 'Auth\AuthController@user');
 });
 
-Route::get('profil/{id}', 'Auth\AuthController@profil')->name('profil');
+Route::get('profil/{id}', 'Api\HomeController@profil')->name('profil');
+Route::get('liste_collaborateur/{id}','Api\HomeController@liste_collaborateur')->name('liste_collaborateur');
+Route::get('liste_projet/{id}','Api\HomeController@liste_projet')->name('liste_projet');
