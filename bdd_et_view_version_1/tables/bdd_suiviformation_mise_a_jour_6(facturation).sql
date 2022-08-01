@@ -1,3 +1,4 @@
+-- Active: 1656573946460@@127.0.0.1@3306@mahafaly
 CREATE TABLE `type_facture` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
