@@ -255,7 +255,7 @@ class Groupe extends Model
     }
 
 
-    public function dataApprenant($cfp_id, $groupe_id){
+    public function dataApprenant( $groupe_id){
         $stagiaire = DB::table('v_stagiaire_groupe')
             ->select('*')
             ->where('groupe_id', $groupe_id)

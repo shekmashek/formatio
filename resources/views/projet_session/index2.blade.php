@@ -1148,7 +1148,7 @@
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                     <th >
@@ -1173,7 +1173,7 @@
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                     
@@ -1200,7 +1200,7 @@
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                     <th class="headProject" >
@@ -1251,7 +1251,7 @@
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                     <th>
@@ -1334,7 +1334,7 @@
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                     <th  >
@@ -1359,7 +1359,7 @@
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                 
@@ -1377,13 +1377,13 @@
                             </button>
                         </div>
                     </th>
-                    <th>
+                    {{-- <th>
                         <div class="dropdown" >
                                 <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class='bx bxs-report align-middle' style="vertical-align: middle"></i> Rapport
                                 </button>
                         </div>
-                    </th>
+                    </th> --}}
                     <th>
                         <div class="dropdown" >
                                 <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -1400,9 +1400,9 @@
                     </th>
                     <th>
                         <div class="dropdown" >
-                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class='bx bxs-file-pdf align-middle' style="vertical-align: middle"></i> PDF
-                                </button>
+                            <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bxs-file-pdf align-middle' style="vertical-align: middle"></i> PDF
+                            </button>
                         </div>
                     </th>
                     <th>
@@ -1426,7 +1426,7 @@
                     <th >Statuts</th>
                     <th >Eval à chaud</th>
                     <th >Eval à froid</th>
-                    <th >Rapport</th>
+                    {{-- <th >Rapport</th> --}}
                     <th >Présence</th>
                     <th >Competence</th>
                     <th >PDF</th>
@@ -1517,7 +1517,7 @@
                         </td>
 
                         
-                        @if ($projet->id == 1)
+                        {{-- @if ($projet->id == 1)
                             <td class="text-center" style="font-size: 13px">
                                 <a href="{{ route('nouveauRapportFinale', [$projet->groupe_id]) }}" target="_blank" style="font-size: 13px">
                                     <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
@@ -1527,7 +1527,7 @@
                             <td class="text-center">
                                 <i class='bx bxs-circle' style="font-size: 13px; cursor: not-allowed; color: #b31217"></i>
                             </td>
-                        @endif
+                        @endif --}}
                         <td class="text-center">
                             <i class='bx bxs-circle' style="font-size: 13px; cursor: not-allowed; color: rgb(163, 162, 162)"></i>
                         </td>
@@ -1793,55 +1793,271 @@
                     
                 @endforeach
                 @foreach ($data as $pj)
-                <div>
-                    <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
-                        tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header  d-flex justify-content-center"
-                                    style="background-color:rgb(224,182,187);">
-                                    <h6 class="modal-title">Avertissement !</h6>
-                                </div>
-                                <div class="modal-body">
-                                    <small>Vous êtes sur le point d'effacer une donnée,
-                                        cette
-                                        action est irréversible. Continuer ?</small>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal"> Non </button>
-                                    <button type="button" class="btn btn-secondary"><a
-                                            href="{{ route('destroy_groupe', [$pj->groupe_id]) }}">Oui</a></button>
+                    <div>
+                        <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
+                            tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header  d-flex justify-content-center"
+                                        style="background-color:rgb(224,182,187);">
+                                        <h6 class="modal-title">Avertissement !</h6>
+                                    </div>
+                                    <div class="modal-body">
+                                        <small>Vous êtes sur le point d'effacer une donnée,
+                                            cette
+                                            action est irréversible. Continuer ?</small>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal"> Non </button>
+                                        <button type="button" class="btn btn-secondary"><a
+                                                href="{{ route('destroy_groupe', [$pj->groupe_id]) }}">Oui</a></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {{-- fin supprimer session --}}
-                    {{-- Debut modal edit session --}}
-                    <div>
-                        <div class="modal fade"
-                            id="modal_modifier_session_{{ $pj->groupe_id }}"
-                            data-backdrop="static" data-bs-backdrop="false">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content p-3">
-                                    <div class="modal-title pt-3"
-                                        style="height: 50px; align-items: center;">
-                                        <h5 class="text-center my-auto">Modifier session
-                                            <strong>{{ $pj->nom_groupe }}</strong>
-                                        </h5>
-                                    </div>
-                                    @if ($projet->id == 1)
-                                        <div class="row">
-                                            <form
-                                                action="{{ route('modifier_session_intra') }}"
-                                                id="formPayement" method="post">
-                                                @csrf
-                                                <input type="hidden" name="id"
-                                                    value="{{ $pj->groupe_id }}">
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <div class="form-row d-flex">
+                        {{-- fin supprimer session --}}
+                        {{-- Debut modal edit session --}}
+                        <div>
+                            <div class="modal fade"
+                                id="modal_modifier_session_{{ $pj->groupe_id }}"
+                                data-backdrop="static" data-bs-backdrop="false">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content p-3">
+                                        <div class="modal-title pt-3"
+                                            style="height: 50px; align-items: center;">
+                                            <h5 class="text-center my-auto">Modifier session
+                                                <strong>{{ $pj->nom_groupe }}</strong>
+                                            </h5>
+                                        </div>
+                                        @if ($projet->id == 1)
+                                            <div class="row">
+                                                <form
+                                                    action="{{ route('modifier_session_intra') }}"
+                                                    id="formPayement" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $pj->groupe_id }}">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="form-row d-flex">
+                                                                <div class="col">
+                                                                    <div class="row ps-3 mt-2">
+                                                                        <div
+                                                                            class="form-group mt-1 mb-1">
+                                                                            <input type="text"
+                                                                                id="min"
+                                                                                class="form-control input"
+                                                                                name="date_debut"
+                                                                                required
+                                                                                onfocus="(this.type='date')"
+                                                                                value="{{ $pj->date_debut }}">
+                                                                            <label
+                                                                                class="ml-3 form-control-placeholder"
+                                                                                for="min">Date
+                                                                                debut du
+                                                                                session<strong
+                                                                                    class="text-danger">*</strong></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row ps-3 mt-2">
+                                                                        <div
+                                                                            class="form-group mt-1">
+                                                                            <select
+                                                                                class="form-select selectP input"
+                                                                                id="formation_session_id"
+                                                                                name="formation_id"
+                                                                                aria-label="Default select example">
+                                                                                <option
+                                                                                    value="{{ $pj->formation_id }}">
+                                                                                    {{ $pj->nom_formation }}
+                                                                                </option>
+                                                                                @foreach ($formation as $form)
+                                                                                    <option
+                                                                                        value="{{ $form->id }}">
+                                                                                        {{ $form->nom_formation }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                            <label
+                                                                                class="ml-3 form-control-placeholder"
+                                                                                for="formation_id">Formations<strong
+                                                                                    class="text-danger">*</strong></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="row ps-3 mt-2">
+                                                                        <div
+                                                                            class="form-group mt-1 mb-1">
+                                                                            <input type="text"
+                                                                                id="min"
+                                                                                class="form-control input"
+                                                                                name="date_fin"
+                                                                                required
+                                                                                onfocus="(this.type='date')"
+                                                                                value="{{ $pj->date_fin }}">
+                                                                            <label
+                                                                                class="ml-3 form-control-placeholder"
+                                                                                for="min">Date
+                                                                                fin du
+                                                                                session<strong
+                                                                                    class="text-danger">*</strong></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row ps-3 mt-2">
+                                                                        <div
+                                                                            class="form-group mt-1 mb-1">
+                                                                            <select
+                                                                                class="form-select selectP input"
+                                                                                id="module_id"
+                                                                                name="module_id"
+                                                                                aria-label="Default select example">
+                                                                                <option
+                                                                                    value="{{ $pj->module_id }}">
+                                                                                    {{ $pj->nom_module }}
+                                                                                </option>
+                                                                                @foreach ($module as $mod)
+                                                                                    <option
+                                                                                        value="{{ $mod->id }}">
+                                                                                        {{ $mod->nom_module }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                            <label
+                                                                                class="ml-3 form-control-placeholder"
+                                                                                for="module_id">Modules<strong
+                                                                                    class="text-danger">*</strong></label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="row ps-3 mt-2">
+                                                                    <div
+                                                                        class="form-group mt-1 mb-1">
+                                                                        <select
+                                                                            class="form-select selectP input"
+                                                                            id="payement_id"
+                                                                            name="payement"
+                                                                            aria-label="Default select example">
+                                                                            <option
+                                                                                value="{{ $pj->type_payement_id }}"
+                                                                                hidden>
+                                                                                {{ $pj->type }}
+                                                                            </option>
+                                                                            @foreach ($payement as $paye)
+                                                                                <option
+                                                                                    value="{{ $paye->id }}">
+                                                                                    {{ $paye->type }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        <label
+                                                                            class=" form-control-placeholder"
+                                                                            for="payement_id">Mode
+                                                                            de Payement<strong
+                                                                                class="text-danger">*</strong></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row d-flex">
+                                                                <div class="col">
+                                                                    <div class="row ps-3">
+                                                                        <div
+                                                                            class="form-group ">
+                                                                            <input type="text"
+                                                                                id="min"
+                                                                                class="form-control input"
+                                                                                min="1" max="50"
+                                                                                name="min_part"
+                                                                                required
+                                                                                onfocus="(this.type='number')"
+                                                                                value="{{ $pj->min_participant }}">
+                                                                            <label
+                                                                                class="ml-3 form-control-placeholder"
+                                                                                for="min">Nombre
+                                                                                de participant
+                                                                                minimal</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="text-center mb-1">
+                                                                        <button type="submit"
+                                                                            form="formPayement"
+                                                                            class="btn btn_enregistrer">Valider</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row ps-3 mt-2">
+                                                                <div
+                                                                    class="col-lg-6 text-end mt-2">
+                                                                    <span>Module<strong
+                                                                            class="text-danger">*</strong>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-lg-6 text-start">
+                                                                    <select
+                                                                        class="form-select input_select"
+                                                                        name="module"
+                                                                        aria-label="Default select example"
+                                                                        style="width: 15rem;"
+                                                                        required>
+                                                                        <option value="null">
+                                                                            Sélectionnez</option>
+                                                                        @foreach ($module as $modu)
+                                                                            <option value="{{ $modu->id }}">{{ $modu->nom_module }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mt-2">
+                                                                <div
+                                                                    class="col-lg-6 text-end mt-2">
+                                                                    <span>Modalité<strong
+                                                                            class="text-danger">*</strong>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-lg-6 text-start">
+                                                                    <select
+                                                                        class="form-select selectP input"
+                                                                        id="module_id"
+                                                                        name="module_id"
+                                                                        aria-label="Default select example">
+                                                                        <option
+                                                                            value="{{ $pj->module_id }}">
+                                                                            {{ $pj->nom_module }}
+                                                                        </option>
+                                                                        @foreach ($module as $mod)
+                                                                            <option
+                                                                                value="{{ $mod->id }}">
+                                                                                {{ $mod->nom_module }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <label
+                                                                        class="ml-3 form-control-placeholder"
+                                                                        for="module_id">Modules<strong
+                                                                            class="text-danger">*</strong></label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                </form>
+                                            </div>
+                                        @endif
+                                        @if ($projet->id == 2)
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="form-row d-flex">
+                                                        <form
+                                                            action="{{ route('modifier_session_inter') }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="id"
+                                                                value="{{ $pj->groupe_id }}">
                                                             <div class="col">
                                                                 <div class="row ps-3 mt-2">
                                                                     <div
@@ -1854,37 +2070,33 @@
                                                                             onfocus="(this.type='date')"
                                                                             value="{{ $pj->date_debut }}">
                                                                         <label
-                                                                            class="ml-3 form-control-placeholder"
+                                                                            class="form-control-placeholder"
                                                                             for="min">Date
-                                                                            debut du
-                                                                            session<strong
+                                                                            debut<strong
                                                                                 class="text-danger">*</strong></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row ps-3 mt-2">
                                                                     <div
-                                                                        class="form-group mt-1">
-                                                                        <select
-                                                                            class="form-select selectP input"
-                                                                            id="formation_session_id"
-                                                                            name="formation_id"
-                                                                            aria-label="Default select example">
-                                                                            <option
-                                                                                value="{{ $pj->formation_id }}">
-                                                                                {{ $pj->nom_formation }}
-                                                                            </option>
-                                                                            @foreach ($formation as $form)
-                                                                                <option
-                                                                                    value="{{ $form->id }}">
-                                                                                    {{ $form->nom_formation }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
+                                                                        class="form-group mt-1 mb-1">
+                                                                        <input type="text"
+                                                                            id="min"
+                                                                            class="form-control input"
+                                                                            min="1" max="50"
+                                                                            name="min_part"
+                                                                            required
+                                                                            onfocus="(this.type='number')"
+                                                                            value="{{ $pj->min_participant }}">
                                                                         <label
-                                                                            class="ml-3 form-control-placeholder"
-                                                                            for="formation_id">Formations<strong
-                                                                                class="text-danger">*</strong></label>
+                                                                            class="form-control-placeholder"
+                                                                            for="min">Participant
+                                                                            minimal</label>
                                                                     </div>
+                                                                </div>
+
+                                                                <div class="text-center ps-3">
+                                                                    <button type="submit"
+                                                                        class="btn btn_enregistrer">Valider</button>
                                                                 </div>
                                                             </div>
                                                             <div class="col">
@@ -1899,119 +2111,100 @@
                                                                             onfocus="(this.type='date')"
                                                                             value="{{ $pj->date_fin }}">
                                                                         <label
-                                                                            class="ml-3 form-control-placeholder"
+                                                                            class=" form-control-placeholder"
                                                                             for="min">Date
-                                                                            fin du
-                                                                            session<strong
+                                                                            fin<strong
                                                                                 class="text-danger">*</strong></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row ps-3 mt-2">
                                                                     <div
                                                                         class="form-group mt-1 mb-1">
-                                                                        <select
-                                                                            class="form-select selectP input"
-                                                                            id="module_id"
-                                                                            name="module_id"
-                                                                            aria-label="Default select example">
-                                                                            <option
-                                                                                value="{{ $pj->module_id }}">
-                                                                                {{ $pj->nom_module }}
-                                                                            </option>
-                                                                            @foreach ($module as $mod)
-                                                                                <option
-                                                                                    value="{{ $mod->id }}">
-                                                                                    {{ $mod->nom_module }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        <label
-                                                                            class="ml-3 form-control-placeholder"
-                                                                            for="module_id">Modules<strong
-                                                                                class="text-danger">*</strong></label>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-row">
-                                                            <div class="row ps-3 mt-2">
-                                                                <div
-                                                                    class="form-group mt-1 mb-1">
-                                                                    <select
-                                                                        class="form-select selectP input"
-                                                                        id="payement_id"
-                                                                        name="payement"
-                                                                        aria-label="Default select example">
-                                                                        <option
-                                                                            value="{{ $pj->type_payement_id }}"
-                                                                            hidden>
-                                                                            {{ $pj->type }}
-                                                                        </option>
-                                                                        @foreach ($payement as $paye)
-                                                                            <option
-                                                                                value="{{ $paye->id }}">
-                                                                                {{ $paye->type }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    <label
-                                                                        class=" form-control-placeholder"
-                                                                        for="payement_id">Mode
-                                                                        de Payement<strong
-                                                                            class="text-danger">*</strong></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-row d-flex">
-                                                            <div class="col">
-                                                                <div class="row ps-3">
-                                                                    <div
-                                                                        class="form-group ">
                                                                         <input type="text"
                                                                             id="min"
                                                                             class="form-control input"
                                                                             min="1" max="50"
-                                                                            name="min_part"
+                                                                            name="max_part"
                                                                             required
                                                                             onfocus="(this.type='number')"
-                                                                            value="{{ $pj->min_participant }}">
+                                                                            value="{{ $pj->max_participant }}">
                                                                         <label
-                                                                            class="ml-3 form-control-placeholder"
-                                                                            for="min">Nombre
-                                                                            de participant
-                                                                            minimal</label>
+                                                                            class="form-control-placeholder"
+                                                                            for="min">Participant
+                                                                            maximal</label>
                                                                     </div>
                                                                 </div>
-                                                                <div
-                                                                    class="text-center mb-1">
-                                                                    <button type="submit"
-                                                                        form="formPayement"
-                                                                        class="btn btn_enregistrer">Valider</button>
+
+
+                                                                <div class="text-center ps-3">
+                                                                    <button type="button"
+                                                                        class="btn btn_annuler"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close">Annuler</button>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="row ps-3 mt-2">
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Fin modal edit session --}}
+                        {{-- debut modal nouveau session --}}
+                        <div>
+                            <div id="modal_{{ $pj->projet_id }}"
+                                class="modal fade modal_projets">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="w-100 text-center">Nouvelle Session pour
+                                                le&nbsp;{{ $pj->nom_projet }}
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('insert_session') }}"
+                                                method="POST"
+                                                class="justify-content-center me-5">
+                                                @csrf
+                                                <input type="hidden" name="type_formation"
+                                                    value="1">
+                                                <input type="hidden" name="projet"
+                                                    value="{{ $pj->projet_id }}">
+                                                    <h5 class="mb-4 text-center">Ajouter votre
+                                                        nouvelle
+                                                        Session</h5>
+                                                    <div class="form-group">
+                                                        <div class="row mt-2">
                                                             <div
                                                                 class="col-lg-6 text-end mt-2">
-                                                                <span>Module<strong
-                                                                        class="text-danger">*</strong>
-                                                                </span>
+                                                                <span>Date debut de la
+                                                                    session<strong
+                                                                        class="text-danger">*</strong></span>
                                                             </div>
-                                                            <div class="col-lg-6 text-start">
-                                                                <select
-                                                                    class="form-select input_select"
-                                                                    name="module"
-                                                                    aria-label="Default select example"
-                                                                    style="width: 15rem;"
-                                                                    required>
-                                                                    <option value="null">
-                                                                        Sélectionnez</option>
-                                                                    @foreach ($module as $modu)
-                                                                        <option value="{{ $modu->id }}">{{ $modu->nom_module }}</option>
-                                                                    @endforeach
-                                                                </select>
+                                                            <div class="col-lg-6"><input
+                                                                    type="date" id="min"
+                                                                    class="form-control input"
+                                                                    name="date_debut"
+                                                                    style="width: 12rem;"
+                                                                    required></div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div
+                                                                class="col-lg-6 text-end mt-2">
+                                                                <span>Date fin de la
+                                                                    session<strong
+                                                                        class="text-danger">*</strong></span>
                                                             </div>
+                                                            <div class="col-lg-6"><input
+                                                                    type="date" id="min"
+                                                                    class="form-control input"
+                                                                    name="date_fin"
+                                                                    style="width: 12rem;"
+                                                                    required></div>
                                                         </div>
                                                         <div class="row mt-2">
                                                             <div
@@ -2020,304 +2213,111 @@
                                                                         class="text-danger">*</strong>
                                                                 </span>
                                                             </div>
-                                                            <div class="col-lg-6 text-start">
+                                                            <div class="col-lg-6 text-end">
                                                                 <select
-                                                                    class="form-select selectP input"
-                                                                    id="module_id"
-                                                                    name="module_id"
-                                                                    aria-label="Default select example">
+                                                                    class="form-select input_select"
+                                                                    name="modalite"
+                                                                    aria-label="Default select example"
+                                                                    style="width: 15rem;"
+                                                                    required>
+                                                                    <option value="null">
+                                                                        Sélectionnez</option>
+                                                                    <option value="Présentiel">
+                                                                        Présentielle</option>
+                                                                    <option value="En ligne">En
+                                                                        ligne</option>
                                                                     <option
-                                                                        value="{{ $pj->module_id }}">
-                                                                        {{ $pj->nom_module }}
+                                                                        value="Présentiel/En ligne">
+                                                                        Présentiel/En ligne
                                                                     </option>
-                                                                    @foreach ($module as $mod)
-                                                                        <option
-                                                                            value="{{ $mod->id }}">
-                                                                            {{ $mod->nom_module }}
-                                                                        </option>
-                                                                    @endforeach
                                                                 </select>
-                                                                <label
-                                                                    class="ml-3 form-control-placeholder"
-                                                                    for="module_id">Modules<strong
-                                                                        class="text-danger">*</strong></label>
                                                             </div>
-
+                                                        </div>
+                                                        <div class="row mt-3">
+                                                            <div class="col-lg-6 text-end"><button type="submit"
+                                                                    class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Enregistrer</button></div>
+                                                            <div class="col-lg-6">
+                                                                <button type="button" class="btn  btn_annuler" data-dismiss="modal">
+                                                                    <i class='bx bx-x me-1'></i> Annuler
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                             </form>
                                         </div>
-                                    @endif
-                                    @if ($projet->id == 2)
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <div class="form-row d-flex">
-                                                    <form
-                                                        action="{{ route('modifier_session_inter') }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        <input type="hidden" name="id"
-                                                            value="{{ $pj->groupe_id }}">
-                                                        <div class="col">
-                                                            <div class="row ps-3 mt-2">
-                                                                <div
-                                                                    class="form-group mt-1 mb-1">
-                                                                    <input type="text"
-                                                                        id="min"
-                                                                        class="form-control input"
-                                                                        name="date_debut"
-                                                                        required
-                                                                        onfocus="(this.type='date')"
-                                                                        value="{{ $pj->date_debut }}">
-                                                                    <label
-                                                                        class="form-control-placeholder"
-                                                                        for="min">Date
-                                                                        debut<strong
-                                                                            class="text-danger">*</strong></label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row ps-3 mt-2">
-                                                                <div
-                                                                    class="form-group mt-1 mb-1">
-                                                                    <input type="text"
-                                                                        id="min"
-                                                                        class="form-control input"
-                                                                        min="1" max="50"
-                                                                        name="min_part"
-                                                                        required
-                                                                        onfocus="(this.type='number')"
-                                                                        value="{{ $pj->min_participant }}">
-                                                                    <label
-                                                                        class="form-control-placeholder"
-                                                                        for="min">Participant
-                                                                        minimal</label>
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="text-center ps-3">
-                                                                <button type="submit"
-                                                                    class="btn btn_enregistrer">Valider</button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="row ps-3 mt-2">
-                                                                <div
-                                                                    class="form-group mt-1 mb-1">
-                                                                    <input type="text"
-                                                                        id="min"
-                                                                        class="form-control input"
-                                                                        name="date_fin"
-                                                                        required
-                                                                        onfocus="(this.type='date')"
-                                                                        value="{{ $pj->date_fin }}">
-                                                                    <label
-                                                                        class=" form-control-placeholder"
-                                                                        for="min">Date
-                                                                        fin<strong
-                                                                            class="text-danger">*</strong></label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row ps-3 mt-2">
-                                                                <div
-                                                                    class="form-group mt-1 mb-1">
-                                                                    <input type="text"
-                                                                        id="min"
-                                                                        class="form-control input"
-                                                                        min="1" max="50"
-                                                                        name="max_part"
-                                                                        required
-                                                                        onfocus="(this.type='number')"
-                                                                        value="{{ $pj->max_participant }}">
-                                                                    <label
-                                                                        class="form-control-placeholder"
-                                                                        for="min">Participant
-                                                                        maximal</label>
-                                                                </div>
-                                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- fin --}}
+                        {{-- debut modal edit projet --}}
+                        <div>
+                            <div id="edit_prj_{{ $pj->projet_id }}"
+                                class="modal fade modal_projets">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="text-center w-100">Modification de la
+                                                Status du
+                                                Session dans le&nbsp;{{ $pj->nom_projet }}
+                                            </h5>
 
-
-                                                            <div class="text-center ps-3">
-                                                                <button type="button"
-                                                                    class="btn btn_annuler"
-                                                                    data-bs-dismiss="modal"
-                                                                    aria-label="Close">Annuler</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
                                         </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Fin modal edit session --}}
-                    {{-- debut modal nouveau session --}}
-                    <div>
-                        <div id="modal_{{ $pj->projet_id }}"
-                            class="modal fade modal_projets">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="w-100 text-center">Nouvelle Session pour
-                                            le&nbsp;{{ $pj->nom_projet }}
-                                        </h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{ route('insert_session') }}"
-                                            method="POST"
-                                            class="justify-content-center me-5">
-                                            @csrf
-                                            <input type="hidden" name="type_formation"
-                                                value="1">
-                                            <input type="hidden" name="projet"
-                                                value="{{ $pj->projet_id }}">
-                                                <h5 class="mb-4 text-center">Ajouter votre
-                                                    nouvelle
-                                                    Session</h5>
-                                                <div class="form-group">
-                                                    <div class="row mt-2">
-                                                        <div
-                                                            class="col-lg-6 text-end mt-2">
-                                                            <span>Date debut de la
-                                                                session<strong
-                                                                    class="text-danger">*</strong></span>
-                                                        </div>
-                                                        <div class="col-lg-6"><input
-                                                                type="date" id="min"
-                                                                class="form-control input"
-                                                                name="date_debut"
-                                                                style="width: 12rem;"
-                                                                required></div>
-                                                    </div>
-                                                    <div class="row mt-2">
-                                                        <div
-                                                            class="col-lg-6 text-end mt-2">
-                                                            <span>Date fin de la
-                                                                session<strong
-                                                                    class="text-danger">*</strong></span>
-                                                        </div>
-                                                        <div class="col-lg-6"><input
-                                                                type="date" id="min"
-                                                                class="form-control input"
-                                                                name="date_fin"
-                                                                style="width: 12rem;"
-                                                                required></div>
-                                                    </div>
-                                                    <div class="row mt-2">
-                                                        <div
-                                                            class="col-lg-6 text-end mt-2">
-                                                            <span>Modalité<strong
-                                                                    class="text-danger">*</strong>
-                                                            </span>
-                                                        </div>
-                                                        <div class="col-lg-6 text-end">
-                                                            <select
-                                                                class="form-select input_select"
-                                                                name="modalite"
-                                                                aria-label="Default select example"
-                                                                style="width: 15rem;"
-                                                                required>
-                                                                <option value="null">
-                                                                    Sélectionnez</option>
-                                                                <option value="Présentiel">
-                                                                    Présentielle</option>
-                                                                <option value="En ligne">En
-                                                                    ligne</option>
+                                        <div class="modal-body">
+                                            <form
+                                                action="{{ route('update_projet', $pj->projet_id) }}"
+                                                id="zsxsq" method="POST">
+                                                @csrf
+                                                <div class="row ps-3 mt-2">
+                                                    <div class="form-group mt-1 mb-1">
+                                                        <select
+                                                            class="form-select selectP input"
+                                                            id="formation_id"
+                                                            name="formation_id"
+                                                            aria-label="Default select example">
+                                                            <option onselected hidden>choisir la
+                                                                status
+                                                                du session</option>
+                                                            @foreach ($status as $stat)
                                                                 <option
-                                                                    value="Présentiel/En ligne">
-                                                                    Présentiel/En ligne
+                                                                    value="{{ $stat->id }}">
+                                                                    {{ $stat->status }}
                                                                 </option>
-                                                            </select>
-                                                        </div>
+                                                            @endforeach
+                                                        </select>
+                                                        <label
+                                                            class="ml-3 form-control-placeholder"
+                                                            for="formation_id">Status</label>
                                                     </div>
-                                                    <div class="row mt-3">
-                                                        <div class="col-lg-6 text-end"><button type="submit"
-                                                                class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Enregistrer</button></div>
-                                                        <div class="col-lg-6">
-                                                            <button type="button" class="btn  btn_annuler" data-dismiss="modal">
-                                                                <i class='bx bx-x me-1'></i> Annuler
-                                                            </button>
+                                                </div>
+
+
+                                                <div class="mt-4 mb-4">
+                                                    <div
+                                                        class="mt-4 mb-4 d-flex justify-content-around">
+                                                        <div class="text-center ps-3"><button
+                                                                type="submit"
+                                                                form="formPayement"
+                                                                class="btn btn_enregistrer">Valider</button>
+                                                        </div>
+                                                        <div class="text-center ps-3"><button
+                                                                type="button"
+                                                                class="btn btn_annuler"
+                                                                data-bs-dismiss="modal"
+                                                                aria-label="Close">Annuler</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </form>
+                                            </form>
+
+                                        </div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {{-- fin --}}
-                    {{-- debut modal edit projet --}}
-                    <div>
-                        <div id="edit_prj_{{ $pj->projet_id }}"
-                            class="modal fade modal_projets">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="text-center w-100">Modification de la
-                                            Status du
-                                            Session dans le&nbsp;{{ $pj->nom_projet }}
-                                        </h5>
-
-                                    </div>
-                                    <div class="modal-body">
-                                        <form
-                                            action="{{ route('update_projet', $pj->projet_id) }}"
-                                            id="zsxsq" method="POST">
-                                            @csrf
-                                            <div class="row ps-3 mt-2">
-                                                <div class="form-group mt-1 mb-1">
-                                                    <select
-                                                        class="form-select selectP input"
-                                                        id="formation_id"
-                                                        name="formation_id"
-                                                        aria-label="Default select example">
-                                                        <option onselected hidden>choisir la
-                                                            status
-                                                            du session</option>
-                                                        @foreach ($status as $stat)
-                                                            <option
-                                                                value="{{ $stat->id }}">
-                                                                {{ $stat->status }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    <label
-                                                        class="ml-3 form-control-placeholder"
-                                                        for="formation_id">Status</label>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="mt-4 mb-4">
-                                                <div
-                                                    class="mt-4 mb-4 d-flex justify-content-around">
-                                                    <div class="text-center ps-3"><button
-                                                            type="submit"
-                                                            form="formPayement"
-                                                            class="btn btn_enregistrer">Valider</button>
-                                                    </div>
-                                                    <div class="text-center ps-3"><button
-                                                            type="button"
-                                                            class="btn btn_annuler"
-                                                            data-bs-dismiss="modal"
-                                                            aria-label="Close">Annuler</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 @endforeach
             </tbody>
         </table>
@@ -2329,32 +2329,250 @@
                 <span class="text-center">Vous n'avez pas encore du projet.</span>
             </div>
         @else
-            <table class="table modifTable">
-                <thead style="position: sticky; top: 0;">
+            <table class="table mahafaly">
+                <thead>
                     <tr style="background: #c7c9c939">
-                        <th class="headProject"><i class='bx bx-library'></i> Projet</th>
-                        <th class="headProject"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
-                        <th class="headProject"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
-                        <th class="headProject"><i class='bx bx-building-house'></i> Centre de formation</th>
-                        <th class="headProject"><i class='bx bx-calendar-check' ></i> Modalité</th>
-                        <th class="headProject"><i class='bx bx-time-five' ></i> Date</th>
-                        <th class="headProject"><i class='bx bx-home' ></i> Ville</th>
-                        <th class="headProject"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statut</th>
-                        <th class="headProject"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type</th>
-                        <th class="headProject"><i class='bx bx-task align-middle' ></i> Eval à chaud</th>
-                        <th class="headProject"><i class='bx bx-task-x align-middle' ></i> Eval à froid</th>
-                        <th class="headProject"><i class='bx bxs-file-pdf align-middle' style="vertical-align: middle"></i> PDF</th>
+                        <th >
+                            <div class="dropdown">
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-library align-middle'></i> Projet
+                                </button>
+                                <ul class="dropdown-menu main p-2" >
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all" type="checkbox" id="select_all">
+                                        <label class="form-check-label label" for="select_all" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomProjet as $prj)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="ProjectE" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="dropdown">
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bxs-book-open align-middle" style="color: #2e3950"></i> Session
+                                </button>
+                                <ul class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                        <label class="form-check10abel label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomSessions as $sess)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="Session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="dropdown">
+                
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bxs-customize align-middle" style="color: #2e3950"></i> Module
+                                </button>
+                                <ul  class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all" type="checkbox" id="select_all2">
+                                        <label class="form-check-label label" for="select_all2" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomModules as $m)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="Module" value="{{ $m->nom_module}}"><span style="font-size: 12px">{{ $m->nom_module}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>    
+                        </th>
+                        <th class="headProject">
+                            <div class="dropdown z-index-2" id="ta">
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-building-house align-middle'></i> Centre de formation
+                                </button>
+                                
+                                <ul  class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all" type="checkbox" id="select_all3">
+                                        <label class="form-check-label label" for="select_all3" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomEntreprises as $e)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="EntrepriseE" value="{{ $e->nom_cfp}}"><span style="font-size: 12px">{{ $e->nom_cfp}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th class="headProject">
+                            <div class="dropdown" >
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-calendar-check align-middle' ></i> Modalité
+                                </button>
+                                <ul class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all" type="checkbox" id="select_all4">
+                                        <label class="form-check-label label" for="select_all4" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomModalites as $mdlt)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="Modalite" value="{{ $mdlt->modalite}}"><span style="font-size: 12px">{{ $mdlt->modalite}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th class="headProject">
+                            <div class="dropdown" >
+                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-time-five'></i> <span style="font-size: 13px">Date
+                                </button>
+                            </div>
+                        </th>
+                        <th class="headProject">
+                            <div class="dropdown" >
+                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-home align-middle' ></i> Ville
+                                </button>
+                            </div>
+                        </th>
+                        <th class="headProject">
+                            <div class="dropdown" >
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-calendar-x align-middle' style="color: #2e3950"></i> Statuts
+                                </button>
+                                <ul class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                        <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomStatuts as $stt)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="Statut" value="{{ $stt->status}}"><span style="font-size: 12px">{{ $stt->status}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th class="headProject">
+                            <div class="dropdown" >
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-book-content align-middle' style="vertical-align: middle"></i> Type
+                                </button>
+                                <ul class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all" type="checkbox" id="select_all6">
+                                        <label class="form-check-label label" for="select_all6" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomTypes as $ntp)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="TypeF" value="{{ $ntp->type_formation}}"><span style="font-size: 12px">{{ $ntp->type_formation}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th class="headProject">
+                            <div class="dropdown" >
+                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-task align-middle' ></i> Eval à chaud
+                                </button>
+                            </div>
+                        </th>
+                        <th class="headProject">
+                            <div class="dropdown" >
+                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-task-x align-middle' ></i> Eval à froid
+                                </button>
+                            </div>
+                        </th>
+                        <th class="headProject">
+                            <div class="dropdown" >
+                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bxs-file-pdf align-middle' style="vertical-align: middle"></i> PDF
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <th >Projet</th>
+                        <th >Session</th>
+                        <th >Module</th>
+                        <th >Centre de formation</th>
+                        <th >Modalité</th>
+                        <th >Date</th>
+                        <th >Ville</th>
+                        <th >Statuts</th>
+                        <th >Type</th>
+                        <th >Eval à chaud</th>
+                        <th >Eval à froid</th>
+                        <th >PDF</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $pj)
                         <tr>
                             <td>
+                                <a role="button"  data-bs-toggle="modal" data-bs-target="#exampleModal2_{{$pj->groupe_id}}">
+                                    <i class='bx bx-window-open' data-id="{{$pj->groupe_id}}" style="font-size: 18px; vertical-align: middle; color: #1c7f2e;"></i>
+                                </a>&nbsp;&nbsp;
                                 <span  style='font-size: 13px;'>{{ $pj->nom_projet }}</span>
                             </td>
                             <td>
                                 @if ($pj->type_formation_id == 3)
-                                <a style="font-size: 13px" href="{{ route('detail_session_interne', [$pj->groupe_id]) }}"><span class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span></a>
+                                <a style="font-size: 13px" href="{{ route('detail_session_interne', [$pj->groupe_id]) }}"><span class="spanClass" style="font-size: 13px">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span></a>
                                 @else
                                     <a href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">
                                         <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
@@ -2384,15 +2602,17 @@
                             </td>
                             <td class="text-center">
                                 @if($pj->item_status_groupe === 'Cloturé')
-                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#111111"">Cloturé</span>
+                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#111111">Cloturé</span>
                                 @elseif($pj->item_status_groupe === 'Reporté')
-                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#af10e9"">Reporté</span>
+                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#af10e9">Reporté</span>
                                 @elseif($pj->item_status_groupe === 'Prévisionnel')
-                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#2792e4"">Prévisionnel</span>
+                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#2792e4">Prévisionnel</span>
                                 @elseif($pj->item_status_groupe === 'Annulée')
-                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#b33939"">Annulée</span>
+                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#b33939">Annulée</span>
                                 @elseif($pj->item_status_groupe === 'Reprogrammer')    
                                     <span class="myData badge" style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#00CDAC">Reprogrammer</span>
+                                @elseif($pj->item_status_groupe === 'En cours')
+                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#2b32b2">En cours</span>
                                 @endif 
                             </td>
                             <td class="text-center">
@@ -2411,6 +2631,7 @@
                                 @endif
                             </td>
 
+                            {{-- chaud --}}
                             @if ($pj->type_formation_id == 3)
                                 <td class="text-center">
                                     <a href="{{ route('resultat_evaluation_interne', [$pj->groupe_id]) }}" style="font-size: 13px">
@@ -2424,9 +2645,12 @@
                                     </a>
                                 </td>
                             @endif
-
-                            @if ($pj->type_formation_id == 3)
                             
+                            {{-- froid --}}
+                            @if ($pj->type_formation_id == 3)
+                                <td class="text-center">
+                                    {{ '-' }}
+                                </td>
                             @else
                                 @php
                                     $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
@@ -2444,6 +2668,7 @@
                                 @endif
                             @endif
 
+                            {{-- pdf --}}
                             @if ($pj->type_formation_id == 3)
                                 <td class="text-center">
                                     <a href="{{ route('fiche_technique_interne_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">
@@ -2458,11 +2683,1037 @@
                                 </td>
                             @endif
                         </tr>
+
+                        <div class="modal fade"  id="exampleModal2_{{$pj->groupe_id}}" data-bs-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-xl " >
+                            <div class="modal-content" style="width: 1800px">
+                                <div class="modal-header text-dark" style="background: whitesmoke;color:gray !important">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    @if ($pj->type_formation_id === 1)
+                                        {{ $pj->nom_module }}
+                                    @elseif($pj->type_formation_id === 2)
+                                        {{ $pj->nom_module }}
+                                    @elseif( $pj->type_formation_id === 3)
+                                        @foreach ($dataFullP as $dfp)
+                                            {{ $dfp->nom2 }}
+                                        @endforeach
+                                    @endif
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <div  id="collapseProject_{{$pj->groupe_id}}">
+                                        <div class="card card-xl" >
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            <i class='bx bxs-customize' style="color: #011e2a;"></i>
+                                                            <span style="color: #011e2a; font-weight: 500; text-transform: capitalize; font-size: 16px">{{ $pj->nom_module }}</span>
+                                                        </h5>
+                                                        <hr>
+                                                        <div class="row mb-2">
+                                                            <div class="col-md-4">
+                                                                <i class="bi bi-person-square"></i>
+                                                                    <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
+                                                                        formateurs
+                                                                    </span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <a href="#">
+
+                                                                    @php
+                                                                        $dataDetails = $groupe->formateurData($pj->groupe_id);
+                                                                    @endphp
+
+                                                                    @if ( count($dataDetails) > 0)
+                                                                        @foreach ($dataDetails as $dataDetail)
+                                                                            <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 14px;'>{{ $dataDetail->nom_formateur }}</span>
+                                                                        @endforeach
+                                                                    @elseif(count($dataDetails) <= 0)
+                                                                        <span class='rounded-pill' style='padding: 2px 7px; border: 1px solid #e4e4e498; color: #011e2a;'>{{"--"}}</span>
+                                                                    @endif
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-md-4">
+                                                                <i class="bi bi-people-fill"></i>
+                                                                    <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
+                                                                        Apprenants
+                                                                    </span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <a href="#">
+                                                                    @php
+                                                                        $dataApprs = $groupe->dataApprenant($pj->groupe_id);
+                                                                        $dataNombres = $groupe->dataNombre($pj->groupe_id);
+                                                                    @endphp
+
+                                                                    @if ( count($dataApprs) > 0)
+                                                                        @foreach ($dataApprs as $dataAppr)
+                                                                            <span class='rounded-pill' style='padding: 2px 6px; border: 1px solid #e4e4e498; color: #011e2a; display: inline-block; margin-bottom: 1px; font-size: 13px'>{{ $dataAppr->nom_stagiaire." ".$dataAppr->prenom_stagiaire }}</span>
+                                                                        @endforeach
+                                                                    @elseif(count($dataApprs) <= 0)
+                                                                        
+                                                                    @endif
+                                                                </a>
+                                                                @foreach ($dataNombres as $nbr)
+                                                                    <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 13px;'>{{$nbr->nombre}}</span>
+                                                                @endforeach
+
+                                                                <a data-bs-toggle="collapse" href="#collapseNombre" role="button" aria-expanded="false" aria-controls="collapseNombre">
+                                                                    <i class='bx bx-chevron-down' style="vertical-align: middle; font-size: 25px;"></i>
+                                                                    <div class="collapse" id="collapseNombre">
+                                                                        <div class="card card-body">
+                                                                            <a href="#">
+                                                                                @php
+                                                                                    $dataAllApprs = $groupe->dataApprenantAll($pj->groupe_id);
+                                                                                @endphp
+
+                                                                                @if ( count($dataAllApprs) > 0)
+                                                                                    @foreach ($dataAllApprs as $dataAllAppr)
+                                                                                        <span class='rounded-pill' style='padding: 2px 6px; border: 1px solid #e4e4e498; color: #011e2a; display: inline-block; margin-bottom: 1px; font-size: 13px'>{{ $dataAllAppr->nom_stagiaire." ".$dataAllAppr->prenom_stagiaire }}</span>
+                                                                                    @endforeach
+                                                                                @elseif(count($dataAllApprs) <= 0)
+                                                                                    <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 13px;'>0</span>
+                                                                                @endif
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="row mb-2">
+                                                            <div class="col-md-4">
+                                                                <i class="bi bi-cash-coin"></i>
+                                                                    <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
+                                                                        Coûts
+                                                                    </span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                    {{-- @php
+                                                                        $dataFrais = $groupe->dataFraisAnnexe($projet->groupe_id, $projet->entreprise_id);
+
+                                                                        $somme = 0;
+                                                                        if (count($dataFrais) > 0) {
+                                                                            foreach ($dataFrais as $dataFrai) {
+                                                                                $somme += $dataFrai->montantTotal;
+                                                                            }
+                                                                        }
+                                                                    @endphp --}}
+
+                                                                <span style="color: #011e2a; font-size: 13px">00 <span style="font-size: 12px">{{ $devise }}</span></span>
+                                                                {{-- <span style="color: #011e2a; font-size: 13px">{{ number_format($projet->prix, 2) }} <span>{{ $devise }}</span></span> --}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            <i class='bx bx-calendar' style="color: #011e2a;"></i>
+                                                            <span style="color: #011e2a; font-weight: 500; font-size: 16px">Calendrier des séances</span>
+                                                        </h5>
+                                                        <hr>
+
+                                                        @php
+                                                            $dataSessions = $groupe->dataSession($pj->groupe_id);
+                                                        @endphp
+                                                        <div class="row">
+                                                            @php
+                                                                $info = $groupe->infos_session($pj->groupe_id);
+                                                                if ($info->difference == null && $info->nb_detail == 0) {
+                                                                    echo "<span style='font-size: 13px'>".$info->nb_detail . ' séance , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m'."</span>";
+                                                                } elseif ($info->difference != null && $info->nb_detail == 1) {
+                                                                    echo "<span style='font-size: 13px'>".$info->nb_detail . ' séance , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m'."</span>";
+                                                                } elseif ($info->difference != null && $info->nb_detail > 1) {
+                                                                    echo "<span style='font-size: 13px'>".$info->nb_detail . ' séances , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m'."</span>";
+                                                                }
+                                                            @endphp
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12" style="background: #e4e4e498;">
+                                                                <div class="row">
+                                                                    <div class="col-md-2" >
+                                                                        <span class="headEtp">Séances</span>
+                                                                    </div>
+                                                                    <div class="col-md-2" >
+                                                                        <span class="headEtp">Date</span>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <span class="headEtp">Lieu de formation</span>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <span class="headEtp">Début</span>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <span class="headEtp">Fin</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12" >
+                                                                <div class="row">
+                                                                    @if ( count($dataSessions) > 0)
+                                                                        <div class="col-md-2" >
+                                                                            @php
+                                                                                $i = 1;
+                                                                            @endphp
+                                                                            @foreach ($dataSessions as $dataSession)
+                                                                                <p style="font-size: 13px">{{ $i++ }}</p>
+                                                                            @endforeach
+                                                                        </div>
+                                                                        <div class="col-md-2" >
+                                                                            @foreach ($dataSessions as $dataSession)
+                                                                                <p style="font-size: 13px">{{ \Carbon\Carbon::parse($dataSession->date_detail)->translatedFormat('d M Y') }}</p>
+                                                                            @endforeach
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            @foreach ($dataSessions as $dataSession)
+                                                                            @php
+                                                                                $salle = explode(',  ', $dataSession->lieu);
+                                                                            @endphp
+                                                                                <p style="font-size: 13px">{{ $salle[0]." ".$salle[1] }}</p>
+                                                                            @endforeach
+                                                                        </div>
+                                                                        <div class="col-md-2">
+                                                                            @foreach ($dataSessions as $dataSession)
+                                                                                <p style="font-size: 13px">{{ $dataSession->h_debut}} </p>
+                                                                            @endforeach
+                                                                        </div>
+                                                                        <div class="col-md-2">
+                                                                            @foreach ($dataSessions as $dataSession)
+                                                                                <p style="font-size: 13px">{{ $dataSession->h_fin}} </p>
+                                                                            @endforeach
+                                                                        </div>
+                                                                    @elseif( count($dataSessions) <= 0)
+                                                                    <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <span style="font-size: 13px; color: #011e2a">Aucune séance</span>
+                                                                            </div>
+                                                                    </div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>
         @endif
     @endcanany
+
+    @canany(['isFormateur'])
+    @if (count($data) <= 0)
+        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+            <span class="text-center">Vous n'avez pas encore du projet.</span>
+        </div>
+    @else
+        <table class="table table-hover m-0 p-0 mt-2 table-borderless">
+            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px; background: #c7c9c939">
+                <th>Projet</th>
+                <th>Type</th>
+                <th>Session</th>
+                <th> Module </th>
+                <th>Date session</th>
+                <th> Entreprise </th>
+                {{-- <th> Date du projet</th> --}}
+                <th> Modalité</th>
+                <th> Statut </th>
+                <th></th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                @foreach ($data as $pj)
+                    <tr class="m-0">
+                        <td>{{ $pj->nom_projet }}</td>
+                        <td>
+                            @if ($pj->type_formation_id == 1)
+                                <h6 class="m-0"><button
+                                        class="type_intra ">{{ $pj->type_formation }}</button>
+                                </h6>
+                                &nbsp;&nbsp;
+                            @elseif ($pj->type_formation_id == 2)
+                                <h6 class="m-0"><button
+                                        class="type_inter ">{{ $pj->type_formation }}</button></h6>
+                                &nbsp;&nbsp;
+                            @endif
+                        </td>
+                        <td class="detail_session">
+                            <a
+                                href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}
+                            </a>
+                        </td>
+                        <td class="text-start">
+                            {{ $pj->nom_module }}
+                            @php
+                                '&nbsp;' . $groupe->nombre_apprenant_session($pj->groupe_id);
+                            @endphp
+                        </td>
+                        <td>
+                            @php
+                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                            @endphp
+                        </td>
+                        <td class="text-start">
+                            @foreach ($entreprise as $etp)
+                                @if ($etp->groupe_id == $pj->groupe_id)
+                                    {{ $etp->nom_etp }}
+                                @endif
+                            @endforeach
+                        </td>
+                        {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
+                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
+                        <td class="tbody_projet">
+                            <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
+                                {{ $pj->item_status_groupe }}</p>
+                        </td>
+                        <td align="left">
+                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
+                                @php
+                                    echo $groupe->statut_presences($pj->groupe_id);
+                                @endphp
+                                "></i>&nbsp;Emargement</p>
+                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle'
+                                @php
+                                    $statut_eval = $groupe->statut_evaluation($pj->groupe_id);
+                                    if($statut_eval == 0){
+                                        echo 'style="color:#bdbebd;"';
+                                    }
+                                    elseif ($statut_eval == 1) {
+                                        echo 'style="color:#00ff00;"';
+                                    }
+                                @endphp
+                                ></i>&nbsp;Evaluation</p>
+                        </td>
+                        <td class="text-center">
+                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                </ul>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+@endcan
+
+@can('isFormateurInterne')
+    @if (count($data) <= 0)
+        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+            <span class="text-center">Vous n'avez pas encore du projet.</span>
+        </div>
+    @else
+        <table class="table table-hover m-0 p-0 mt-2 table-borderless">
+            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
+                <th>Projet</th>
+                <th>Type</th>
+                <th>Session</th>
+                <th> Module </th>
+                <th>Date session</th>
+                <th> Modalité</th>
+                <th> Statut </th>
+                {{-- <th></th> --}}
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                @foreach ($data as $pj)
+                    <tr class="m-0">
+                        <td>{{ $pj->nom_projet }}</td>
+                        <td class="pb-2 text-center">
+                            <h6><button class="type_inter">Interne</button></h6>
+                        </td>
+                        <td class="detail_session text-center">
+                            <a
+                                href="{{ route('detail_session_interne', [$pj->groupe_id]) }}">{{ $pj->nom_groupe }}</a>
+                        </td>
+                        <td class="text-start">{{ $pj->nom_module }}</td>
+                        <td class="text-center">
+                            @php
+                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                            @endphp
+                        </td>
+                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
+                        <td class="tbody_projet">
+                            <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
+                                {{ $pj->item_status_groupe }}</p>
+                        </td>
+                        {{-- <td align="left">
+                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
+                                @php
+                                    echo $groupe->statut_presences($pj->groupe_id);
+                                @endphp
+                                "></i>&nbsp;Emargement</p>
+                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle'
+                                @php
+                                    $statut_eval = $groupe->statut_evaluation($pj->groupe_id);
+                                    if($statut_eval == 0){
+                                        echo 'style="color:#bdbebd;"';
+                                    }
+                                    elseif ($statut_eval == 1) {
+                                        echo 'style="color:#00ff00;"';
+                                    }
+                                @endphp
+                                ></i>&nbsp;Evaluation</p>
+                        </td> --}}
+                        <td class="text-center">
+                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_interne_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                </ul>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+@endcan
+
+@canany(['isReferent','isReferentSimple','isManager','isChefDeService'])
+    @if (count($data) <= 0)
+        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+            <span class="text-center">Vous n'avez pas encore du projet.</span>
+        </div>
+    @else
+        <table class="table modifTable">
+            <thead style="position: sticky; top: 0;">
+                <tr style="background: #c7c9c939">
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bx-library'></i> Projet</th>
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bx-building-house'></i> Centre de formation</th>
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-check' ></i> Modalité</th>
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bx-time-five' ></i> Date session</th>
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bx-home' ></i> Ville</th>
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statut</th>
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type formation</th>
+                    <th class="headProject" style="min-width: 10%;"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
+                </tr>
+                <tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $pj)
+                    <tr>
+                        <td>
+                            <span  style='font-size: 13px;'>{{ $pj->nom_projet }}</span>
+                        </td>
+                        <td class="text-center">
+                            @if ($pj->type_formation_id == 3)
+                            <a style="font-size: 13px" href="{{ route('detail_session_interne', [$pj->groupe_id]) }}"><span class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span></a>
+                            @else
+                                <a href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">
+                                    <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
+                                </a>
+                            @endif
+                        </td>
+                        <td>
+                            <span style="font-size: 13px">{{ $pj->nom_module }}</span>
+                        </td>
+                        <td>
+                            <span style="font-size: 13px">{{ $pj->nom_cfp }}</span>
+                        </td>
+                        <td>
+                            <span style="font-size: 13px">{{ $pj->modalite }}</span>
+                        </td>
+                        <td class="text-center">
+                            @php
+                                echo "<span style='font-size: 13px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";
+                            @endphp
+                        </td>
+                        <td>
+                            @if($lieuFormation!=null)
+                                <span style="font-size: 13px;">{{$lieuFormation[0]}}</span>
+                            @else
+                                {{"-"}}
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            <p class="{{ $pj->class_status_groupe }} m-0" style="width: 100px;">
+                                <span style="font-size: 13px">{{ $pj->item_status_groupe }}</span>
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            @if ($pj->type_formation_id == 1)
+                                <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
+                                    {{ $pj->type_formation }}
+                                </span>
+                            @elseif ($pj->type_formation_id == 2)
+                                <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
+                                    {{ $pj->type_formation }}
+                                </span>
+                            @elseif ($pj->type_formation_id == 3)
+                                <span style="background: #b32cb8; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
+                                    {{ $pj->type_formation }}
+                                </span>
+                            @endif
+                        </td>
+                        
+                        {{-- <td class="text-end">
+                        @if($pj->hors_taxe_net!=null)
+                        {{number_format($pj->hors_taxe_net,0,","," ")}}
+                        @else
+                                @php
+                                    echo "<span>-</span>";
+                                @endphp
+                        @endif
+                        </td> --}}
+                        {{-- <td> --}}
+                        {{-- @if($pj->qte!=null)
+                            {{$pj->qte}}
+                        @else
+                            @php
+                                echo "<span>-</span>";
+                            @endphp
+                        @endif
+                        </td> --}}
+
+                        <td class="text-center">
+                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.4rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                @if ($pj->type_formation_id == 3)
+                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_interne_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">Expoter en PDF</a></li>
+                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation_interne', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
+                                @else
+                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">Expoter en PDF</a></li>
+                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
+                                    @php
+                                        $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
+                                    @endphp
+                                    @if($reponse == 1)
+                                        <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à froid</a></li>
+                                    @endif
+                                @endif
+                            </ul>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+@endcanany
+@can('isStagiaire')
+    @if (count($data) <= 0)
+        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+            <span class="text-center">Vous n'avez pas encore du projet.</span>
+        </div>
+    @else
+        <div class="row mb-5 justify-content-md-start">
+            <div class="col-md-3 border-bottom">
+                <div class="text_retourner">
+                    <span style="--i:1">P</span>
+                    <span style="--i:2">r</span>
+                    <span style="--i:3">o</span>
+                    <span style="--i:4">j</span>
+                    <span style="--i:5">e</span>
+                    <span style="--i:6">c</span>
+                    <span style="--i:7">t</span>
+                    <span style="--i:8">s</span>
+                    <span style="--i:9"> </span>
+                    <span style="--i:10">T</span>
+                    <span style="--i:11">i</span>
+                    <span style="--i:12">m</span>
+                    <span style="--i:13">e</span>
+                    <span style="--i:14">l</span>
+                    <span style="--i:15">i</span>
+                    <span style="--i:16">n</span>
+                    <span style="--i:17">e</span>
+                </div>
+            </div>
+        </div>
+        @can('isStagiaire')
+            <div class="row justify-content-md-center mb-5">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <label for="inputEmail3" class="col-sm-1 col-form-label">De:</label>
+                            <div class="col-sm-5">
+                                <input type="date" id="start_date" class="form-control input"/>
+                            </div>
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">à:</label>
+                            <div class="col-sm-5">
+                                <input type="date" id="end_date" class="form-control input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="col-sm-11 btn-group">
+                            <button type="button" class="form-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                Tous les module
+                            </button>
+                            <ul id="module" class="dropdown-menu">
+                                <li class="border-bottom border-2">
+                                    <div class="col-sm-11 ms-2 mt-2 mb-2">
+                                        <input type="text" id="recherche_module" placeholder="Rechercher par module" class="form-control input"/>
+                                    </div>
+                                </li>
+                                <li class="dropdown-item"><input name="module_all" type="checkbox" value="null"> Tous les modules</li>
+                            @foreach ($modules as $mod)
+                                <li class="dropdown-item"><input name="module" type="checkbox" value="{{$mod->nom_module}}"> {{$mod->nom_module}}</li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group col-sm-10">
+                            <button type="button" class="form-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                Tous les formations
+                            </button>
+                            <ul id="formation" class="dropdown-menu">
+                                <li class="border-bottom border-2">
+                                    <div class="col-sm-11 ms-2 mt-2 mb-2">
+                                        <input type="text" id="recherche_formation" placeholder="Rechercher par formation" class="form-control input"/>
+                                    </div>
+                                </li>
+                                <li class="dropdown-item"><input name="formation_all" type="checkbox" value="null"> Tous les formations</li>
+                            @foreach ($formations as $form)
+                                <li class="dropdown-item"><input name="formation" type="checkbox" value="{{$form->nom_formation}}"> {{$form->nom_formation}}</li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group col-sm-11">
+                            <button type="button" class="form-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                Tous les Status
+                            </button>
+                            <ul id="status" class="dropdown-menu">
+                                <li class="border-bottom border-2">
+                                    <div class="col-sm-11 ms-2 mt-2 mb-2">
+                                        <input type="text" id="recherche_status" placeholder="Rechercher par status" class="form-control input"/>
+                                    </div>
+                                </li>
+                                <li class="dropdown-item"><input name="status_all" type="checkbox" value="null"> Tous les Status</li>
+                                <li class="dropdown-item"><input name="status" type="checkbox" value="En cours"> En cours</li>
+                                <li class="dropdown-item"><input name="status" type="checkbox" value="Reprogrammer"> Reprogrammer</li>
+                                <li class="dropdown-item"><input name="status" type="checkbox" value="Annulée"> Annulée</li>
+                                <li class="dropdown-item"><input name="status" type="checkbox" value="Reporté"> Reporté</li>
+                                <li class="dropdown-item"><input name="status" type="checkbox" value="Cloturé"> Cloturé</li>
+                                <li class="dropdown-item"><input name="status" type="checkbox" value="Terminé"> Terminé</li>
+                                <li class="dropdown-item"><input name="status" type="checkbox" value="A venir"> A venir</li>
+                                <li class="dropdown-item"><input name="status" type="checkbox" value="Prévisionnel"> Prévisionnel</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endcan
+        <div id="stg_projet">
+        @foreach ($data as $pj)
+        <div class="row listes justify-content-md-center">
+            <div class="col-md-2" style="">
+                <div class="date_class">
+                    <div style="float: left; display: inline-block; width: 100%;">
+                        <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
+                        <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
+                        <p class="col-md-3 nom_status {{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
+                    </div>
+                    <div class="triangle-right"></div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <ul class="timeline-1 text-black">{{-- here --}}
+                    @php
+                        $statut_eval = $groupe->statut_evaluation_chaud($pj->groupe_id,$pj->stagiaire_id);
+                        $statut_eval_interne = $groupe->statut_evaluation_chaud_interne($pj->groupe_id,$pj->stagiaire_id);
+                    @endphp
+                    @if ($pj->item_status_groupe == 'En cours' || $pj->item_status_groupe == 'Prévisionnel')
+                        <li class="event">
+                    @elseif ($pj->item_status_groupe == 'Terminé')
+                        <li class="event_terminer">
+                    @elseif ($pj->item_status_groupe == 'Reprogrammer' || $pj->item_status_groupe == 'Annulée' || $pj->item_status_groupe == 'Reporté' || $pj->item_status_groupe == 'Cloturé')
+                        <li class="event_repro">
+                    @endif
+                        <div class="row mt-2 titre_projet mb-1 pt-2 pb-2 w-100 g-0">
+                            <div class="col-md-1 p-0">
+                            <h6 class="m-0"><a href="#collapseprojet_{{ $pj->groupe_id }}" class="mb-0 changer_carret d-flex" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
+                            </div>
+                            <div class="col-md-2 text-start">
+                                <h6 class="nom_module">{{ $pj->nom_module }}</h6>
+                                <span class="nom_formation text-black-50">{{ $pj->nom_formation }}</span>
+                            </div>
+                            <div class="col-md-2 p-0 d-flex justify-content-start">
+                                @if($pj->type_formation_id == 3)
+                                <span style="background: #b32cb8; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                    Interne
+                                </span>
+                                @else
+                                    <img src="{{ asset('images/CFP/' . $pj->logo) }}" alt="{{ $pj->logo }}" style="width:64px;height:34px"/>
+                                @endif
+                            </div>
+                            <div class="col-md-1 p-0 d-flex justify-content-start">
+                                <a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn" style="width:57x;height:20px;font-size: 11px;padding-top: initial;"><i class="bx bxs-file-pdf"></i>PDF</button></a>
+                            </div>
+                            <div class="col-md-2 p-0 d-flex justify-content-start">
+                                @if($pj->type_formation_id == 3)
+                                    @if ($statut_eval_interne == 0)
+                                        <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud_interne', [$pj->groupe_id]) }}"><button class="btn" style="width:116px;height:20px;font-size: 11px;padding-top: initial;color: #ffffff !important">Evaluation à faire</button></a>
+                                    @elseif ($statut_eval_interne == 1)
+                                        <p class="mt-3" style="color: green">Evaluation terminé</p>
+                                    @endif
+                                @else
+                                    @if ($statut_eval == 0)
+                                        <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn" style="width:116px;height:20px;font-size: 11px;padding-top: initial;color: #ffffff !important">Evaluation à faire</button></a>
+                                    @elseif ($statut_eval == 1)
+                                        <p class="mt-3" style="color: green">Evaluation terminé</p>
+                                    @endif
+                                @endif
+
+                            </div>
+                            <div class="col-md-1 p-0 d-flex justify-content-start">
+                                <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn" style="width:63px;height:20px;font-size: 11px;padding-top: initial;">Résultat</button></a>
+                            </div>
+                        </div>
+                        <div class="collapse" id="collapseprojet_{{ $pj->groupe_id }}">
+                            {{-- section --}}
+                            <section>
+                                <div class="row bg-light p-0 d-flex flex-row" role="tabpanel">
+                                    @if($pj->type_formation_id == 3)
+                                    <div class="col-md-2 nav_session">
+                                        <div class="corps_planning m-0 bg-light" id="myTab" data-id="refresh" role="tablist">
+                                            <div class="nav-item active" role="presentation">
+                                                <a href="#detail_{{ $pj->groupe_id }}" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
+                                                    role="tab" aria-controls="home" aria-selected="true">
+                                                    <button class="planning_{{ $pj->groupe_id }} d-flex justify-content-between active detail-tab_{{ $pj->groupe_id }}" onclick="openCity(event, 'detail_{{ $pj->groupe_id }}')" style="width: 100%">
+                                                        <p class="m-0 pt-2 pb-2">PLANNING</p>
+                                                        {{-- @if ($test == 0)
+                                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                                        @endif
+                                                        @if ($test != 0)
+                                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                                        @endif --}}
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div class="nav-item" role="presentation">
+                                                <a href="#apprenant_{{ $pj->groupe_id }}" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
+                                                    role="tab" aria-controls="home" aria-selected="true">
+                                                    <button class="planning_{{ $pj->groupe_id }} d-flex justify-content-between apprenant-tab_{{ $pj->groupe_id }}" onclick="openCity(event, 'apprenant_{{ $pj->groupe_id }}')" style="width: 100%">
+                                                        <p class="m-0 pt-2 pb-2">APPRENANTS</p>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div class="nav-item" role="presentation">
+                                                <a href="#ressource_{{ $pj->groupe_id }}" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
+                                                    role="tab" aria-controls="home" aria-selected="true">
+                                                    <button class="planning_{{ $pj->groupe_id }} d-flex justify-content-between action_animation ressource-tab_{{ $pj->groupe_id }}" onclick="openCity(event, 'ressource_{{ $pj->groupe_id }}')" style="width: 100%">
+                                                        <p class="m-0 pt-2 pb-2">RESSOURCES</p>
+                                                        {{-- @if (count($ressource) == 0)
+                                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                                        @else
+                                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                                        @endif --}}
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                        <div class="tab-content col-md-10">
+                                            <div class="tab-pane fade show active tabcontent_{{ $pj->module_id }}" id="detail_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="detail-tab" style="display: block">
+                                                <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
+                                                    <thead style="border-bottom: 1px solid black; line-height: 20px">
+                                                        <td>Séance</td>
+                                                        <td>Module</td>
+                                                        <td>Ville</td>
+                                                        <td>Date</td>
+                                                        <td>Début</td>
+                                                        <td>Fin</td>
+                                                        <td>Formateur</td>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php
+                                                            $i = 1;
+                                                        @endphp
+                                                        @foreach ($data_detail_interne as $dt)
+                                                        @if($pj->module_id == $dt->module_id)
+                                                            <tr>
+                                                                <td>{{ $i }}</td>
+                                                                <td>{{ $dt->nom_module }}</td>
+                                                                @php
+                                                                    $salle = explode(',  ', $dt->lieu);
+                                                                @endphp
+                                                                <td>{{ $dt->lieu }}</td>
+                                                                <td>{{ $dt->date_detail }}</td>
+                                                                <td>{{ $dt->h_debut }} h</td>
+                                                                <td>{{ $dt->h_fin }} h</td>
+                                                                <td>{{ $dt->nom_formateur . ' ' . $dt->prenom_formateur }}</td>
+                                                            </tr>
+                                                            @endif
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="apprenant_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
+                                                <div style="display: inline-block">
+                                                    @foreach($stagiaire_interne as $stg)
+                                                        @if($pj->module_id == $stg->module_id)
+                                                        <div class="float-start wrapper_stg mt-3 p-1 pe-2 ps-2 me-2">
+                                                            <span style="color:#ececec;">{{$stg->nom_stagiaire}}&nbsp;{{$stg->prenom_stagiaire}}</span>
+                                                        </div>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="ressource_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
+                                            {{--  @if (count($ressource)>0) --}}
+                                                    <div class="mb-3 pe-5 ps-1 col-12 pb-5">
+                                                        <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
+                                                            <div class="col-md-3">
+                                                                <span>
+                                                                    <h6>Matériel nécessaire</h6>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-md-3 p-0">
+                                                                <span>
+                                                                    <h6>Pris en charge par </h6>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-md-3 p-0">
+                                                                <span>
+                                                                    <h6>Note </h6>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-0 align-content-center">
+                                                            <div id="affiche_ressource">
+                                                                @foreach ($ressource_interne as $ri)
+                                                                    @if ($ri->groupe_id == $pj->groupe_id)
+
+                                                                    <div class="d-flex mt-1" id="ressource_{{ $ri->id }}">
+                                                                        <div class="col-md-3">
+                                                                            <section>
+                                                                                <i class="far fa-check-circle"></i>&nbsp; {{ $ri->description }}
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <section>
+                                                                                {{ $ri->pris_en_charge }}
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <section>
+                                                                                {{ $ri->note }}
+                                                                            </section>
+                                                                        </div>
+                                                                    </div>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                {{-- @else
+                                                    <div class="mb-3 pe-5 ps-1 col-12 pb-5">Vous n'avez pas besoin de ressources!</div>
+                                                @endif --}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    @else
+                                        <div class="col-md-2 nav_session">
+                                            <div class="corps_planning m-0 bg-light" id="myTab" data-id="refresh" role="tablist">
+                                                <div class="nav-item active" role="presentation">
+                                                    <a href="#detail_{{ $pj->module_id }}" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
+                                                        role="tab" aria-controls="home" aria-selected="true">
+                                                        <button class="planning_{{ $pj->module_id }} d-flex justify-content-between active detail-tab_{{ $pj->module_id }}" onclick="openCity(event, 'detail_{{ $pj->module_id }}')" style="width: 100%">
+                                                            <p class="m-0 pt-2 pb-2">PLANNING</p>
+                                                            {{-- @if ($test == 0)
+                                                                <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                                            @endif
+                                                            @if ($test != 0)
+                                                                <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                                            @endif --}}
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <div class="nav-item" role="presentation">
+                                                    <a href="#apprenant_{{ $pj->module_id }}" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
+                                                        role="tab" aria-controls="home" aria-selected="true">
+                                                        <button class="planning_{{ $pj->module_id }} d-flex justify-content-between apprenant-tab_{{ $pj->module_id }}" onclick="openCity(event, 'apprenant_{{ $pj->module_id }}')" style="width: 100%">
+                                                            <p class="m-0 pt-2 pb-2">APPRENANTS</p>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <div class="nav-item" role="presentation">
+                                                    <a href="#ressource_{{ $pj->module_id }}" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
+                                                        role="tab" aria-controls="home" aria-selected="true">
+                                                        <button class="planning_{{ $pj->module_id }} d-flex justify-content-between action_animation ressource-tab_{{ $pj->module_id }}" onclick="openCity(event, 'ressource_{{ $pj->module_id }}')" style="width: 100%">
+                                                            <p class="m-0 pt-2 pb-2">RESSOURCES</p>
+                                                            {{-- @if (count($ressource) == 0)
+                                                                <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                                            @else
+                                                                <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                                            @endif --}}
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-content col-md-10">
+                                            <div class="tab-pane fade show active tabcontent_{{ $pj->module_id }}" id="detail_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="detail-tab" style="display: block">
+                                                <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
+                                                    <thead style="border-bottom: 1px solid black; line-height: 20px">
+                                                        <td>Séance</td>
+                                                        <td>Module</td>
+                                                        <td>Ville</td>
+                                                        <td>Date</td>
+                                                        <td>Début</td>
+                                                        <td>Fin</td>
+                                                        <td>Formateur</td>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php
+                                                            $i = 1;
+                                                        @endphp
+                                                        @foreach ($data_detail as $dt)
+                                                        @if($pj->module_id == $dt->module_id)
+                                                            <tr>
+                                                                <td>{{ $i }}</td>
+                                                                <td>{{ $dt->nom_module }}</td>
+                                                                @php
+                                                                    $salle = explode(',  ', $dt->lieu);
+                                                                @endphp
+                                                                <td>{{ $dt->lieu }}</td>
+                                                                <td>{{ $dt->date_detail }}</td>
+                                                                <td>{{ $dt->h_debut }} h</td>
+                                                                <td>{{ $dt->h_fin }} h</td>
+                                                                <td>{{ $dt->nom_formateur . ' ' . $dt->prenom_formateur }}</td>
+                                                            </tr>
+                                                            @endif
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="apprenant_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
+                                                <div style="display: inline-block">
+                                                    @foreach($stagiaire as $stg)
+                                                        @if($pj->module_id == $stg->module_id)
+                                                        <div class="float-start wrapper_stg mt-3 p-1 pe-2 ps-2 me-2">
+                                                            <span style="color:#ececec;">{{$stg->nom_stagiaire}}&nbsp;{{$stg->prenom_stagiaire}}</span>
+                                                        </div>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="ressource_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
+                                            {{--  @if (count($ressource)>0) --}}
+                                                    <div class="mb-3 pe-5 ps-1 col-12 pb-5">
+                                                        <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
+                                                            <div class="col-md-3">
+                                                                <span>
+                                                                    <h6>Matériel nécessaire</h6>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-md-3 p-0">
+                                                                <span>
+                                                                    <h6>Demandé(e) par </h6>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-md-3 p-0">
+                                                                <span>
+                                                                    <h6>Pris en charge par </h6>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-md-3 p-0">
+                                                                <span>
+                                                                    <h6>Note </h6>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-0 align-content-center">
+                                                            <div id="affiche_ressource">
+                                                                @foreach ($ressource as $r)
+                                                                    @if ($r->groupe_id == $pj->groupe_id)
+
+                                                                    <div class="d-flex mt-1" id="ressource_{{ $r->id }}">
+                                                                        <div class="col-md-3">
+                                                                            <section>
+                                                                                <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <section>
+                                                                                {{ $r->demandeur }}
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <section>
+                                                                                {{ $r->pris_en_charge }}
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <section>
+                                                                                {{ $r->note }}
+                                                                            </section>
+                                                                        </div>
+                                                                    </div>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                {{-- @else
+                                                    <div class="mb-3 pe-5 ps-1 col-12 pb-5">Vous n'avez pas besoin de ressources!</div>
+                                                @endif --}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    @endif
+                                <div>
+                            </section>
+                            {{-- /section --}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+            $('.document-tab_'.$pj->groupe_id).on('click',function(e){
+                localStorage.setItem('activeTab', 'document_'.$pj->groupe_id);
+            });
+            $('.ressource-tab_'.$pj->groupe_id).on('click',function(e){
+                localStorage.setItem('activeTab', 'ressource_'.$pj->groupe_id);
+            });
+            $('.apprenant-tab_'.$pj->groupe_id).on('click',function(e){
+                console.log("here");
+                localStorage.setItem('activeTab', 'apprenant_'.$pj->groupe_id);
+            });
+            $('.detail-tab_'.$pj->groupe_id).on('click',function(e){
+                localStorage.setItem('activeTab', 'detail_'.$pj->groupe_id);
+            });
+
+            let activeTab = localStorage.getItem('activeTab');
+
+            if(activeTab){
+                $('.tabcontent_'.$pj->groupe_id).css('display','none');
+                $('#' + activeTab).show();
+                tablinks = document.getElementsByClassName("planning_".$pj->groupe_id);
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                $('.'+activeTab+'-tab').addClass("active");
+            }
+        </script>
+        @endforeach
+        </div>
+    @endif
+@endcan
 </div>
 </div>
 @endsection
@@ -2488,11 +3739,8 @@
     <script>
         $(document).ready(function() {
             var table = $('#example').DataTable( {
-                // dom:            "Bfrtip",
                 "dom": 'C<"clear">lfrtip',
-                // scrollY:        "500px",
                 scrollX:        true,
-                // scrollCollapse: true,
                 paging:         true,
                 buttons:        [ 'colvis','colonne' ],
                 select: true,
@@ -2511,11 +3759,40 @@
                     "buttonText": "Change colonne"
                 },
                 "colVis": {
-                "label": function ( index, title, th ) {
-                    return (index+1) +'. '+ title;
-                }
+                    "label": function ( index, title, th ) {
+                        return (index+1) +'. '+ title;
+                    }
                 }
             } );
+
+            $('.mahafaly').DataTable( {
+                "dom": 'C<"clear">lfrtip',
+                scrollX:        true,
+                paging:         true,
+                buttons:        [ 'colvis','colonne' ],
+                select: true,
+                ordering:false,
+                "language": {
+                    "paginate": {
+                    "previous": "précédent",
+                    "next": "suivant"
+                    },
+                    "search": "Recherche :",
+                    "zeroRecords":    "Aucun résultat trouvé",
+                    "infoEmpty":      " 0 trouvés",
+                    "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                    "infoFiltered":   "(filtre sur _MAX_ entrées)",
+                    "lengthMenu":     "Affichage _MENU_ ",
+                    "buttonText": "Change colonne"
+                },
+                "colVis": {
+                    "label": function ( index, title, th ) {
+                        return (index+1) +'. '+ title;
+                    }
+                }
+            } );
+
+            // $('.ColVis_MasterButton').text('Afficher / Masquer');
 
             new $.fn.dataTable.FixedColumns( table, {
                 leftColumns: 3,

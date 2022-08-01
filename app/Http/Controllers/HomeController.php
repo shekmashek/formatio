@@ -698,24 +698,28 @@ class HomeController extends Controller
         }
         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
             $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
-            $data = DB::select('select projet_id,nom_projet,type_formation_id,type_formation,groupe_id,nom_groupe,module_id,nom_module,date_debut,date_fin,cfp_id,nom_cfp,modalite,item_status_groupe,class_status_groupe from v_groupe_projet_entreprise where entreprise_id = ?',[$entreprise_id]);
-
-            // $nomCfps = DB::select('select nom_cfp  from v_groupe_projet_entreprise group by nom_cfp asc');
-            // $nomSessions = DB::select('select nom_groupe from v_groupe_projet_entreprise group by nom_groupe order by groupe_id asc');
-            // $nomModalites = DB::select('select modalite from v_groupe_projet_module group by modalite');
-            // $nomModules = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
-            // $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module group by item_status_groupe');
-            // $nomTypes = DB::select('select type_formation from v_projet_session group by type_formation');
-            // $nomProjet = DB::table('v_projet_session')
-            //     ->select('nom_projet')
-            //     ->groupBy('nom_projet')
-            //     ->orderBy('projet_id', 'ASC')
-            //     ->get();
+            $data = DB::select('select projet_id,nom_projet,type_formation_id,type_formation,groupe_id,nom_groupe,module_id,nom_module,date_debut,date_fin,cfp_id,nom_cfp,modalite,item_status_groupe,class_status_groupe, entreprise_id from v_groupe_projet_entreprise where entreprise_id = ?',[$entreprise_id]);
+            $devise = DB::select('select * from devise')[0]->devise;
 
             $dataInterne = DB::select('select projet_id,nom_projet,type_formation_id,type_formation,groupe_id,nom_groupe,module_id,nom_module,date_debut,date_fin,0 as cfp_id,"-" as nom_cfp,modalite,item_status_groupe,class_status_groupe from v_groupe_entreprise_interne where entreprise_id = ?',[$entreprise_id]);
             foreach($dataInterne as $interne) {
                 array_push($data,$interne);
             }
+
+            // filter multi select
+            $nomProjet = DB::select('select nom_projet from v_groupe_projet_entreprise where entreprise_id = ? group by nom_projet order by groupe_id asc', [$entreprise_id]);
+            $nomSessions = DB::select('select nom_groupe from v_groupe_projet_entreprise where entreprise_id  = ? group by nom_groupe order by groupe_id asc', [$entreprise_id]);
+            $nomModules = DB::select('select nom_module from v_groupe_projet_entreprise where entreprise_id  = ? group by nom_module order by groupe_id asc', [$entreprise_id]);
+            $nomEntreprises = DB::select('select nom_cfp from v_groupe_projet_entreprise where entreprise_id = ? group by nom_cfp', [$entreprise_id]);
+            $nomModalites = DB::select('select modalite from v_groupe_projet_entreprise where entreprise_id = ? group by modalite', [$entreprise_id]);
+            $nomTypes = DB::select('select type_formation from type_formations');
+            $nomStatuts = DB::select('select status from status');
+
+            $dataFullP = DB::table('v_groupe_projet_entreprise')
+                    ->join('v_groupe_entreprise_interne', 'v_groupe_entreprise_interne.groupe_id', 'v_groupe_projet_entreprise.groupe_id')
+                    ->select('v_groupe_projet_entreprise.nom_module as nom1', 'v_groupe_entreprise_interne.nom_module as nom2')
+                    ->get();
+            // dd($nomProjet);
 
             $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu limit 1",[$entreprise_id]);
             if(count($lieu_formations)>0){
@@ -728,7 +732,9 @@ class HomeController extends Controller
             $nb_employes = DB::select('select count(emp.id) from employers as emp join entreprises as etp on emp.entreprise_id = etp.id where etp.type_entreprise_id = ?',[1]);
             $nb_collaboration = DB::select('select count(*) from collaboration_etp_cfp where etp_id = ? and statut = ?',[$entreprise_id,2]);
             $abonnement_etp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_etp_id,v_tac.illimite from v_type_abonnement_etp v_tac JOIN entreprises as etp on v_tac.entreprise_id = etp.id where v_tac.entreprise_id = ? and etp.statut_compte_id = ? and v_tac.status = ?',[$entreprise_id,2,"Activé"]);
-            return view('projet_session.index2', compact('data','ref','nb_employes','nb_collaboration','abonnement_etp','stagiaires','lieuFormation', 'type_formation_id', 'page'));
+            return view('projet_session.index2', compact('data','ref','nb_employes','nb_collaboration','abonnement_etp',
+            'stagiaires','lieuFormation', 'type_formation_id', 'page', 'devise', 'dataFullP', 'nomProjet', 'nomSessions', 'nomModules',
+            'nomEntreprises', 'nomModalites', 'nomTypes', 'nomStatuts'));
         }
         if (Gate::allows('isManager') ) {
 
@@ -895,14 +901,14 @@ class HomeController extends Controller
             $abonnement_cfp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_cfp_id,v_tac.nb_projet,v_tac.illimite from v_type_abonnement_cfp v_tac JOIN cfps as cfp on v_tac.cfp_id = cfp.id where cfp_id = ? and statut_compte_id = ? and status = ?',[$cfp_id,2,"Activé"]);
             
             // filter multi select
-            $nomProjet = DB::select('select distinct nom_projet from v_groupe_projet_module where cfp_id = ? order by groupe_id asc', [$cfp_id]);
-            $nomSessions = DB::select('select distinct nom_groupe from v_groupe_projet_module where cfp_id  = ? order by groupe_id asc', [$cfp_id]);
-            $nomModules = DB::select('select distinct nom_module from v_groupe_projet_module where cfp_id  = ? order by groupe_id asc', [$cfp_id]);
-            $nomEntreprises = DB::select('select distinct(entreprises.nom_etp) from v_groupe_projet_module 
-            join entreprises on v_groupe_projet_module.entreprise_id = entreprises.id where cfp_id = ?', [$cfp_id]);
-            $nomModalites = DB::select('select distinct modalite from v_groupe_projet_module where cfp_id = ?', [$cfp_id]);
-            $nomTypes = DB::select('select distinct type_formation from v_groupe_projet_module where cfp_id = ?', [$cfp_id]);
-            $nomStatuts = DB::select('select distinct item_status_groupe from v_groupe_projet_module where cfp_id = ?', [$cfp_id]);
+            $nomProjet = DB::select('select nom_projet from v_groupe_projet_module where cfp_id = ? group by nom_projet order by groupe_id asc', [$cfp_id]);
+            $nomSessions = DB::select('select nom_groupe from v_groupe_projet_module where cfp_id  = ? group by nom_groupe order by groupe_id asc', [$cfp_id]);
+            $nomModules = DB::select('select nom_module from v_groupe_projet_module where cfp_id  = ? group by nom_module order by groupe_id asc', [$cfp_id]);
+            $nomEntreprises = DB::select('select entreprises.nom_etp from v_groupe_projet_module 
+            join entreprises on v_groupe_projet_module.entreprise_id = entreprises.id where cfp_id = ? group by entreprises.nom_etp', [$cfp_id]);
+            $nomModalites = DB::select('select modalite from v_groupe_projet_module where cfp_id = ? group by modalite', [$cfp_id]);
+            $nomTypes = DB::select('select type_formation from v_groupe_projet_module where cfp_id = ? group by type_formation', [$cfp_id]);
+            $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module where cfp_id = ? group by item_status_groupe', [$cfp_id]);
 
             $fullProjects = $fonct->projetSessionFull($cfp_id);
 
