@@ -1,3 +1,4 @@
+-- Active: 1656573946460@@127.0.0.1@3306@mahafaly
 CREATE OR REPLACE VIEW v_type_abonnement_etp AS SELECT
     t.id AS type_abonnements_etp_id,
     t.nom_type,
@@ -48,6 +49,8 @@ CREATE OR REPLACE VIEW v_type_abonnement_cfp AS SELECT
     a.date_fin,
     a.status,
     a.cfp_id,
+    month(a.date_demande) as mois_actuel,
+    year(a.date_demande) as annee_actuel,
     c.nom as nom_of,
     a.activite,
     a.created_at,

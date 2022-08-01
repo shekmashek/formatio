@@ -183,7 +183,7 @@
             color: blue;
         }
 
-        #modifTable_length label, #modifTable_length select, #modifTable_filter label, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
+        .dataTables_filter label, #modifTable_length label, #modifTable_length select, #modifTable_filter label, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
             font-size: 13px;
         }
 
@@ -287,30 +287,7 @@
                                     {{-- @include("admin.facture.pagination_etp.pagination_tout_facture") --}}
 
                                     <table class="table modifTable" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Type</th>
-                                                <th>
-                                                    <a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
-                                                </th>
-                                                <th><a class="nom_entiter_trie" value="0">
-                                                    Organisme de formation &nbsp; <span class="nom_has_arrow"></span> </a>
-                                                </th>
-                                                <th scope="col"><a class="dte_fact_trie" value="0">
-                                                    Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
-                                                </th>
-                                                <th><a class="dte_reglement_trie" value="0">
-                                                    Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
-                                                </th>
-                                                <th>
-                                                    <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
-                                                </th>
-                                                <th>
-                                                    <a class=" rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
-                                                </th>
-                                                <th>Statut</th>
-                                            </tr>
+                                        <thead style="background: #c7c9c939; border-color: white !important">
                                             <tr>
                                                 <th>#</th>
                                                 <th>Type</th>
@@ -509,8 +486,8 @@
                                         {{-- @include("admin.facture.pagination_etp.pagination_facture_actif") --}}
 
 
-                                        <table class="table modifTable" style="width:100%">
-                                            <thead>
+                                        <table class="table" style="width:100%" id="modifTable">
+                                            <thead style="background: #c7c9c939; border-color: white">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Type</th>
@@ -665,7 +642,7 @@
                                                 @endforeach
                                                 @else
                                                 <tr>
-                                                    <td colspan="9" class="text-center" style="color:red;">Aucun Résultat</td>
+                                                    <td colspan="9" class="text-center" style="color:rgb(48, 48, 48);">Aucun Résultat</td>
                                                     <td style="display: none"></td>
                                                     <td style="display: none"></td>
                                                     <td style="display: none"></td>
@@ -694,8 +671,8 @@
                                                 {{-- @include("admin.facture.pagination_etp.pagination_facture_payer") --}}
 
 
-                                                <table class="table modifTable" style="width:100%">
-                                                    <thead>
+                                                <table class="table" style="width:100%" id="modifTable1">
+                                                    <thead style="background: #c7c9c939; border-color: white">
                                                         <tr>
                                                             <th>#</th>
                                                             <th scope="col">Type</th>
@@ -708,14 +685,10 @@
                                                             <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
                                                             </th>
                                                             <th scope="col">
-                                                                <div align="right">
-                                                                    <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
-                                                                </div>
+                                                                <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
                                                             </th>
                                                             <th scope="col">
-                                                                <div align="right">
-                                                                    <a class="rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
-                                                                </div>
+                                                                <a class="rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
                                                             </th>
                                                             <th scope="col">Statut</th>
                                                         </tr>
@@ -842,7 +815,7 @@
                                                         @endforeach
                                                         @else
                                                         <tr>
-                                                            <td colspan="9" class="text-center" style="color:red;">Aucun Résultat</td>
+                                                            <td colspan="9" class="text-center" style="color:rgb(48, 48, 48);">Aucun Résultat</td>
                                                             <td style="display: none"></td>
                                                             <td style="display: none"></td>
                                                             <td style="display: none"></td>
@@ -980,7 +953,7 @@
                                                                 <br>
                                                                 <select class="form-select" autocomplete="on" name="entiter_id" id="entiter_id">
                                                                     @foreach ($cfp as $cf)
-                                                                    <option value="{{$cf->cfp_id}}">{{$cf->nom}}</option>
+                                                                    <option value="{{$cf->id_cfp}}">{{$cf->nom}}</option>
                                                                     @endforeach
                                                                 </select>
                                                                 <br>
@@ -1033,7 +1006,7 @@
         </div>
     </div>
     {{-- inmportation fonction js pour cfp --}}
-    @include("admin.facture.function_js.js_etp")
+    {{-- @include("admin.facture.function_js.js_etp") --}}
 @endsection
 
 @section('script')
@@ -1057,7 +1030,7 @@
                 var defaultSearch = 0;
 
                 $(document).on('change keyup', '#select-column', function(){
-                    defaultSearch = this.value; 
+                    defaultSearch = this.value;
                 });
 
                 $(document).on('change keyup', '#search-by-column', function(){
@@ -1065,9 +1038,9 @@
                     table.column(defaultSearch).search(this.value).draw();
                 });
             }
-            
+
             $( '.modifTable thead'  ).on( 'keyup', ".column_search",function () {
-        
+
                 table
                     .column( $(this).parent().index() )
                     .search( this.value )
@@ -1096,53 +1069,51 @@
                     "lengthMenu":     "Affichage _MENU_ ",
                 }
             });
-            
+
             $('input:checkbox').on('change', function () {
                 var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
                     return '^' + this.value + '$';
                 }).get().join('|');
-                
+
                 table.column(0).search(Projet, true, false, false).draw(false);
 
                 var Session = $('input:checkbox[name="session"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(1).search(Session, true, false, false).draw(false);
 
                 var Entreprise = $('input:checkbox[name="entreprise"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(3).search(Entreprise, true, false, false).draw(false);
 
                 var Modalite = $('input:checkbox[name="modalite"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(4).search(Modalite, true, false, false).draw(false);
-                
+
                 var TypeFormation = $('input:checkbox[name="typeFormation"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(8).search(TypeFormation, true, false, false).draw(false);
-                
+
                 var Module = $('input:checkbox[name="module"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
+
                 table.column(2).search(Module, true, false, false).draw(false);
-                
+
                 var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
-                
-                table.column(7).search(Statut, true, false, false).draw(false);
-            
-            });
 
-            searchByColumn(table);
+                table.column(7).search(Statut, true, false, false).draw(false);
+
+            });
         });
     </script>
 @endsection

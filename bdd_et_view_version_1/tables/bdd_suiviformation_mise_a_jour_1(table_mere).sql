@@ -1,4 +1,4 @@
--- Active: 1657548149937@@127.0.0.1@3306@mydb2
+-- Active: 1656573946460@@127.0.0.1@3306@mahafaly
 CREATE TABLE genre (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   genre varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -28,7 +28,7 @@ INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES
 (7,'CFP',"Organisme de Formation", '2021-11-22 09:27:38', '2021-11-22 09:27:38'),
 (8,'service','chef de service', '2021-10-26 05:45:24', '2021-10-26 05:45:24');
 
-INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES (8,'formateur_interne','Formateur interne', '2021-10-26 05:45:24', '2021-10-26 05:45:24');
+INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES (9,'formateur_interne','Formateur interne', '2021-10-26 05:45:24', '2021-10-26 05:45:24');
 
 
 CREATE TABLE `niveaux` (
@@ -149,106 +149,6 @@ CREATE TABLE `tarif_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
--- CREATE TABLE cfps (
---   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
---   nom varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
---   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
---   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
---   adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci default 'XXX',
---   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
---   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
---   email varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
---   telephone varchar(10) COLLATE utf8mb4_unicode_ci,
---   slogan varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
---   nif varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
---   stat varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
---   rcs varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
---   cif varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
---   created_at timestamp NULL DEFAULT current_timestamp(),
---   updated_at timestamp NULL DEFAULT current_timestamp(),
---   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
---   activiter boolean not null default true,
---   site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  'XXXXXXX',
---   url_logo varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE OR REPLACE VIEW cfps as SELECT
-    id,
-    nom_etp as nom,
-    adresse_rue as adresse_lot,
-    adresse_quartier,
-    adresse_code_postal,
-    adresse_ville,
-    adresse_region,
-    email_etp as email,
-    telephone_etp as telephone,
-    slogan,
-    nif,
-    stat,
-    rcs,
-    cif,
-    created_at,
-    updated_at,
-    logo,
-    activiter,
-    site_etp as site_web,
-    url_logo,
-    statut_compte_id,
-    presentation,
-    specialisation,
-    assujetti_id
-FROM entreprises WHERE entreprises.type_entreprise_id = 2;
-
-CREATE TABLE horaires (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  jours varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  h_entree time,
-  h_sortie time,
-  created_at timestamp NULL DEFAULT current_timestamp(),
-  updated_at timestamp NULL DEFAULT current_timestamp(),
-  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-CREATE TABLE reseaux_sociaux (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  lien_facebook varchar(191) COLLATE utf8mb4_unicode_ci NULL,
-  lien_twitter varchar(191) COLLATE utf8mb4_unicode_ci NULL,
-  lien_instagram varchar(191) COLLATE utf8mb4_unicode_ci NULL,
-  lien_linkedin varchar(191) COLLATE utf8mb4_unicode_ci NULL,
-  created_at timestamp NULL DEFAULT current_timestamp(),
-  updated_at timestamp NULL DEFAULT current_timestamp(),
-  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
-
-
--- CREATE TABLE responsables_cfp(
---   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
---   nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
---   prenom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
---   sexe_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
---   date_naissance_resp_cfp date default current_timestamp(),
---   cin_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXXX',
---   email_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
---   telephone_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
---   fonction_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
---   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
---   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
---   adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
---   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
---   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
---   photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default NULL,
---   cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
---   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
---   activiter boolean not null default true,
---   prioriter boolean not null default false,
---   url_photo varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
---   created_at timestamp NULL DEFAULT current_timestamp(),
---   updated_at timestamp NULL DEFAULT current_timestamp()
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 

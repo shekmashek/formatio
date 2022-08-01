@@ -32,9 +32,7 @@ class AdminController extends Controller
         $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$id_user]);
         $id_cfp = $resp->cfp_id;
 
-        $cfp_etp = DB::select('select COUNT(*) as cfp_etp FROM `demmande_cfp_etp` where demmandeur_cfp_id = ? and activiter = ?', [$id_cfp, 1])[0]->cfp_etp;
-        $etp_cfp = DB::select('select COUNT(*) as etp_cfp FROM `demmande_etp_cfp` where inviter_cfp_id = ? and activiter = ?', [$id_cfp, 1])[0]->etp_cfp;
-        $entreprise = $etp_cfp + $cfp_etp;
+        $entreprise = DB::select('select id_etp,logo_etp,nom_etp,initial_resp_etp,photos_resp,nom_resp,prenom_resp from v_collab_cfp_etp where cfp_id = ? and statut = ?',[$id_cfp,2]);
 
         $projet_en_cours = DB::select('select count(*) as projet_en_cours FROM `projets` where cfp_id = ? and status = ?', [$id_cfp, 'En Cours'])[0]->projet_en_cours;
         $projet_termime = DB::select('select count(*) as projet_termine FROM `projets` where cfp_id = ? and status = ?', [$id_cfp, 'termine'])[0]->projet_termine;
@@ -47,27 +45,7 @@ class AdminController extends Controller
 
         return response()->json([$entreprise, $projet_en_cours, $projet_termime, $projet_a_venir, $projet, $formateur]);
     }
-    public function admin_etp()
-    {
-        // $id_user = Auth::user()->id;
 
-        // $id_etp = responsable::where('user_id', $id_user)->value('id');
-
-        // $cfp_etp = DB::select('select COUNT(*) as cfp_etp FROM `demmande_cfp_etp` where inviter_etp_id = ? and activiter = ?', [$id_etp, 1])[0]->cfp_etp;
-        // $etp_cfp = DB::select('select COUNT(*) as etp_cfp FROM `demmande_etp_cfp` where demmandeur_etp_id = ? and activiter = ?', [$id_etp, 1])[0]->etp_cfp;
-        // $cfp = $etp_cfp + $cfp_etp;
-
-        // $projet_en_cours_etp = DB::select('select count(*) as projet_en_cours FROM `projets` where entreprise_id = ? and status = ?', [$id_etp, 'En Cours'])[0]->projet_en_cours;
-        // $projet_termime_etp = DB::select('select count(*) as projet_termine FROM `projets` where entreprise_id = ? and status = ?', [$id_etp, 'termine'])[0]->projet_termine;
-        // $projet_a_venir_etp = DB::select('select count(*) as projet_a_venir FROM `projets` where entreprise_id = ? and status = ?', [$id_etp, 'A venir'])[0]->projet_a_venir;
-        // $projet_etp = DB::select('select count(*) as all_projet from projets where entreprise_id =?', [$id_etp])[0]->all_projet;
-
-        // $stagiaire = DB::select('select count(*) as stagiaire_dans_entreprise from stagiaires where entreprise_id = ?', [$id_etp])[0]->stagiaire_dans_entreprise;
-
-        // $manager = DB::select('select count(*) as manager_entreprise from chef_departements where entreprise_id = ?', [$id_etp])[0]->manager_entreprise;
-
-        // return response()->json([$cfp, $projet_en_cours_etp, $projet_termime_etp, $projet_a_venir_etp, $projet_etp, $stagiaire, $manager]);
-    }
     public function get_name_etp()
     {
         $id_user = Auth::user()->id;
@@ -124,20 +102,11 @@ class AdminController extends Controller
     {
         $id_user = Auth::user()->id;
         $fonct = new FonctionGenerique();
-        $entp = new entreprise();
 
         if (Gate::allows('isCFP')) {
 
-            // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
-            $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-            // $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $refuse_demmande_etp = DB::select('select * from v_refuse_demmande_etp_cfp where cfp_id = ? order by date_refuse desc limit 10',[$cfp_id]);
-            $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
-
-            $entreprise = $entp->getEntreprise($etp2, $etp1);
+            $refuse_demmande_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur,date_refuse from v_collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,3,'etp']);
 
             return response()->json(['refuse_invitation'=>$refuse_demmande_etp]);
         }
@@ -152,12 +121,8 @@ class AdminController extends Controller
         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple') ) {
             // $user = responsable::where('user_id', $id_user)->value('photos');
             $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
-            $invitation = DB::select('select id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$entreprise_id,1,'cfp']);
+            $invitation = DB::select('select cfp_id as id_cfp,nom,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,nom_etp,nom_secteur from v_collab_cfp_etp where id_etp = ? and statut = ? and demmandeur = ?',[$entreprise_id,1,'cfp']);
 
-            // $invitation = $fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]);
-            // $refuse_demmande_cfp = $fonct->findWhere("v_refuse_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
-            // $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
-            // $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
             $user = $fonct->findWhereMulitOne(("responsables"),["user_id"],[$id_user])->photos;
             $photo ='';
             if($user == null){
@@ -222,16 +187,7 @@ class AdminController extends Controller
 
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
-            $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
-            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_resp,nom_etp,nom_secteur from collab_cfp_etp where id_cfp = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
-
-            // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-            // $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            // $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
-            // $entreprise = $entp->getEntreprise($etp2, $etp1);
-
-
+            $invitation_etp = DB::select('select id_etp,nom_resp,prenom_resp,email_responsable as email_resp,nom_etp,nom_secteur from v_collab_cfp_etp where cfp_id = ? and statut = ? and demmandeur = ?',[$cfp_id,1,'etp']);
             $user = $fonct->findWhereMulitOne(("v_responsable_cfp"),["user_id"],[$id_user])->photos_resp_cfp;
             $photo ='';
             if($user == null){
@@ -242,8 +198,7 @@ class AdminController extends Controller
                 $user = 'images/employes/' . $user;
                 $photo = 'oui';
             }
-        //    return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$etp1]);
-        // return response()->json([$invitation_etp]);
+
             return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$invitation_etp]);
         }
         if (Gate::allows('isStagiaire')) {

@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AbonnementController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\TestController;
 use App\PlanFormation;
@@ -1010,7 +1011,8 @@ Route::post('mettre_fin_cfp_formateur', 'CollaborationController@mettre_fin_cfp_
 // Route::get('delete_cfp_formateur','CollaborationController@delete_cfp_formateur')->name('delete_cfp_formateur');
 
 Route::get('annulation_cfp_etp/{id?}', 'CollaborationController@annulation_invitation_cfp_etp')->name('annulation_cfp_etp');
-// Route::get('suppresion_invite_cfp_etp/{id}', 'CollaborationController@suppresion_invite_cfp_etp')->name('suppresion_invite_cfp_etp');
+Route::get('suppresion_invite_cfp_etp/{id?}/{id_collab?}', 'CollaborationController@suppresion_invite_cfp_etp')->name('suppresion_invite_cfp_etp');
+Route::get('suppresion_invite_etp_cfp/{id?}/{id_collab?}', 'CollaborationController@suppresion_invite_etp_cfp')->name('suppresion_invite_etp_cfp');
 
 Route::get('annulation_cfp_etp_notif', 'CollaborationController@refuser')->name('annulation_cfp_etp_notif');
 Route::get('annulation_etp_cfp/{id?}', 'CollaborationController@annulation_invitation_etp_cfp')->name('annulation_etp_cfp');
@@ -1521,6 +1523,7 @@ Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagia
 
 //newAfficheInfo
 Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploye');
+Route::get('/newAfficheInfo/employe_cfp/{id_emp}', 'ParticipantController@infoEmployeCfp');
 
 Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInfo');
 

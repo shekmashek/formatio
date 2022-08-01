@@ -267,6 +267,9 @@ recreer vue v_liste_avis_interne dans bdd_suiviformation_view_30
 -----------26 juillet ----------------
 Creation table collaboration_etp_cfp
 
+DROP TABLE IF EXISTS demmande_cfp_etp;
+DROP TABLE IF EXISTS demmande_etp_cfp;
+
 DROP TABLE IF EXISTS collaboration_etp_cfp;
 CREATE table collaboration_etp_cfp (
 	`id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -280,37 +283,60 @@ CREATE table collaboration_etp_cfp (
 
 view a creer
 
-CREATE OR REPLACE VIEW collab_cfp_etp AS SELECT
+CREATE OR REPLACE VIEW v_collab_cfp_etp AS SELECT
+    collab.id,
     collab.statut,
     collab.demmandeur,
-    etp.id as id_etp,
-    etp.nom_etp,
-    etp.logo as logo_etp,
+    e.id AS id_etp,
+    e.nom_etp,
+    e.adresse_rue,
+    e.logo AS logo_etp,
+    e.nif AS nif_etp,
+    e.stat AS stat_etp,
+    e.cif AS cif_etp,
+    e.rcs AS rcs_etp,
+    e.secteur_id,
+    e.email_etp,
+    e.site_etp,
+    e.telephone_etp,
     sect.nom_secteur,
-    resp.nom_resp,
-    resp.prenom_resp,
-    SUBSTRING(resp.nom_resp, 1, 1) AS nom_resp_initial,
-    SUBSTRING(resp.prenom_resp, 1, 1) AS prenom_resp_initial,
-    resp.photos,
-    resp.email_resp,
-    cfp.id as id_cfp,
-    cfp.nom,
-    cfp.logo,
-    resp_cfp.nom_resp_cfp,
-    resp_cfp.prenom_resp_cfp,
-    SUBSTRING(resp_cfp.nom_resp_cfp, 1, 1) AS nom_resp_cfp_inital,
-    SUBSTRING(resp_cfp.prenom_resp_cfp, 1, 1) AS prenom_resp_cfp_initial,
-    resp_cfp.photos_resp_cfp,
-    resp_cfp.email_resp_cfp,
+    r.id AS responsable_id,
+    r.nom_resp AS nom_resp,
+    r.prenom_resp AS prenom_resp,
+    r.email_resp AS email_responsable,
+    r.photos AS photos_resp,
+    concat(SUBSTRING(r.nom_resp, 1, 1),SUBSTRING(r.prenom_resp, 1, 1)) as initial_resp_etp,
+    c.id AS cfp_id,
+    c.nom,
+    c.adresse_lot,
+    c.adresse_ville,
+    c.adresse_region,
+    c.email,
+    c.telephone,
+    c.slogan,
+    c.nif AS nif_cfp,
+    c.stat AS stat_cfp,
+    c.rcs AS rcs_cfp,
+    c.cif AS cif_cfp,
+    c.logo AS logo_cfp,
+    c.specialisation AS specialisation,
+    c.presentation AS presentation,
+    c.site_web,
+    rc.id AS responsable_cfp_id,
+    rc.email_resp_cfp,
+    rc.nom_resp_cfp,
+    rc.prenom_resp_cfp,
+    rc.photos_resp_cfp,
+    concat(SUBSTRING(rc.nom_resp_cfp, 1, 1),SUBSTRING(rc.prenom_resp_cfp, 1, 1)) as initial_resp_cfp,
     collab.updated_at as date_refuse
 
 FROM collaboration_etp_cfp as collab
-JOIN entreprises as etp ON collab.etp_id = etp.id
-JOIN cfps as cfp ON collab.cfp_id = cfp.id
-JOIN secteurs as sect ON etp.secteur_id = sect.id
-JOIN responsables as resp ON collab.etp_id = resp.entreprise_id
-JOIN responsables_cfp as resp_cfp ON collab.cfp_id = resp_cfp.cfp_id
-WHERE resp.prioriter = 1 and resp_cfp.prioriter = 1;
+JOIN entreprises as e ON collab.etp_id = e.id
+JOIN cfps as c ON collab.cfp_id = c.id
+JOIN secteurs as sect ON e.secteur_id = sect.id
+JOIN responsables as r ON collab.etp_id = r.entreprise_id
+JOIN responsables_cfp as rc ON collab.cfp_id = rc.cfp_id
+WHERE r.prioriter = 1 and rc.prioriter = 1;
 
 recreer view responsables dans 0.bdd_suiviformation_view_employes
 
@@ -391,3 +417,15 @@ FROM
     responsables_cfp
 JOIN cfps ON  responsables_cfp.cfp_id = cfps.id
 LEFT JOIN genre ON  responsables_cfp.sexe_resp_cfp = genre.id
+
+faire les alters tables suivants :
+
+ALTER TABLE `entreprises` CHANGE `adresse_rue` `adresse_rue` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_quartier` `adresse_quartier` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_code_postal` `adresse_code_postal` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_ville` `adresse_ville` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `adresse_region` `adresse_region` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `stat` `stat` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `rcs` `rcs` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `cif` `cif` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `site_etp` `site_etp` varchar(191) COLLATE utf8mb4_unicode_ci  default null;

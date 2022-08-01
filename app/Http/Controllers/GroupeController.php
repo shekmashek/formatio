@@ -47,18 +47,11 @@ class GroupeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
-        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
-        // dd($fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]));
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
         $type_formation = request()->type_formation;
-        // $formations = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
-        // $modules = $fonct->findAll("modules");
         $modules = $fonct->findWhere("modules", ["cfp_id",'status'], [$cfp_id,2]);
 
-        $etp1 = $fonct->findWhere("v_demmande_cfp_etp", ['cfp_id'], [$cfp_id]);
-        $etp2 = $fonct->findWhere("v_demmande_etp_cfp", ['cfp_id'], [$cfp_id]);
-        $entreprise = $fonct->concatTwoList($etp1, $etp2);
-
+        $entreprise = DB::select('select id_etp as entreprise_id,logo_etp,nom_etp,initial_resp_etp,photos_resp,nom_resp,prenom_resp from v_collab_cfp_etp where cfp_id = ? and statut = ?',[$cfp_id,2]);
 
         $payement = $fonct->findAll("type_payement");
 
@@ -334,9 +327,9 @@ class GroupeController extends Controller
             if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
             }
-            // if($request->min_part >= $request->max_part ){
-            //     throw new Exception("Participant minimal doit être inférieur au participant maximal.");
-            // }
+            if($request->module == null){
+                throw new Exception("Choisissez le module pour la session.");
+            }
             if($request->modalite == null){
                 throw new Exception("Vous devez choisir la modalité de formation.");
             }

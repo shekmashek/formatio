@@ -376,18 +376,6 @@
                                         <th class="headProject" style="width: 10%;"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type formation</th>
                                         <th class="headProject" style="width: 10%;"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
                                     </tr>
-                                    <tr>
-                                        <th class="headProject">Projet</th>
-                                        <th class="headProject">Session</th>
-                                        <th class="headProject">Module</th>
-                                        <th class="headProject">Entreprise</th>
-                                        <th class="headProject">Modalité</th>
-                                        <th class="headProject">Date du projet</th>
-                                        <th class="headProject toHide">Ville</th>
-                                        <th class="headProject">Statuts</th>
-                                        <th class="headProject">Type formation</th>
-                                        <th class="headProject hideAction">Action</th>
-                                    </tr>
                                 </thead>
                                 <tbody>
                                     @if (count($projet) <= 0)
@@ -1352,28 +1340,7 @@
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#modifTable thead tr:eq(1) th').each( function () {
-                var title = $(this).text();
-                $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px; margin-bottom: 0"/>');
 
-                // $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
-                $( "th.toHide > input" ).prop( "disabled", true ).attr( "placeholder", "" );
-                $( "th.toHideAction > input" ).addClass( "hideAction");
-            } );
-
-            function searchByColumn(table){
-                var defaultSearch = 0;
-
-                $(document).on('change keyup', '#select-column', function(){
-                    defaultSearch = this.value; 
-                });
-
-                $(document).on('change keyup', '#search-by-column', function(){
-                    table.search('').column().search('').draw();
-                    table.column(defaultSearch).search(this.value).draw();
-                });
-            }
-            
             $( '#modifTable thead'  ).on( 'keyup', ".column_search",function () {
         
                 table
@@ -1405,17 +1372,6 @@
                 }
             });
 
-            searchByColumn(table);
-        });
-
-        $(document).ready(function () {
-            $('.arrowDrop').on('click', function(){
-                if ($(this).hasClass('mivadika')){
-                    $(this).removeClass('mivadika');
-                } else {
-                    $(this).addClass('mivadika');
-                }
-            });
         });
     </script>
 @endsection

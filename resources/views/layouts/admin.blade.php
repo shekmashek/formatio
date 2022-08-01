@@ -23,9 +23,6 @@
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
-        integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{asset('img/logos_all/iconFormation.webp') }}" type="image/x-icon">
@@ -968,14 +965,12 @@
                                         @csrf
                                         <div class="modal-header .avertissement  d-flex justify-content-center"
                                             style="color: white">
-                                            <h6 class="modal-title">Créer un Nouveau module</h6>
+                                            <h6 class="modal-title">@lang('translation.DomaineDeFormation')</h6>
                                         </div>
                                         <div class="modal-body mb-3">
                                             <div class="form-group" >
-                                                {{-- <p class="text-center">Pour créer un nouveau module choisissez d'abord votre domaine de formation et la thématique</p> --}}
-                                                <select class="form-control select_formulaire input mt-2" id="acf-domaine" name="domaine" style="height: 40px;" required>
-                                                    <option value="null" disable selected hidden>Choisissez la
-                                                        domaine de formation ...</option>
+                                                <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 40px;" required>
+                                                    <option value="null" disable selected hidden>@lang('translation.ChoisissezLaDomaineDeFormation') ...</option>
                                                     @php
                                                         $data = $domaine->domaine();
                                                     @endphp
@@ -993,8 +988,8 @@
                                                 <p id="domaine_id_err" class="text-danger">@lang('translation.ChoisirLeDomaineDeFormationValide')</p>
                                             </div>
                                         <div class="modal-footer justify-content-center">
-                                            <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Créer votre module</button>
-                                            <button type="button" class="btn btn_annuler redirect_annule" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
+                                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>@lang('translation.Non')</button>
+                                            <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>@lang('translation.CréerVotreModule')</button>
                                         </div>
                                     </form>
                                 </div>

@@ -54,6 +54,11 @@ class ParticipantController extends Controller
         return response()->json($emps);
     }
 
+    public function infoEmployeCfp($id_emp){
+        $info_emploi = DB::select('select photos_resp_cfp as photos,nom_resp_cfp,prenom_resp_cfp,email_resp_cfp,telephone_resp_cfp,adresse_lot,adresse_quartier,adresse_ville,adresse_region,adresse_code_postal from responsables_cfp where id = ?',[$id_emp]);
+        return response()->json($info_emploi);
+    }
+
     public function infoResponsable($id_emp, $id){
         $responsable = DB::table('users')
                     // ->join('role_users', 'role_users.id', 'users.id')

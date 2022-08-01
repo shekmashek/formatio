@@ -496,7 +496,7 @@
                                     }
                                     if (userData2.length > 0) {
                                         for (var $i = 0; $i < userData2.length; $i++) {
-                                            $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
+                                            $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '/'+ userData2[$i].groupe_id+'">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
                                         }
                                         document.getElementById("session_id_err").innerHTML = "";
                                     } else {
@@ -573,7 +573,7 @@
                 }
                 if (userData2.length > 0) {
                     for (var $i = 0; $i < userData2.length; $i++) {
-                        $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
+                        $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '/'+ userData2[$i].groupe_id+'">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
                     }
                     document.getElementById("session_id_err").innerHTML = "";
                 } else {
@@ -698,16 +698,14 @@
                 }
                 , success: function(response) {
                     var userData = response;
-
                     var html = '';
                     html += '<div class="row mt-2" id="inputFormRowMontant">';
                     html += '<div class="col-2">';
                     html += '</div>';
                     html += '<div class="col-3">';
                     html += '<select class="form-select selectP input_section4"  id="session_id[]" name="session_id[]" required>';
-
                     for (var $i = 0; $i < userData.length; $i++) {
-                        html += '<option value="' + userData[$i].groupe_entreprise_id + '">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
+                        html += '<option value="' + userData[$i].groupe_entreprise_id+'/'+ userData[$i].groupe_id+'">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
                     }
                     html += '</select>';
                     html += '</div>';
@@ -727,7 +725,6 @@
                     html += '<button id="removeRowMontant" type="button" class="btn icon_suppre_frais "><i class="fa fa-trash"></i></button></span></p>';
                     html += '</div>';
                     html += '</div>';
-
                     $('#newRowMontant').append(html);
                 }
                 , error: function(error) {

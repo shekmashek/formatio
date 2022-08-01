@@ -1,3 +1,4 @@
+
 create or replace  view v_responsable_cfp as SELECT
     responsables_cfp.*,
     cfps.slogan,
@@ -14,6 +15,7 @@ create or replace  view v_responsable_cfp as SELECT
     (cfps.adresse_region) adresse_region_cfp,
     cfps.logo,
     cfps.site_web
+
 FROM
     responsables_cfp
 JOIN cfps ON  responsables_cfp.cfp_id = cfps.id

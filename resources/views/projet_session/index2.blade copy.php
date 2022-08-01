@@ -4,258 +4,236 @@
 @endsection
 
 @inject('groupe', 'App\groupe')
+@inject('carbon', 'Carbon\Carbon')
+@inject('froidEval', 'App\FroidEvaluation')
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
- 
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
-    
-
-    <style>
-        .dropdown-item.active{
-            background-color: transparent !important;
-        }
-
-        .dropdown-item.active:hover{
-            background-color: #ececec !important;
-        }
-        .status_grise {
-            border-radius: 5px;
-            background-color: #637381;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_reprogrammer {
-            border-radius: 5px;
-            background-color: #00CDAC;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_cloturer {
-            border-radius: 5px;
-            background-color: #314755;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_reporter {
-            border-radius: 5px;
-            background-color: #26a0da;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_annulee {
-            border-radius: 5px;
-            background-color: #b31217;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_termine {
-            border-radius: 5px;
-            background-color: #1E9600;
-            color: white;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .status_confirme {
-            border-radius: 5px;
-            background-color: #2B32B2;
-            color: white;
-            align-items: center ;margin: 0 auto;
-            padding-end: 1rem;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .statut_active {
-            border-radius: 5px;
-            background-color: rgb(15, 126, 145);
-            color: whitesmoke;
-            align-items: center; margin: 0 auto;
-            padding-top: 2.5px;
-            padding-bottom: 2.5px;
-            position: relative;
-            bottom: 1px;
-        }
-
-        .modalite {
-            border-radius: 5px;
-            background-color: #26a0da;
-            color: rgb(255, 255, 255);
-            /* width: 60%; */
-            align-items: center; margin: 0 auto;
-
-            padding: 0.3rem 0.5rem !important;
-        }
-
-        /* .filter{
-            position: relative;
-            bottom: .5rem;
-            float: right;
-        } */
-        .btn_creer {
-            background-color: white;
-            border: none;
-            border-radius: 30px;
-            padding: .2rem 1rem;
-            color: black;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-        }
-
-        .btn_creer a {
-            font-size: .8rem;
-            position: relative;
-            bottom: .2rem;
-        }
-
-        .btn_creer:hover {
-            background: #6373812a;
-            color: blue;
-        }
-
-        .btn_creer:focus {
-            color: blue;
-            text-decoration: none;
-        }
-
-        .icon_creer {
-            background-image: linear-gradient(60deg, #f206ee, #0765f3);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            font-size: 1.5rem;
-            position: relative;
-            top: .4rem;
-            margin-right: .3rem;
-        }
-
-        .pagination {
-            background-clip: text;
-            margin-right: .3rem;
-            font-size: 2rem;
-            position: relative;
-            top: .7rem;
-        }
-
-        .pagination:hover {
-            color: #000000;
-            background-color: rgb(239, 239, 239);
-            border-radius: 1.3rem;
-        }
-
-        .nombre_pagination {
-            color: #626262;
-
-        }
-
-        .rapport_finale {
-            background-color: #F16529 !important;
-        }
-
-        .rapport_finale button {
-            color: #ffffff !important;
-        }
-
-        .rapport_finale:hover {
-            background-color: #af3906 !important;
-        }
-
-        .pdf_download {
-            background-color: #e73827 !important;
-            padding: 0.3rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all .5ms ease;
-            color: white !important;
-            position: relative;
-        }
-
-        .pdf_download:hover {
-            background-color: #af3906 !important;
-        }
-
-        .pdf_download button {
-            color: #ffffff !important;
-        }
-
-        tbody tr {
-            vertical-align: middle;
-        }
-
-        .btn-label-session {
-            position: relative;
-            left: -12px;
-            display: inline-block;
-            padding: 6px 12px;
-            background: rgba(37, 37, 37, 0.15);
-            /* background-color: #a8e063; */
-            border-radius: 3px 0 0 3px;
-        }
-
-        .btn-ajout-session {
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        .resultat_stg{
-            background-color: #2cb445;
-            padding: 0.3rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all .5ms ease;
-            position: relative;
-        }
-        .resultat_stg button{
-            color: #ffffff !important;
-        }
-        .resultat_stg:hover{
-            background-color: #1c7f2e;
-        }
-
-        .btn_eval_stg{
-            background-color: #363dbc;
-            padding: 0.3rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all .5ms ease;
-            position: relative;
-        }
-        .btn_eval_stg:hover{
-            background-color: #262b86;
-        }
-            /*info SESSION*/
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.3/css/fixedColumns.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="http://infra.clarin.eu/content/libs/DataTables-1.10.6/extensions/ColVis/css/dataTables.colVis.css">
+<style>
+    .corps_planning .nav-link {
+        color: #637381;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 200ms;
+        text-transform: uppercase;
+        padding-top: 10px;
+    }
+    .nav-item .nav-link button.active {
+        /* border-bottom: 3px solid #7635dc !important; */
+        color: #7635dc;
+        border-right:.2rem solid  #7635dc;
+    }
+    .nav-tabs .nav-link:hover {
+        background-color: rgb(245, 243, 243);
+        transform: scale(1.1);
+        border: none;
+    }
+    .nav-tabs .nav-item a {
+        text-decoration: none;
+        text-decoration-line: none;
+    }
+    .corps_planning .nav-item .planning{
+        border-right:.2rem solid  #c5c4c49b;
+    }
+    .dropdown-item.active{
+        background-color: transparent !important;
+    }
+    .dropdown-item.active:hover{
+        background-color: #ececec !important;
+    }
+    .status_grise {
+        border-radius: 5px;
+        background-color: #637381;
+        color: white;
+        align-items: center; margin: 0 auto;
+        padding-top: 2.5px;
+        padding-bottom: 2.5px;
+        position: relative;
+        bottom: 1px;
+    }
+    .status_reprogrammer {
+        border-radius: 5px;
+        background-color: #00CDAC;
+        color: white;
+        align-items: center; margin: 0 auto;
+        padding-top: 2.5px;
+        padding-bottom: 2.5px;
+        position: relative;
+        bottom: 1px;
+    }
+    .status_cloturer {
+        border-radius: 5px;
+        background-color: #314755;
+        color: white;
+        align-items: center; margin: 0 auto;
+        padding-top: 2.5px;
+        padding-bottom: 2.5px;
+        position: relative;
+        bottom: 1px;
+    }
+    .status_reporter {
+        border-radius: 5px;
+        background-color: #26a0da;
+        color: white;
+        align-items: center; margin: 0 auto;
+        padding-top: 2.5px;
+        padding-bottom: 2.5px;
+        position: relative;
+        bottom: 1px;
+    }
+    .status_annulee {
+        border-radius: 5px;
+        background-color: #b31217;
+        color: white;
+        align-items: center; margin: 0 auto;
+        padding-top: 2.5px;
+        padding-bottom: 2.5px;
+        position: relative;
+        bottom: 1px;
+    }
+    .status_termine {
+        border-radius: 5px;
+        background-color: #1E9600;
+        color: white;
+        align-items: center; margin: 0 auto;
+        padding-top: 2.5px;
+        padding-bottom: 2.5px;
+        position: relative;
+        bottom: 1px;
+    }
+    .status_confirme {
+        border-radius: 5px;
+        background-color: #2B32B2;
+        color: white;
+        align-items: center ;margin: 0 auto;
+        padding-end: 1rem;
+        padding-top: 2.5px;
+        padding-bottom: 2.5px;
+        position: relative;
+        bottom: 1px;
+    }
+    .statut_active {
+        border-radius: 5px;
+        background-color: rgb(15, 126, 145);
+        color: whitesmoke;
+        align-items: center; margin: 0 auto;
+        padding-top: 2.5px;
+        padding-bottom: 2.5px;
+        position: relative;
+        bottom: 1px;
+    }
+    .modalite {
+        border-radius: 5px;
+        background-color: #26a0da;
+        color: rgb(255, 255, 255);
+        /* width: 60%; */
+        margin: 0 auto;
+        text-align: center;
+        padding: 0.2rem 0.3rem !important;
+        min-width: 140px;
+        display: inline-block;
+    }
+    .btn_creer {
+        background-color: white;
+        border: none;
+        border-radius: 30px;
+        padding: .2rem 1rem;
+        color: black;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+    .btn_creer a {
+        font-size: .8rem;
+        position: relative;
+        bottom: .2rem;
+    }
+    .btn_creer:hover {
+        background: #6373812a;
+        color: blue;
+    }
+    .btn_creer:focus {
+        color: blue;
+        text-decoration: none;
+    }
+    .icon_creer {
+        background-image: linear-gradient(60deg, #f206ee, #0765f3);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        font-size: 1.5rem;
+        position: relative;
+        top: .4rem;
+        margin-right: .3rem;
+    }
+    .rapport_finale {
+        background-color: #F16529 !important;
+    }
+    .rapport_finale button {
+        color: #ffffff !important;
+    }
+    .rapport_finale:hover {
+        background-color: #af3906 !important;
+    }
+    .pdf_download {
+        background-color: #e73827 !important;
+        padding: 0.3rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all .5ms ease;
+        color: white !important;
+        position: relative;
+    }
+    .pdf_download:hover {
+        background-color: #af3906 !important;
+    }
+    .pdf_download button {
+        color: #ffffff !important;
+    }
+    tbody tr {
+        vertical-align: middle;
+    }
+    .btn-label-session {
+        position: relative;
+        left: -12px;
+        display: inline-block;
+        padding: 6px 12px;
+        background: rgba(37, 37, 37, 0.15);
+        /* background-color: #a8e063; */
+        border-radius: 3px 0 0 3px;
+    }
+    .btn-ajout-session {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .resultat_stg{
+        background-color: #2cb445;
+        padding: 0.3rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all .5ms ease;
+        position: relative;
+    }
+    .resultat_stg button{
+        color: #ffffff !important;
+    }
+    .resultat_stg:hover{
+        background-color: #1c7f2e;
+    }
+    .btn_eval_stg{
+        background-color: #363dbc;
+        padding: 0.3rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all .5ms ease;
+        position: relative;
+    }
+    .btn_eval_stg:hover{
+        background-color: #262b86;
+    }
+        /*info SESSION*/
     .green{
         color: #5e35b1;
         border: 2px solid #43a047;
@@ -264,7 +242,6 @@
         font-weight: 700;
         padding: 4px;
     }
-
     .red{
         color: #5e35b1;
         border: 2px solid #f4511e;
@@ -273,7 +250,6 @@
         font-weight: 700;
         padding: 4px;
     }
-
     .yellow{
         color: #5e35b1;
         border: 2px solid #fdd835;
@@ -282,9 +258,8 @@
         font-weight: 700;
         padding: 4px;
     }
-
     .saClass{
-        font-size: 21px; 
+        font-size: 21px;
         color: #637381;
     }
     .saSpan{
@@ -296,1331 +271,1974 @@
         max-height: 750px;
         overflow-y: scroll;
     }
-
-    .fixedTop thead th {
-      position: sticky;
-      top: 0;
-      background: #e5e5e5;
-      border-bottom: none;
-      z-index: 100;
+    .spanClass:hover{
+        color: #673ab7;
+        transition: 0.3s ease-in-out;
+        /* border-bottom: 3px solid #673ab7; */
+    }
+    .head{
+        font-size: 14px;
+    }
+    .wrapper_stg{
+        height:26px;
+        border-radius: 30px;
+        background-color: #014f70;
+    }
+    .shadow {
+        height: auto;
+    }
+    * {
+        font-size: 1rem;
+    }
+    .body_nav p {
+        font-size: 0.9rem;
+    }
+    .chiffre_d_affaire p {
+        font-size: 0.9rem;
+    }
+    .body_nav {
+        padding: 6px 8px;
+        border-radius: 4px 4px 0 0;
+    }
+    .numero_session {
+        background-color: rgb(255, 255, 255);
+        padding: 0 6px;
+        border-radius: 4px;
+    }
+    strong {
+        font-size: 10px;
+    }
+    .img_commentaire {
+        border-radius: 5rem;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+    .img_commentaire:hover {
+        cursor: pointer;
+    }
+    .height_default {
+        height: 27px;
+        align-items: center
+    }
+    a {
+        font-size: 12px;
+        text-decoration: none;
+    }
+    #myDIV {
+        position: absolute;
+        display: none;
+        margin-left: 57%;
+        margin-top: 20px;
+    }
+    u {
+        font-size: 12px;
+    }
+    .pad_img {
+        padding-left: 10px;
+    }
+    a:hover {
+        color: blueviolet;
+    }
+    p {
+        font-size: 10px;
+    }
+    .img_superpose {
+        margin-left: -10px;
+        border: 2px solid white;
+    }
+    .chiffre_d_affaire {
+        padding: 0 10px;
+    }
+    .status_grise {
+        border-radius: 1rem;
+        background-color: #637381;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+    .status_reprogrammer {
+        border-radius: 1rem;
+        background-color: #00CDAC;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+    .status_cloturer {
+        border-radius: 1rem;
+        background-color: #314755;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+    .status_reporter {
+        border-radius: 1rem;
+        background-color: #26a0da;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+    .status_annulee {
+        border-radius: 1rem;
+        background-color: #b31217;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+    .status_termine {
+        border-radius: 1rem;
+        background-color: #2ebf91;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+    .status_confirme {
+        border-radius: 1rem;
+        background-color: #2B32B2;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+    .statut_active {
+        border-radius: 1rem;
+        background-color: rgb(15, 126, 145);
+        color: whitesmoke;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+    .modalite {
+        border-radius: 1rem;
+        background-color: #26a0da;
+        color: rgb(255, 255, 255);
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: 0.1rem 0.5rem !important;
+    }
+    .dernier_planning {
+        text-align: left;
+        padding-left: 6px;
+        height: 100%;
+        font-size: 12px;
+        background-color: rgba(230, 228, 228, 0.39);
+    }
+    .dernier_planning:focus {
+        color: rgb(130, 33, 100);
+        background-color: white;
+        font-weight: bold;
+    }
+    button {
+        background-color: white;
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+    .titre_card {
+        background-color: rgb(223, 219, 219);
+        height: 30px;
+        border-radius: 4px 4px 0 0;
+        margin: 2px 0;
+        color: white;
+    }
+    .tabcontent {
+        display: none;
+    }
+    .btn_modifier_statut {
+        border-radius: 30px;
+        padding: 1rem 1rem;
+        color: black;
+    }
+    .btn_modifier_statut a {
+        font-size: .8rem;
+        position: relative;
+        bottom: .2rem;
+    }
+    .btn_modifier_statut:hover {
+        background-color: white;
+        color: black;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+    .planning {
+        text-align: left;
+        padding-left: 6px;
+        height: 100%;
+        font-size: 12px;
+        margin:0;
+    }
+    .planning:hover {
+        background-color: #eeeeee;
+    }
+    .planning p{
+        font-size: .85rem;
+    }
+    @keyframes action{
+        0%{
+            filter: brightness(0.99);
+        }
+        25%{
+            filter: brightness(0.94);
+        }
+        50%{
+            filter: brightness(0.96);
+        }
+        75%{
+            filter: brightness(0.98);
+        }
+        100%{
+            filter: brightness(1);
+        }
+    }
+    .action_animation{
+        animation-name: action;
+        animation-duration: 3s;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
+    }
+    .icon_creer {
+        background-image: linear-gradient(60deg, #f206ee, #0765f3);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        font-size: 1.5rem;
+        position: relative;
+        top: .4rem;
+        margin-right: .3rem;
+    }
+    .liste_projet{
+        background-color: #637381;
+        margin: 0;
+        padding: 1;
+        color: #ffffff;
+    }
+    .liste_projet:hover{
+        background-color: #cfccccc5;
+        color: #191818;
+    }
+    .pdf_download{
+            background-color: #e73827 !important;
+            border-radius: 5px;
+    }
+    .pdf_download:hover{
+        background-color: #af3906 !important;
+    }
+    .pdf_download button{
+        color: #ffffff !important;
+    }
+    .type_formation{
+        border-radius: 1rem;
+        background-color: #826bf3;
+        color: rgb(255, 255, 255);
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: 0.1rem 0.5rem !important;
+    }
+    .type_intra{
+        padding: 0.1rem 0.5rem !important;
+        font-size: 0.85rem;
+        background-color: #2193b0;
+        border-radius: 1rem;
+        transition: all 200ms;
+        color: white;
+        border: none;
+        box-shadow: none;
+        outline: none;
+        position: relative;
+        align-items: center margin: 0 auto;
+    }
+    .type_intra:hover,
+    .type_inter:hover{
+        cursor: default;
+        color: white;
+    }
+    .type_inter{
+        padding: 0.1rem 0.5rem !important;
+        font-size: 0.85rem;
+        background-color: #2ebf91;
+        border-radius: 1rem;
+        transition: all 200ms;
+        color: rgb(255, 255, 255);
+        border: none;
+        box-shadow: none;
+        outline: none;
+        position: relative;
+        align-items: center; margin: 0 auto;
+    }
+    /*info SESSION*/
+    .green{
+        color: #5e35b1;
+        border: 2px solid #43a047;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+    .red{
+        color: #5e35b1;
+        border: 2px solid #f4511e;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+    .yellow{
+        color: #5e35b1;
+        border: 2px solid #fdd835;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+    .saClass{
+        font-size: 22px;
+        color: #637381;
+    }
+    .saSpan{
+        color: #637381;
+        font-size: 14px;
+    }
+    .nom_status{
+        text-align: center;
+    }
+            /****************
+    VERTICAL TIMELINE ( BOOTSTRAP 5)
+    ****************/
+    .timeline-1 {
+        border-left: 3px solid #b565a7;
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+        /* background: rgba(177, 99, 163, 0.09); */
+        margin: 0 auto;
+        position: relative;
+        padding: 30px;
+        list-style: none;
+        text-align: left;
+        max-width: 99%;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 {
+            max-width: 98%;
+            padding: 25px;
+        }
+    }
+    .timeline-1 .event {
+        border-bottom: 1px dashed #000;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        position: relative;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event {
+            padding-top: 30px;
+        }
+    }
+    .timeline-1 .event:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+    .timeline-1 .event:before,
+    .timeline-1 .event:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
+    .timeline-1 .event:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event:before {
+            left: 0px;
+            text-align: left;
+        }
+    }
+    .timeline-1 .event:after {
+        -webkit-box-shadow: 0 0 0 3px #b565a7;
+        box-shadow: 0 0 0 3px #b565a7;
+        left: -35.8px;
+        background: #fff;
+        border-radius: 50%;
+        height: 9px;
+        width: 9px;
+        content: "";
+        top: 31px;
+    }
+    /* event terminer */
+    .timeline-1 .event_terminer {
+        border-bottom: 1px dashed #000;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        position: relative;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event_terminer {
+            padding-top: 30px;
+        }
+    }
+    .timeline-1 .event_terminer:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+    .timeline-1 .event_terminer:before,
+    .timeline-1 .event_terminer:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
+    .timeline-1 .event_terminer:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event_terminer:before {
+            left: 0px;
+            text-align: left;
+        }
+    }
+    .timeline-1 .event_terminer:after {
+        -webkit-box-shadow: 0 0 0 3px #b565a7;
+        box-shadow: 0 0 0 3px #b565a7;
+        left: -35.8px;
+        background: rgb(168, 246, 108);
+        border-radius: 50%;
+        height: 9px;
+        width: 9px;
+        content: "";
+        top: 31px;
+    }
+    /* evenet repro */
+    .timeline-1 .event_repro {
+        border-bottom: 1px dashed #000;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        position: relative;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event_repro {
+            padding-top: 30px;
+        }
+    }
+    .timeline-1 .event_repro:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+    .timeline-1 .event_repro:before,
+    .timeline-1 .event_repro:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
+    .timeline-1 .event_repro:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event_repro:before {
+            left: 0px;
+            text-align: left;
+        }
+    }
+    .timeline-1 .event_repro:after {
+        -webkit-box-shadow: 0 0 0 3px #b565a7;
+        box-shadow: 0 0 0 3px #b565a7;
+        left: -35.8px;
+        background: rgba(0, 0, 0, 0.745);
+        border-radius: 50%;
+        height: 9px;
+        content: "";
+        width: 9px;
+        top: 31px;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event:after {
+            left: -31.8px;
+        }
+        .timeline-1 .event_terminer:after {
+            left: -31.8px;
+        }
+        .timeline-1 .event_repro:after {
+            left: -31.8px;
+        }
+    }
+    .p_date{
+        margin-left:40%;
+    }
+    .div_class>div{
+        display:inline-block;
+    }
+    .triangle-right {
+        width: 0;
+        height: 0;
+        border-top: 7px solid transparent;
+        border-left: 7px solid rgba(191, 26, 160, 0.593);
+        border-bottom: 7px solid transparent;
+        display: inline-block;
+        margin-left: 10px;
+        margin-top: 67px;
+        position: absolute;
+    }
+    .text_retourner {
+        position: relative;
+    }
+    .text_retourner span {
+        position: relative;
+        display: inline-block;
+        font-size: 25px;
+        color: rgba(0,0,0,.5);
+        text-transform: uppercase;
+        animation: flip 3s infinite;
+        animation-delay: calc(.2s * var(--i))
+    }
+    @keyframes flip {
+        0%,80% {
+            transform: rotateY(360deg)
+        }
+    }
+    /* timeline */
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        padding: 4px 1rem !important;
+        border-radius: 5px !important;
+        box-sizing: border-box !important;
+        color: #637381 !important;
+        font-size: 16px !important;
+        letter-spacing: 1px !important;
+        height: 40px !important;
+    }
+    .select2-container .select2-selection--single :focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border-bottom: 2px solid #28a7eb !important;
+        outline-width: 0 !important;
+    }
+    .select2-container .select2-selection--single{
+        height: 40px !important;
+        border: 1px solid #28a7eb !important;
+    }
+    .popover{
+        max-width:500px;
+    }
+    .myCircle:hover{
+        color: #1e9600;
+    }
+    .hideAction{
+        display: none;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 35px !important;
+    }
+    .fixedTop{
+        overflow-y: scroll;
+    }
+    #myDiv{
+        position: fixed;
+        top: 0;
+    }
+    .spanClass:hover{
+        color: #673ab7;
+        transition: 0.3s ease-in-out;
+    }
+    .modifTable_length label, .modifTable_length select, .modifTable_filter label, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
+        font-size: 13px;
+    }
+    
+    .dataTables_length label, .dataTables_filter label {
+        font-size: 12px;
+    }
+    .redClass{
+        color: #f44336 !important;
+    }
+    .arrowDrop{
+        color: #1e9600;
+        
+    }
+    .mivadika{
+        transform: rotate(180deg) !important;
+        color: red !important;
+        transition: 0.3s !important;
+    }
+    #example_length select{
+        height: 25px;
+        font-size: 13px;
+        vertical-align: middle;
+    }
+    .popover{
+        max-width:500px;
+    }
+    .myCircle:hover{
+        color: #1e9600;
+    }
+    .hideAction{
+        display: none;
+    }
+    .dataTables_empty{
+        font-size: 13px;
+    }
+    /* colvis */
+    th, td { 
+        white-space: nowrap; 
+        border: none;
+    }
+    div.dataTables_wrapper {
+        width: 95%;
+        margin: 0 auto;
+    }
+    div.ColVis {
+        float: left;
+    }
+    .DTFC_LeftBodyLiner{
+        margin-top:-12px;
+        padding-top: 0px;
+        background: #ffff;
+    }
+    ul.ColVis_collection{
+        box-shadow: none !important;
+        background: #f3f3f3 !important;
+    }
+    ul.ColVis_collection li{
+        background: #f3f3f3;
+        box-shadow: none !important;
+        border: none;
+        font-size: px;
+    }
+    ul.ColVis_collection li{
+        background: #f3f3f3;
+        box-shadow: none !important;
+        border: none;
+    }
+    .myTh th{
+        font-size: 0px; 
+        padding: 0;
+        background: white; 
+        border: 1px solid #fff !important;
+    }
+    .myData{
+        font-size: 12px;
+    }
+    #example{
+        padding-bottom: 20px !important; 
+    }
+    
+    table .dropdown-menu  {
+        position:fixed !important; 
+        z-index: 1;
+        background: white;
+        opacity: inherit;
+    }
+/*     
+    .dataTables_wrapper.no-footer div.dataTables_scrollBody > table {
+        position: relative; 
+        z-index: 0;
     }
 
-    </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5-5.1.3/datatables.min.css"/>
+    .table{
+        overflow: unset !important;
+    } */
+    
+</style>
+<div class="container-fluid mt-5">
 
-    <div class="container-fluid mb-5">
-        <div class="d-flex flex-row justify-content-end mt-3">
-            <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
-                    {{ $nb_projet }}</span>
-                @if ($nb_par_page >= $nb_projet)
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($page == 1)
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
-                            class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($page == $fin_page || $page > $fin_page)
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
-                            class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                @else
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
-                            class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
-                            class='bx bx-chevron-right pagination'></i></a>
-                @endif
-            </span>
-            <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i
-                    class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
-
-        </div>
-        @if (Session::has('pdf_error'))
-            <div class="alert alert-danger ms-4 me-4">
-                <ul>
-                    <li>{!! \Session::get('pdf_error') !!}</li>
-                </ul>
-            </div>
-        @endif
-        <div class="row w-100">
-
-            <div class="col-12 ps-5">
-                <div class="row">
-                    @canany(['isCFP'])
-                        <div class="m" id="corps">
-                            @if (count($projet) <= 0)
-                                <div class="row d-flex mt-3 titre_projet p-1 mb-1">
-                                    <p class="text-center text_aucun">Vous n'avez pas encore du projet.</p>
-                                </div>
-                            @endif
-                            @if (Session::has('groupe_error'))
-                                <div class="alert alert-danger ms-2 me-2">
-                                    <ul>
-                                        <li>{!! \Session::get('groupe_error') !!}</li>
-                                    </ul>
-                                </div>
-                            @endif
-                            {{-- datatable --}}
-
-                            <table id="myData" class="table table-striped table-bordered">
+    <table class="table order-column  modifTable"  id="example">
+        {{-- en tete --}}
+        <thead>
+            <tr style="background: #d4d1d139;">
+                <th >
+                    <div class="dropdown">
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-library align-middle'></i> Projet
+                        </button>
+                        <ul class="dropdown-menu main p-2" >
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all">
+                                <label class="form-check-label label" for="select_all" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomProjet as $prj)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="Projet" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                        </ul>
+                    </div> 
+                </th>
+                <th >
+                    <div class="dropdown">
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bxs-book-open align-middle" style="color: #2e3950"></i> Session
+                        </button>
+                        <ul class="dropdown-menu main p-2">
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                <label class="form-check10abel label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomSessions as $sess)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="Session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                        </ul>
+                    </div>
+                </th>
+                
+                <th class="headProject" >
+                    <div class="dropdown">
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bxs-customize align-middle" style="color: #2e3950"></i> Module
+                        </button>
+                        <ul  class="dropdown-menu main p-2">
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomModules as $mdl)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="Module" value="{{ $mdl->nom_module}}"><span style="font-size: 12px">{{ $mdl->nom_module}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                        </ul>
+                    </div>
+                </th>
+                <th class="headProject" >
+                    <div class="dropdown z-index-2" id="ta">
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-building-house align-middle'></i> Entreprise
+                        </button>
+                        
+                        <ul  class="dropdown-menu main p-2">
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomEntreprises as $et)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="Enterprise" value="{{ $et->nom_etp}}"><span style="font-size: 12px">{{ $et->nom_etp}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                      </ul>
+                    </div>
+                </th>
+                <th >
+                    <div class="dropdown" >
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-calendar-check align-middle' ></i> Modalité
+                        </button>
+                        <ul class="dropdown-menu main p-2">
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomModalites as $mdlt)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="Modalite" value="{{ $mdlt->modalite}}"><span style="font-size: 12px">{{ $mdlt->modalite}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                      </ul>
+                    </div>
+                </th>
+                <th>
+                    <div class="dropdown">
+                        <a id="exampleE1" tabindex="0" class="btn btn-sm btn-default" role="button" data-bs-placement="bottom" data-bs-toggle="popover" title="Recherche entre 2 périodes" style="width: 100%;">
+                            <i class='bx bx-time-five'></i> <span style="font-size: 13px">Date</span> &nbsp;&nbsp;<i class='bx bx-caret-down' style="font-size: 12px"></i>
+                        </a>
+                    </div>
+                    <div hidden>
+                        <div data-name="popover-content">
+                            <table class="table">
                                 <thead>
-                                    <tr>
-                                        <th>Projet</th>
-                                        <th>Type</th>
-                                        <th>CFP</th>
-                                        <th>Session</th>
-                                        <th>Modalité</th>
-                                        <th>Status</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td> hdhd </td>
-                                        <td> fggg </td>
-                                        <td> szzz </td>
-                                        <td> tggg </td>
-                                        <td> dfff </td>
-                                        <td> dddd </td>
-                                        <td> sss </td>
-                                    </tr>
-                                </tbody>
-                    
-                            </table>
-                            {{-- /datatable --}}
-                            <div class="fixedTop">
-                                <table id="myTableSa" class="table shadow-sm p-3 mb-5 bg-body rounded">
-                                    <thead>
-                                        <tr style="background: #eff1f3;">
-                                            <th scope="col">Projet</th>
-                                            <th scope="col">Session</th>
-                                            <th scope="col">Module</th>
-                                            <th scope="col">Entrepise</th>
-                                            <th scope="col">Modalité</th>
-                                            <th scope="col">Date du projet</th>
-                                            <th scope="col">Ville</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Actions</th>
+                                    <form action="{{ route('project.filterBydate') }}" method="post">
+                                        @csrf
+                                        <tr>
+                                            <th style="font-size: 12px; font-weight: 400;">De</th>
+                                            <th style="font-size: 12px; font-weight: 400;">A</th>
+                                            <th></th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($projet as $prj)
-                                            <tr>
-                                                <td colspan="9" scope="row" style="border-bottom: none; background: #cccccc;">
+                                        <tr>
+                                            <th>
+                                                <div class="input-group input-group-sm" style="width: 98%;">
+                                                    <input type="date" name="from" id="from" value="{{ date('Y-m-d')}}" class="form-control form-control-sm @error('from') is-invalid @enderror" style="font-size: 13px">
+                                                    <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' style="font-size: 20px"></i></span>
+                                                    @error('from')
+                                                        <span class="text-danger" style="font-size: 12px">{{ "Ce champs est obligatoire" }}</span>
+                                                    @enderror
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="input-group input-group-sm" style="width: 98%;">
+                                                    <input type="date" name="to" id="to" value="{{ date('Y-m-d')}}" class="form-control form-control-sm @error('to') is-invalid @enderror" style="font-size: 13px">
+                                                    <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' style="font-size: 20px"></i></span>
+                                                    @error('to')
+                                                        <span class="text-danger" style="font-size: 12px">{{ "Ce champs est obligatoire" }}</span>
+                                                    @enderror
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <button type="submit" class="btn btn-sm btn-primary">Filtrer <i class='bx bx-search-alt-2' style="font-size: 20px; vertical-align: middle;"></i></button>
+                                            </th>
+                                        </tr>
+                                    </form>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </th>
+                <th  >
+                    <div class="dropdown" >
+                        <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-home align-middle' ></i> Ville
+                        </button>
+                    </div>
+                </th>
+                <th  >
+                    <div class="dropdown" >
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-book-content align-middle' style="vertical-align: middle"></i> Type
+                        </button>
+                        <ul class="dropdown-menu main p-2">
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomTypes as $ntp)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="TypeF" value="{{ $ntp->type_formation}}"><span style="font-size: 12px">{{ $ntp->type_formation}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                      </ul>
+                    </div>
+                </th>
+                <th  >
+                    <div class="dropdown" >
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton10" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-calendar-x align-middle' style="color: #2e3950"></i> Statuts
+                        </button>
+                        <ul class="dropdown-menu main p-2">
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomStatuts as $stt)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="Statut" value="{{ $stt->item_status_groupe}}"><span style="font-size: 12px">{{ $stt->item_status_groupe}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                      </ul>
+                    </div>
+                </th>
+               
+                <th >
+                    <div class="dropdown" >
+                        <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-task align-middle' ></i> Eval à chaud
+                        </button>
+                    </div>
+                </th>
+                <th >
+                    <div class="dropdown" >
+                        <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-task-x align-middle' ></i> Eval à froid
+                        </button>
+                    </div>
+                </th>
+                <th>
+                    <div class="dropdown" >
+                            <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bxs-report align-middle' style="vertical-align: middle"></i> Rapport
+                            </button>
+                    </div>
+                 </th>
+                 <th>
+                    <div class="dropdown" >
+                            <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-timer align-middle' style="vertical-align: middle; font-size: 20px"></i> Présence
+                            </button>
+                    </div>
+                 </th>
+                 <th>
+                    <div class="dropdown" >
+                            <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-spa align-middle' style="vertical-align: middle"></i> Competence
+                            </button>
+                    </div>
+                 </th>
+                 <th>
+                    <div class="dropdown" >
+                            <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bxs-file-pdf align-middle' style="vertical-align: middle"></i> PDF
+                            </button>
+                    </div>
+                 </th>
+                 <th>
+                    <div class="dropdown" >
+                            <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-menu align-middle' style="vertical-align: middle"></i> Action
+                            </button>
+                    </div>
+                 </th>
+            </tr>
+            <tr class="myTh">
+                <th >Projet</th>
+                <th >Session</th>
+                <th >Module</th>
+                <th >Entreprise</th>
+                <th >Modalité</th>
+                <th >Date</th>
+                <th >Ville</th>
+                <th >Type</th>
+                <th >Statuts</th>
+                <th >Eval à chaud</th>
+                <th >Eval à froid</th>
+                <th >Rapport</th>
+                <th >Présence</th>
+                <th >Competence</th>
+                <th >PDF</th>
+                <th >Action</th>
+            </tr>
+        </thead>
+        <tbody class="myTbody">
+            @foreach ($fullProjects as $projet)
+                <tr class="tab">
+                    <td >
+                        <span>
+                            <span class="myData">{{ $projet->nom_projet }}</span>
+                            &nbsp;&nbsp;
+                            <a role="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$projet->groupe_id}}">
+                                <i class='bx bx-window-open' data-id="{{$projet->groupe_id}}" style="font-size: 18px; vertical-align: middle; color: #1c7f2e"></i>
+                            </a>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="myData">
+                            <a href="{{ route('detail_session', [$projet->groupe_id, $projet->id]) }}">
+                                <span style="font-size: 13px"  class="spanClass">{{ $projet->session }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
+                            </a>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="myData">{{ $projet->nom_module }}</span>
+                    </td>
+                    <td>
+                        <span class="myData">{{ $projet->nom_etp }}</span>
+                    </td>
+                    <td>
+                        <span style="z-index:-1!important" class="myData">{{ $projet->modalite }}</span>
+                    </td>
+                    <td>
+                        <span class="myData">{{ \Carbon\Carbon::parse($projet->date_debut)->translatedFormat('d-m-y') }}</span> <span style="font-size: 11px">au</span> 
+                        <span class="myData">{{ \Carbon\Carbon::parse($projet->date_fin)->translatedFormat('d-m-y') }}</span>
+                    </td>
+                    <td>
+                        <span class="myData">{{ $projet->lieu }}</span>
+                    </td>
+                    <td class="text-center">
+                        <span class="myData">{{ $projet->type_formation }}</span>
+                    </td>
+                    <td class="text-center">
+                        @if($projet->item_status_groupe === 'Cloturé')
+                            <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#111111"">Cloturé</span>
+                        @elseif($projet->item_status_groupe === 'Reporté')
+                            <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#af10e9"">Reporté</span>
+                        @elseif($projet->item_status_groupe === 'Prévisionnel')
+                            <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#2792e4"">Prévisionnel</span>
+                        @elseif($projet->item_status_groupe === 'Annulée')
+                            <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#b33939"">Annulée</span>
+                        @elseif($projet->item_status_groupe === 'Reprogrammer')    
+                            <span class="myData badge" style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#00CDAC">Reprogrammer</span>
+                        @endif 
+                    </td>
+
+                    <td class="text-center" style="font-size: 13px">
+                        @if($projet->date_debut < \Carbon\Carbon::today()->toDateString())
+                            <a href="{{ route('resultat_evaluation', [$projet->groupe_id]) }}" style="font-size: 13px">
+                                <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #868686"></i>
+                            </a>
+                        @elseif($projet->date_debut == \Carbon\Carbon::today()->toDateString())
+                            <a href="{{ route('resultat_evaluation', [$projet->groupe_id]) }}" style="font-size: 13px">
+                                <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
+                            </a>
+                        @else
+                            <a href="{{ route('resultat_evaluation', [$projet->groupe_id]) }}" style="font-size: 13px">
+                                <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #b31217"></i>
+                            </a>
+                        @endif
+                    </td>
+                    <td class="text-center" style="font-size: 13px">
+                        <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
+                    </td>
+
+                    
+                    @if ($projet->id == 1)
+                        <td class="text-center" style="font-size: 13px">
+                            <a href="{{ route('nouveauRapportFinale', [$projet->groupe_id]) }}" target="_blank" style="font-size: 13px">
+                                <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
+                            </a>
+                        </td>
+                    @else
+                        <td class="text-center">
+                            <i class='bx bxs-circle' style="font-size: 13px; cursor: not-allowed; color: #b31217"></i>
+                        </td>
+                    @endif
+                    <td class="text-center">
+                        <i class='bx bxs-circle' style="font-size: 13px; cursor: not-allowed; color: rgb(163, 162, 162)"></i>
+                    </td>
+                    <td class="text-center">
+                        <i class='bx bxs-circle' style="font-size: 13px; cursor: not-allowed; color: #1c7f2e"></i>
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ route('fiche_technique_pdf', [$projet->groupe_id]) }}" style="font-size: 13px">
+                            <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        @can('isCFP')
+                            <i style="color: rgb(25, 193, 225); cursor: pointer;font-size:20px" class='bx bx-edit'data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $projet->groupe_id }}" data-backdrop="static"></i>
+                        @endcan
+                    </td>
+                </tr>
+
+                <div class="modal fade  "  id="exampleModal_{{$projet->groupe_id}}" data-bs-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl " >
+                      <div class="modal-content" style="width: 1800px">
+                        <div class="modal-header text-dark" style="background: whitesmoke;color:gray !important">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                            {{ $projet->nom_module }}
+                          </h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <div  id="collapseProject_{{$projet->groupe_id}}">
+                                <div class="card card-xl" >
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <i class='bx bxs-customize' style="color: #011e2a;"></i>
+                                                    <span style="color: #011e2a; font-weight: 500; text-transform: capitalize; font-size: 16px">{{ $projet->nom_module }}</span>
+                                                </h5>
+                                                <hr>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-4">
+                                                        <i class="bi bi-person-square"></i>
+                                                            <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
+                                                                formateurs
+                                                            </span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <a href="#">
+
+                                                            @php
+                                                                $dataDetails = $groupe->formateurData($projet->groupe_id);
+                                                            @endphp
+
+                                                            @if ( count($dataDetails) > 0)
+                                                                @foreach ($dataDetails as $dataDetail)
+                                                                    <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 14px;'>{{ $dataDetail->nom_formateur }}</span>
+                                                                @endforeach
+                                                            @elseif(count($dataDetails) <= 0)
+                                                                <span class='rounded-pill' style='padding: 2px 7px; border: 1px solid #e4e4e498; color: #011e2a;'>{{"--"}}</span>
+                                                            @endif
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-4">
+                                                        <i class="bi bi-people-fill"></i>
+                                                            <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
+                                                                Apprenants
+                                                            </span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <a href="#">
+                                                            @php
+                                                                $dataApprs = $groupe->dataApprenant($projet->entreprise_id, $projet->groupe_id);
+                                                                $dataNombres = $groupe->dataNombre($projet->groupe_id);
+                                                            @endphp
+
+                                                            @if ( count($dataApprs) > 0)
+                                                                @foreach ($dataApprs as $dataAppr)
+                                                                    <span class='rounded-pill' style='padding: 2px 6px; border: 1px solid #e4e4e498; color: #011e2a; display: inline-block; margin-bottom: 1px; font-size: 13px'>{{ $dataAppr->nom_stagiaire." ".$dataAppr->prenom_stagiaire }}</span>
+                                                                @endforeach
+                                                            @elseif(count($dataApprs) <= 0)
+                                                                
+                                                            @endif
+                                                        </a>
+                                                        @foreach ($dataNombres as $nbr)
+                                                            <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 13px;'>{{$nbr->nombre}}</span>
+                                                        @endforeach
+
+                                                        <a data-bs-toggle="collapse" href="#collapseNombre" role="button" aria-expanded="false" aria-controls="collapseNombre">
+                                                            <i class='bx bx-chevron-down' style="vertical-align: middle; font-size: 25px;"></i>
+                                                            <div class="collapse" id="collapseNombre">
+                                                                <div class="card card-body">
+                                                                    <a href="#">
+                                                                        @php
+                                                                            $dataAllApprs = $groupe->dataApprenantAll($projet->groupe_id);
+                                                                        @endphp
+
+                                                                        @if ( count($dataAllApprs) > 0)
+                                                                            @foreach ($dataAllApprs as $dataAllAppr)
+                                                                                <span class='rounded-pill' style='padding: 2px 6px; border: 1px solid #e4e4e498; color: #011e2a; display: inline-block; margin-bottom: 1px; font-size: 13px'>{{ $dataAllAppr->nom_stagiaire." ".$dataAllAppr->prenom_stagiaire }}</span>
+                                                                            @endforeach
+                                                                        @elseif(count($dataAllApprs) <= 0)
+                                                                            <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 13px;'>0</span>
+                                                                        @endif
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-4">
+                                                        <i class="bi bi-currency-dollar"></i>
+                                                            <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
+                                                                Frais annexes
+                                                            </span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                            @php
+                                                                $dataFrais = $groupe->dataFraisAnnexe($projet->groupe_id, $projet->entreprise_id);
+                                                                $somme = 0;
+                                                                if (count($dataFrais) > 0) {
+                                                                    foreach ($dataFrais as $dataFrai) {
+                                                                        $somme += $dataFrai->montantTotal;
+                                                                    }
+                                                                }
+                                                            @endphp
+
+                                                        <span style="color: #011e2a; font-size: 13px">{{ number_format($somme, 2, ',', ' ') }} <span style="font-size: 12px">{{ $devise }}</span></span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-4">
+                                                        <i class="bi bi-cash-coin"></i>
+                                                            <span style="color: #011e2a; font-weight: 500; font-size: 14px; text-transform: capitalize; margin-left: 4px;">
+                                                                Coûts
+                                                            </span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                            {{-- @php
+                                                                $dataFrais = $groupe->dataFraisAnnexe($projet->groupe_id, $projet->entreprise_id);
+                                                                $somme = 0;
+                                                                if (count($dataFrais) > 0) {
+                                                                    foreach ($dataFrais as $dataFrai) {
+                                                                        $somme += $dataFrai->montantTotal;
+                                                                    }
+                                                                }
+                                                            @endphp --}}
+
+                                                        <span style="color: #011e2a; font-size: 13px">00 <span style="font-size: 12px">{{ $devise }}</span></span>
+                                                        {{-- <span style="color: #011e2a; font-size: 13px">{{ number_format($projet->prix, 2) }} <span>{{ $devise }}</span></span> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <i class='bx bx-calendar' style="color: #011e2a;"></i>
+                                                    <span style="color: #011e2a; font-weight: 500; font-size: 16px">Calendrier des séances</span>
+                                                </h5>
+                                                <hr>
+
+                                                @php
+                                                    $dataSessions = $groupe->dataSession($projet->groupe_id);
+                                                @endphp
+                                                <div class="row">
                                                     @php
-                                                        if ($prj->totale_session == 1) {
-                                                            echo $prj->nom_projet;
-                                                        } elseif ($prj->totale_session > 1) {
-                                                            echo $prj->nom_projet;
-                                                        } elseif ($prj->totale_session == 0) {
-                                                            echo $prj->nom_projet;
+                                                        $info = $groupe->infos_session($projet->groupe_id);
+                                                        if ($info->difference == null && $info->nb_detail == 0) {
+                                                            echo "<span style='font-size: 13px'>".$info->nb_detail . ' séance , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m'."</span>";
+                                                        } elseif ($info->difference != null && $info->nb_detail == 1) {
+                                                            echo "<span style='font-size: 13px'>".$info->nb_detail . ' séance , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m'."</span>";
+                                                        } elseif ($info->difference != null && $info->nb_detail > 1) {
+                                                            echo "<span style='font-size: 13px'>".$info->nb_detail . ' séances , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m'."</span>";
                                                         }
                                                     @endphp
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="7" style="font-size: 20;">
-                                                    @if ($prj->type_formation_id == 1)
-                                                        <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
-                                                            {{ $prj->type_formation }}
-                                                        </span>
-                                                    @elseif ($prj->type_formation_id == 2)
-                                                        <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
-                                                            {{ $prj->type_formation }}
-                                                        </span>
-                                                    @endif 
-                                                </td>
-                                                    
-                                                {{-- Bouton add session --}}
-                                                @can('isCFP')
-                                                    @if ($prj->type_formation_id == 1)
-                                                        <td style="border-bottom: none;">
-                                                            <span role="button" data-bs-toggle="modal"
-                                                                data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static'
-                                                                title="Nouvelle session" class="btn btn_nouveau py-1">
-                                                                <i class='bx bx-plus-medical me-1'></i>Session
-                                                            </span>
-                                                        </td>
-                                                    @endif 
-                                                @endcan
-
-                                                @if ($prj->totale_session <= 0)
-                                                    <td colspan="9"> Aucune session</td>
-                                                @else
-                                                    @foreach ($data as $pj)
-                                                        @if ($prj->projet_id == $pj->projet_id)
-                                                        <tr>
-                                                        <td></td>
-                                                        <td>
-                                                            <a href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">
-                                                                <span style="border-bottom: 3px solid #673ab7">{{ $pj->nom_groupe }}</span>
-                                                            </a>
-                                                        </td>
-                                                        <td>{{ $pj->nom_module }}</td>
-                                                        <td>
-                                                            @foreach ($entreprise as $etp)
-                                                                @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    {{ $etp->nom_etp }}
-                                                                @endif
-                                                            @endforeach
-                                                        </td>
-                                                        {{-- <td>
-                                                            @if ($prj->type_formation_id == 1)
-                                                                <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px">
-                                                                    {{ $prj->type_formation }}
-                                                                </span>
-                                                            @elseif ($prj->type_formation_id == 2)
-                                                                <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px">
-                                                                    {{ $prj->type_formation }}
-                                                                </span>
-                                                            @endif 
-                                                        </td> --}}
-                                                        <td>
-                                                            <span>
-                                                                {{ $pj->modalite }}
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            @php
-                                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
-                                                            @endphp
-                                                        </td>
-                                                        <td>
-                                                            @if($lieuFormation!=null)
-                                                                {{$lieuFormation[0]}}
-                                                            @else
-                                                                {{"-"}}
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" style="background: #e4e4e498;">
+                                                        <div class="row">
+                                                            <div class="col-md-2" >
+                                                                <span class="headEtp">Séances</span>
+                                                            </div>
+                                                            <div class="col-md-2" >
+                                                                <span class="headEtp">Date</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <span class="headEtp">Lieu de formation</span>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <span class="headEtp">Début</span>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <span class="headEtp">Fin</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" >
+                                                        <div class="row">
+                                                            @if ( count($dataSessions) > 0)
+                                                                <div class="col-md-2" >
+                                                                    @php
+                                                                        $i = 1;
+                                                                    @endphp
+                                                                    @foreach ($dataSessions as $dataSession)
+                                                                        <p style="font-size: 13px">{{ $i++ }}</p>
+                                                                    @endforeach
+                                                                </div>
+                                                                <div class="col-md-2" >
+                                                                    @foreach ($dataSessions as $dataSession)
+                                                                        <p style="font-size: 13px">{{ \Carbon\Carbon::parse($dataSession->date_detail)->translatedFormat('d M Y') }}</p>
+                                                                    @endforeach
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    @foreach ($dataSessions as $dataSession)
+                                                                    @php
+                                                                        $salle = explode(',  ', $dataSession->lieu);
+                                                                    @endphp
+                                                                        <p style="font-size: 13px">{{ $salle[0]." ".$salle[1] }}</p>
+                                                                    @endforeach
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    @foreach ($dataSessions as $dataSession)
+                                                                        <p style="font-size: 13px">{{ $dataSession->h_debut}} </p>
+                                                                    @endforeach
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    @foreach ($dataSessions as $dataSession)
+                                                                        <p style="font-size: 13px">{{ $dataSession->h_fin}} </p>
+                                                                    @endforeach
+                                                                </div>
+                                                            @elseif( count($dataSessions) <= 0)
+                                                            <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <span style="font-size: 13px; color: #011e2a">Aucune séance</span>
+                                                                    </div>
+                                                            </div>
                                                             @endif
-                                                        </td>
-                                                        <td style="min-width: 6rem;">
-                                                            <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1 text-center">
-                                                                {{ $pj->item_status_groupe }}
-                                                            </p>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
-                                                                @can('isCFP')
-                                                                    <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static" style="cursor: pointer;">Modifier</span></li>
-                                                                @endcan
-                                                                <li class="action_projet"><a class="dropdown-item" href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
-                                                                <li class="action_projet"><a class="dropdown-item" href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
-                                                                @if ($prj->type_formation_id == 1)
-                                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank">Rapport</a></li>
-                                                                @endif
-                                                            </ul>
-                                                        </td>
-
-
-                                                        <tr>
-                                                            <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
-                                                                tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header  d-flex justify-content-center"
-                                                                            style="background-color:rgb(224,182,187);">
-                                                                            <h6 class="modal-title">Avertissement !</h6>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <small>Vous êtes sur le point d'effacer une donnée,
-                                                                                cette
-                                                                                action est irréversible. Continuer ?</small>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal"> Non </button>
-                                                                            <button type="button" class="btn btn-secondary"><a
-                                                                                    href="{{ route('destroy_groupe', [$pj->groupe_id]) }}">Oui</a></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            {{-- fin supprimer session --}}
-                                                            {{-- Debut modal edit session --}}
-                                                            <div>
-                                                                <div class="modal fade"
-                                                                    id="modal_modifier_session_{{ $pj->groupe_id }}"
-                                                                    data-backdrop="static">
-                                                                    <div class="modal-dialog modal-lg">
-                                                                        <div class="modal-content p-3">
-                                                                            <div class="modal-title pt-3"
-                                                                                style="height: 50px; align-items: center;">
-                                                                                <h5 class="text-center my-auto">Modifier session
-                                                                                    <strong>{{ $pj->nom_groupe }}</strong>
-                                                                                </h5>
-                                                                            </div>
-                                                                            @if ($prj->type_formation_id == 1)
-                                                                                <div class="row">
-                                                                                    <form
-                                                                                        action="{{ route('modifier_session_intra') }}"
-                                                                                        id="formPayement" method="post">
-                                                                                        @csrf
-                                                                                        <input type="hidden" name="id"
-                                                                                            value="{{ $pj->groupe_id }}">
-                                                                                        <div class="row">
-                                                                                            <div class="form-group">
-                                                                                                <div class="form-row d-flex">
-                                                                                                    <div class="col">
-                                                                                                        <div class="row ps-3 mt-2">
-                                                                                                            <div
-                                                                                                                class="form-group mt-1 mb-1">
-                                                                                                                <input type="text"
-                                                                                                                    id="min"
-                                                                                                                    class="form-control input"
-                                                                                                                    name="date_debut"
-                                                                                                                    required
-                                                                                                                    onfocus="(this.type='date')"
-                                                                                                                    value="{{ $pj->date_debut }}">
-                                                                                                                <label
-                                                                                                                    class="ml-3 form-control-placeholder"
-                                                                                                                    for="min">Date
-                                                                                                                    debut du
-                                                                                                                    session<strong
-                                                                                                                        class="text-danger">*</strong></label>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div class="row ps-3 mt-2">
-                                                                                                            <div
-                                                                                                                class="form-group mt-1">
-                                                                                                                <select
-                                                                                                                    class="form-select selectP input"
-                                                                                                                    id="formation_session_id"
-                                                                                                                    name="formation_id"
-                                                                                                                    aria-label="Default select example">
-                                                                                                                    <option
-                                                                                                                        value="{{ $pj->formation_id }}">
-                                                                                                                        {{ $pj->nom_formation }}
-                                                                                                                    </option>
-                                                                                                                    @foreach ($formation as $form)
-                                                                                                                        <option
-                                                                                                                            value="{{ $form->id }}">
-                                                                                                                            {{ $form->nom_formation }}
-                                                                                                                        </option>
-                                                                                                                    @endforeach
-                                                                                                                </select>
-                                                                                                                <label
-                                                                                                                    class="ml-3 form-control-placeholder"
-                                                                                                                    for="formation_id">Formations<strong
-                                                                                                                        class="text-danger">*</strong></label>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col">
-                                                                                                        <div class="row ps-3 mt-2">
-                                                                                                            <div
-                                                                                                                class="form-group mt-1 mb-1">
-                                                                                                                <input type="text"
-                                                                                                                    id="min"
-                                                                                                                    class="form-control input"
-                                                                                                                    name="date_fin"
-                                                                                                                    required
-                                                                                                                    onfocus="(this.type='date')"
-                                                                                                                    value="{{ $pj->date_fin }}">
-                                                                                                                <label
-                                                                                                                    class="ml-3 form-control-placeholder"
-                                                                                                                    for="min">Date
-                                                                                                                    fin du
-                                                                                                                    session<strong
-                                                                                                                        class="text-danger">*</strong></label>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div class="row ps-3 mt-2">
-                                                                                                            <div
-                                                                                                                class="form-group mt-1 mb-1">
-                                                                                                                <select
-                                                                                                                    class="form-select selectP input"
-                                                                                                                    id="module_id"
-                                                                                                                    name="module_id"
-                                                                                                                    aria-label="Default select example">
-                                                                                                                    <option
-                                                                                                                        value="{{ $pj->module_id }}">
-                                                                                                                        {{ $pj->nom_module }}
-                                                                                                                    </option>
-                                                                                                                    @foreach ($module as $mod)
-                                                                                                                        <option
-                                                                                                                            value="{{ $mod->id }}">
-                                                                                                                            {{ $mod->nom_module }}
-                                                                                                                        </option>
-                                                                                                                    @endforeach
-                                                                                                                </select>
-                                                                                                                <label
-                                                                                                                    class="ml-3 form-control-placeholder"
-                                                                                                                    for="module_id">Modules<strong
-                                                                                                                        class="text-danger">*</strong></label>
-                                                                                                            </div>
-                                                                                                        </div>
-
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="form-row">
-                                                                                                    <div class="row ps-3 mt-2">
-                                                                                                        <div
-                                                                                                            class="form-group mt-1 mb-1">
-                                                                                                            <select
-                                                                                                                class="form-select selectP input"
-                                                                                                                id="payement_id"
-                                                                                                                name="payement"
-                                                                                                                aria-label="Default select example">
-                                                                                                                <option
-                                                                                                                    value="{{ $pj->type_payement_id }}"
-                                                                                                                    hidden>
-                                                                                                                    {{ $pj->type }}
-                                                                                                                </option>
-                                                                                                                @foreach ($payement as $paye)
-                                                                                                                    <option
-                                                                                                                        value="{{ $paye->id }}">
-                                                                                                                        {{ $paye->type }}
-                                                                                                                    </option>
-                                                                                                                @endforeach
-                                                                                                            </select>
-                                                                                                            <label
-                                                                                                                class=" form-control-placeholder"
-                                                                                                                for="payement_id">Mode
-                                                                                                                de Payement<strong
-                                                                                                                    class="text-danger">*</strong></label>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="form-row d-flex">
-                                                                                                    <div class="col">
-                                                                                                        <div class="row ps-3">
-                                                                                                            <div
-                                                                                                                class="form-group ">
-                                                                                                                <input type="text"
-                                                                                                                    id="min"
-                                                                                                                    class="form-control input"
-                                                                                                                    min="1" max="50"
-                                                                                                                    name="min_part"
-                                                                                                                    required
-                                                                                                                    onfocus="(this.type='number')"
-                                                                                                                    value="{{ $pj->min_participant }}">
-                                                                                                                <label
-                                                                                                                    class="ml-3 form-control-placeholder"
-                                                                                                                    for="min">Nombre
-                                                                                                                    de participant
-                                                                                                                    minimal</label>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="text-center mb-1">
-                                                                                                            <button type="submit"
-                                                                                                                form="formPayement"
-                                                                                                                class="btn btn_enregistrer">Valider</button>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col">
-                                                                                                        <div class="row ps-3">
-                                                                                                            <div
-                                                                                                                class="form-group ">
-                                                                                                                <input type="text"
-                                                                                                                    id="min"
-                                                                                                                    class="form-control input"
-                                                                                                                    min="1" max="50"
-                                                                                                                    name="max_part"
-                                                                                                                    required
-                                                                                                                    onfocus="(this.type='number')"
-                                                                                                                    value="{{ $pj->max_participant }}">
-                                                                                                                <label
-                                                                                                                    class="ml-3 form-control-placeholder"
-                                                                                                                    for="min">Nombre
-                                                                                                                    de participant
-                                                                                                                    maximal</label>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="text-center mb-1">
-                                                                                                            <button type="button"
-                                                                                                                class="btn  btn_annuler"
-                                                                                                                data-bs-dismiss="modal">Annuler</button>
-                                                                                                        </div>
-                                                                                                    </div>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            @endif
-                                                                            @if ($prj->type_formation_id == 2)
-                                                                                <div class="row">
-                                                                                    <div class="form-group">
-                                                                                        <div class="form-row d-flex">
-                                                                                            <form
-                                                                                                action="{{ route('modifier_session_inter') }}"
-                                                                                                method="POST">
-                                                                                                @csrf
-                                                                                                <input type="hidden" name="id"
-                                                                                                    value="{{ $pj->groupe_id }}">
-                                                                                                <div class="col">
-                                                                                                    <div class="row ps-3 mt-2">
-                                                                                                        <div
-                                                                                                            class="form-group mt-1 mb-1">
-                                                                                                            <input type="text"
-                                                                                                                id="min"
-                                                                                                                class="form-control input"
-                                                                                                                name="date_debut"
-                                                                                                                required
-                                                                                                                onfocus="(this.type='date')"
-                                                                                                                value="{{ $pj->date_debut }}">
-                                                                                                            <label
-                                                                                                                class="form-control-placeholder"
-                                                                                                                for="min">Date
-                                                                                                                debut<strong
-                                                                                                                    class="text-danger">*</strong></label>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="row ps-3 mt-2">
-                                                                                                        <div
-                                                                                                            class="form-group mt-1 mb-1">
-                                                                                                            <input type="text"
-                                                                                                                id="min"
-                                                                                                                class="form-control input"
-                                                                                                                min="1" max="50"
-                                                                                                                name="min_part"
-                                                                                                                required
-                                                                                                                onfocus="(this.type='number')"
-                                                                                                                value="{{ $pj->min_participant }}">
-                                                                                                            <label
-                                                                                                                class="form-control-placeholder"
-                                                                                                                for="min">Participant
-                                                                                                                minimal</label>
-                                                                                                        </div>
-                                                                                                    </div>
-
-                                                                                                    <div class="text-center ps-3">
-                                                                                                        <button type="submit"
-                                                                                                            class="btn btn_enregistrer">Valider</button>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col">
-                                                                                                    <div class="row ps-3 mt-2">
-                                                                                                        <div
-                                                                                                            class="form-group mt-1 mb-1">
-                                                                                                            <input type="text"
-                                                                                                                id="min"
-                                                                                                                class="form-control input"
-                                                                                                                name="date_fin"
-                                                                                                                required
-                                                                                                                onfocus="(this.type='date')"
-                                                                                                                value="{{ $pj->date_fin }}">
-                                                                                                            <label
-                                                                                                                class=" form-control-placeholder"
-                                                                                                                for="min">Date
-                                                                                                                fin<strong
-                                                                                                                    class="text-danger">*</strong></label>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="row ps-3 mt-2">
-                                                                                                        <div
-                                                                                                            class="form-group mt-1 mb-1">
-                                                                                                            <input type="text"
-                                                                                                                id="min"
-                                                                                                                class="form-control input"
-                                                                                                                min="1" max="50"
-                                                                                                                name="max_part"
-                                                                                                                required
-                                                                                                                onfocus="(this.type='number')"
-                                                                                                                value="{{ $pj->max_participant }}">
-                                                                                                            <label
-                                                                                                                class="form-control-placeholder"
-                                                                                                                for="min">Participant
-                                                                                                                maximal</label>
-                                                                                                        </div>
-                                                                                                    </div>
-
-
-                                                                                                    <div class="text-center ps-3">
-                                                                                                        <button type="button"
-                                                                                                            class="btn btn_annuler"
-                                                                                                            data-bs-dismiss="modal"
-                                                                                                            aria-label="Close">Annuler</button>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </form>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            {{-- Fin modal edit session --}}
-                                                            {{-- debut modal nouveau session --}}
-                                                            <div>
-                                                                <div id="modal_{{ $pj->projet_id }}"
-                                                                    class="modal fade modal_projets">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="w-100 text-center">Nouvelle Session pour
-                                                                                    le&nbsp;{{ $pj->nom_projet }}
-                                                                                </h5>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <form action="{{ route('insert_session') }}"
-                                                                                    method="POST"
-                                                                                    class="justify-content-center me-5">
-                                                                                    @csrf
-                                                                                    <input type="hidden" name="type_formation"
-                                                                                        value="1">
-                                                                                    <input type="hidden" name="projet"
-                                                                                        value="{{ $pj->projet_id }}">
-                                                                                        <h5 class="mb-4 text-center">Ajouter votre
-                                                                                            nouvelle
-                                                                                            Session</h5>
-                                                                                        <div class="form-group">
-                                                                                            <div class="row mt-2">
-                                                                                                <div
-                                                                                                    class="col-lg-6 text-end mt-2">
-                                                                                                    <span>Date debut de la
-                                                                                                        session<strong
-                                                                                                            class="text-danger">*</strong></span>
-                                                                                                </div>
-                                                                                                <div class="col-lg-6"><input
-                                                                                                        type="date" id="min"
-                                                                                                        class="form-control input"
-                                                                                                        name="date_debut"
-                                                                                                        style="width: 12rem;"
-                                                                                                        required></div>
-                                                                                            </div>
-                                                                                            <div class="row mt-2">
-                                                                                                <div
-                                                                                                    class="col-lg-6 text-end mt-2">
-                                                                                                    <span>Date fin de la
-                                                                                                        session<strong
-                                                                                                            class="text-danger">*</strong></span>
-                                                                                                </div>
-                                                                                                <div class="col-lg-6"><input
-                                                                                                        type="date" id="min"
-                                                                                                        class="form-control input"
-                                                                                                        name="date_fin"
-                                                                                                        style="width: 12rem;"
-                                                                                                        required></div>
-                                                                                            </div>
-                                                                                            <div class="row mt-2">
-                                                                                                <div
-                                                                                                    class="col-lg-6 text-end mt-2">
-                                                                                                    <span>Modalité<strong
-                                                                                                            class="text-danger">*</strong>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                                <div class="col-lg-6 text-end">
-                                                                                                    <select
-                                                                                                        class="form-select input_select"
-                                                                                                        name="modalite"
-                                                                                                        aria-label="Default select example"
-                                                                                                        style="width: 15rem;"
-                                                                                                        required>
-                                                                                                        <option value="null">
-                                                                                                            Sélectionnez</option>
-                                                                                                        <option value="Présentiel">
-                                                                                                            Présentielle</option>
-                                                                                                        <option value="En ligne">En
-                                                                                                            ligne</option>
-                                                                                                        <option
-                                                                                                            value="Présentiel/En ligne">
-                                                                                                            Présentiel/En ligne
-                                                                                                        </option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row mt-3">
-                                                                                                <div class="col-lg-6 text-end"><button type="submit"
-                                                                                                        class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Enregistrer</button></div>
-                                                                                                <div class="col-lg-6">
-                                                                                                    <button type="button" class="btn  btn_annuler" data-dismiss="modal">
-                                                                                                        <i class='bx bx-x me-1'></i> Annuler
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                </form>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            {{-- fin --}}
-                                                            {{-- debut modal edit projet --}}
-                                                            <div>
-                                                                <div id="edit_prj_{{ $pj->projet_id }}"
-                                                                    class="modal fade modal_projets">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="text-center w-100">Modification de la
-                                                                                    Status du
-                                                                                    Session dans le&nbsp;{{ $pj->nom_projet }}
-                                                                                </h5>
-
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <form
-                                                                                    action="{{ route('update_projet', $pj->projet_id) }}"
-                                                                                    id="zsxsq" method="POST">
-                                                                                    @csrf
-                                                                                    <div class="row ps-3 mt-2">
-                                                                                        <div class="form-group mt-1 mb-1">
-                                                                                            <select
-                                                                                                class="form-select selectP input"
-                                                                                                id="formation_id"
-                                                                                                name="formation_id"
-                                                                                                aria-label="Default select example">
-                                                                                                <option onselected hidden>choisir la
-                                                                                                    status
-                                                                                                    du session</option>
-                                                                                                @foreach ($status as $stat)
-                                                                                                    <option
-                                                                                                        value="{{ $stat->id }}">
-                                                                                                        {{ $stat->status }}
-                                                                                                    </option>
-                                                                                                @endforeach
-                                                                                            </select>
-                                                                                            <label
-                                                                                                class="ml-3 form-control-placeholder"
-                                                                                                for="formation_id">Status</label>
-                                                                                        </div>
-                                                                                    </div>
-
-
-                                                                                    <div class="mt-4 mb-4">
-                                                                                        <div
-                                                                                            class="mt-4 mb-4 d-flex justify-content-around">
-                                                                                            <div class="text-center ps-3"><button
-                                                                                                    type="submit"
-                                                                                                    form="formPayement"
-                                                                                                    class="btn btn_enregistrer">Valider</button>
-                                                                                            </div>
-                                                                                            <div class="text-center ps-3"><button
-                                                                                                    type="button"
-                                                                                                    class="btn btn_annuler"
-                                                                                                    data-bs-dismiss="modal"
-                                                                                                    aria-label="Close">Annuler</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </form>
-
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            {{-- fin --}}
-                                                        </tr>
-                                                        @if ($prj->type_formation_id == 2)
-                                                            @break
-                                                        @endif
-                                                        </tr>
-                                                    @endif
-                                                    @endforeach
-                                                @endif
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          
+                        </div>
+                      </div>
                     </div>
-                @endcanany
+                </div>
 
-                @canany(['isFormateur','isFormateurInterne'])
-                    @if (count($data) <= 0)
-                        <div class="d-flex mt-3 titre_projet p-1 mb-1">
-                            <span class="text-center">Vous n'avez pas encore du projet.</span>
+                
+            @endforeach
+            @foreach ($data as $pj)
+            <div>
+                <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
+                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header  d-flex justify-content-center"
+                                style="background-color:rgb(224,182,187);">
+                                <h6 class="modal-title">Avertissement !</h6>
+                            </div>
+                            <div class="modal-body">
+                                <small>Vous êtes sur le point d'effacer une donnée,
+                                    cette
+                                    action est irréversible. Continuer ?</small>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal"> Non </button>
+                                <button type="button" class="btn btn-secondary"><a
+                                        href="{{ route('destroy_groupe', [$pj->groupe_id]) }}">Oui</a></button>
+                            </div>
                         </div>
-                    @else
-                        <table class="table table-hover m-0 p-0 mt-2 table-borderless">
-                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
-                                <th>Projet</th>
-                                <th>Type</th>
-                                <th>Session</th>
-                                <th> Module </th>
-                                <th>Date session</th>
-                                <th> Entreprise </th>
-                                {{-- <th> Date du projet</th> --}}
-                                <th> Modalité</th>
-                                <th> Statut </th>
-                                <th></th>
-                                <th>Actions</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $pj)
-                                    <tr class="m-0">
-                                        <td>{{ $pj->nom_projet }}</td>
-                                        <td>
-                                            @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0"><button
-                                                        class="type_intra ">{{ $pj->type_formation }}</button>
-                                                </h6>
-                                                &nbsp;&nbsp;
-                                            @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button
-                                                        class="type_inter ">{{ $pj->type_formation }}</button></h6>
-                                                &nbsp;&nbsp;
-                                            @endif
-                                        </td>
-                                        <td class="tbody_projet">
-                                            <a
-                                                href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
-                                        </td>
-                                        <td class="text-start">
-                                            @php
-                                                echo $groupe->module_session($pj->module_id) . '&nbsp;' . $groupe->nombre_apprenant_session($pj->groupe_id);
-                                            @endphp
-                                        </td>
-                                        <td>
-                                            @php
-                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
-                                            @endphp
-                                        </td>
-                                        <td class="text-start">
-                                            @foreach ($entreprise as $etp)
-                                                @if ($etp->groupe_id == $pj->groupe_id)
-                                                    {{ $etp->nom_etp }}
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
-                                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
-                                        <td class="tbody_projet">
-                                            <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
-                                                {{ $pj->item_status_groupe }}</p>
-                                        </td>
-                                        <td align="left">
-                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
-                                                @php
-                                                    echo $groupe->statut_presences($pj->groupe_id);
-                                                @endphp
-                                                "></i>&nbsp;Emargement</p>
-                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle'
-                                                @php
-                                                    $statut_eval = $groupe->statut_evaluation($pj->groupe_id);
-                                                    if($statut_eval == 0){
-                                                        echo 'style="color:#bdbebd;"';
-                                                    }
-                                                    elseif ($statut_eval == 1) {
-                                                        echo 'style="color:#00ff00;"';
-                                                    }
-                                                @endphp
-                                                ></i>&nbsp;Evaluation</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
-                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
-                                              </ul>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                @endcanany
-                @can('isReferent')
-                    @if (count($data) <= 0)
-                        <div class="d-flex mt-3 titre_projet p-1 mb-1">
-                            <span class="text-center">Vous n'avez pas encore du projet.</span>
-                        </div>
-                    @else
-                        <table class="table table-hover table-borderless m-0 p-0 mt-2">
-                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
-                                <th>Projet</th>
-                                <th>Type de formation</th>
-                                <th> Session </th>
-                                <th> Module </th>
-                                {{-- <th><i class="bx bx-dollar"></i> {{$ref}}</th>
-                                <th> <i class='bx bx-group'></i> </th> --}}
-                                <th>Date session</th>
-                                <th>Ville</th>
-                                <th> Centre de formation </th>
-                                {{-- <th> Date du projet</th> --}}
-                                <th>Modalité</th>
-                                <th> Statut </th>
-                                <th>Actions</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $pj)
-                                    <tr>
-                                        <td>{{ $pj->nom_projet }}</td>
-                                        <td class="tbody_projet" style="vertical-align: middle">
-                                            @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0 "><button
-                                                        class="type_intra ">{{ $pj->type_formation }}</button>
-                                                </h6>
-                                                &nbsp;&nbsp;
-                                            @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button
-                                                        class="type_inter">{{ $pj->type_formation }}</button></h6>
-                                                &nbsp;&nbsp;
-                                            @endif
-                                        </td>
-                                        <td class="tbody_projet"> <a
-                                                href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
-                                        </td>
-                                        <td class="text-start">
-                                            @php
-                                                echo $groupe->module_session($pj->module_id);
-                                            @endphp
-                                        </td>
-                                        {{-- <td class="text-end">
-                                           @if($pj->hors_taxe_net!=null)
-                                           <a href="{{route('detail_facture_etp',[$pj->cfp_id,$pj->num_facture])}}">
-                                           {{number_format($pj->hors_taxe_net,0,","," ")}}
-                                           </a>
-                                           @else
-                                                @php
-                                                    echo "<span>-</span>";
-                                                @endphp
-                                           @endif
-                                        </td>
-                                       <td>
-                                        @if($pj->qte!=null)
-                                            {{$pj->qte}}
-                                        @else
-                                            @php
-                                                echo "<span>-</span>";
-                                            @endphp
-                                        @endif
-                                       </td> --}}
-                                        <td>
-                                            @php
-                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
-                                            @endphp
-                                        </td>
-                                        <td>
-                                            @if($lieuFormation!=null)
-                                               {{$lieuFormation[0]}}
-                                            @else
-                                                {{"-"}}
-                                            @endif
-
-                                        </td>
-                                        <td class="text-center"> {{ $pj->nom_cfp }} </td>
-                                        {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
-                                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
-                                        <td class="tbody_projet">
-                                            <p class="{{ $pj->class_status_groupe }} m-0">
-                                                {{ $pj->item_status_groupe }}
-                                            </p>
-                                        </td>
-                                        <td class="text-center">
-                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
-                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
-                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
-                                              </ul>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                @endcan
-                @can('isStagiaire')
-                    @if (count($data) <= 0)
-                        <div class="d-flex mt-3 titre_projet p-1 mb-1">
-                            <span class="text-center">Vous n'avez pas encore du projet.</span>
-                        </div>
-                    @else
-                        <table class="table table-hover table-borderless m-0 p-0">
-                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
-                                {{-- <th>Projet</th> --}}
-                                <th> Session </th>
-                                <th> Module </th>
-                                <th> Date du session</th>
-                                <th> Centre de formation </th>
-                                <th> Formation </th>
-                                <th> Module</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </thead>
-                            <tbody class="">
-                                @foreach ($data as $pj)
-                                    <tr>
-                                        {{-- <td>{{ $pj->nom_projet }}</td> --}}
-                                        <td> {{ $pj->nom_groupe }}</td>
-                                        <td>
-                                            @php
-                                                echo $groupe->module_session($pj->module_id);
-                                            @endphp
-                                        </td>
-                                        <td>
-                                            @php
-                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
-                                            @endphp
-                                        </td>
-                                        <td> {{ $pj->nom_cfp }} </td>
-                                        <td> {{ $pj->nom_formation }} </td>
-                                        <td> {{ $pj->nom_module }} </td>
-                                        @php
-                                            $statut_eval = $groupe->statut_valuation_chaud($pj->groupe_id,$pj->stagiaire_id);
-                                        @endphp
-                                        <td class="p-0"><a
-                                                href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}"
-                                                class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i
-                                                        class="bx bxs-file-pdf"></i>PDF</button></a></td>
-                                        <td>
-                                            @if ($statut_eval == 0)
-                                                <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn pb-2" style="color: #ffffff !important">Evaluation</button></a>
-                                            @elseif ($statut_eval == 1)
-                                                <p class="mt-3" style="color: green">Evaluation terminé</p>
-                                            @endif
-
-                                        </td>
-                                        <td>
-                                            <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn pb-2">Résultat</button>
-
-                                            </a>
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                @endcan
-
+                    </div>
+                </div>
+                {{-- fin supprimer session --}}
+                {{-- Debut modal edit session --}}
                 <div>
-                    {{-- {!! $projet->links() !!} --}}
+                    <div class="modal fade"
+                        id="modal_modifier_session_{{ $pj->groupe_id }}"
+                        data-backdrop="static" data-bs-backdrop="false">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content p-3">
+                                <div class="modal-title pt-3"
+                                    style="height: 50px; align-items: center;">
+                                    <h5 class="text-center my-auto">Modifier session
+                                        <strong>{{ $pj->nom_groupe }}</strong>
+                                    </h5>
+                                </div>
+                                @if ($projet->id == 1)
+                                    <div class="row">
+                                        <form
+                                            action="{{ route('modifier_session_intra') }}"
+                                            id="formPayement" method="post">
+                                            @csrf
+                                            <input type="hidden" name="id"
+                                                value="{{ $pj->groupe_id }}">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="form-row d-flex">
+                                                        <div class="col">
+                                                            <div class="row ps-3 mt-2">
+                                                                <div
+                                                                    class="form-group mt-1 mb-1">
+                                                                    <input type="text"
+                                                                        id="min"
+                                                                        class="form-control input"
+                                                                        name="date_debut"
+                                                                        required
+                                                                        onfocus="(this.type='date')"
+                                                                        value="{{ $pj->date_debut }}">
+                                                                    <label
+                                                                        class="ml-3 form-control-placeholder"
+                                                                        for="min">Date
+                                                                        debut du
+                                                                        session<strong
+                                                                            class="text-danger">*</strong></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row ps-3 mt-2">
+                                                                <div
+                                                                    class="form-group mt-1">
+                                                                    <select
+                                                                        class="form-select selectP input"
+                                                                        id="formation_session_id"
+                                                                        name="formation_id"
+                                                                        aria-label="Default select example">
+                                                                        <option
+                                                                            value="{{ $pj->formation_id }}">
+                                                                            {{ $pj->nom_formation }}
+                                                                        </option>
+                                                                        @foreach ($formation as $form)
+                                                                            <option
+                                                                                value="{{ $form->id }}">
+                                                                                {{ $form->nom_formation }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <label
+                                                                        class="ml-3 form-control-placeholder"
+                                                                        for="formation_id">Formations<strong
+                                                                            class="text-danger">*</strong></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row ps-3 mt-2">
+                                                                <div
+                                                                    class="form-group mt-1 mb-1">
+                                                                    <input type="text"
+                                                                        id="min"
+                                                                        class="form-control input"
+                                                                        name="date_fin"
+                                                                        required
+                                                                        onfocus="(this.type='date')"
+                                                                        value="{{ $pj->date_fin }}">
+                                                                    <label
+                                                                        class="ml-3 form-control-placeholder"
+                                                                        for="min">Date
+                                                                        fin du
+                                                                        session<strong
+                                                                            class="text-danger">*</strong></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row ps-3 mt-2">
+                                                                <div
+                                                                    class="form-group mt-1 mb-1">
+                                                                    <select
+                                                                        class="form-select selectP input"
+                                                                        id="module_id"
+                                                                        name="module_id"
+                                                                        aria-label="Default select example">
+                                                                        <option
+                                                                            value="{{ $pj->module_id }}">
+                                                                            {{ $pj->nom_module }}
+                                                                        </option>
+                                                                        @foreach ($module as $mod)
+                                                                            <option
+                                                                                value="{{ $mod->id }}">
+                                                                                {{ $mod->nom_module }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <label
+                                                                        class="ml-3 form-control-placeholder"
+                                                                        for="module_id">Modules<strong
+                                                                            class="text-danger">*</strong></label>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="row ps-3 mt-2">
+                                                            <div
+                                                                class="form-group mt-1 mb-1">
+                                                                <select
+                                                                    class="form-select selectP input"
+                                                                    id="payement_id"
+                                                                    name="payement"
+                                                                    aria-label="Default select example">
+                                                                    <option
+                                                                        value="{{ $pj->type_payement_id }}"
+                                                                        hidden>
+                                                                        {{ $pj->type }}
+                                                                    </option>
+                                                                    @foreach ($payement as $paye)
+                                                                        <option
+                                                                            value="{{ $paye->id }}">
+                                                                            {{ $paye->type }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <label
+                                                                    class=" form-control-placeholder"
+                                                                    for="payement_id">Mode
+                                                                    de Payement<strong
+                                                                        class="text-danger">*</strong></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row d-flex">
+                                                        <div class="col">
+                                                            <div class="row ps-3">
+                                                                <div
+                                                                    class="form-group ">
+                                                                    <input type="text"
+                                                                        id="min"
+                                                                        class="form-control input"
+                                                                        min="1" max="50"
+                                                                        name="min_part"
+                                                                        required
+                                                                        onfocus="(this.type='number')"
+                                                                        value="{{ $pj->min_participant }}">
+                                                                    <label
+                                                                        class="ml-3 form-control-placeholder"
+                                                                        for="min">Nombre
+                                                                        de participant
+                                                                        minimal</label>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="text-center mb-1">
+                                                                <button type="submit"
+                                                                    form="formPayement"
+                                                                    class="btn btn_enregistrer">Valider</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ps-3 mt-2">
+                                                        <div
+                                                            class="col-lg-6 text-end mt-2">
+                                                            <span>Module<strong
+                                                                    class="text-danger">*</strong>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-lg-6 text-start">
+                                                            <select
+                                                                class="form-select input_select"
+                                                                name="module"
+                                                                aria-label="Default select example"
+                                                                style="width: 15rem;"
+                                                                required>
+                                                                <option value="null">
+                                                                    Sélectionnez</option>
+                                                                @foreach ($module as $modu)
+                                                                    <option value="{{ $modu->id }}">{{ $modu->nom_module }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div
+                                                            class="col-lg-6 text-end mt-2">
+                                                            <span>Modalité<strong
+                                                                    class="text-danger">*</strong>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-lg-6 text-start">
+                                                            <select
+                                                                class="form-select selectP input"
+                                                                id="module_id"
+                                                                name="module_id"
+                                                                aria-label="Default select example">
+                                                                <option
+                                                                    value="{{ $pj->module_id }}">
+                                                                    {{ $pj->nom_module }}
+                                                                </option>
+                                                                @foreach ($module as $mod)
+                                                                    <option
+                                                                        value="{{ $mod->id }}">
+                                                                        {{ $mod->nom_module }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <label
+                                                                class="ml-3 form-control-placeholder"
+                                                                for="module_id">Modules<strong
+                                                                    class="text-danger">*</strong></label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                        </form>
+                                    </div>
+                                @endif
+                                @if ($projet->id == 2)
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="form-row d-flex">
+                                                <form
+                                                    action="{{ route('modifier_session_inter') }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $pj->groupe_id }}">
+                                                    <div class="col">
+                                                        <div class="row ps-3 mt-2">
+                                                            <div
+                                                                class="form-group mt-1 mb-1">
+                                                                <input type="text"
+                                                                    id="min"
+                                                                    class="form-control input"
+                                                                    name="date_debut"
+                                                                    required
+                                                                    onfocus="(this.type='date')"
+                                                                    value="{{ $pj->date_debut }}">
+                                                                <label
+                                                                    class="form-control-placeholder"
+                                                                    for="min">Date
+                                                                    debut<strong
+                                                                        class="text-danger">*</strong></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row ps-3 mt-2">
+                                                            <div
+                                                                class="form-group mt-1 mb-1">
+                                                                <input type="text"
+                                                                    id="min"
+                                                                    class="form-control input"
+                                                                    min="1" max="50"
+                                                                    name="min_part"
+                                                                    required
+                                                                    onfocus="(this.type='number')"
+                                                                    value="{{ $pj->min_participant }}">
+                                                                <label
+                                                                    class="form-control-placeholder"
+                                                                    for="min">Participant
+                                                                    minimal</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="text-center ps-3">
+                                                            <button type="submit"
+                                                                class="btn btn_enregistrer">Valider</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="row ps-3 mt-2">
+                                                            <div
+                                                                class="form-group mt-1 mb-1">
+                                                                <input type="text"
+                                                                    id="min"
+                                                                    class="form-control input"
+                                                                    name="date_fin"
+                                                                    required
+                                                                    onfocus="(this.type='date')"
+                                                                    value="{{ $pj->date_fin }}">
+                                                                <label
+                                                                    class=" form-control-placeholder"
+                                                                    for="min">Date
+                                                                    fin<strong
+                                                                        class="text-danger">*</strong></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row ps-3 mt-2">
+                                                            <div
+                                                                class="form-group mt-1 mb-1">
+                                                                <input type="text"
+                                                                    id="min"
+                                                                    class="form-control input"
+                                                                    min="1" max="50"
+                                                                    name="max_part"
+                                                                    required
+                                                                    onfocus="(this.type='number')"
+                                                                    value="{{ $pj->max_participant }}">
+                                                                <label
+                                                                    class="form-control-placeholder"
+                                                                    for="min">Participant
+                                                                    maximal</label>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="text-center ps-3">
+                                                            <button type="button"
+                                                                class="btn btn_annuler"
+                                                                data-bs-dismiss="modal"
+                                                                aria-label="Close">Annuler</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Fin modal edit session --}}
+                {{-- debut modal nouveau session --}}
+                <div>
+                    <div id="modal_{{ $pj->projet_id }}"
+                        class="modal fade modal_projets">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="w-100 text-center">Nouvelle Session pour
+                                        le&nbsp;{{ $pj->nom_projet }}
+                                    </h5>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('insert_session') }}"
+                                        method="POST"
+                                        class="justify-content-center me-5">
+                                        @csrf
+                                        <input type="hidden" name="type_formation"
+                                            value="1">
+                                        <input type="hidden" name="projet"
+                                            value="{{ $pj->projet_id }}">
+                                            <h5 class="mb-4 text-center">Ajouter votre
+                                                nouvelle
+                                                Session</h5>
+                                            <div class="form-group">
+                                                <div class="row mt-2">
+                                                    <div
+                                                        class="col-lg-6 text-end mt-2">
+                                                        <span>Date debut de la
+                                                            session<strong
+                                                                class="text-danger">*</strong></span>
+                                                    </div>
+                                                    <div class="col-lg-6"><input
+                                                            type="date" id="min"
+                                                            class="form-control input"
+                                                            name="date_debut"
+                                                            style="width: 12rem;"
+                                                            required></div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div
+                                                        class="col-lg-6 text-end mt-2">
+                                                        <span>Date fin de la
+                                                            session<strong
+                                                                class="text-danger">*</strong></span>
+                                                    </div>
+                                                    <div class="col-lg-6"><input
+                                                            type="date" id="min"
+                                                            class="form-control input"
+                                                            name="date_fin"
+                                                            style="width: 12rem;"
+                                                            required></div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div
+                                                        class="col-lg-6 text-end mt-2">
+                                                        <span>Modalité<strong
+                                                                class="text-danger">*</strong>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-lg-6 text-end">
+                                                        <select
+                                                            class="form-select input_select"
+                                                            name="modalite"
+                                                            aria-label="Default select example"
+                                                            style="width: 15rem;"
+                                                            required>
+                                                            <option value="null">
+                                                                Sélectionnez</option>
+                                                            <option value="Présentiel">
+                                                                Présentielle</option>
+                                                            <option value="En ligne">En
+                                                                ligne</option>
+                                                            <option
+                                                                value="Présentiel/En ligne">
+                                                                Présentiel/En ligne
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-lg-6 text-end"><button type="submit"
+                                                            class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Enregistrer</button></div>
+                                                    <div class="col-lg-6">
+                                                        <button type="button" class="btn  btn_annuler" data-dismiss="modal">
+                                                            <i class='bx bx-x me-1'></i> Annuler
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- fin --}}
+                {{-- debut modal edit projet --}}
+                <div>
+                    <div id="edit_prj_{{ $pj->projet_id }}"
+                        class="modal fade modal_projets">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="text-center w-100">Modification de la
+                                        Status du
+                                        Session dans le&nbsp;{{ $pj->nom_projet }}
+                                    </h5>
+
+                                </div>
+                                <div class="modal-body">
+                                    <form
+                                        action="{{ route('update_projet', $pj->projet_id) }}"
+                                        id="zsxsq" method="POST">
+                                        @csrf
+                                        <div class="row ps-3 mt-2">
+                                            <div class="form-group mt-1 mb-1">
+                                                <select
+                                                    class="form-select selectP input"
+                                                    id="formation_id"
+                                                    name="formation_id"
+                                                    aria-label="Default select example">
+                                                    <option onselected hidden>choisir la
+                                                        status
+                                                        du session</option>
+                                                    @foreach ($status as $stat)
+                                                        <option
+                                                            value="{{ $stat->id }}">
+                                                            {{ $stat->status }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <label
+                                                    class="ml-3 form-control-placeholder"
+                                                    for="formation_id">Status</label>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="mt-4 mb-4">
+                                            <div
+                                                class="mt-4 mb-4 d-flex justify-content-around">
+                                                <div class="text-center ps-3"><button
+                                                        type="submit"
+                                                        form="formPayement"
+                                                        class="btn btn_enregistrer">Valider</button>
+                                                </div>
+                                                <div class="text-center ps-3"><button
+                                                        type="button"
+                                                        class="btn btn_annuler"
+                                                        data-bs-dismiss="modal"
+                                                        aria-label="Close">Annuler</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="filtrer mt-3">
-            <div class="row">
-                <div class="col">
-                    <p class="m-0">Filter vos projets</p>
-                </div>
-                <div class="col text-end">
-                    <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
-                </div>
-                <hr class="mt-2">
-                @canany(['isReferent', 'isCFP'])
-                    <div class="col-12 pe-3">
-                        <div class="row mb-3 p-2 pt-0">
-                            <form action="{{ route('liste_projet') }}" method="GET">
-                                <input type="hidden" name="type_formation" value="{{ $type_formation_id }}">
-                                <div class="row px-3 mt-2">
-                                    <select name="mois" id="mois" class="filtre_projet">
-                                        <option value="null" selected>Mois</option>
-                                        <option style="background-color: red;color: red;" value="1">Janvier</option>
-                                        <option value="2">Février</option>
-                                        <option value="3">Mars</option>
-                                        <option value="4">Avril</option>
-                                        <option value="5">Mai</option>
-                                        <option value="6">Juin</option>
-                                        <option value="7">Juillet</option>
-                                        <option value="8">Août</option>
-                                        <option value="9">Septembre</option>
-                                        <option value="10">Octobre</option>
-                                        <option value="11">Novembre</option>
-                                        <option value="12">Décembre</option>
-                                    </select>
-                                </div>
-                                <div class="row px-3 mt-2">
-                                    <select name="trimestre" id="trimestre" class="filtre_projet">
-                                        <option value="null" selected>Trimestres</option>
-                                        <option value="1">1e Trimestre</option>
-                                        <option value="2">2e Trimestre</option>
-                                        <option value="3">3e Trimestre</option>
-                                        <option value="4">4e Trimestre</option>
-                                    </select>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+</div>
+@endsection
+@section('script')
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="http://infra.clarin.eu/content/libs/DataTables-1.10.6/extensions/ColVis/js/dataTables.colVis.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
 
-                                </div>
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            var options = {
+                html: true,
+                title: "Optional: HELLO(Will overide the default-the inline title)",
+                content: $('[data-name="popover-content"]')
+            }
+            var example = document.getElementById('exampleE1')
+            var popover = new bootstrap.Popover(example, options)
+        })
+    </script>
 
-                                <div class="row px-3 mt-2">
-                                    <select name="semestre" id="semestre" class="filtre_projet">
-                                        <option value="null" selected>Semestres</option>
-                                        <option value="1">1e Semestre</option>
-                                        <option value="2">2e Semestre</option>
-                                    </select>
+    <script>
+        $(document).ready(function() {
+            var table = $('#example').DataTable( {
+                // dom:            "Bfrtip",
+                "dom": 'C<"clear">lfrtip',
+                // scrollY:        "500px",
+                scrollX:        true,
+                // scrollCollapse: true,
+                paging:         true,
+                buttons:        [ 'colvis','colonne' ],
+                select: true,
+                ordering:false,
+                "language": {
+                    "paginate": {
+                    "previous": "précédent",
+                    "next": "suivant"
+                    },
+                    "search": "Recherche :",
+                    "zeroRecords":    "Aucun résultat trouvé",
+                    "infoEmpty":      " 0 trouvés",
+                    "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                    "infoFiltered":   "(filtre sur _MAX_ entrées)",
+                    "lengthMenu":     "Affichage _MENU_ ",
+                    "buttonText": "Change colonne"
+                },
+                "colVis": {
+                "label": function ( index, title, th ) {
+                    return (index+1) +'. '+ title;
+                }
+                }
+            } );
+            // $('.dataTables_scrollBody').addClass("z-index-n2 overflow-visible");
+            // $('.dropdown-menu').addClass("z-index-master position-relative overflow-scroll");
+            new $.fn.dataTable.FixedColumns( table, {
+                leftColumns: 3,
+            } );
+            $('.ColVis_Button').text('Afficher / Masquer');
+            $('input:checkbox').on('change', function () {
+                var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
+                    return '^' + this.value + '$';
+                }).get().join('|');
+                
+                table.column(0).search(Projet, true,false,true).draw();
 
-                                </div>
+                var Session = $('input:checkbox[name="Session"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(1).search(Session, true,false,true).draw();
+                
+                var Module = $('input:checkbox[name="Module"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(2).search(Module, true,false,true).draw();
+                var Entreprise = $('input:checkbox[name="Enterprise"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(3).search(Entreprise, true,false,true).draw();
+                var Modalite = $('input:checkbox[name="Modalite"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(4).search(Modalite, true,false,true).draw();
+                
+                var TypeF = $('input:checkbox[name="TypeF"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(7).search(TypeF, true,false,true).draw();
 
-                                <div class="row px-3 mt-2">
-                                    <select name="annee" id="annee" class="filtre_projet">
-                                        <option value="null" selected>Années</option>
-                                    </select>
-                                    <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
-
-                                </div>
-
-                            </form>
-                        </div>
-                    @endcanany
-                </div>
-                @can('isReferent')
-                    <div class="row px-3 mt-2">
-                        <form action="{{ route('recherche_cfp') }}" method="POST">
-                            @csrf
-                            <div class="form-group mt-1 mb-1">
-                                <input type="text " class="form-control input" name="cfp_search">
-                                <label class="form-control-placeholder">Organisme de formation</label>
-                            </div>
-                            <div class="row px-3">
-                                <button class="btn btn_next mt-3 mb-3" type="submit">Rechercher</button>
-                            </div>
-                        </form>
-                    </div>
-                @endcan
-                {{-- @can('isCFP')
-                <div class="row px-3 mt-2">
-                    <form  action="{{ route('recherche_entreprise') }}" method="POST">
-                        @csrf
-                        <div class="form-group mt-1 mb-1">
-                        <input type="text " class="form-control input"   name="entreprise">
-                        <label class="form-control-placeholder">Entreprise</label>
-                    </div>
-                    <div class="row px-3">
-                        <button class="btn btn_next mt-3 mb-3" type="submit">Rechercher</button>
-                    </div>
-                    </form>
-                </div>
-                @endcan --}}
-                @canany(['isReferent', 'isCFP'])
-                    <div class="col-12 ps-5">
-                    @endcanany
-                    @canany(['isFormateur', 'isStagiaire','isFormateurInterne'])
-                        <div class="col-12 ps-5">
-                    @endcanany
-                    </div>
-                </div>
-
-                {{--info Entreprise --}}
-                <div class="infos mt-3">
-                    <div class="row">
-
-                        <div class="col">
-                            <p class="m-0 text-center">INFORMATION</p>
-                        </div>
-                        <div class="col text-end">
-                            <i class="bx bx-x " role="button" onclick="afficherInfos();" style="padding: 10px;"></i>
-                        </div>
-                        <hr class="mt-2">
-
-                        <div class="mt-2" style="font-size:14px">
-                                <div class="mt-1 text-center mb-3">
-                                    <span id="lEtp">
-                                        
-                                    </span>
-                                </div>
-                                <div class="mt-1 text-center">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10">
-                                            
-                                            <p id="nEtp" style="color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
-                                                
-                                            </p>
-                                            <p id="status">
-                                                
-                                            </p>
-                                        </div>
-                                        <div class="col-md-1"></div>
-                                    </div>
-                                </div>
-                                <div class="mt-1">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-1"><i class='bx bx-donate-heart'></i></div>
-                                        <div class="col-md-3">Type</div>
-                                        <div class="col-md">
-                                            <span id="juridic" style="font-size: 14px;">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-1">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-1"><i class='bx bx-credit-card-front' ></i></div>
-                                        <div class="col-md-3">NIF</div>
-                                        <div class="col-md">
-                                            <span id="nif" style="font-size: 14px;">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-1">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-1"><i class='bx bx-credit-card' ></i></div>
-                                        <div class="col-md-3">STAT</div>
-                                        <div class="col-md">
-                                            <span id="stat" style="font-size: 14px;">
-                                                
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-1">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-1"><i class='bx bx-phone'></i></div>
-                                        <div class="col-md-3">Tel</div>
-                                        <div class="col-md">
-                                            <span id="tel" style="font-size: 14px;">
-                                                
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-1">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
-                                        <div class="col-md-3">E-mail</div>
-                                        <div class="col-md">
-                                            <span id="mail">
-                                                
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-1">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
-                                        <div class="col-md-3">Adresse</div>
-                                        <div class="col-md">
-                                            <span id="adrlot"></span>
-                                            <span id="adrlot2"></span>
-                                            <span id="adrlot3"></span>
-                                            <span id="adrlot4"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-1">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-1"><i class='bx bx-globe' ></i></div>
-                                        <div class="col-md-3">Site web</div>
-                                        <div class="col-md">
-                                            <span id="site">
-                                                
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>                            
-                        </div>
-                </div>
-
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-                <script type="text/javascript" src="https://cdn.datatables.net/v/bs5-5.1.3/datatables.min.js"></script>
-                <script>
-                    $(document).ready( function () {
-                        $('#myData').DataTable();
-                    } );
-                </script>
-
-                <script src="{{ asset('js/index2.js') }}"></script>
-                <script>
-                    $("#formation_session_id").on("change", function() {
-                        var id = $("#formation_session_id").val();
-                        $("#module_id option").remove();
-                        $.ajax({
-                            method: "GET",
-                            url: "{{ route('module_formation') }}",
-                            data: {
-                                id: id,
-                            },
-                            dataType: "html",
-                            _token: "{{ csrf_token() }}",
-                            success: function(response) {
-                                var data = JSON.parse(response);
-                                if (data.length <= 0) {
-                                    document.getElementById("module_id_err").innerHTML =
-                                        "Aucun module a été détecter! veuillez choisir la formation";
-                                } else {
-                                    // document.getElementById("module_id_err").innerHTML = "";
-                                    for (var $i = 0; $i < data.length; $i++) {
-                                        $("#module_id").append(
-                                            '<option value="' +
-                                            data[$i].id +
-                                            '">' +
-                                            data[$i].nom_module +
-                                            "</option>"
-                                        );
-                                    }
-                                }
-                            },
-                            error: function(error) {
-                                console.log(error);
-                            },
-                        });
-                    });
-                    // $('.changer_carret').on('click',function(){
-                    //     if ($('.collapse').hasClass('show')) {
-                    //         $('.collapse').remove('show');
-                    //     } ;
-                    // });
-
-                    localStorage.setItem('activeTab', 'detail');
-                </script>
-
-                {{--info etp --}}
-                <script>
-                    $('.information').on('click', function(){
-                        var etpId = $(this).data("id");
-                        // console.log(etpId);
-                        $.ajax({
-                            type: "get",
-                            url: "/info/etp",
-                            data: { Id: etpId},
-                            dataType: "html",
-                            success: function (response) {
-                                let userData = JSON.parse(response);
-                                // console.log(userData);
-                                for(let i = 0; i < userData.length; i++){
-                                    let logo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:120px;border-radius:100%">';
-                                    logo = logo.replace(":url_img", userData[i].logo);
-                                    $("#lEtp").html(" ");
-                                    $("#lEtp").append(logo);
-                                    $("#status").text(userData[i].nom_statut);
-                                    $("#nEtp").text(userData[i].nom_etp);
-                                    $("#juridic").text(': '+userData[i].nom_type);
-                                    $("#nif").text(': '+userData[i].nif);
-                                    $("#stat").text(': '+userData[i].stat);
-                                    $("#tel").text(': '+userData[i].telephone_etp);
-                                    $("#mail").text(': '+userData[i].email_etp);
-                                    $("#adrlot").text(': '+userData[i].adresse_lot);
-                                    $("#adrlot2").text(userData[i].adresse_quartier);
-
-                                    $("#adrlot3").text(userData[i].adresse_ville);
-                                    $("#adrlot4").text(userData[i].adresse_region);
-                                    $("#site").text(': '+userData[i].site_etp);
-                                    
-                                    
-                                    var status = $('#status');
-                                    // console.log(status);
-
-                                    if(status.text() == "Premium"){
-                                        status.removeClass();
-                                        status.addClass('green');
-                                    }else if(status.text() == "Invité"){
-                                        status.removeClass();
-                                        status.addClass('red');
-                                    }else if(status.text() == "Pending"){
-                                        status.removeClass();
-                                        status.addClass('yellow');
-                                    }else{
-                                        console.log('ereur');
-                                    }
-                                    
-                                }
-                            }
-                        });
-                        
-                    });
-
-                </script>
-            @endsection
+                var Statut = $('input:checkbox[name="Statut"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(8).search(Statut, true,false,true).draw();
+            });
+        } );
+        
+    </script>
+@endsection
