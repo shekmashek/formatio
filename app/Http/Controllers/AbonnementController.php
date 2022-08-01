@@ -1142,8 +1142,6 @@ class AbonnementController extends Controller
             if($request->prix_employee == null) {
                 throw new Exception('Vous devez completer le champ prix par employé.');
             }
-            // dd($request->all());
-            DB::enableQueryLog();
             DB::update('update autres_types_abonnements set prix_fixe = ?, prix_par_employe = ? where id = ?', [$request->prix_fixe,$request->prix_employee,$id]);
             return redirect()->route('listeAbonne');
         }catch(Exception $e) {
