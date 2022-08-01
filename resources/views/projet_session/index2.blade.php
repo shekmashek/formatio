@@ -1113,78 +1113,11 @@
         border-bottom: 2px solid red;
     } */
 </style>
-<div class="container-fluid " style="height: 700px;z-index:-1!important;margin-top:-60px">
+<div class="container-fluid " style="height: 700px;z-index:-1!important;margin-top:100px">
     <div >
-        <div class="dropdown"   style="position: relative;margin-left:40px;top:165px;z-index:1;width:150px">
-            <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class='bx bx-library align-middle'></i> Projet
-            </button>
-            <ul class="dropdown-menu main p-2" >
-                <li>
-                    <input type="text" class="column_search form-control form-control-sm">
-                </li>
-                <li>
-                    <input class="form-check-input select_all" type="checkbox" id="select_all">
-                    <label class="form-check-label label" for="select_all" style="font-size: 12px">Selectionez tout</label>
-                </li>
-                <ul>
-                    @foreach ($nomProjet as $prj)
-                        <div class="form-check">
-                            <li>
-                                <input class="checkbox form-check-input" type="checkbox" name="Projet" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
-                            </li>
-                        </div>
-                    @endforeach
-                </ul>
-          </ul>
-        </div>
-        <div class="dropdown" style="position: relative;margin-left:122px;top:132px;z-index:1;width:150px">
-            <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bx bxs-book-open align-middle" style="color: #2e3950"></i> Session
-            </button>
-            <ul class="dropdown-menu main p-2">
-                <li>
-                    <input type="text" class="column_search form-control form-control-sm">
-                </li>
-                <li>
-                    <input class="form-check-input select_all" type="checkbox" id="select_all1">
-                    <label class="form-check10abel label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
-                </li>
-                <ul>
-                    @foreach ($nomSessions as $sess)
-                        <div class="form-check">
-                            <li>
-                                <input class="checkbox form-check-input" type="checkbox" name="session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
-                            </li>
-                        </div>
-                    @endforeach
-                </ul>
-          </ul>
-        </div>
-        <div class="dropdown" style="position: relative;margin-left:210px;top:98px;z-index:1;width:200px">
-            
-            <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bx bxs-customize align-middle" style="color: #2e3950"></i> Module
-            </button>
-            <ul  class="dropdown-menu main p-2">
-                <li>
-                    <input type="text" class="column_search form-control form-control-sm">
-                </li>
-                <li>
-                    <input class="form-check-input select_all" type="checkbox" id="select_all1">
-                    <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
-                </li>
-                <ul>
-                    @foreach ($nomSessions as $sess)
-                        <div class="form-check">
-                            <li>
-                                <input class="checkbox form-check-input" type="checkbox" name="session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
-                            </li>
-                        </div>
-                    @endforeach
-                </ul>
-          </ul>
-        </div>
+        
+        
+        
     </div>
 
     <table class="table order-column  modifTable "   id="example">
@@ -1194,14 +1127,81 @@
             <tr style="background: #d4d1d139;margin-top:-10px">
                 
                 <th >
-                    
+                    <div class="dropdown"  >
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-library align-middle'></i> Projet
+                        </button>
+                        <ul class="dropdown-menu main p-2" >
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all">
+                                <label class="form-check-label label" for="select_all" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomProjet as $prj)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="Projet" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                      </ul>
+                    </div> 
                 </th>
                 <th >
-                    
+                    <div class="dropdown" >
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bxs-book-open align-middle" style="color: #2e3950"></i> Session
+                        </button>
+                        <ul class="dropdown-menu main p-2">
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                <label class="form-check10abel label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomSessions as $sess)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                      </ul>
+                    </div>
                 </th>
                 
                 <th class="headProject" >
-                    
+                    <div class="dropdown" >
+            
+                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bxs-customize align-middle" style="color: #2e3950"></i> Module
+                        </button>
+                        <ul  class="dropdown-menu main p-2">
+                            <li>
+                                <input type="text" class="column_search form-control form-control-sm">
+                            </li>
+                            <li>
+                                <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                            </li>
+                            <ul>
+                                @foreach ($nomSessions as $sess)
+                                    <div class="form-check">
+                                        <li>
+                                            <input class="checkbox form-check-input" type="checkbox" name="session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
+                                        </li>
+                                    </div>
+                                @endforeach
+                            </ul>
+                      </ul>
+                    </div>
                 </th>
                 <th class="headProject" >
                     <div class="dropdown z-index-2" id="ta">
