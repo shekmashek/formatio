@@ -49,6 +49,8 @@ CREATE OR REPLACE VIEW v_type_abonnement_cfp AS SELECT
     a.date_fin,
     a.status,
     a.cfp_id,
+    month(a.date_demande) as mois_actuel,
+    year(a.date_demande) as annee_actuel,
     c.nom as nom_of,
     a.activite,
     a.created_at,

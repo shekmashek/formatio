@@ -1,6 +1,3 @@
--- Active: 1656588558198@@127.0.0.1@3306@bdd_suivi_formation_version_1.2
-CREATE OR REPLACE
-
 
 CREATE OR REPLACE VIEW v_departement_service_entreprise AS SELECT
      dep.id as departement_entreprise_id,
@@ -61,6 +58,8 @@ JOIN genre ON genre.id = employers.genre_id
 JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
 WHERE role_users.role_id=3;
 
+
+
 CREATE OR REPLACE view responsables as
 SELECT
     employers.id,
@@ -114,6 +113,7 @@ JOIN genre ON genre.id = employers.genre_id
 JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
 JOIN entreprises as etp ON etp.id = employers.entreprise_id
 WHERE role_users.role_id=2;
+
 
 CREATE OR REPLACE view chef_departements as
 SELECT
@@ -184,7 +184,7 @@ CREATE OR REPLACE view responsables_cfp as SELECT
     prioriter,
     url_photo,
     (employers.created_at) created_at,
-    (employers.updated_at) updated_at,
+    (employers.updated_at) updated_at
 FROM
 employers
 JOIN entreprises

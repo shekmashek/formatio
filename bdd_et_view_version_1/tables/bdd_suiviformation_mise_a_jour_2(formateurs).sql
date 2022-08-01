@@ -12,7 +12,7 @@ CREATE TABLE `formateurs` (
   `adresse` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `specialite` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text not null default "",
+  `description` text   default null,
   `niveau_etude_id` bigint(20) UNSIGNED  DEFAULT 1 REFERENCES niveau_etude(id) ON DELETE CASCADE ,
   `activiter` boolean not null default true,
   `user_id` bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
@@ -49,7 +49,7 @@ CREATE TABLE `experience_formateurs` (
   `nom_entreprise` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `poste_occuper` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `debut_travail` date NOT NULL,
-  `fin_travail` date default current_timestamp(),
+  `fin_travail` date default null,
   `taches` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `formateur_id` bigint(20) UNSIGNED NOT NULL REFERENCES formateurs(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),

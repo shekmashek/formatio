@@ -58,7 +58,7 @@ ALTER TABLE `entreprises` CHANGE `adresse_region` `adresse_region` varchar(191) 
 ALTER TABLE `entreprises` CHANGE `stat` `stat` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
 ALTER TABLE `entreprises` CHANGE `rcs` `rcs` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
 ALTER TABLE `entreprises` CHANGE `cif` `cif` varchar(255) COLLATE utf8mb4_unicode_ci  default null;
-ALTER TABLE `entreprises` CHANGE `site_etp` `site_etp` archar(191) COLLATE utf8mb4_unicode_ci  default null;
+ALTER TABLE `entreprises` CHANGE `site_etp` `site_etp` varchar(191) COLLATE utf8mb4_unicode_ci  default null;
 
 
 
@@ -67,6 +67,8 @@ ALTER TABLE entreprises
     ADD presentation text COLLATE utf8mb4_unicode_ci default NULL,
     ADD specialisation text COLLATE utf8mb4_unicode_ci default NULL,
     ADD type_entreprise_id bigint(20) UNSIGNED default 1  REFERENCES type_entreprise(id);
+
+
 
 CREATE TABLE `departement_entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -97,7 +99,7 @@ CREATE TABLE employers (
   matricule_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   nom_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_emp varchar(255) COLLATE utf8mb4_unicode_ci,
-  date_naissance_emp date DEFAULT current_timestamp(),
+  date_naissance_emp date DEFAULT null,
   cin_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   email_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone_emp varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -152,6 +154,100 @@ CREATE TABLE `historique_stagiaires` (
   `date_arrivee` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `particulier` boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+CREATE TABLE `statut_compte` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nom_statut` varchar(55) COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `statut_compte` (`id`, `nom_statut`) VALUES
+(1, 'Invité'),
+(2, 'Premium'),
+(3, 'Pending');
+
+ALTER TABLE entreprises
+  add column statut_compte_id bigint(20) unsigned NOT NULL DEFAULT 1,
+  ADD CONSTRAINT FOREIGN KEY(statut_compte_id) REFERENCES statut_compte(id);
+
+
+
+
+
+CREATE TABLE `assujetti` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `assujetti` boolean not null default false,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+INSERT INTO `assujetti` (`assujetti`) VALUES
+(1),
+(0);
+
+ALTER TABLE entreprises
+    add column assujetti_id bigint(20) unsigned default 1,
+    ADD CONSTRAINT FOREIGN KEY(assujetti_id) REFERENCES assujetti(id);
+
+
+
+
+
+CREATE OR REPLACE VIEW cfps as SELECT
+    id,
+    nom_etp as nom,
+    adresse_rue as adresse_lot,
+    adresse_quartier,
+    adresse_code_postal,
+    adresse_ville,
+    adresse_region,
+    email_etp as email,
+    telephone_etp as telephone,
+    slogan,
+    nif,
+    stat,
+    rcs,
+    cif,
+    created_at,
+    updated_at,
+    logo,
+    activiter,
+    site_etp as site_web,
+    url_logo,
+    statut_compte_id,
+    presentation,
+    specialisation,
+    assujetti_id
+FROM entreprises WHERE entreprises.type_entreprise_id = 2;
+
+
+
+CREATE TABLE horaires (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  jours varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  h_entree time,
+  h_sortie time,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp(),
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE reseaux_sociaux (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  lien_facebook varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_twitter varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_instagram varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_linkedin varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp(),
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 
 

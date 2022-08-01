@@ -1,6 +1,6 @@
 insert into type_formations(type_formation) values ('Interne');
 
-insert into roles(id,role_name,role_description) values(8,'formateur_interne','Formateur interne');
+
 
 alter table employers add column formateur_interne int(2) default 0;
 

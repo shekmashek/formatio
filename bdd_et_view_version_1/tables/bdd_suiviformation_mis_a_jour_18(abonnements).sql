@@ -44,28 +44,28 @@ CREATE TABLE `type_abonnements_etp` (
 
 CREATE TABLE `abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date default current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
+  `date_demande` timestamp NULL default current_timestamp(),
+  `date_debut` timestamp NULL default current_timestamp(),
+  `date_fin` timestamp NULL default current_timestamp(),
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type_abonnement_id` bigint(20) UNSIGNED NOT NULL  REFERENCES type_abonnements_etp(id) ON DELETE CASCADE,
   `entreprise_id` bigint(20) UNSIGNED NOT NULL  REFERENCES entreprises(id) ON DELETE CASCADE,
   `type_arret` varchar(50) COLLATE utf8mb4_unicode_ci,
-  `activite` boolean not null default true,
+  `activite` boolean not null default false,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `abonnement_cfps` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date DEFAULT current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
+  `date_demande` timestamp NULL default current_timestamp(),
+  `date_debut` timestamp NULL default current_timestamp(),
+  `date_fin` timestamp NULL default current_timestamp(),
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type_abonnement_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnements_of(id) ON DELETE CASCADE,
   `cfp_id` bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
   `type_arret` varchar(50) COLLATE utf8mb4_unicode_ci,
-  `activite` boolean not null default true,
+  `activite` boolean not null default false,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -129,49 +129,6 @@ INSERT INTO `type_abonnements_etp` (`id`, `nom_type`, `description`, `tarif`, `n
 (5, 'GE', 'La plateforme pour les Grandes Entreprises à la pointe de la transformation digitale', '400000.00', 0, 0, 0, 0, 1, '2022-05-10 07:27:16', '2022-05-10 07:27:16');
 
 
-
-
-CREATE TABLE `statut_compte` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nom_statut` varchar(55) COLLATE utf8mb4_unicode_ci,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `statut_compte` (`id`, `nom_statut`) VALUES
-(1, 'Invité'),
-(2, 'Premium'),
-(3, 'Pending');
-
-ALTER TABLE entreprises
-  add column statut_compte_id bigint(20) unsigned NOT NULL DEFAULT 1,
-  ADD CONSTRAINT FOREIGN KEY(statut_compte_id) REFERENCES statut_compte(id);
-
-ALTER TABLE cfps
-  add column statut_compte_id bigint(20) unsigned NOT NULL DEFAULT 1,
-  ADD CONSTRAINT FOREIGN KEY(statut_compte_id) REFERENCES statut_compte(id);
-
-
-
-CREATE TABLE `assujetti` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `assujetti` boolean not null default false,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-INSERT INTO `assujetti` (`assujetti`) VALUES
-(1),
-(0);
-
-ALTER TABLE entreprises
-    add column assujetti_id bigint(20) unsigned default 1,
-    ADD CONSTRAINT FOREIGN KEY(assujetti_id) REFERENCES assujetti(id);
-
-ALTER TABLE cfps
-    add column assujetti_id bigint(20) unsigned default 1,
-    ADD CONSTRAINT FOREIGN KEY(assujetti_id) REFERENCES assujetti(id);
 
 drop table if exists coupon;
 CREATE TABLE `coupon` (
