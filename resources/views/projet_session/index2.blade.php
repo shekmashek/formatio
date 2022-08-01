@@ -1247,6 +1247,11 @@
                     </div>
                 </th>
                 <th>
+                    <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class='bx bx-dollar-circle align-middle'></i> Montant
+                    </button>
+                </th>
+                <th>
                     <div class="dropdown">
                         <a id="exampleE1" tabindex="0" class="btn btn-sm btn-default" role="button" data-bs-toggle="popover" title="Recherche entre 2 périodes" style="width: 100%;">
                             <i class='bx bx-time-five'></i> <span style="font-size: 13px">Date</span> &nbsp;&nbsp;<i class='bx bx-caret-down' style="font-size: 12px"></i>
@@ -1406,6 +1411,7 @@
                 <th >Module</th>
                 <th >Entreprise</th>
                 <th >Modalité</th>
+                <th>Montant</th>
                 <th >Date</th>
                 <th >Ville</th>
                 <th >Type</th>
@@ -1448,6 +1454,9 @@
                     </td>
                     <td>
                         <span style="z-index:-1!important" class="myData">{{ $projet->modalite }}</span>
+                    </td>
+                    <td class="text-center"> 
+                        <span class="myData ">O ar</span>
                     </td>
                     <td>
                         <span class="myData">{{ \Carbon\Carbon::parse($projet->date_debut)->translatedFormat('d-m-y') }}</span> <span style="font-size: 11px">au</span>
