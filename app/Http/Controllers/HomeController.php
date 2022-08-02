@@ -1021,23 +1021,35 @@ class HomeController extends Controller
             'to' => 'required'
         ]);
 
+        $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
+        $devise = DB::select('select * from devise')[0]->devise;
+        $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
+        $module = $fonct->findWhere("v_module", ['cfp_id', 'status'], [$cfp_id, 2]);
+        $payement = $fonct->findAll("type_payement");
+        $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
+        $status = DB::select('select * from status');
+
         $resultDate = DB::select('select v_groupe_projet_module.nom_projet, entreprises.nom_etp, entreprises.id as entreprise_id,
-            groupes.nom_groupe as session, groupes.modalite, modules.nom_module, v_groupe_projet_module.modalite, 
-            v_groupe_projet_module.date_projet, v_groupe_projet_module.groupe_id,  v_groupe_projet_module.date_debut,
-            v_groupe_projet_module.item_status_groupe, details.lieu, type_formations.id, v_groupe_projet_module.date_fin,
+            groupes.nom_groupe as session, groupes.modalite, modules.nom_module, v_groupe_projet_module.modalite, modules.id as module_id,
+            v_groupe_projet_module.date_projet, v_groupe_projet_module.groupe_id,  v_groupe_projet_module.date_debut, type_payement.id as type_payement_id,
+            v_groupe_projet_module.item_status_groupe, details.lieu, type_formations.id, v_groupe_projet_module.date_fin, v_groupe_projet_module.projet_id,
+            type_payement.type, v_groupe_projet_module.min_participant, v_groupe_projet_module.max_participant, formations.id as formation_id, formations.nom_formation,
             type_formations.type_formation, cfps.nom as nomCfp from v_groupe_projet_module
+            left join projets on v_groupe_projet_module.projet_id = projets.id
             left join modules on v_groupe_projet_module.module_id = modules.id
+            left join type_payement on v_groupe_projet_module.type_payement_id = type_payement.id
+            left join formations on v_groupe_projet_module.formation_id = formations.id
             left join details on details.groupe_id = v_groupe_projet_module.groupe_id
             left join entreprises on v_groupe_projet_module.entreprise_id = entreprises.id 
             left join groupes on v_groupe_projet_module.groupe_id = groupes.id 
             left join type_formations on v_groupe_projet_module.type_formation_id = type_formations.id 
             left join cfps on v_groupe_projet_module.cfp_id = cfps.id 
             WHERE v_groupe_projet_module.cfp_id = ? 
-            and where v_groupe_projet_module.date_debut = ?
-            and where v_groupe_projet_module.date_debut = ?
+            and v_groupe_projet_module.date_debut = ?
+            and v_groupe_projet_module.date_debut = ?
             order by v_groupe_projet_module.groupe_id asc', [$cfp_id, $request->from, $request->to]);
 
-        return view('projet_session.index2Filter', compact('resultDate'));
+        return view('projet_session.index2Filter', compact('resultDate', 'devise', 'data', 'formation', 'module', 'payement', 'entreprise', 'status'));
     }
 
     public function statut_presence_emargement(Request $req){

@@ -305,7 +305,7 @@
                                                     </div>
                                                 </th>
                                                 <th>
-                                                    <button type="submit" class="btn btn-sm btn-primary">Filtrer <i class='bx bx-search-alt-2' style="font-size: 20px; vertical-align: middle;"></i></button>
+                                                    <button type="submit" class="btn btn-sm btn-primary">Afficher <i class='bx bx-search-alt-2' style="font-size: 20px; vertical-align: middle;"></i></button>
                                                 </th>
                                             </tr>
                                         </form>
@@ -552,9 +552,7 @@
                             </a>
                         </td>
                         <td class="text-center">
-                            
-                                <i style="color: rgb(25, 193, 225); cursor: pointer;font-size:20px" class='bx bx-edit'data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $projet->groupe_id }}" data-backdrop="static"></i>
-                           
+                            <i style="color: rgb(25, 193, 225); cursor: pointer;font-size:20px" class='bx bx-edit'data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $projet->groupe_id }}" data-backdrop="static"></i>
                         </td>
                     </tr>
 
