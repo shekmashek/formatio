@@ -92,12 +92,17 @@
         box-shadow: none !important;
     }
 
-    div.dataTables_scrollHead {
-        overflow: visible !important;
+    table .dropdown-menu{
+        position: fixed !important;
+        z-index: 1;
+    }
+
+    /* div.dataTables_scrollHead {
+        overflow: auto !important;
     }
     div.DTFC_LeftHeadWrapper{
-        overflow: visible !important;
-    }
+        overflow: auto !important;
+    } */
 
     .popover{
         max-width:500px;
@@ -133,7 +138,7 @@
     @endif
 
         <table class="table order-column" id="example">
-            <thead  style=" top: 0">
+            <thead>
                 <tr style="background: #d4d1d139;margin-top:-10px">
                     <th >
                         <div class="dropdown">

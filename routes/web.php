@@ -77,6 +77,9 @@ Route::get('/liste_projet_cfp/{id?}/{page?}', 'HomeController@projet_cfp')->name
 //liste projet entreprise
 Route::get('/liste_projet_entreprise/{id?}/{page?}', 'HomeController@projet_entreprise')->name('liste_projet_entreprise');
 
+// liste projet Formateur
+Route::get('/liste_projet_formateur/{id?}/{page?}', [HomeController::class, 'projet_formateur'])->name('liste_projet_formateur');
+
 
 
 /* Route::get('/liste_projet_stagiaire', 'HomeController@liste_projet_stagiaire')->name('liste_projet_stagiaire'); */

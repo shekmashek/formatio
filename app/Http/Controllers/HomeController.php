@@ -705,7 +705,7 @@ class HomeController extends Controller
             $nomModules = DB::select('select nom_module from v_groupe_projet_entreprise where entreprise_id = ? group by nom_module order by groupe_id asc', [$entreprise_id]);
             $nomTypes = DB::select('select type_formation from type_formations');
             $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_entreprise where entreprise_id = ? group by item_status_groupe', [$entreprise_id]);
-            $nomEtp = DB::select('select nom_etp from entreprises group by nom_etp');
+            $nomEtps = DB::select('select nom_etp from entreprises group by nom_etp');
             
 
             $dataInterne = DB::select('select projet_id,nom_projet,type_formation_id,type_formation,groupe_id,nom_groupe,module_id,nom_module,date_debut,date_fin,0 as cfp_id,"-" as nom_cfp,modalite,item_status_groupe,class_status_groupe from v_groupe_entreprise_interne where entreprise_id = ?',[$entreprise_id]);
@@ -726,7 +726,7 @@ class HomeController extends Controller
             $abonnement_etp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_etp_id,v_tac.illimite from v_type_abonnement_etp v_tac JOIN entreprises as etp on v_tac.entreprise_id = etp.id where v_tac.entreprise_id = ? and etp.statut_compte_id = ? and v_tac.status = ?',[$entreprise_id,2,"Activé"]);
             return view('projet_session.index2', compact('data','ref','nb_employes','nb_collaboration',
             'abonnement_etp','stagiaires','lieuFormation', 'type_formation_id', 'page', 
-            'nomProjet', 'nomSessions', 'nomModules', 'nomTypes', 'nomStatuts', 'nomCfps'));
+            'nomProjet', 'nomSessions', 'nomModules', 'nomTypes', 'nomStatuts', 'nomEtps'));
         }
         if (Gate::allows('isManager') ) {
 
@@ -1009,6 +1009,25 @@ class HomeController extends Controller
             'nomSessions', 'nomStatuts','nomProjet', 'nomModules', 'nomEntreprises', 'nomModalites', 'nomTypes'));
     }
 
+    public function projet_formateur(Request $request){
+        $fonct = new FonctionGenerique();
+        $user_id = Auth::user()->id;
+        $formateur_id = formateur::where('user_id', $user_id)->value('id');
+        $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?", [$user_id])[0]->cfp_id;
+        $projet = $fonct->findWhere("v_projet_session", ["cfp_id"], [$cfp_id]);
+
+        $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_formateur where cfp_id = ? and formateur_id = ?', [$cfp_id, $formateur_id])[0]->nb_projet;
+
+        $data = DB::select('select * from v_projet_formateur where cfp_id = ? and formateur_id = ? order by date_projet desc',[$cfp_id,$formateur_id]);
+        $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
+        $formation = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
+        $module = $fonct->findAll("modules");
+        $type_formation = DB::select('select * from type_formations');
+        $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
+
+        return view('projet_session.projet_formateur', compact('projet', 'data', 'entreprise', 'formation', 'module', 'projet_formation'));
+    }
+
     // date filter project
     public function filterProjectDate(Request $request){
         $user_id = Auth::user()->id;
@@ -1045,8 +1064,8 @@ class HomeController extends Controller
             left join type_formations on v_groupe_projet_module.type_formation_id = type_formations.id 
             left join cfps on v_groupe_projet_module.cfp_id = cfps.id 
             WHERE v_groupe_projet_module.cfp_id = ? 
-            and v_groupe_projet_module.date_debut = ?
-            and v_groupe_projet_module.date_debut = ?
+            and v_groupe_projet_module.date_debut >= ?
+            and v_groupe_projet_module.date_debut <= ?
             order by v_groupe_projet_module.groupe_id asc', [$cfp_id, $request->from, $request->to]);
 
         return view('projet_session.index2Filter', compact('resultDate', 'devise', 'data', 'formation', 'module', 'payement', 'entreprise', 'status'));
