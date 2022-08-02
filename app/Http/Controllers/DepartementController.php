@@ -299,6 +299,8 @@ class DepartementController extends Controller
         $id_etp = $rqt[0]->entreprise_id;
         for ($i = 0; $i < count($input['departement']); $i++) {
             DB::insert('insert into departement_entreprises (entreprise_id, nom_departement) values (?, ?)', [$id_etp, $input['departement'][$i]]);
+            $last_id =  DB::table('departement_entreprises')->latest('id')->first()->id;
+            DB::insert('insert into branche_departement (branche_id, departement_entreprise_id) values (?, ?)', [$input['branche_id'][$i], $last_id]);
         }
         return back();
     }
@@ -578,5 +580,13 @@ class DepartementController extends Controller
         else{
             return back()->with('erreur_manager',"Choisissez un chef de service avant d'enregistrer");
         }
+    }
+    /**Liste des branches */
+    public function affiche_branche(){
+        $fonct = new FonctionGenerique();        
+        $id_etp = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
+        $branches = DB::select('select id, nom_branche from branches where entreprise_id = ?', [$id_etp]);
+        return response()->json($branches);
+
     }
 }

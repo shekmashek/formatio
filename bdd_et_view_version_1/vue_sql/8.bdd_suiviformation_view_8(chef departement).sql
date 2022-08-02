@@ -1,6 +1,18 @@
 -- Active: 1656400043423@@127.0.0.1@3306@bdd_nicole
 
 
+create or replace view v_branches_departement as
+SELECT
+    bd.id as branche_departement_id,
+    bd.branche_id,
+    bd.departement_entreprise_id,
+    bc.entreprise_id,
+    bc.nom_branche,
+    dep.nom_departement
+FROM
+    branche_departement bd
+LEFT JOIN branches bc on bc.id = bd.branche_id
+LEFT JOIN departement_entreprises dep on dep.id  = bd.departement_entreprise_id
 
 create or replace view v_chef_departement_entreprise as
 SELECT
@@ -11,11 +23,15 @@ SELECT
     chef_departements.prenom_chef,
     (chef_departements.user_id) user_id_chef_departement,
     departement_entreprises.id,
-    departement_entreprises.nom_departement
+    departement_entreprises.nom_departement,
+    v_branches_departement.nom_branche,
+    v_branches_departement.departement_entreprise_id
 FROM
     departement_entreprises
 LEFT JOIN   chef_departements on  chef_departements.entreprise_id =  departement_entreprises.entreprise_id
-and chef_departements.departement_entreprises_id = departement_entreprises.id;
+LEFT JOIN   branche_departement bd on  bd.departement_entreprise_id  =  departement_entreprises.id
+LEFT JOIN v_branches_departement on v_branches_departement.departement_entreprise_id =  departement_entreprises.id
+
 
 create or replace view v_chef_de_service_entreprise as
 SELECT

@@ -1191,4 +1191,5 @@ class DetailController extends Controller
         $date_groupe = groupe::findOrFail($id_groupe);
         return response()->json($date_groupe);
     }
+   
 }

@@ -138,15 +138,16 @@
         @endif
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+            <li class="nav-item">
+                <a href="#branches" class="nav-link" data-bs-toggle="tab">Branches</a>
+            </li>
             <li class="nav-item active">
                 <a href="#departements" class="nav-link active" data-bs-toggle="tab">Départements</a>
             </li>
             <li class="nav-item">
                 <a href="#services" class="nav-link" data-bs-toggle="tab">Services</a>
             </li>
-            <li class="nav-item">
-                <a href="#branches" class="nav-link" data-bs-toggle="tab">Branches</a>
-            </li>
+          
         </ul>
 
         <div class="tab-content">
@@ -165,6 +166,7 @@
                                     <table class="table  table-border table-sm ">
                                         <thead>
                                             <th>Départements</th>
+                                            <th>Branche</th>
                                             <th>Manager</th>
                                             <th>Actions</th>
                                         </thead>
@@ -172,10 +174,20 @@
                                             @if (count($rqt)>0)
                                             @if(isset($rqt))
                                                 @for($i = 0; $i < count($rqt); $i++)
-                                            <tr >
-                                                <td >
+                                            <tr>
+                                                <td>
                                                     <div align="left">
                                                             <span>{{$rqt[$i]->nom_departement}}</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div align="left">
+                                                        @if ($rqt[$i]->nom_branche == null)
+                                                            ---
+                                                        @else
+                                                        <span>{{$rqt[$i]->nom_branche}}</span>
+                                                        @endif
+                                                       
                                                     </div>
                                                 </td>
                                                 <td>
@@ -692,18 +704,35 @@
     }
     //add row1
     $(document).on('click', '#addRow1', function() {
-        var html = '';
-        html += '<div class="form-row d-flex" id="inputFormRow1">';
-        html += '<div class="col">';
-        html += '<input type="text" class="form-control  mb-2 mt-2" name="departement[]" id="inlineFormInput"  placeholder="Nom de département"  required>';
-        html += '</div>';
-        html += '<div class="col ms-2 ">';
-        html += ' <button id="removeRow1" type="button" class="btn btn_annuler"><i class="bx bx-x me-1"></i>Annuler</button>';
-
-        // html += '<button id="removeRow1" type="button" class="btn btn-danger mt-2"><i class="fa fa-close style="font-size: 15px;"></i></button>';
-        html += '</div>';
-        html += '</div>';
-        $('#add_column').append(html);
+        $.ajax({
+            type: "GET"
+            , url: "{{route('affiche_branche')}}"
+            , dataType: "html"
+            , success: function(response) {
+                    var userData = JSON.parse(response);
+                    var html = '';
+                    html += '<div class="form-row d-flex" id="inputFormRow1">';
+                    html += '<div class="col">';
+                    html += '<select class="form-select mt-2" id="inlineFormInput" aria-label="Default select example" name = "branche_id[]">';
+                    html += ' <option selected>Choisissez la branche </option>';
+                    for (var $i = 0; $i < userData.length; $i++) {
+                        html += ' <option value="' + userData[$i].id + '"> ' + userData[$i].nom_branche + '</option>';
+                    }
+                    html += ' </select>';
+                    html += '</div>';
+                    html += '<div class="col mb-2">';
+                    html += '<input type="text" class="form-control  mb-2 mt-2" name="departement[]" id="inlineFormInput"  placeholder="Nom de département"  required>';        
+                    html += '</div>';
+                    html += '<div class="col ms-2 ">';
+                    html += ' <button id="removeRow1" type="button" class="btn btn_annuler"><i class="bx bx-x me-1"></i>Annuler</button>';
+                    html += '</div>';
+                    html += '</div>';
+                    $('#add_column').append(html);
+                }
+                , error: function(error) {
+                    console.log(error);
+                }
+         });
     });
 
     // remove row1

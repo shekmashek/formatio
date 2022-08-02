@@ -801,6 +801,7 @@ Route::get('nouveauRapportFinale.delete_note_candidat/{id_candidat_groupe}', 'Ra
 // =======================  Departement =========== //
 Route::resource('departement', 'DepartementController')->except('show', 'create');
 Route::get('nouveau_manager', 'DepartementController@create')->name('nouveau_manager');
+Route::get('affiche_branche','DepartementController@affiche_branche')->name('affiche_branche');
 // Route::get('liste_chefDepartement','DepartementController@liste')->name('liste_chefDepartement');
 Route::get('/show_dep', 'DepartementController@show')->name('show_dep');
 Route::get('/edit_manager/{id?}', 'DepartementController@edit')->name('edit_manager');
