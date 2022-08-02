@@ -590,7 +590,7 @@
                                             class="text_racourcis">@lang('translation.Catalogue')</span></span></a>
                             </div>
                             <div class="btn_racourcis me-4">
-                                <a href="{{route('liste_projet')}}" class="text-center annuaire" role="button"
+                                <a href="{{route('liste_projet_entreprise')}}" class="text-center annuaire" role="button"
                                     onclick="afficher_annuaire()"><span class="d-flex flex-column"><i
                                             class='bx bx-library mb-2 mt-1'></i><span
                                             class="text_racourcis">@lang('translation.Projets')</span></span></a>
@@ -635,7 +635,7 @@
                                             class="text_racourcis">@lang('translation.Modules')</span></span></a>
                             </div>
                             <div class="btn_racourcis me-4">
-                                <a href="{{route('liste_projet')}}" class="text-center projet" role="button"><span
+                                <a href="{{route('liste_projet_cfp')}}" class="text-center projet" role="button"><span
                                         class="d-flex flex-column"><i class='bx bx-library mb-2 mt-1'></i><span
                                             class="text_racourcis">@lang('translation.Projets')</span></span></a>
                             </div>
