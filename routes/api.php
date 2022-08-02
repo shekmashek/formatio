@@ -28,3 +28,4 @@ Route::group([
     Route::get('logout', 'Auth\AuthController@logout');
     Route::get('user', 'Auth\AuthController@user');
 });
+Route::get('calendrier_formation', 'DetailController@calendrier_formation');
