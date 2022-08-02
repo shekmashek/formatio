@@ -97,15 +97,15 @@
                                         Web</a></span>
                             </div>
                             @foreach ($collaboration as $collab)
-                                @if($collab->inviter_cfp_id == $cfp->id && $collab->activiter == 1)
-                                    <div class="main-wrapper">
-                                        <div class="badge green">
-                                            <div class="circle"> <i class="bx bxs-badge-check"></i></div>
-                                            <div class="ribbon">Collaboré</div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
+                                        @if($collab->statut == 2)
+                                            <div class="main-wrapper">
+                                                <div class="badge green">
+                                                    <div class="circle"> <i class="bx bxs-badge-check"></i></div>
+                                                    <div class="ribbon">Collaboré</div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
                         </div>
                     </div>
                 </div>
