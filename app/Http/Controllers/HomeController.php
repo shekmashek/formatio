@@ -1024,7 +1024,7 @@ class HomeController extends Controller
 
 
 
-            return view('projet_session.index2', compact('data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status','data_detail_interne','ressource_interne','stagiaire_interne'));
+            return view('projet_session.index2', compact('nomProjet','data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status','data_detail_interne','ressource_interne','stagiaire_interne'));
         }
     }
 

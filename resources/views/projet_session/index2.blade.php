@@ -1113,8 +1113,9 @@
         border-bottom: 2px solid red;
     } */
 </style>
+ @can('isCFP')
 <div class="container-fluid mt-5">
-
+  
     <table class="table order-column  modifTable"  id="example">
         <thead  style=" top: 0">
             <tr style="background: #d4d1d139;margin-top:-10px">
@@ -2299,6 +2300,7 @@
     </table>
 </div>
 </div>
+@endcan
 @endsection
 @section('script')
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
