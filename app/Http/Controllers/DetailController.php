@@ -34,11 +34,11 @@ class DetailController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        /*$this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
-        });
+        });*/
         $this->fonct = new FonctionGenerique();
         $this->groupes = new groupe();
     }
@@ -236,7 +236,7 @@ class DetailController extends Controller
         return view('admin.calendrier.calendrier',compact('events'));
     }
     //calendrier entreprise
-    public function calendrier_formation(){
+    public function calendrier_formation($id){
         $current_route = request()->path();
         // dd($current_route);
         if($current_route == "calendrier_formation"){
@@ -502,13 +502,18 @@ class DetailController extends Controller
             // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
             return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations','events', 'groupe_entreprises'));
         }else{
+             
             $domaines = $this->fonct->findAll('domaines');
             $statut = $this->fonct->findAll('status');
+            
             $formations = DB::select('select * from formations ');
+            
+           
             // dd('stagiaire');
                 // getting the stagiaire_id of the connected user
-                $stagiaire_id = stagiaire::where('user_id', Auth::user()->id)->first()->id;
-
+                 $stagiaire_id = $this->fonct->findWhereMulitOne('employers',['user_id'],[$id]);
+             //   $stagiaire_id = stagiaire::where('user_id', Auth::user()->id)->first()->id;
+             
                 $participant_groupe = participant_groupe::where('stagiaire_id', $stagiaire_id)->get();
                 // $groupe_id = $participant_groupe->id;
                 // getting the groupe_entreprises belonging to $entreprise
