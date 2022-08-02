@@ -495,7 +495,11 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
+<<<<<<< HEAD
             'reference' => 'f5a3f19a93897c9d7b0741bd39b04beec31f6a77',
+=======
+            'reference' => '64d593ba5180616333cf50ca9ebf4822ae4f3dbe',
+>>>>>>> origin/fix_formation_test
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

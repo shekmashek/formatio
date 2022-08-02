@@ -93,6 +93,13 @@ CREATE TABLE `branches` (
   foreign key(entreprise_id) references entreprises (id) on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE branche_departement (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  branche_id bigint(20) unsigned not null,
+  departement_entreprise_id bigint(20) unsigned not null,
+  foreign key(branche_id) references branches(id) on delete cascade,
+  foreign key(departement_entreprise_id) references departement_entreprises (id) on delete cascade
+);
 
 CREATE TABLE employers (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
