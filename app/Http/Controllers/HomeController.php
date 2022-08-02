@@ -632,29 +632,6 @@ class HomeController extends Controller
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
-            // pagination
-            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ? and cfp_id=?',[$entreprise_id,$cfp_id])[0]->nb_projet;
-            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;
-
-            $fin_page = ceil($nb_projet / $nb_par_page);
-            if ($page == 1) {
-                $offset = 0;
-                $debut = 1;
-                if ($nb_par_page > $nb_projet) {
-                    $fin = $nb_projet;
-                } else {
-                    $fin = $nb_par_page;
-                }
-            } elseif ($page == $fin_page) {
-                $offset = ($page - 1) * $nb_par_page;
-                $debut = ($page - 1) * $nb_par_page;
-                $fin =  $nb_projet;
-            } else {
-                $offset = ($page - 1) * $nb_par_page;
-                $debut = ($page - 1) * $nb_par_page;
-                $fin =  $page * $nb_par_page;
-            }
-            // fin pagination
             $projet = DB::select('select * from v_projet_session where cfp_id=?', [$cfp_id]);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
@@ -667,7 +644,7 @@ class HomeController extends Controller
             $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?', [$cfp_id]);
 
 
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation', 'payement', 'entreprise', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation', 'payement', 'entreprise', 'page'));
         }
     }
 
@@ -798,7 +775,6 @@ class HomeController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-
             $data = DB::select('select * from v_projet_formateur_interne where formateur_id = ?', [$formateur_id]);
             return view('projet_session.index2', compact('data', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
@@ -893,12 +869,12 @@ class HomeController extends Controller
             $nb_formateur = DB::select('select count(*) from v_demmande_cfp_formateur where cfp_id = ?',[$cfp_id]);
             $nb_collaboration = DB::select('select count(*) from collaboration_etp_cfp where cfp_id = ? and statut = ?',[$cfp_id,2]);
             $abonnement_cfp = DB::select('select v_tac.nom_type,v_tac.type_abonnements_cfp_id,v_tac.nb_projet,v_tac.illimite from v_type_abonnement_cfp v_tac JOIN cfps as cfp on v_tac.cfp_id = cfp.id where cfp_id = ? and statut_compte_id = ? and status = ?',[$cfp_id,2,"Activé"]);
-            
+
             // filter multi select
             $nomProjet = DB::select('select distinct nom_projet from v_groupe_projet_module where cfp_id = ? order by groupe_id asc', [$cfp_id]);
             $nomSessions = DB::select('select distinct nom_groupe from v_groupe_projet_module where cfp_id  = ? order by groupe_id asc', [$cfp_id]);
             $nomModules = DB::select('select distinct nom_module from v_groupe_projet_module where cfp_id  = ? order by groupe_id asc', [$cfp_id]);
-            $nomEntreprises = DB::select('select distinct(entreprises.nom_etp) from v_groupe_projet_module 
+            $nomEntreprises = DB::select('select distinct(entreprises.nom_etp) from v_groupe_projet_module
             join entreprises on v_groupe_projet_module.entreprise_id = entreprises.id where cfp_id = ?', [$cfp_id]);
             $nomModalites = DB::select('select distinct modalite from v_groupe_projet_module where cfp_id = ?', [$cfp_id]);
             $nomTypes = DB::select('select distinct type_formation from v_groupe_projet_module where cfp_id = ?', [$cfp_id]);
@@ -907,7 +883,7 @@ class HomeController extends Controller
             $fullProjects = $fonct->projetSessionFull($cfp_id);
 
             return view('projet_session.index2', compact( 'fullProjects', 'nb_modules','nb_formateur','abonnement_cfp','nb_collaboration','projet','ref', 'data',
-                'lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 
+                'lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise',
                 'nomSessions', 'nomStatuts','nomProjet', 'nomModules', 'nomEntreprises', 'nomModalites', 'nomTypes'));
         }
 
@@ -1024,7 +1000,7 @@ class HomeController extends Controller
 
 
 
-            return view('projet_session.index2', compact('nomProjet','data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status','data_detail_interne','ressource_interne','stagiaire_interne'));
+            return view('projet_session.index2', compact('data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status','data_detail_interne','ressource_interne','stagiaire_interne'));
         }
     }
 
