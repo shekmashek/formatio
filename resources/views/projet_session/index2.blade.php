@@ -1073,12 +1073,12 @@
         padding-bottom: 20px !important; 
     }
     
-    table .dropdown-menu  {
+    /* table .dropdown-menu  {
         position:fixed !important; 
         z-index: 1;
         background: white;
         opacity: inherit;
-    }
+    } */
     
     .dataTables_wrapper.no-footer div.dataTables_scrollBody > table {
         position: relative; 
@@ -1100,8 +1100,13 @@
         box-shadow: none !important;
     }
 
-    
+    div.dataTables_scrollHead {
+        overflow: visible !important;
+    }
 
+    div.DTFC_LeftHeadWrapper{
+        overflow: visible !important;
+    }
 </style>
 <div class="container-fluid mt-5">
     @if (Session::has('pdf_error'))
@@ -1154,71 +1159,71 @@
                                     <input type="text" class="column_search form-control form-control-sm">
                                 </li>
                                 <li>
-                                    <input class="form-check-input select_all" type="checkbox" id="select_all">
+                                    <input class="form-check-input select_all2" type="checkbox" id="select_all">
                                     <label class="form-check-label label" for="select_all" style="font-size: 12px">Selectionez tout</label>
                                 </li>
                                 <ul>
                                     @foreach ($nomProjet as $prj)
                                         <div class="form-check">
                                             <li>
-                                                <input class="checkbox form-check-input" type="checkbox" name="ProjectE" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
+                                                <input class="checkbox2 form-check-input" type="checkbox" name="Projet2" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
                                             </li>
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                     <th >
                         <div class="dropdown">
-                            <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bx bxs-book-open align-middle" style="color: #2e3950"></i> Session
                             </button>
-                            <ul class="dropdown-menu main p-2">
+                            <ul class="dropdown-menu main p-2" >
                                 <li>
                                     <input type="text" class="column_search form-control form-control-sm">
                                 </li>
                                 <li>
-                                    <input class="form-check-input select_all" type="checkbox" id="select_all1">
-                                    <label class="form-check10abel label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                    <input class="form-check-input select_all2" type="checkbox" id="select_all">
+                                    <label class="form-check-label label" for="select_all" style="font-size: 12px">Selectionez tout</label>
                                 </li>
                                 <ul>
-                                    @foreach ($nomSessions as $sess)
+                                    @foreach ($nomSessions as $s)
                                         <div class="form-check">
                                             <li>
-                                                <input class="checkbox form-check-input" type="checkbox" name="Session" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
+                                                <input class="checkbox2 form-check-input" type="checkbox" name="Session2" value="{{ $s->nom_groupe}}"><span style="font-size: 12px">{{ $s->nom_groupe}}</span>
                                             </li>
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                     
                     <th class="headProject" >
                         <div class="dropdown">
                 
-                            <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button style="font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bx bxs-customize align-middle" style="color: #2e3950"></i> Module
                             </button>
-                            <ul  class="dropdown-menu main p-2">
+                            {{-- <ul  class="dropdown-menu main p-2">
                                 <li>
                                     <input type="text" class="column_search form-control form-control-sm">
                                 </li>
                                 <li>
-                                    <input class="form-check-input select_all" type="checkbox" id="select_all2">
-                                    <label class="form-check-label label" for="select_all2" style="font-size: 12px">Selectionez tout</label>
+                                    <input class="form-check-input select_all2" type="checkbox" id="select_all23">
+                                    <label class="form-check-label label" for="select_all23" style="font-size: 12px">Selectionez tout</label>
                                 </li>
                                 <ul>
                                     @foreach ($nomModules as $m)
                                         <div class="form-check">
                                             <li>
-                                                <input class="checkbox form-check-input" type="checkbox" name="Module" value="{{ $m->nom_module}}"><span style="font-size: 12px">{{ $m->nom_module}}</span>
+                                                <input class="checkbox2 form-check-input" type="checkbox" name="Module2" value="{{ $m->nom_module}}"><span style="font-size: 12px">{{ $m->nom_module}}</span>
                                             </li>
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul> --}}
                         </div>
                     </th>
                     <th class="headProject" >
@@ -1232,14 +1237,14 @@
                                     <input type="text" class="column_search form-control form-control-sm">
                                 </li>
                                 <li>
-                                    <input class="form-check-input select_all" type="checkbox" id="select_all3">
+                                    <input class="form-check-input select_all2" type="checkbox" id="select_all3">
                                     <label class="form-check-label label" for="select_all3" style="font-size: 12px">Selectionez tout</label>
                                 </li>
                                 <ul>
                                     @foreach ($nomEntreprises as $e)
                                         <div class="form-check">
                                             <li>
-                                                <input class="checkbox form-check-input" type="checkbox" name="EntrepriseE" value="{{ $e->nom_etp}}"><span style="font-size: 12px">{{ $e->nom_etp}}</span>
+                                                <input class="checkbox2 form-check-input" type="checkbox" name="Entreprise2" value="{{ $e->nom_etp}}"><span style="font-size: 12px">{{ $e->nom_etp}}</span>
                                             </li>
                                         </div>
                                     @endforeach
@@ -1257,14 +1262,14 @@
                                     <input type="text" class="column_search form-control form-control-sm">
                                 </li>
                                 <li>
-                                    <input class="form-check-input select_all" type="checkbox" id="select_all4">
+                                    <input class="form-check-input select_all2" type="checkbox" id="select_all4">
                                     <label class="form-check-label label" for="select_all4" style="font-size: 12px">Selectionez tout</label>
                                 </li>
                                 <ul>
                                     @foreach ($nomModalites as $mdlt)
                                         <div class="form-check">
                                             <li>
-                                                <input class="checkbox form-check-input" type="checkbox" name="Modalite" value="{{ $mdlt->modalite}}"><span style="font-size: 12px">{{ $mdlt->modalite}}</span>
+                                                <input class="checkbox2 form-check-input" type="checkbox" name="Modalite2" value="{{ $mdlt->modalite}}"><span style="font-size: 12px">{{ $mdlt->modalite}}</span>
                                             </li>
                                         </div>
                                     @endforeach
@@ -1273,7 +1278,7 @@
                         </div>
                     </th>
                     <th>
-                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button style="font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class='bx bx-dollar-circle align-middle' ></i> Montant
                         </button>
                     </th>
@@ -1340,19 +1345,19 @@
                                     <input type="text" class="column_search form-control form-control-sm">
                                 </li>
                                 <li>
-                                    <input class="form-check-input select_all" type="checkbox" id="select_all6">
+                                    <input class="form-check-input select_all2" type="checkbox" id="select_all6">
                                     <label class="form-check-label label" for="select_all6" style="font-size: 12px">Selectionez tout</label>
                                 </li>
                                 <ul>
                                     @foreach ($nomTypes as $ntp)
                                         <div class="form-check">
                                             <li>
-                                                <input class="checkbox form-check-input" type="checkbox" name="TypeF" value="{{ $ntp->type_formation}}"><span style="font-size: 12px">{{ $ntp->type_formation}}</span>
+                                                <input class="checkbox2 form-check-input" type="checkbox" name="Type2" value="{{ $ntp->type_formation}}"><span style="font-size: 12px">{{ $ntp->type_formation}}</span>
                                             </li>
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                     <th  >
@@ -1365,19 +1370,19 @@
                                     <input type="text" class="column_search form-control form-control-sm">
                                 </li>
                                 <li>
-                                    <input class="form-check-input select_all" type="checkbox" id="select_all1">
+                                    <input class="form-check-input select_all2" type="checkbox" id="select_all1">
                                     <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
                                 </li>
                                 <ul>
                                     @foreach ($nomStatuts as $stt)
                                         <div class="form-check">
                                             <li>
-                                                <input class="checkbox form-check-input" type="checkbox" name="Statut" value="{{ $stt->item_status_groupe}}"><span style="font-size: 12px">{{ $stt->item_status_groupe}}</span>
+                                                <input class="checkbox2 form-check-input" type="checkbox" name="Statut2" value="{{ $stt->item_status_groupe}}"><span style="font-size: 12px">{{ $stt->item_status_groupe}}</span>
                                             </li>
                                         </div>
                                     @endforeach
                                 </ul>
-                        </ul>
+                            </ul>
                         </div>
                     </th>
                 
@@ -2350,21 +2355,184 @@
                 <span class="text-center">Vous n'avez pas encore du projet.</span>
             </div>
         @else
-            <table class="table modifTable">
-                <thead style="position: sticky; top: 0;">
+            <table class="table mahafaly">
+                <thead>
                     <tr style="background: #c7c9c939">
-                        <th class="headProject"><i class='bx bx-library'></i> Projet</th>
-                        <th class="headProject"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
-                        <th class="headProject"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
-                        <th class="headProject"><i class='bx bx-building-house'></i> Centre de formation</th>
-                        <th class="headProject"><i class='bx bx-calendar-check' ></i> Modalité</th>
-                        <th class="headProject"><i class='bx bx-time-five' ></i> Date</th>
-                        <th class="headProject"><i class='bx bx-home' ></i> Ville</th>
-                        <th class="headProject"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statut</th>
-                        <th class="headProject"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type</th>
-                        <th class="headProject"><i class='bx bx-task align-middle' ></i> Eval à chaud</th>
-                        <th class="headProject"><i class='bx bx-task-x align-middle' ></i> Eval à froid</th>
-                        <th class="headProject"><i class='bx bxs-file-pdf align-middle' style="vertical-align: middle"></i> PDF</th>
+                        <th>
+                            <div class="dropdown">
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-library align-middle'></i> Projet
+                                </button>
+                                <ul class="dropdown-menu main p-2" >
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all1" type="checkbox" id="select_all">
+                                        <label class="form-check-label label" for="select_all" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomProjet as $prj)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="Projet1" value="{{ $prj->nom_projet}}"><span style="font-size: 12px">{{ $prj->nom_projet}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="dropdown">
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bxs-book-open align-middle" style="color: #2e3950"></i> Session
+                                </button>
+                                <ul class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all1" type="checkbox" id="select_all1">
+                                        <label class="form-check10abel label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomSessions as $sess)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="Session1" value="{{ $sess->nom_groupe}}"><span style="font-size: 12px">{{ $sess->nom_groupe}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th>
+                            <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bxs-customize'></i> Module
+                            </button>
+                        </th>
+                        <th>
+                            <div class="dropdown z-index-2" id="ta">
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-building-house'></i> Centre de formation
+                                </button>
+                                
+                                <ul  class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all1" type="checkbox" id="select_all3">
+                                        <label class="form-check-label label" for="select_all3" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomCfps as $c)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="Cfp1" value="{{ $c->nom_etp}}"><span style="font-size: 12px">{{ $c->nom_etp}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th>
+                            <button style="font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-calendar-check' ></i> Modalité
+                            </button>
+                        </th>
+                        <th>
+                            <button style="font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-time-five' ></i> Date
+                            </button>
+                        </th>
+                        <th>
+                            <button style="font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-home' ></i> Ville
+                            </button>
+                        </th>
+                        <th>
+                            <div class="dropdown" >
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-calendar-x align-middle' style="color: #2e3950"></i> Statuts
+                                </button>
+                                <ul class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all1" type="checkbox" id="select_all1">
+                                        <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomStatuts as $stt)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="Statut1" value="{{ $stt->item_status_groupe}}"><span style="font-size: 12px">{{ $stt->item_status_groupe}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="dropdown" >
+                                <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-book-content align-middle' style="vertical-align: middle"></i> Type
+                                </button>
+                                <ul class="dropdown-menu main p-2">
+                                    <li>
+                                        <input type="text" class="column_search form-control form-control-sm">
+                                    </li>
+                                    <li>
+                                        <input class="form-check-input select_all1" type="checkbox" id="select_all6">
+                                        <label class="form-check-label label" for="select_all6" style="font-size: 12px">Selectionez tout</label>
+                                    </li>
+                                    <ul>
+                                        @foreach ($nomTypes as $ntp)
+                                            <div class="form-check">
+                                                <li>
+                                                    <input class="checkbox form-check-input" type="checkbox" name="Type1" value="{{ $ntp->type_formation}}"><span style="font-size: 12px">{{ $ntp->type_formation}}</span>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </ul>
+                            </div>
+                        </th>
+                        <th>
+                            <button style="font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-task align-middle' ></i> Eval à chaud
+                            </button>
+                        </th>
+                        <th>
+                            <button style="font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-task-x align-middle' ></i> Eval à froid
+                            </button>
+                        </th>
+                        <th>
+                            <button style="font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bxs-file-pdf align-middle' style="vertical-align: middle"></i> PDF
+                            </button>
+                        </th>
+                    </tr>
+                    <tr class="myTh">
+                        <th></i> Projet</th>
+                        <th></i> Session</th>
+                        <th></i> Module</th>
+                        <th></i> Centre de formation</th>
+                        <th></i> Modalité</th>
+                        <th></i> Date</th>
+                        <th> Ville</th>
+                        <th></i> Statut</th>
+                        <th></i> Type</th>
+                        <th> Eval à chaud</th>
+                        <th> Eval à froid</th>
+                        <th> PDF</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -2375,7 +2543,7 @@
                             </td>
                             <td>
                                 @if ($pj->type_formation_id == 3)
-                                <a style="font-size: 13px" href="{{ route('detail_session_interne', [$pj->groupe_id]) }}"><span class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span></a>
+                                <a style="font-size: 13px" href="{{ route('detail_session_interne', [$pj->groupe_id]) }}"><span class="spanClass"style="font-size: 13px;">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span></a>
                                 @else
                                     <a href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">
                                         <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
@@ -2447,7 +2615,9 @@
                             @endif
 
                             @if ($pj->type_formation_id == 3)
-                            
+                                <td class="text-center">
+                                    <span> {{ '-' }} </span>
+                                </td>
                             @else
                                 @php
                                     $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
@@ -2508,6 +2678,98 @@
 
     <script>
         $(document).ready(function() {
+            var table1 = $('.mahafaly').DataTable({
+                // dom:            "Bfrtip",
+                "dom": 'C<"clear">lfrtip',
+                // scrollY:        "500px",
+                scrollX:        true,
+                // scrollCollapse: true,
+                paging:         true,
+                buttons:        [ 'colvis','colonne' ],
+                select: true,
+                ordering:false,
+                "bAutoWidth": false,
+                "language": {
+                    "paginate": {
+                    "previous": "précédent",
+                    "next": "suivant"
+                    },
+                    "search": "Recherche :",
+                    "zeroRecords":    "Aucun résultat trouvé",
+                    "infoEmpty":      " 0 trouvés",
+                    "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                    "infoFiltered":   "(filtre sur _MAX_ entrées)",
+                    "lengthMenu":     "Affichage _MENU_ ",
+                    "buttonText": "Change colonne"
+                },
+                "colVis": {
+                    "label": function ( index, title, th ) {
+                        return (index+1) +'. '+ title;
+                    }
+                }
+            });
+
+            $('input:checkbox').on('change', function () {
+                var Projet1 = $('input:checkbox[name="Projet1"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table1.column(0).search(Projet1, true,false,false).draw();
+
+                var Session1 = $('input:checkbox[name="Session1"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table1.column(1).search(Session1, true,false,false).draw();
+
+                var Module1 = $('input:checkbox[name="Module1"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table1.column(2).search(Module1, true,false,false).draw();
+
+                var Cfp1 = $('input:checkbox[name="Cfp1"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table1.column(3).search(Cfp1, true,false,false).draw();
+
+                var Statut1 = $('input:checkbox[name="Statut1"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table1.column(7).search(Statut1, true,false,false).draw();
+
+                var Type1 = $('input:checkbox[name="Type1"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table1.column(8).search(Type1, true,false,false).draw();
+                
+                
+                // select all
+                $('.select_all1').on('click', function(){
+                    if(this.checked){
+                        $('.checkbox').each(function(){
+                            this.checked = true;
+                        });
+                    }else{
+                        $('.checkbox').each(function(){
+                            this.checked = false;
+                        });
+                    }
+                });
+
+                $('.checkbox').on('click', function(){
+                    if(('.checkbox:checked').length == $('.checkboxx').length){
+                        $('.select_all1').prop('checked', true);
+                    } else{
+                        $('.select_all1').prop('checked', false);
+                    }
+                });
+                // end select all
+            });
+
             var table = $('#example').DataTable( {
                 // dom:            "Bfrtip",
                 "dom": 'C<"clear">lfrtip',
@@ -2532,11 +2794,13 @@
                     "buttonText": "Change colonne"
                 },
                 "colVis": {
-                "label": function ( index, title, th ) {
-                    return (index+1) +'. '+ title;
-                }
+                    "label": function ( index, title, th ) {
+                        return (index+1) +'. '+ title;
+                    }
                 }
             } );
+
+            $('.ColVis_Button').text('Afficher / Masquer');
 
             new $.fn.dataTable.FixedColumns( table, {
                 leftColumns: 3,
@@ -2544,77 +2808,76 @@
             $('.ColVis_Button').text('Afficher / Masquer');
 
             $('input:checkbox').on('change', function () {
-                var Session = $('input:checkbox[name="Session"]:checked').map(function() {
+                var Projet2 = $('input:checkbox[name="Projet2"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(0 ).search(Session, true,false,false).draw();
+                table.column(0).search(Projet2, true,false,false).draw();
 
-                var Session = $('input:checkbox[name="Session"]:checked').map(function() {
+                var Session2 = $('input:checkbox[name="Session2"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(1).search(Session, true,false,false).draw();
-                
-                var Module = $('input:checkbox[name="Module"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(2).search(Module, true,false,false).draw();
+                table.column(1).search(Session2, true,false,false).draw();
 
-                var Entreprise = $('input:checkbox[name="EntrepriseE"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
                 
-                table.column(3).search(Entreprise, true,false,false).draw();
+                // var Module2 = $('input:checkbox[name="Module2"]:checked').map(function() {
+                //     return this.value;
+                // }).get().join('|');
+                
+                // table.column(2).search(Module2, true,false,false).draw();
 
-                var Modalite = $('input:checkbox[name="Modalite"]:checked').map(function() {
+                
+                var Entreprise2 = $('input:checkbox[name="Entreprise2"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(4).search(Modalite, true,false,false).draw();
-                
-                var Statut = $('input:checkbox[name="Statut"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(8).search(Statut, true,false,false).draw();
+                table.column(3).search(Entreprise2, true,false,false).draw();
 
-                var Type = $('input:checkbox[name="TypeF"]:checked').map(function() {
+                var Modalite2 = $('input:checkbox[name="Modalite2"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table.column(7).search(Type, true,false,false).draw();
+                table.column(4).search(Modalite2, true,false,false).draw();
+                
+                var Type2 = $('input:checkbox[name="Type2"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(8).search(Type2, true,false,false).draw();
+
+                var Statut2 = $('input:checkbox[name="Statut2"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(9).search(Statut2, true,false,false).draw();
+                // select all
+                $('.select_all2').on('click', function(){
+                    if(this.checked){
+                        $('.checkbox2').each(function(){
+                            this.checked = true;
+                        });
+                    }else{
+                        $('.checkbox2').each(function(){
+                            this.checked = false;
+                        });
+                    }
+                });
+
+                $('.checkbox2').on('click', function(){
+                    if(('.checkbox2:checked').length == $('.checkbox2').length){
+                        $('.select_all2').prop('checked', true);
+                    } else{
+                        $('.select_all2').prop('checked', false);
+                    }
+                });
+                // end select all
             });
 
             $('.column_search').on('keyup' ,function () {
                 console.log($(this).val());
                 table.column( $(this).parent().parent().parent().parent().index() ).search( this.value ).draw();
             } );
-
-            // select all
-            $('.select_all').on('click', function(){
-                if(this.checked){
-                    $('.checkbox').each(function(){
-                        this.checked = true;
-                    });
-                }else{
-                    $('.checkbox').each(function(){
-                        this.checked = false;
-                    });
-                }
-            });
-
-            $('.checkbox').on('click', function(){
-                if(('.checkbox:checked').length == $('.checkboxx').length){
-                    $('.select_all').prop('checked', true);
-                } else{
-                    $('.select_all').prop('checked', false);
-                }
-            });
-            // end select all
-
-            $('.modifTable').DataTable();
         } );
     </script>
 @endsection
