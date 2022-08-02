@@ -1,3 +1,4 @@
+-- Active: 1656573946460@@127.0.0.1@3306@mahafaly
 CREATE TABLE domaines (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_domaine varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

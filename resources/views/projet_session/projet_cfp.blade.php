@@ -13,1007 +13,6 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="http://infra.clarin.eu/content/libs/DataTables-1.10.6/extensions/ColVis/css/dataTables.colVis.css">
 <style>
-    .corps_planning .nav-link {
-        color: #637381;
-        padding: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: all 200ms;
-        text-transform: uppercase;
-        padding-top: 10px;
-    }
-    .nav-item .nav-link button.active {
-        /* border-bottom: 3px solid #7635dc !important; */
-        color: #7635dc;
-        border-right:.2rem solid  #7635dc;
-    }
-
-    .nav-tabs .nav-link:hover {
-        background-color: rgb(245, 243, 243);
-        transform: scale(1.1);
-        border: none;
-    }
-
-    .nav-tabs .nav-item a {
-        text-decoration: none;
-        text-decoration-line: none;
-    }
-
-    .corps_planning .nav-item .planning{
-        border-right:.2rem solid  #c5c4c49b;
-    }
-
-    .dropdown-item.active{
-        background-color: transparent !important;
-    }
-
-    .dropdown-item.active:hover{
-        background-color: #ececec !important;
-    }
-    .status_grise {
-        border-radius: 5px;
-        background-color: #637381;
-        color: white;
-        align-items: center; margin: 0 auto;
-        padding-top: 2.5px;
-        padding-bottom: 2.5px;
-        position: relative;
-        bottom: 1px;
-    }
-
-    .status_reprogrammer {
-        border-radius: 5px;
-        background-color: #00CDAC;
-        color: white;
-        align-items: center; margin: 0 auto;
-        padding-top: 2.5px;
-        padding-bottom: 2.5px;
-        position: relative;
-        bottom: 1px;
-    }
-
-    .status_cloturer {
-        border-radius: 5px;
-        background-color: #314755;
-        color: white;
-        align-items: center; margin: 0 auto;
-        padding-top: 2.5px;
-        padding-bottom: 2.5px;
-        position: relative;
-        bottom: 1px;
-    }
-
-    .status_reporter {
-        border-radius: 5px;
-        background-color: #26a0da;
-        color: white;
-        align-items: center; margin: 0 auto;
-        padding-top: 2.5px;
-        padding-bottom: 2.5px;
-        position: relative;
-        bottom: 1px;
-    }
-
-    .status_annulee {
-        border-radius: 5px;
-        background-color: #b31217;
-        color: white;
-        align-items: center; margin: 0 auto;
-        padding-top: 2.5px;
-        padding-bottom: 2.5px;
-        position: relative;
-        bottom: 1px;
-    }
-
-    .status_termine {
-        border-radius: 5px;
-        background-color: #1E9600;
-        color: white;
-        align-items: center; margin: 0 auto;
-        padding-top: 2.5px;
-        padding-bottom: 2.5px;
-        position: relative;
-        bottom: 1px;
-    }
-
-    .status_confirme {
-        border-radius: 5px;
-        background-color: #2B32B2;
-        color: white;
-        align-items: center ;margin: 0 auto;
-        padding-end: 1rem;
-        padding-top: 2.5px;
-        padding-bottom: 2.5px;
-        position: relative;
-        bottom: 1px;
-    }
-
-    .statut_active {
-        border-radius: 5px;
-        background-color: rgb(15, 126, 145);
-        color: whitesmoke;
-        align-items: center; margin: 0 auto;
-        padding-top: 2.5px;
-        padding-bottom: 2.5px;
-        position: relative;
-        bottom: 1px;
-    }
-
-    .modalite {
-        border-radius: 5px;
-        background-color: #26a0da;
-        color: rgb(255, 255, 255);
-        /* width: 60%; */
-        margin: 0 auto;
-        text-align: center;
-        padding: 0.2rem 0.3rem !important;
-        min-width: 140px;
-        display: inline-block;
-    }
-
-    .btn_creer {
-        background-color: white;
-        border: none;
-        border-radius: 30px;
-        padding: .2rem 1rem;
-        color: black;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    }
-
-    .btn_creer a {
-        font-size: .8rem;
-        position: relative;
-        bottom: .2rem;
-    }
-
-    .btn_creer:hover {
-        background: #6373812a;
-        color: blue;
-    }
-
-    .btn_creer:focus {
-        color: blue;
-        text-decoration: none;
-    }
-
-    .icon_creer {
-        background-image: linear-gradient(60deg, #f206ee, #0765f3);
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        font-size: 1.5rem;
-        position: relative;
-        top: .4rem;
-        margin-right: .3rem;
-    }
-
-    .rapport_finale {
-        background-color: #F16529 !important;
-    }
-
-    .rapport_finale button {
-        color: #ffffff !important;
-    }
-
-    .rapport_finale:hover {
-        background-color: #af3906 !important;
-    }
-
-    .pdf_download {
-        background-color: #e73827 !important;
-        padding: 0.3rem;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all .5ms ease;
-        color: white !important;
-        position: relative;
-    }
-
-    .pdf_download:hover {
-        background-color: #af3906 !important;
-    }
-
-    .pdf_download button {
-        color: #ffffff !important;
-    }
-
-    tbody tr {
-        vertical-align: middle;
-    }
-
-    .btn-label-session {
-        position: relative;
-        left: -12px;
-        display: inline-block;
-        padding: 6px 12px;
-        background: rgba(37, 37, 37, 0.15);
-        /* background-color: #a8e063; */
-        border-radius: 3px 0 0 3px;
-    }
-
-    .btn-ajout-session {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    .resultat_stg{
-        background-color: #2cb445;
-        padding: 0.3rem;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all .5ms ease;
-        position: relative;
-    }
-    .resultat_stg button{
-        color: #ffffff !important;
-    }
-    .resultat_stg:hover{
-        background-color: #1c7f2e;
-    }
-
-    .btn_eval_stg{
-        background-color: #363dbc;
-        padding: 0.3rem;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all .5ms ease;
-        position: relative;
-    }
-    .btn_eval_stg:hover{
-        background-color: #262b86;
-    }
-        /*info SESSION*/
-    .green{
-        color: #5e35b1;
-        border: 2px solid #43a047;
-        border-radius: 2px;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 4px;
-    }
-
-    .red{
-        color: #5e35b1;
-        border: 2px solid #f4511e;
-        border-radius: 2px;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 4px;
-    }
-
-    .yellow{
-        color: #5e35b1;
-        border: 2px solid #fdd835;
-        border-radius: 2px;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 4px;
-    }
-
-    .saClass{
-        font-size: 21px;
-        color: #637381;
-    }
-    .saSpan{
-        color: #637381;
-        font-size: 14px;
-    }
-    /* fixed top header */
-    .fixedTop{
-        max-height: 750px;
-        overflow-y: scroll;
-    }
-
-    .spanClass:hover{
-        color: #673ab7;
-        transition: 0.3s ease-in-out;
-        /* border-bottom: 3px solid #673ab7; */
-    }
-
-    .head{
-        font-size: 14px;
-    }
-    .wrapper_stg{
-        height:26px;
-        border-radius: 30px;
-        background-color: #014f70;
-    }
-    .shadow {
-        height: auto;
-    }
-
-    * {
-        font-size: 1rem;
-    }
-
-    .body_nav p {
-        font-size: 0.9rem;
-    }
-
-    .chiffre_d_affaire p {
-        font-size: 0.9rem;
-    }
-
-
-    .body_nav {
-        padding: 6px 8px;
-        border-radius: 4px 4px 0 0;
-    }
-
-    .numero_session {
-        background-color: rgb(255, 255, 255);
-        padding: 0 6px;
-        border-radius: 4px;
-    }
-
-    strong {
-        font-size: 10px;
-    }
-
-    .img_commentaire {
-        border-radius: 5rem;
-        position: absolute;
-        width: 40px;
-        height: 40px;
-        margin-right: 10px;
-    }
-
-    .img_commentaire:hover {
-        cursor: pointer;
-    }
-
-    .height_default {
-        height: 27px;
-        align-items: center
-    }
-
-    a {
-        font-size: 12px;
-        text-decoration: none;
-    }
-
-    #myDIV {
-        position: absolute;
-        display: none;
-        margin-left: 57%;
-        margin-top: 20px;
-    }
-
-    u {
-        font-size: 12px;
-    }
-
-    .pad_img {
-        padding-left: 10px;
-    }
-
-    a:hover {
-        color: blueviolet;
-    }
-
-    p {
-        font-size: 10px;
-    }
-
-    .img_superpose {
-        margin-left: -10px;
-        border: 2px solid white;
-    }
-
-    .chiffre_d_affaire {
-        padding: 0 10px;
-    }
-
-    .status_grise {
-        border-radius: 1rem;
-        background-color: #637381;
-        color: white;
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-        padding: .1rem .5rem;
-    }
-
-    .status_reprogrammer {
-        border-radius: 1rem;
-        background-color: #00CDAC;
-        color: white;
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-        padding: .1rem .5rem;
-    }
-
-    .status_cloturer {
-        border-radius: 1rem;
-        background-color: #314755;
-        color: white;
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-        padding: .1rem .5rem;
-    }
-
-    .status_reporter {
-        border-radius: 1rem;
-        background-color: #26a0da;
-        color: white;
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-        padding: .1rem .5rem;
-    }
-
-    .status_annulee {
-        border-radius: 1rem;
-        background-color: #b31217;
-        color: white;
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-        padding: .1rem .5rem;
-    }
-
-    .status_termine {
-        border-radius: 1rem;
-        background-color: #2ebf91;
-        color: white;
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-        padding: .1rem .5rem;
-    }
-
-    .status_confirme {
-        border-radius: 1rem;
-        background-color: #2B32B2;
-        color: white;
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-        padding: .1rem .5rem;
-    }
-
-    .statut_active {
-        border-radius: 1rem;
-        background-color: rgb(15, 126, 145);
-        color: whitesmoke;
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-        padding: .1rem .5rem;
-    }
-
-    .modalite {
-        border-radius: 1rem;
-        background-color: #26a0da;
-        color: rgb(255, 255, 255);
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-
-        padding: 0.1rem 0.5rem !important;
-    }
-
-
-    .dernier_planning {
-        text-align: left;
-        padding-left: 6px;
-        height: 100%;
-        font-size: 12px;
-        background-color: rgba(230, 228, 228, 0.39);
-    }
-
-    .dernier_planning:focus {
-        color: rgb(130, 33, 100);
-        background-color: white;
-        font-weight: bold;
-    }
-
-
-
-    button {
-        background-color: white;
-        border: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .titre_card {
-        background-color: rgb(223, 219, 219);
-        height: 30px;
-        border-radius: 4px 4px 0 0;
-        margin: 2px 0;
-        color: white;
-    }
-
-    .tabcontent {
-        display: none;
-    }
-
-    .btn_modifier_statut {
-        border-radius: 30px;
-        padding: 1rem 1rem;
-        color: black;
-    }
-
-    .btn_modifier_statut a {
-        font-size: .8rem;
-        position: relative;
-        bottom: .2rem;
-    }
-
-    .btn_modifier_statut:hover {
-        background-color: white;
-        color: black;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    }
-
-    .planning {
-        text-align: left;
-        padding-left: 6px;
-        height: 100%;
-        font-size: 12px;
-        margin:0;
-    }
-
-    .planning:hover {
-        background-color: #eeeeee;
-    }
-
-    .planning p{
-        font-size: .85rem;
-    }
-
-    @keyframes action{
-        0%{
-            filter: brightness(0.99);
-        }
-        25%{
-            filter: brightness(0.94);
-        }
-        50%{
-            filter: brightness(0.96);
-        }
-        75%{
-            filter: brightness(0.98);
-        }
-        100%{
-            filter: brightness(1);
-        }
-    }
-
-
-    .action_animation{
-        animation-name: action;
-        animation-duration: 3s;
-        animation-delay: 1s;
-        animation-iteration-count: infinite;
-    }
-
-    .icon_creer {
-        background-image: linear-gradient(60deg, #f206ee, #0765f3);
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        font-size: 1.5rem;
-        position: relative;
-        top: .4rem;
-        margin-right: .3rem;
-    }
-
-    .liste_projet{
-        background-color: #637381;
-        margin: 0;
-        padding: 1;
-        color: #ffffff;
-    }
-
-    .liste_projet:hover{
-        background-color: #cfccccc5;
-        color: #191818;
-    }
-
-    .pdf_download{
-            background-color: #e73827 !important;
-            border-radius: 5px;
-    }
-    .pdf_download:hover{
-        background-color: #af3906 !important;
-    }
-    .pdf_download button{
-        color: #ffffff !important;
-    }
-
-    .type_formation{
-        border-radius: 1rem;
-        background-color: #826bf3;
-        color: rgb(255, 255, 255);
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-
-        padding: 0.1rem 0.5rem !important;
-    }
-    .type_intra{
-        padding: 0.1rem 0.5rem !important;
-        font-size: 0.85rem;
-        background-color: #2193b0;
-        border-radius: 1rem;
-        transition: all 200ms;
-        color: white;
-        border: none;
-        box-shadow: none;
-        outline: none;
-        position: relative;
-        align-items: center margin: 0 auto;
-    }
-
-    .type_intra:hover,
-    .type_inter:hover{
-        cursor: default;
-        color: white;
-    }
-
-    .type_inter{
-        padding: 0.1rem 0.5rem !important;
-        font-size: 0.85rem;
-        background-color: #2ebf91;
-        border-radius: 1rem;
-        transition: all 200ms;
-        color: rgb(255, 255, 255);
-        border: none;
-        box-shadow: none;
-        outline: none;
-        position: relative;
-        align-items: center; margin: 0 auto;
-    }
-
-    /*info SESSION*/
-    .green{
-        color: #5e35b1;
-        border: 2px solid #43a047;
-        border-radius: 2px;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 4px;
-    }
-
-    .red{
-        color: #5e35b1;
-        border: 2px solid #f4511e;
-        border-radius: 2px;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 4px;
-    }
-
-    .yellow{
-        color: #5e35b1;
-        border: 2px solid #fdd835;
-        border-radius: 2px;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 4px;
-    }
-
-    .saClass{
-        font-size: 22px;
-        color: #637381;
-    }
-    .saSpan{
-        color: #637381;
-        font-size: 14px;
-    }
-    .nom_status{
-        text-align: center;
-    }
-            /****************
-    VERTICAL TIMELINE ( BOOTSTRAP 5)
-    ****************/
-    .timeline-1 {
-        border-left: 3px solid #b565a7;
-        border-bottom-right-radius: 4px;
-        border-top-right-radius: 4px;
-        /* background: rgba(177, 99, 163, 0.09); */
-        margin: 0 auto;
-        position: relative;
-        padding: 30px;
-        list-style: none;
-        text-align: left;
-        max-width: 99%;
-    }
-    @media (max-width: 767px) {
-        .timeline-1 {
-            max-width: 98%;
-            padding: 25px;
-        }
-    }
-
-    .timeline-1 .event {
-        border-bottom: 1px dashed #000;
-        padding-bottom: 25px;
-        margin-bottom: 25px;
-        position: relative;
-    }
-
-    @media (max-width: 767px) {
-        .timeline-1 .event {
-            padding-top: 30px;
-        }
-    }
-
-    .timeline-1 .event:last-of-type {
-        padding-bottom: 0;
-        margin-bottom: 0;
-        border: none;
-    }
-
-    .timeline-1 .event:before,
-    .timeline-1 .event:after {
-        position: absolute;
-        display: block;
-        top: 0;
-    }
-
-    .timeline-1 .event:before {
-        left: -207px;
-        content: attr(data-date);
-        text-align: right;
-        font-weight: 100;
-        font-size: 0.9em;
-        min-width: 120px;
-    }
-
-    @media (max-width: 767px) {
-        .timeline-1 .event:before {
-            left: 0px;
-            text-align: left;
-        }
-    }
-
-    .timeline-1 .event:after {
-        -webkit-box-shadow: 0 0 0 3px #b565a7;
-        box-shadow: 0 0 0 3px #b565a7;
-        left: -35.8px;
-        background: #fff;
-        border-radius: 50%;
-        height: 9px;
-        width: 9px;
-        content: "";
-        top: 31px;
-    }
-    /* event terminer */
-    .timeline-1 .event_terminer {
-        border-bottom: 1px dashed #000;
-        padding-bottom: 25px;
-        margin-bottom: 25px;
-        position: relative;
-    }
-
-    @media (max-width: 767px) {
-        .timeline-1 .event_terminer {
-            padding-top: 30px;
-        }
-    }
-
-    .timeline-1 .event_terminer:last-of-type {
-        padding-bottom: 0;
-        margin-bottom: 0;
-        border: none;
-    }
-
-    .timeline-1 .event_terminer:before,
-    .timeline-1 .event_terminer:after {
-        position: absolute;
-        display: block;
-        top: 0;
-    }
-
-    .timeline-1 .event_terminer:before {
-        left: -207px;
-        content: attr(data-date);
-        text-align: right;
-        font-weight: 100;
-        font-size: 0.9em;
-        min-width: 120px;
-    }
-
-    @media (max-width: 767px) {
-        .timeline-1 .event_terminer:before {
-            left: 0px;
-            text-align: left;
-        }
-    }
-
-    .timeline-1 .event_terminer:after {
-        -webkit-box-shadow: 0 0 0 3px #b565a7;
-        box-shadow: 0 0 0 3px #b565a7;
-        left: -35.8px;
-        background: rgb(168, 246, 108);
-        border-radius: 50%;
-        height: 9px;
-        width: 9px;
-        content: "";
-        top: 31px;
-    }
-    /* evenet repro */
-    .timeline-1 .event_repro {
-        border-bottom: 1px dashed #000;
-        padding-bottom: 25px;
-        margin-bottom: 25px;
-        position: relative;
-    }
-    @media (max-width: 767px) {
-        .timeline-1 .event_repro {
-            padding-top: 30px;
-        }
-    }
-
-    .timeline-1 .event_repro:last-of-type {
-        padding-bottom: 0;
-        margin-bottom: 0;
-        border: none;
-    }
-
-    .timeline-1 .event_repro:before,
-    .timeline-1 .event_repro:after {
-        position: absolute;
-        display: block;
-        top: 0;
-    }
-
-    .timeline-1 .event_repro:before {
-        left: -207px;
-        content: attr(data-date);
-        text-align: right;
-        font-weight: 100;
-        font-size: 0.9em;
-        min-width: 120px;
-    }
-
-    @media (max-width: 767px) {
-        .timeline-1 .event_repro:before {
-            left: 0px;
-            text-align: left;
-        }
-    }
-
-    .timeline-1 .event_repro:after {
-        -webkit-box-shadow: 0 0 0 3px #b565a7;
-        box-shadow: 0 0 0 3px #b565a7;
-        left: -35.8px;
-        background: rgba(0, 0, 0, 0.745);
-        border-radius: 50%;
-        height: 9px;
-        content: "";
-        width: 9px;
-        top: 31px;
-    }
-    @media (max-width: 767px) {
-        .timeline-1 .event:after {
-            left: -31.8px;
-        }
-        .timeline-1 .event_terminer:after {
-            left: -31.8px;
-        }
-        .timeline-1 .event_repro:after {
-            left: -31.8px;
-        }
-    }
-    .p_date{
-        margin-left:40%;
-    }
-    .div_class>div{
-        display:inline-block;
-    }
-    .triangle-right {
-        width: 0;
-        height: 0;
-        border-top: 7px solid transparent;
-        border-left: 7px solid rgba(191, 26, 160, 0.593);
-        border-bottom: 7px solid transparent;
-        display: inline-block;
-        margin-left: 10px;
-        margin-top: 67px;
-        position: absolute;
-    }
-    .text_retourner {
-        position: relative;
-    }
-    .text_retourner span {
-        position: relative;
-        display: inline-block;
-        font-size: 25px;
-        color: rgba(0,0,0,.5);
-        text-transform: uppercase;
-        animation: flip 3s infinite;
-        animation-delay: calc(.2s * var(--i))
-    }
-    @keyframes flip {
-        0%,80% {
-            transform: rotateY(360deg)
-        }
-    }
-    /* timeline */
-    .select2-container .select2-selection--single .select2-selection__rendered {
-        padding: 4px 1rem !important;
-        border-radius: 5px !important;
-        box-sizing: border-box !important;
-        color: #637381 !important;
-        font-size: 16px !important;
-        letter-spacing: 1px !important;
-        height: 40px !important;
-    }
-
-    .select2-container .select2-selection--single :focus {
-        -moz-box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        border-bottom: 2px solid #28a7eb !important;
-        outline-width: 0 !important;
-    }
-
-    .select2-container .select2-selection--single{
-        height: 40px !important;
-        border: 1px solid #28a7eb !important;
-    }
-    .popover{
-        max-width:500px;
-    }
-
-    .myCircle:hover{
-        color: #1e9600;
-    }
-    .hideAction{
-        display: none;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 35px !important;
-    }
-
-    .fixedTop{
-        overflow-y: scroll;
-    }
-
-    #myDiv{
-        position: fixed;
-        top: 0;
-
-    }
-    .spanClass:hover{
-        color: #673ab7;
-        transition: 0.3s ease-in-out;
-    }
-
-    .modifTable_length label, .modifTable_length select, .modifTable_filter label, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
-        font-size: 13px;
-    }
-    
-    .dataTables_length label, .dataTables_filter label {
-        font-size: 12px;
-    }
-    .redClass{
-        color: #f44336 !important;
-    }
-
-    .arrowDrop{
-        color: #1e9600;
-        
-    }
-    .mivadika{
-        transform: rotate(180deg) !important;
-        color: red !important;
-        transition: 0.3s !important;
-    }
-
-    #example_length select{
-        height: 25px;
-        font-size: 13px;
-        vertical-align: middle;
-    }
-
-    .popover{
-        max-width:500px;
-    }
-
-    .myCircle:hover{
-        color: #1e9600;
-    }
-    .hideAction{
-        display: none;
-    }
     .dataTables_empty{
         font-size: 13px;
     }
@@ -1099,21 +98,8 @@
     button.ColVis_Button:hover{
         box-shadow: none !important;
     }
-
-    
-
 </style>
-<div class="container-fluid mt-5">
-    @if (Session::has('pdf_error'))
-        <div class="alert alert-danger ms-4 me-4">
-            <ul>
-                <li>{!! \Session::get('pdf_error') !!}</li>
-            </ul>
-        </div>
-    @endif
-
-    @canany(['isCFP'])
-        @if (count($projet) <= 0)
+@if (count($projet) <= 0)
             <div class="container mt-3 p-1 mb-1">
                 <div id="popup">
                     <div class="row">
@@ -1561,9 +547,9 @@
                             </a>
                         </td>
                         <td class="text-center">
-                            @can('isCFP')
+                            
                                 <i style="color: rgb(25, 193, 225); cursor: pointer;font-size:20px" class='bx bx-edit'data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $projet->groupe_id }}" data-backdrop="static"></i>
-                            @endcan
+                           
                         </td>
                     </tr>
 
@@ -2342,279 +1328,134 @@
                 @endforeach
             </tbody>
         </table>
-    @endcanany
+    
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script src="http://infra.clarin.eu/content/libs/DataTables-1.10.6/extensions/ColVis/js/dataTables.colVis.js"></script>
+        <script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
 
-    @canany(['isReferent','isReferentSimple','isManager','isChefDeService'])
-        @if (count($data) <= 0)
-            <div class="d-flex mt-3 titre_projet p-1 mb-1">
-                <span class="text-center">Vous n'avez pas encore du projet.</span>
-            </div>
-        @else
-            <table class="table modifTable">
-                <thead style="position: sticky; top: 0;">
-                    <tr style="background: #c7c9c939">
-                        <th class="headProject"><i class='bx bx-library'></i> Projet</th>
-                        <th class="headProject"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
-                        <th class="headProject"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
-                        <th class="headProject"><i class='bx bx-building-house'></i> Centre de formation</th>
-                        <th class="headProject"><i class='bx bx-calendar-check' ></i> Modalité</th>
-                        <th class="headProject"><i class='bx bx-time-five' ></i> Date</th>
-                        <th class="headProject"><i class='bx bx-home' ></i> Ville</th>
-                        <th class="headProject"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statut</th>
-                        <th class="headProject"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type</th>
-                        <th class="headProject"><i class='bx bx-task align-middle' ></i> Eval à chaud</th>
-                        <th class="headProject"><i class='bx bx-task-x align-middle' ></i> Eval à froid</th>
-                        <th class="headProject"><i class='bx bxs-file-pdf align-middle' style="vertical-align: middle"></i> PDF</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($data as $pj)
-                        <tr>
-                            <td>
-                                <span  style='font-size: 13px;'>{{ $pj->nom_projet }}</span>
-                            </td>
-                            <td>
-                                @if ($pj->type_formation_id == 3)
-                                <a style="font-size: 13px" href="{{ route('detail_session_interne', [$pj->groupe_id]) }}"><span class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span></a>
-                                @else
-                                    <a href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">
-                                        <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
-                                    </a>
-                                @endif
-                            </td>
-                            <td>
-                                <span style="font-size: 13px">{{ $pj->nom_module }}</span>
-                            </td>
-                            <td>
-                                <span style="font-size: 13px">{{ $pj->nom_cfp }}</span>
-                            </td>
-                            <td>
-                                <span style="font-size: 13px">{{ $pj->modalite }}</span>
-                            </td>
-                            <td class="text-center">
-                                @php
-                                    echo "<span style='font-size: 13px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";
-                                @endphp
-                            </td>
-                            <td>
-                                @if($lieuFormation!=null)
-                                    <span style="font-size: 13px;">{{$lieuFormation[0]}}</span>
-                                @else
-                                    {{"-"}}
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if($pj->item_status_groupe === 'Cloturé')
-                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#111111"">Cloturé</span>
-                                @elseif($pj->item_status_groupe === 'Reporté')
-                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#af10e9"">Reporté</span>
-                                @elseif($pj->item_status_groupe === 'Prévisionnel')
-                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#2792e4"">Prévisionnel</span>
-                                @elseif($pj->item_status_groupe === 'Annulée')
-                                    <span class="myData badge " style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#b33939"">Annulée</span>
-                                @elseif($pj->item_status_groupe === 'Reprogrammer')    
-                                    <span class="myData badge" style="width: 97px; font-size: 12px; font-weight: 400; text-align: center;background:#00CDAC">Reprogrammer</span>
-                                @endif 
-                            </td>
-                            <td class="text-center">
-                                @if ($pj->type_formation_id == 1)
-                                    <span style="text-align: center; font-weight: 400; font-size: 13px">
-                                        {{ $pj->type_formation }}
-                                    </span>
-                                @elseif ($pj->type_formation_id == 2)
-                                    <span style="text-align: center; font-weight: 400; font-size: 13px">
-                                        {{ $pj->type_formation }}
-                                    </span>
-                                @elseif ($pj->type_formation_id == 3)
-                                    <span style="text-align: center; font-weight: 400; font-size: 13px">
-                                        {{ $pj->type_formation }}
-                                    </span>
-                                @endif
-                            </td>
+        <script type='text/javascript'>
+            $(document).ready(function() {
+                var options = {
+                    html: true,
+                    title: "Optional: HELLO(Will overide the default-the inline title)",
+                    content: $('[data-name="popover-content"]')
+                }
+                var example = document.getElementById('exampleE1')
+                var popover = new bootstrap.Popover(example, options)
+            })
+        </script>
 
-                            @if ($pj->type_formation_id == 3)
-                                <td class="text-center">
-                                    <a href="{{ route('resultat_evaluation_interne', [$pj->groupe_id]) }}" style="font-size: 13px">
-                                        <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
-                                    </a>
-                                </td>
-                            @else
-                                <td class="text-center">
-                                    <a href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">
-                                        <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
-                                    </a>
-                                </td>
-                            @endif
-
-                            @if ($pj->type_formation_id == 3)
-                            
-                            @else
-                                @php
-                                    $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
-                                @endphp
-                                @if($reponse == 1)
-                                    <td class="text-center">
-                                        <a href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}" style="font-size: 13px">
-                                            <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
-                                        </a>
-                                    </td>
-                                @else
-                                    <td class="text-center">
-                                        {{ '-' }}
-                                    </td>
-                                @endif
-                            @endif
-
-                            @if ($pj->type_formation_id == 3)
-                                <td class="text-center">
-                                    <a href="{{ route('fiche_technique_interne_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">
-                                        <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
-                                    </a>
-                                </td>
-                            @else
-                                <td class="text-center">
-                                    <a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">
-                                        <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
-                                    </a>
-                                </td>
-                            @endif
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @endif
-    @endcanany
-</div>
-</div>
-@endsection
-@section('script')
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="http://infra.clarin.eu/content/libs/DataTables-1.10.6/extensions/ColVis/js/dataTables.colVis.js"></script>
-    <script src="https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
-
-    <script type='text/javascript'>
-        $(document).ready(function() {
-            var options = {
-                html: true,
-                title: "Optional: HELLO(Will overide the default-the inline title)",
-                content: $('[data-name="popover-content"]')
-            }
-            var example = document.getElementById('exampleE1')
-            var popover = new bootstrap.Popover(example, options)
-        })
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            var table = $('#example').DataTable( {
-                // dom:            "Bfrtip",
-                "dom": 'C<"clear">lfrtip',
-                // scrollY:        "500px",
-                scrollX:        true,
-                // scrollCollapse: true,
-                paging:         true,
-                buttons:        [ 'colvis','colonne' ],
-                select: true,
-                ordering:false,
-                "language": {
-                    "paginate": {
-                    "previous": "précédent",
-                    "next": "suivant"
+        <script>
+            $(document).ready(function() {
+                var table = $('#example').DataTable( {
+                    // dom:            "Bfrtip",
+                    "dom": 'C<"clear">lfrtip',
+                    // scrollY:        "500px",
+                    scrollX:        true,
+                    // scrollCollapse: true,
+                    paging:         true,
+                    buttons:        [ 'colvis','colonne' ],
+                    select: true,
+                    ordering:false,
+                    "language": {
+                        "paginate": {
+                        "previous": "précédent",
+                        "next": "suivant"
+                        },
+                        "search": "Recherche :",
+                        "zeroRecords":    "Aucun résultat trouvé",
+                        "infoEmpty":      " 0 trouvés",
+                        "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                        "infoFiltered":   "(filtre sur _MAX_ entrées)",
+                        "lengthMenu":     "Affichage _MENU_ ",
+                        "buttonText": "Change colonne"
                     },
-                    "search": "Recherche :",
-                    "zeroRecords":    "Aucun résultat trouvé",
-                    "infoEmpty":      " 0 trouvés",
-                    "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
-                    "infoFiltered":   "(filtre sur _MAX_ entrées)",
-                    "lengthMenu":     "Affichage _MENU_ ",
-                    "buttonText": "Change colonne"
-                },
-                "colVis": {
-                "label": function ( index, title, th ) {
-                    return (index+1) +'. '+ title;
-                }
-                }
+                    "colVis": {
+                    "label": function ( index, title, th ) {
+                        return (index+1) +'. '+ title;
+                    }
+                    }
+                } );
+
+                new $.fn.dataTable.FixedColumns( table, {
+                    leftColumns: 3,
+                } );
+                $('.ColVis_Button').text('Afficher / Masquer');
+
+                $('input:checkbox').on('change', function () {
+                    var Session = $('input:checkbox[name="Session"]:checked').map(function() {
+                        return this.value;
+                    }).get().join('|');
+                    
+                    table.column(0 ).search(Session, true,false,false).draw();
+
+                    var Session = $('input:checkbox[name="Session"]:checked').map(function() {
+                        return this.value;
+                    }).get().join('|');
+                    
+                    table.column(1).search(Session, true,false,false).draw();
+                    
+                    var Module = $('input:checkbox[name="Module"]:checked').map(function() {
+                        return this.value;
+                    }).get().join('|');
+                    
+                    table.column(2).search(Module, true,false,false).draw();
+
+                    var Entreprise = $('input:checkbox[name="EntrepriseE"]:checked').map(function() {
+                        return this.value;
+                    }).get().join('|');
+                    
+                    table.column(3).search(Entreprise, true,false,false).draw();
+
+                    var Modalite = $('input:checkbox[name="Modalite"]:checked').map(function() {
+                        return this.value;
+                    }).get().join('|');
+                    
+                    table.column(4).search(Modalite, true,false,false).draw();
+                    
+                    var Statut = $('input:checkbox[name="Statut"]:checked').map(function() {
+                        return this.value;
+                    }).get().join('|');
+                    
+                    table.column(8).search(Statut, true,false,false).draw();
+
+                    var Type = $('input:checkbox[name="TypeF"]:checked').map(function() {
+                        return this.value;
+                    }).get().join('|');
+                    
+                    table.column(7).search(Type, true,false,false).draw();
+                });
+
+                $('.column_search').on('keyup' ,function () {
+                    console.log($(this).val());
+                    table.column( $(this).parent().parent().parent().parent().index() ).search( this.value ).draw();
+                } );
+
+                // select all
+                $('.select_all').on('click', function(){
+                    if(this.checked){
+                        $('.checkbox').each(function(){
+                            this.checked = true;
+                        });
+                    }else{
+                        $('.checkbox').each(function(){
+                            this.checked = false;
+                        });
+                    }
+                });
+
+                $('.checkbox').on('click', function(){
+                    if(('.checkbox:checked').length == $('.checkboxx').length){
+                        $('.select_all').prop('checked', true);
+                    } else{
+                        $('.select_all').prop('checked', false);
+                    }
+                });
+                // end select all
+
+                $('.modifTable').DataTable();
             } );
-
-            new $.fn.dataTable.FixedColumns( table, {
-                leftColumns: 3,
-            } );
-            $('.ColVis_Button').text('Afficher / Masquer');
-
-            $('input:checkbox').on('change', function () {
-                var Session = $('input:checkbox[name="Session"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(0 ).search(Session, true,false,false).draw();
-
-                var Session = $('input:checkbox[name="Session"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(1).search(Session, true,false,false).draw();
-                
-                var Module = $('input:checkbox[name="Module"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(2).search(Module, true,false,false).draw();
-
-                var Entreprise = $('input:checkbox[name="EntrepriseE"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(3).search(Entreprise, true,false,false).draw();
-
-                var Modalite = $('input:checkbox[name="Modalite"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(4).search(Modalite, true,false,false).draw();
-                
-                var Statut = $('input:checkbox[name="Statut"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(8).search(Statut, true,false,false).draw();
-
-                var Type = $('input:checkbox[name="TypeF"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(7).search(Type, true,false,false).draw();
-            });
-
-            $('.column_search').on('keyup' ,function () {
-                console.log($(this).val());
-                table.column( $(this).parent().parent().parent().parent().index() ).search( this.value ).draw();
-            } );
-
-            // select all
-            $('.select_all').on('click', function(){
-                if(this.checked){
-                    $('.checkbox').each(function(){
-                        this.checked = true;
-                    });
-                }else{
-                    $('.checkbox').each(function(){
-                        this.checked = false;
-                    });
-                }
-            });
-
-            $('.checkbox').on('click', function(){
-                if(('.checkbox:checked').length == $('.checkboxx').length){
-                    $('.select_all').prop('checked', true);
-                } else{
-                    $('.select_all').prop('checked', false);
-                }
-            });
-            // end select all
-
-            $('.modifTable').DataTable();
-        } );
-    </script>
+        </script>
 @endsection
