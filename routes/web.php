@@ -953,7 +953,9 @@ Route::get('nouveau_coupon',function(){
 Route::get('modifier_abonnement_of/{id}','AbonnementController@modifier_abonnement_of')->name('modifier_abonnement_of');
 Route::post('enregistrer_modification_abonnement_of/{id}','AbonnementController@enregistrer_modification_abonnement_of')->name('enregistrer_modification_abonnement_of');
 Route::get('modifier_abonnement_entreprise/{id}','AbonnementController@modifier_abonnement_entreprise')->name('modifier_abonnement_entreprise');
+Route::get('modifier_autre_abonnement_entreprise/{id}','AbonnementController@modifier_autres_abonnement_entreprise')->name('modifier_autre_abonnement_entreprise');
 Route::post('enregistrer_modification_abonnement_etp/{id}','AbonnementController@enregistrer_modification_abonnement_etp')->name('enregistrer_modification_abonnement_etp');
+Route::post('enregistrer_modification_autre_abonnement/{id}','AbonnementController@enregistrer_modification_autre_abonnement')->name('enregistrer_modification_autre_abonnement');
 //ajouter nouveau plan
 // Route::get('ajout_plan', function () {
 //     return view('referent.ajout_plan');

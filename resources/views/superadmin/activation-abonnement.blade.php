@@ -156,7 +156,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                             class="sup">AR</sup>/ mois</span>
                                     <span class="tarif"> <span class="number">+ {{number_format($autre->prix_par_employe,0, ',', '.')}}</span> <sup
                                             class="sup">AR</sup>/ Employé</span>
-                                    <button class="btn btn-primary"><a href="{{route('modifier_abonnement_entreprise',$types_etp->id)}}">Modifier</a></button>
+                                    <button class="btn btn-primary"><a href="{{route('modifier_autre_abonnement_entreprise',$autre->id)}}">Modifier</a></button>
                                 </div>
                             </div>
                         <?php $i+=1; ?>

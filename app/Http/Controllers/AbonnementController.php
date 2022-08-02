@@ -727,7 +727,7 @@ class AbonnementController extends Controller
         $typeAbonnement_etp =$this->fonct->findAll('type_abonnements_etp');
         $typeAbonnement_of =$this->fonct->findAll('type_abonnements_of');
         $liste_coupon = $this->fonct->findAll('coupon');
-        $autres_types = DB::select('select type_service_id,prix_fixe,prix_par_employe,type_service from type_services join autres_types_abonnements on autres_types_abonnements.type_service_id = type_services.id');
+        $autres_types = DB::select('select autres_types_abonnements.id,type_service_id,prix_fixe,prix_par_employe,type_service from type_services join autres_types_abonnements on autres_types_abonnements.type_service_id = type_services.id');
         return view('superadmin.activation-abonnement', compact('liste_coupon','liste','cfpListe','typeAbonnement_etp','typeAbonnement_of','autres_types'));
     }
     //activation de compte
@@ -1095,6 +1095,15 @@ class AbonnementController extends Controller
         $abonnement = $this->fonct->findWhereMulitOne("type_abonnements_etp",["id"],[$id]);
         return view('superadmin.modifier_type_etp',compact('abonnement'));
     }
+
+    public function modifier_autres_abonnement_entreprise($id){
+        $abonnement = DB::select('select autres_types_abonnements.id,type_service_id,prix_fixe,prix_par_employe,type_service from type_services join autres_types_abonnements on autres_types_abonnements.type_service_id = type_services.id where autres_types_abonnements.id =?',[$id]);
+        if(count($abonnement) < 1){
+            return back();
+        }
+        $abonnement = $abonnement[0];
+        return view('superadmin.modifier_autre_type',compact('abonnement'));
+    }
     public function enregistrer_modification_abonnement_etp(Request $request,$id){
 
         $nom_type = $request->nom_type;
@@ -1123,6 +1132,23 @@ class AbonnementController extends Controller
         DB::update('update type_abonnements_etp set nom_type = ?, description = ?,tarif = ?, nb_utilisateur = ?,nb_formateur = ?,min_emp = ?,max_emp = ?,illimite = ? where id = ?', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$min_emp,$max_emp,$illimite,$id]);
         return redirect()->route('listeAbonne');
     }
+
+    public function enregistrer_modification_autre_abonnement(Request $request){
+        try{
+            $id = $request->id;
+            if($request->prix_fixe == null){
+                throw new Exception('Vous devez completer le champ prix fixe.');
+            }
+            if($request->prix_employee == null) {
+                throw new Exception('Vous devez completer le champ prix par employé.');
+            }
+            DB::update('update autres_types_abonnements set prix_fixe = ?, prix_par_employe = ? where id = ?', [$request->prix_fixe,$request->prix_employee,$id]);
+            return redirect()->route('listeAbonne');
+        }catch(Exception $e) {
+            return back()->with('message', $e->getMessage());
+        }
+    }
+
     //enregistrement coupon par le super admin
     public function enregistrer_coupon(Request $request){
         $coupon = $request->coupon;
