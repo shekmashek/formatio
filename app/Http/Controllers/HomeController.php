@@ -718,8 +718,18 @@ class HomeController extends Controller
             }else{
                 $lieuFormation = null;
             }
+
+            $nomProjet = DB::select('select nom_projet from v_projet_manager where entreprise_id = ? group by nom_projet order by groupe_id asc', [$entreprise_id]);
+            $nomSessions = DB::select('select nom_groupe from v_projet_manager where entreprise_id = ? group by nom_groupe order by groupe_id asc', [$entreprise_id]);
+            $nomModules = DB::select('select nom_module from v_projet_manager where entreprise_id = ? group by nom_module order by groupe_id asc', [$entreprise_id]);
+            $nomTypes = DB::select('select type_formation from type_formations');
+            $nomStatuts = DB::select('select item_status_groupe from v_projet_manager where entreprise_id = ? group by item_status_groupe', [$entreprise_id]);
+            $nomEtps = DB::select('select nom_etp from entreprises group by nom_etp');
+
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
-            return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page'));
+
+            return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page',
+            'nomProjet', 'nomSessions', 'nomModules', 'nomTypes', 'nomStatuts', 'nomEtps'));
         }
         if (Gate::allows('isChefDeService')) {
             $employe = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
@@ -928,6 +938,80 @@ class HomeController extends Controller
         
     }
 
+    public function projet_manager(Request $request){
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
+        $id_departement = DB::select('select * from chef_departements  where user_id = ? limit 1', [$user_id])[0]->departement_entreprises_id;
+        
+        $data = DB::select("select * from v_projet_manager WHERE entreprise_id = ? and departement_id = ?",[$entreprise_id,$id_departement]);
+        $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$entreprise_id]);
+        
+        if(count($lieu_formations)>0){
+            $lieuFormation = explode(',',$lieu_formations[0]->lieu);
+        }else{
+            $lieuFormation = null;
+        }
+
+        $nomProjet = DB::select('select nom_projet from v_projet_manager where entreprise_id = ? group by nom_projet order by groupe_id asc', [$entreprise_id]);
+        $nomSessions = DB::select('select nom_groupe from v_projet_manager where entreprise_id = ? group by nom_groupe order by groupe_id asc', [$entreprise_id]);
+        $nomModules = DB::select('select nom_module from v_projet_manager where entreprise_id = ? group by nom_module order by groupe_id asc', [$entreprise_id]);
+        $nomTypes = DB::select('select type_formation from type_formations');
+        $nomStatuts = DB::select('select item_status_groupe from v_projet_manager where entreprise_id = ? group by item_status_groupe', [$entreprise_id]);
+        $nomEtps = DB::select('select nom_etp from entreprises group by nom_etp');
+
+        $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
+
+        return view('projet_session.projet_manager', compact('data','stagiaires','lieuFormation',
+        'nomProjet', 'nomSessions', 'nomModules', 'nomTypes', 'nomStatuts', 'nomEtps'));
+    }
+
+    public function projet_stagiaire(Request $request){
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $evaluation = new EvaluationChaud();
+        $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
+        $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
+        $stg_id = stagiaire::where('user_id', $user_id)->value('id');
+
+        $data = DB::select('select date_debut, date_fin, groupe_id,stagiaire_id,item_status_groupe,class_status_groupe,module_id,nom_module,nom_formation,logo,type_formation_id from v_stagiaire_groupe where stagiaire_id = ?', [$stg_id]);
+        $dataInterne = DB::select('select date_debut, date_fin, groupe_id,stagiaire_id,item_status_groupe,class_status_groupe,module_id,nom_module,nom_formation, "Interne" as logo,type_formation_id from v_stagiaire_groupe_interne where stagiaire_id = ?', [$stg_id]);
+
+        foreach ($dataInterne as $interne) {
+            array_push($data,$interne);
+        }
+
+        $var = [];
+        $var_int = [];
+        for($i=0; $i<count($data) ;$i++){
+            $var[$i] = $data[$i]->groupe_id;
+        }
+        for($i=0; $i<count($dataInterne) ;$i++){
+            $var_int[$i] = $dataInterne[$i]->groupe_id;
+        }
+        $ressource =[];
+        $stagiaire =[];
+        $data_detail=[];
+        $ressource_interne =[];
+        $stagiaire_interne =[];
+        $data_detail_interne=[];
+        $modules = DB::select('select nom_module,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe union select nom_module,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe_interne group by nom_module');
+        $formations = DB::select('select nom_formation,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by nom_formation');
+        $status = DB::select('select item_status_groupe as status,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by item_status_groupe');
+        if($data != null){
+            $ressource = DB::select('select * from ressources where groupe_id in (' . implode(',',$var) .')');
+            $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id in (' . implode(',',$var) .') order by stagiaire_id asc');
+            $data_detail = DB::select('select * from v_participant_groupe_detail where stagiaire_id = ? order by date_debut desc', [$stg_id]);
+        }
+        if($dataInterne != null) {
+            $ressource_interne = DB::select('select * from ressources_interne where groupe_id in (' . implode(',',$var_int) .')');
+            $stagiaire_interne =DB::select('select * from v_stagiaire_groupe_interne where groupe_id in (' . implode(',',$var_int) .') order by stagiaire_id asc');
+            $data_detail_interne=DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud_interne) then 0 else 1 end statut_eval from v_participant_groupe_detail_interne where stagiaire_id = ? order by date_debut desc', [$stg_id]);
+        }
+
+        return view('projet_session.projet_stagiaire', compact('data', 'status','data_detail','ressource','stagiaire','modules','formations','data_detail_interne','ressource_interne','stagiaire_interne'));
+    }
+
     public function projet_cfp(Request $request){
         $projet_model = new projet();
         $drive = new getImageModel();
@@ -1002,6 +1086,15 @@ class HomeController extends Controller
         $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
 
         return view('projet_session.projet_formateur', compact('projet', 'data', 'entreprise', 'formation', 'module', 'projet_formation'));
+    }
+
+    public function projet_formateur_interne(Request $request){
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $formateur_id = $fonct->findWhereMulitOne("formateurs_interne",["user_id"],[$user_id])->formateur_id;
+        $data = DB::select('select * from v_projet_formateur_interne where formateur_id = ?', [$formateur_id]);
+
+        return view('projet_session.projet_formateur_interne', compact('data'));
     }
 
     // date filter project

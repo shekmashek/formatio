@@ -525,18 +525,6 @@
                             <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
                         </td>
 
-                        
-                        {{-- @if ($projet->id == 1)
-                            <td class="text-center" style="font-size: 13px">
-                                <a href="{{ route('nouveauRapportFinale', [$projet->groupe_id]) }}" target="_blank" style="font-size: 13px">
-                                    <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
-                                </a>
-                            </td>
-                        @else
-                            <td class="text-center">
-                                <i class='bx bxs-circle' style="font-size: 13px; cursor: not-allowed; color: #b31217"></i>
-                            </td>
-                        @endif --}}
                         <td class="text-center">
                             <i class='bx bxs-circle' style="font-size: 13px; cursor: not-allowed; color: rgb(163, 162, 162)"></i>
                         </td>
