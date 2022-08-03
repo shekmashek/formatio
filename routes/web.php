@@ -75,12 +75,19 @@ Route::get('/liste_projet/{id?}/{page?}', 'HomeController@liste_projet')->name('
 Route::get('/liste_projet_cfp/{id?}/{page?}', 'HomeController@projet_cfp')->name('liste_projet_cfp');
 
 //liste projet entreprise
-Route::get('/liste_projet_entreprise/{id?}/{page?}', 'HomeController@projet_entreprise')->name('liste_projet_entreprise');
+Route::get('/liste_projet_entreprise/{id?}', 'HomeController@projet_entreprise')->name('liste_projet_entreprise');
 
 // liste projet Formateur
-Route::get('/liste_projet_formateur/{id?}/{page?}', [HomeController::class, 'projet_formateur'])->name('liste_projet_formateur');
+Route::get('/liste_projet_formateur/{id?}', [HomeController::class, 'projet_formateur'])->name('liste_projet_formateur');
 
+// liste projet formateur_interne
+Route::get('/liste_projet_formateur_interne/{id?}', [HomeController::class, 'projet_formateur_interne'])->name('liste_projet_formateur_interne');
 
+// liste projet manager
+Route::get('/liste_projet_manager/{id?}', [HomeController::class, 'projet_manager'])->name('liste_projet_manager');
+
+// liste projet stagiaire
+Route::get('/liste_projet_stagiaire/{id?}', [HomeController::class, 'projet_stagiaire'])->name('liste_projet_stagiaire');
 
 /* Route::get('/liste_projet_stagiaire', 'HomeController@liste_projet_stagiaire')->name('liste_projet_stagiaire'); */
 Route::get('/liste', 'HomeController@liste')->name('liste');

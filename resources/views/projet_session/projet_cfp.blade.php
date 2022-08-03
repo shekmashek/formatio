@@ -394,13 +394,6 @@
                     <th>
                         <div class="dropdown" >
                                 <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class='bx bxs-report align-middle' style="vertical-align: middle"></i> Rapport
-                                </button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="dropdown" >
-                                <button style="cursor: default !important; font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class='bx bx-timer align-middle' style="vertical-align: middle; font-size: 20px"></i> Présence
                                 </button>
                         </div>
@@ -440,7 +433,6 @@
                     <th >Statuts</th>
                     <th >Eval à chaud</th>
                     <th >Eval à froid</th>
-                    <th >Rapport</th>
                     <th >Présence</th>
                     <th >Competence</th>
                     <th >PDF</th>
@@ -533,18 +525,6 @@
                             <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
                         </td>
 
-                        
-                        @if ($projet->id == 1)
-                            <td class="text-center" style="font-size: 13px">
-                                <a href="{{ route('nouveauRapportFinale', [$projet->groupe_id]) }}" target="_blank" style="font-size: 13px">
-                                    <i class='bx bxs-circle' style="font-size: 13px; cursor: pointer; color: #1c7f2e"></i>
-                                </a>
-                            </td>
-                        @else
-                            <td class="text-center">
-                                <i class='bx bxs-circle' style="font-size: 13px; cursor: not-allowed; color: #b31217"></i>
-                            </td>
-                        @endif
                         <td class="text-center">
                             <i class='bx bxs-circle' style="font-size: 13px; cursor: not-allowed; color: rgb(163, 162, 162)"></i>
                         </td>

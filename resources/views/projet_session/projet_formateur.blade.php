@@ -96,7 +96,13 @@
         overflow: visible !important;
     }
 </style>
-
+@if (Session::has('pdf_error'))
+<div class="alert alert-danger ms-4 me-4">
+    <ul>
+        <li>{!! \Session::get('pdf_error') !!}</li>
+    </ul>
+</div>
+@endif
 @if (count($data) <= 0)
 <div class="d-flex mt-3 titre_projet p-1 mb-1">
     <span class="text-center">Vous n'avez pas encore du projet.</span>
