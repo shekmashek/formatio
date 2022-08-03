@@ -141,7 +141,7 @@
                                 </li>
                                 <li>
                                     <input class="form-check-input select_all1" type="checkbox" id="select_all1">
-                                    <label class="form-check10abel label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
+                                    <label class="form-check-label label" for="select_all1" style="font-size: 12px">Selectionez tout</label>
                                 </li>
                                 <ul>
                                     @foreach ($nomSessions as $sess)
@@ -156,7 +156,7 @@
                         </div>
                     </th>
                     <th>
-                        <button style="font-size: 13px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button style="font-size: 13px" class="btn btn-default" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class='bx bxs-customize'></i> Module
                         </button>
                     </th>
@@ -460,37 +460,37 @@
                     return this.value;
                 }).get().join('|');
                 
-                table1.column(0).search(Projet1, true,false,false).draw();
+                table1.column(0).find(Projet1).draw();
 
                 var Session1 = $('input:checkbox[name="Session1"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table1.column(1).search(Session1, true,false,false).draw();
+                table1.column(1).find(Session1).draw();
 
                 var Module1 = $('input:checkbox[name="Module1"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table1.column(2).search(Module1, true,false,false).draw();
+                table1.column(2).find(Module1).draw();
 
                 var Cfp1 = $('input:checkbox[name="Cfp1"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table1.column(3).search(Cfp1, true,false,false).draw();
+                table1.column(3).find(Cfp1).draw();
 
                 var Statut1 = $('input:checkbox[name="Statut1"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table1.column(7).search(Statut1, true,false,false).draw();
+                table1.column(7).find(Statut1).draw();
 
                 var Type1 = $('input:checkbox[name="Type1"]:checked').map(function() {
                     return this.value;
                 }).get().join('|');
                 
-                table1.column(8).search(Type1, true,false,false).draw();
+                table1.column(8).find(Type1).draw();
                 
                 
                 // select all
@@ -514,115 +514,11 @@
                     }
                 });
                 // end select all
-            });
 
-            var table = $('#example').DataTable( {
-                // dom:            "Bfrtip",
-                "dom": 'C<"clear">lfrtip',
-                // scrollY:        "500px",
-                scrollX:        true,
-                // scrollCollapse: true,
-                paging:         true,
-                buttons:        [ 'colvis','colonne' ],
-                select: true,
-                ordering:false,
-                "language": {
-                    "paginate": {
-                    "previous": "précédent",
-                    "next": "suivant"
-                    },
-                    "search": "Recherche :",
-                    "zeroRecords":    "Aucun résultat trouvé",
-                    "infoEmpty":      " 0 trouvés",
-                    "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
-                    "infoFiltered":   "(filtre sur _MAX_ entrées)",
-                    "lengthMenu":     "Affichage _MENU_ ",
-                    "buttonText": "Change colonne"
-                },
-                "colVis": {
-                    "label": function ( index, title, th ) {
-                        return (index+1) +'. '+ title;
-                    }
-                }
-            } );
-
-            $('.ColVis_Button').text('Afficher / Masquer');
-
-            new $.fn.dataTable.FixedColumns( table, {
-                leftColumns: 3,
-            } );
-            $('.ColVis_Button').text('Afficher / Masquer');
-
-            $('input:checkbox').on('change', function () {
-                var Projet2 = $('input:checkbox[name="Projet2"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(0).search(Projet2, true,false,false).draw();
-
-                var Session2 = $('input:checkbox[name="Session2"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(1).search(Session2, true,false,false).draw();
-
-                
-                // var Module2 = $('input:checkbox[name="Module2"]:checked').map(function() {
-                //     return this.value;
-                // }).get().join('|');
-                
-                // table.column(2).search(Module2, true,false,false).draw();
-
-                
-                var Entreprise2 = $('input:checkbox[name="Entreprise2"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(3).search(Entreprise2, true,false,false).draw();
-
-                var Modalite2 = $('input:checkbox[name="Modalite2"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(4).search(Modalite2, true,false,false).draw();
-                
-                var Type2 = $('input:checkbox[name="Type2"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(8).search(Type2, true,false,false).draw();
-
-                var Statut2 = $('input:checkbox[name="Statut2"]:checked').map(function() {
-                    return this.value;
-                }).get().join('|');
-                
-                table.column(9).search(Statut2, true,false,false).draw();
-                // select all
-                $('.select_all2').on('click', function(){
-                    if(this.checked){
-                        $('.checkbox2').each(function(){
-                            this.checked = true;
-                        });
-                    }else{
-                        $('.checkbox2').each(function(){
-                            this.checked = false;
-                        });
-                    }
-                });
-
-                $('.checkbox2').on('click', function(){
-                    if(('.checkbox2:checked').length == $('.checkbox2').length){
-                        $('.select_all2').prop('checked', true);
-                    } else{
-                        $('.select_all2').prop('checked', false);
-                    }
-                });
-                // end select all
             });
 
             $('.column_search').on('keyup' ,function () {
-                console.log($(this).val());
-                table.column( $(this).parent().parent().parent().parent().index() ).search( this.value ).draw();
+                table1.column( $(this).parent().parent().parent().parent().index() ).search( this.value ).draw();
             } );
         } );
     </script>
